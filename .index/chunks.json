@@ -15093,6 +15093,66 @@
     "text": "Romania - Decont de TVA (D300)\nl10n_ro_anaf_d300\nModul destinat departamentelor financiar-contabile din România care au obligația depunerii Decontului de TVA (Declarația 300) la ANAF. Permite generarea și exportul D300 direct din Odoo, în două formate acceptate oficial, fără re-introducerea manuală a datelor.\nExport XDP (Soft A): generează un fișier Adobe XDP care poate fi importat instantaneu în formularul PDF inteligent oficial ANAF (D300 v12).\nExport XML (Soft J): generează fișierul XML conform structurii oficiale ANAF v12.0.0+, gata pentru validare și semnare digitală în DUKIntegrator.\nValidare XSD automată: fișierul XML este validat față de schema XSD oficială înainte de export; erorile de structură sunt raportate înainte de descărcare.\nMapare rânduri de decont: corelează automat codurile liniilor din raportul de taxe Odoo cu câmpurile corespunzătoare din declarația D300 (rânduri R1–R44).\nDate de identificare completate automat: CUI, denumire companie, reprezentant legal, județ (prin mapare ANAF din `l10n_ro_anaf_base`).\nCalcul sold reportat TVA: preia automat soldul conturilor 4423 (TVA de plată) și 4424 (TVA de recuperat) din perioada precedentă pentru rândurile R35/R38.\nSuport TVA la încasare (CABA): calculează baza și TVA neexigibil din facturile neîncasate la sfârșitul perioadei.\nIntegrare account.return: buton „Generează D300\" disponibil în fluxul de închidere lunară/trimestrială, cu pre-filtrare automată pe perioada return-ului.\nTip decont automat: detectează tipul perioadei (lunar L, trimestrial T, semestrial S, anual A) și generează numărul de evidență al plății conform algoritmului ANAF."
   },
   {
+    "path": "l10n_ro_anaf_d307/index.md",
+    "module": "l10n_ro_anaf_d307",
+    "version": "20.0.1.0.6",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d307",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d307",
+    "last_ingest": null,
+    "friendly_name": "Romania - Declarația 307 (ajustări de TVA)",
+    "summary": "Modulul permite completarea și exportul în XML al Declarației 307, prin care persoana impozabilă declară sumele rezultate din ajustarea, corecția ajustărilor sau regularizarea taxei pe valoarea adăugată. Scutește contabilul de formularul manual de pe portalul ANAF și produce un fișier care trece validarea oficială.",
+    "features": [
+      "Trei situații ale formularului: transfer de active (A), transfer al proprietății asupra activelor în leasing (L) și anularea codului de TVA (C).",
+      "Operațiuni declarate individual, cu operatorul (cedent, finanțator sau beneficiar) preluat de pe partener și TVA-ul aferent, care poate fi negativ.",
+      "Totaluri pe cele trei tipuri și suma de control, calculate automat după regulile ANAF.",
+      "Temei legal al corectării (art. 105 alin. (6) lit. a/b din Legea 207/2015), cerut când declarația se depune după anularea rezervei verificării ulterioare.",
+      "Gărzi de corelație: același operator nu poate apărea de două ori pe același tip de operațiune.",
+      "Acces din Contabilitate → Raportare → Declarații ANAF → D307 Ajustări de TVA; flux Confirmă → Exportă XML.",
+      "Formular acceptat: OPANAF 793/2016 (structura din 07.11.2017), schema `d307_20171205.xsd`; verificat cu DUKIntegrator la 12.09.2026."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_duk",
+      "l10n_ro_anaf_submission"
+    ],
+    "text": "Romania - Declarația 307 (ajustări de TVA)\nl10n_ro_anaf_d307\nModulul permite completarea și exportul în XML al Declarației 307, prin care persoana impozabilă declară sumele rezultate din ajustarea, corecția ajustărilor sau regularizarea taxei pe valoarea adăugată. Scutește contabilul de formularul manual de pe portalul ANAF și produce un fișier care trece validarea oficială.\nTrei situații ale formularului: transfer de active (A), transfer al proprietății asupra activelor în leasing (L) și anularea codului de TVA (C).\nOperațiuni declarate individual, cu operatorul (cedent, finanțator sau beneficiar) preluat de pe partener și TVA-ul aferent, care poate fi negativ.\nTotaluri pe cele trei tipuri și suma de control, calculate automat după regulile ANAF.\nTemei legal al corectării (art. 105 alin. (6) lit. a/b din Legea 207/2015), cerut când declarația se depune după anularea rezervei verificării ulterioare.\nGărzi de corelație: același operator nu poate apărea de două ori pe același tip de operațiune.\nAcces din Contabilitate → Raportare → Declarații ANAF → D307 Ajustări de TVA; flux Confirmă → Exportă XML.\nFormular acceptat: OPANAF 793/2016 (structura din 07.11.2017), schema `d307_20171205.xsd`; verificat cu DUKIntegrator la 12.09.2026."
+  },
+  {
+    "path": "l10n_ro_anaf_d311/index.md",
+    "module": "l10n_ro_anaf_d311",
+    "version": "20.0.1.0.6",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d311",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d311",
+    "last_ingest": null,
+    "friendly_name": "Romania - Declarația 311 (TVA la cod anulat)",
+    "summary": "Modulul permite completarea și exportul în XML al Declarației 311, prin care se declară taxa pe valoarea adăugată colectată de persoanele al căror cod de TVA a fost anulat sau care s-au reînregistrat ulterior. Reduce riscul de respingere la ANAF prin calculul automat al totalurilor și prin verificările de corelație.",
+    "features": [
+      "Alegerea situației (care se exclud reciproc): persoana cu codul anulat (secțiunea IV) sau persoana reînregistrată conform art. 316 alin. (12) (secțiunea V); se deschid doar rubricile secțiunii alese.",
+      "Secțiunea IV: livrări (rd. 01), achiziții cu taxare inversă (rd. 02) și livrări dinainte de anulare exigibile în sistemul TVA la încasare (rd. 04), cu subtotaluri calculate (rd. 03 = 01 + 02, rd. 05 = 03 + 04).",
+      "Temeiul anulării (din oficiu sau la cerere) redat prin perechea complementară de bife cerută de validator.",
+      "Temei legal al corectării, când declarația se depune după anularea rezervei verificării ulterioare.",
+      "Gărzi pentru regulile de corelație verificate de ANAF; exportul se oprește înainte de a produce un fișier respins.",
+      "Acces din Contabilitate → Raportare → Declarații ANAF → D311 TVA după anularea codului; flux Confirmă → Exportă XML. Modulul nu produce note contabile.",
+      "Formular acceptat: structura din 29.01.2021, schema `d311_20210129.xsd`; verificat cu DUKIntegrator la 12.09.2026."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_duk",
+      "l10n_ro_anaf_submission"
+    ],
+    "text": "Romania - Declarația 311 (TVA la cod anulat)\nl10n_ro_anaf_d311\nModulul permite completarea și exportul în XML al Declarației 311, prin care se declară taxa pe valoarea adăugată colectată de persoanele al căror cod de TVA a fost anulat sau care s-au reînregistrat ulterior. Reduce riscul de respingere la ANAF prin calculul automat al totalurilor și prin verificările de corelație.\nAlegerea situației (care se exclud reciproc): persoana cu codul anulat (secțiunea IV) sau persoana reînregistrată conform art. 316 alin. (12) (secțiunea V); se deschid doar rubricile secțiunii alese.\nSecțiunea IV: livrări (rd. 01), achiziții cu taxare inversă (rd. 02) și livrări dinainte de anulare exigibile în sistemul TVA la încasare (rd. 04), cu subtotaluri calculate (rd. 03 = 01 + 02, rd. 05 = 03 + 04).\nTemeiul anulării (din oficiu sau la cerere) redat prin perechea complementară de bife cerută de validator.\nTemei legal al corectării, când declarația se depune după anularea rezervei verificării ulterioare.\nGărzi pentru regulile de corelație verificate de ANAF; exportul se oprește înainte de a produce un fișier respins.\nAcces din Contabilitate → Raportare → Declarații ANAF → D311 TVA după anularea codului; flux Confirmă → Exportă XML. Modulul nu produce note contabile.\nFormular acceptat: structura din 29.01.2021, schema `d311_20210129.xsd`; verificat cu DUKIntegrator la 12.09.2026."
+  },
+  {
     "path": "l10n_ro_anaf_d318/index.md",
     "module": "l10n_ro_anaf_d318",
     "version": "19.0.1.0.0",
@@ -15154,6 +15214,35 @@
       "l10n_ro_doc_screenshots"
     ],
     "text": "Romania - Declarație recapitulativă (D390)\nl10n_ro_anaf_d390\nModulul automatizează generarea Declarației recapitulative D390 (VIES) privind livrările, achizițiile și prestările intracomunitare, pentru companiile înregistrate în scopuri de TVA în România care efectuează operațiuni intracomunitare. Declarația este obligatorie conform Art. 325 din Codul Fiscal și se depune lunar, până pe 25 ale lunii următoare. Modulul construiește un raport în stil contabil pe baza listei standard Odoo „Listă Vânzări/Achiziții CE\", clasifică automat operațiunile pe baza tag-urilor fiscale românești din `l10n_ro`, produce fișierele de depunere către ANAF și integrează D390 în lista declarațiilor fiscale (`account.return`), cu termen legal calculat și verificări proprii, eliminând completarea manuală pe fiecare partener UE.\nRaport „Listă vânzări/achiziții CE\" adaptat pentru România, accesibil din meniul Contabilitate → Declarații ANAF → Declarație 390.\nClasificare automată a operațiunilor în categoriile D390 pe baza tag-urilor fiscale românești: L (livrări bunuri), P (prestări servicii), T (triunghiulare), A (achiziții bunuri) și S (achiziții servicii).\nExport XDP (Soft A) — fișier Adobe XDP gata de importat în formularul PDF inteligent de pe portalul ANAF.\nExport XML (Soft J) — fișier XML conform schemei oficiale ANAF v3 (2021+), validat automat împotriva schemei XSD înainte de descărcare și compatibil cu DUKIntegrator.\nButoanele de export (XML / XDP) sunt afișate permanent în bara de sus a raportului.\nValidare automată înainte de export: cod TVA companie, adresă fiscală completă, cod TVA al partenerilor UE cu prefix de țară corect.\nDate declarant preluate automat din câmpul de contact ANAF configurat în setările companiei (funcție — fallback „CONTABIL\" —, prenume, nume).\nAgregare pe perechea partener + tip operație, cu eliminarea automată a sumelor zero.\nD390 apare în lista declarațiilor fiscale (`account.return`), cu termenul legal calculat automat (ziua 25 a lunii următoare perioadei) și cu două verificări proprii: operațiunile intracomunitare ale perioadei (cu acțiune directă către raport) și partenerii fără cod de TVA sau fără țară, care altfel ar bloca exportul.\nSuport pentru declarație rectificativă: caracterul rectificativ se deduce automat din istoric (dacă declarația a fost deja depusă pentru perioadă), fără bifă manuală și fără dialog suplimentar.\nCategoria de comerț triunghiular (cod `T`) este funcțională: tag fiscal dedicat (`01T - TAX BASE`) și taxă de vânzare `0% EU T`, creată automat la instalare inclusiv pe companiile RO care au deja planul de conturi instalat."
+  },
+  {
+    "path": "l10n_ro_anaf_d392/index.md",
+    "module": "l10n_ro_anaf_d392",
+    "version": "20.0.1.0.7",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d392",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d392",
+    "last_ingest": null,
+    "friendly_name": "Romania - Declarație informativă anuală (D392)",
+    "summary": "Modulul pregătește Declarația 392, informativa anuală privind livrările, prestările și achizițiile persoanelor impozabile cu cifră de afaceri sub plafon. Sumele se completează din facturile anului, iar fișierul XML rezultat trece validarea oficială ANAF.",
+    "features": [
+      "Două variante: 392A pentru persoanele înregistrate în scopuri de TVA (livrări cu TVA, către parteneri înregistrați și neînregistrați) și 392B pentru cele neînregistrate (în plus, blocul de achiziții).",
+      "Buton Calculează din facturi: sumele din facturile anului, separate după prefixul `RO` al codului fiscal al partenerului; valorile rămân editabile.",
+      "Gardă pe plafonul cifrei de afaceri (300.000 lei de la anul 2019), verificată automat la 392A; la 392B se verifică manual.",
+      "Pe companie se completează CUI, adresă, Cod CAEN și Contact declarații (persoana care semnează).",
+      "Acces din Contabilitate → Raportare → Declarații ANAF → D392 Informativa anuală; flux Confirmă → Exportă XML.",
+      "Formular acceptat: OPANAF 522/26.01.2016, schema `d392.xsd`; verificat cu DUKIntegrator la 12.09.2026. Aplicarea art. 324 alin. (4)-(6) este suspendată până la 31.12.2026 (OUG 115/2023)."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_duk",
+      "l10n_ro_anaf_submission"
+    ],
+    "text": "Romania - Declarație informativă anuală (D392)\nl10n_ro_anaf_d392\nModulul pregătește Declarația 392, informativa anuală privind livrările, prestările și achizițiile persoanelor impozabile cu cifră de afaceri sub plafon. Sumele se completează din facturile anului, iar fișierul XML rezultat trece validarea oficială ANAF.\nDouă variante: 392A pentru persoanele înregistrate în scopuri de TVA (livrări cu TVA, către parteneri înregistrați și neînregistrați) și 392B pentru cele neînregistrate (în plus, blocul de achiziții).\nButon Calculează din facturi: sumele din facturile anului, separate după prefixul `RO` al codului fiscal al partenerului; valorile rămân editabile.\nGardă pe plafonul cifrei de afaceri (300.000 lei de la anul 2019), verificată automat la 392A; la 392B se verifică manual.\nPe companie se completează CUI, adresă, Cod CAEN și Contact declarații (persoana care semnează).\nAcces din Contabilitate → Raportare → Declarații ANAF → D392 Informativa anuală; flux Confirmă → Exportă XML.\nFormular acceptat: OPANAF 522/26.01.2016, schema `d392.xsd`; verificat cu DUKIntegrator la 12.09.2026. Aplicarea art. 324 alin. (4)-(6) este suspendată până la 31.12.2026 (OUG 115/2023)."
   },
   {
     "path": "l10n_ro_anaf_d394/index.md",
@@ -15259,6 +15348,64 @@
       "l10n_eu_oss_reports"
     ],
     "text": "Romania - Declarația D398 ANAF (TVA OSS)\nl10n_ro_anaf_d398\nModulul permite generarea Declarației Speciale de TVA (D398) direct din Odoo, conform formatului solicitat de ANAF pentru regimul special One Stop Shop (OSS). Este destinat companiilor din România care efectuează livrări de bunuri sau prestări de servicii către consumatori finali (B2C) din alte state membre UE și sunt înregistrate în regimul OSS. Modulul **nu adaugă un ecran propriu**: extinde raportul standard OSS din Enterprise, adăugând butoanele de export ANAF (XML Soft J / XDP Soft A) și coloane de control în EUR (conversie la cursul BCE). Contabilitatea rămâne în RON — modulul adaugă doar conversia de raportare în EUR pentru declarația OSS. Implementarea este aliniată la infrastructura comună din `l10n_ro_anaf_base` (date companie/declarant, registru de profile de declarații, validări pentru resursele de export și pentru datele minime ale companiei).\nExport XML D398 (Soft J) — fișier validat automat față de schema XSD oficială ANAF, compatibil cu DUKIntegrator pentru semnare digitală.\nExport XDP D398 (Soft A) — fișier de date pentru import în formularul PDF inteligent ANAF (versiunea 1.0.11+); disponibil și ca ZIP cu PDF inclus.\nConversie automată în EUR — sumele sunt convertite folosind cursul de schimb publicat de Banca Centrală Europeană (BCE) din ultima zi a perioadei fiscale, fără a afecta furnizorul de cursuri BNR configurat pentru restul înregistrărilor contabile.\nColoane suplimentare în raportul OSS — „Net (EUR)\" și „Tax (EUR)\" vizibile direct în interfața rapoartelor OSS Enterprise, pentru verificarea sumelor înainte de export.\nGrupare automată pe state membre de consum (MSCON), tip livrare (bunuri/servicii) și cotă TVA (standard/redusă).\nValidare date companie — verifică prezența datelor obligatorii (CUI, județ, date contact) înainte de generarea fișierului.\nMeniu dedicat — „Declarație 398\" disponibil sub meniul „Declarații ANAF\" din modulul Contabilitate.\nLimitări cunoscute: avertizarea pentru pragul OSS de 10.000 EUR/an și depunerea automată în portalul ANAF nu sunt încă implementate."
+  },
+  {
+    "path": "l10n_ro_anaf_d700/index.md",
+    "module": "l10n_ro_anaf_d700",
+    "version": "20.0.1.0.4",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d700",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d700",
+    "last_ingest": null,
+    "friendly_name": "Romania - Declarație vector fiscal (D700)",
+    "summary": "Modulul permite completarea și exportul în XML al Declarației 700, prin care se înregistrează sau se modifică, în mediu electronic, categoriile de obligații fiscale declarative din vectorul fiscal. Se folosește la fiecare schimbare de regim: intrarea sau ieșirea din sistemul de TVA, trecerea de la lunar la trimestrial, adăugarea ori radierea unei obligații declarative.",
+    "features": [
+      "Antet complet: perioada solicitării, declarantul și identificarea contribuabilului.",
+      "Secțiunile D, E și F: obligațiile din vectorul fiscal, cu nomenclatorul fiecărei secțiuni, periodicitatea (numai la D) și datele de adăugare sau radiere; limite de apariții (4 la D, 6 la E, 12 la F), coduri unice în secțiune, data de început și cea de sfârșit se exclud.",
+      "Secțiunea B: bifele de subsecțiune pentru înregistrarea în scopuri de TVA (B.I, B.II, B.VII, B.VIII), schimbarea perioadei fiscale și TVA la încasare.",
+      "Nu acoperă sediile secundare, datele contabilului, codurile CAEN, reprezentantul fiscal, stările 61/62 și subsecțiunile B rare; pentru acestea se folosește formularul de pe portalul ANAF.",
+      "Acces din Contabilitate → Raportare → Declarații ANAF; flux Confirmă → Exportă XML.",
+      "Formular acceptat: OPANAF 15/09.01.2026; ANAF nu publică XSD pentru D700, deci structura urmează documentația oficială, verificată cu DUKIntegrator la 12.09.2026."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_duk",
+      "l10n_ro_anaf_submission"
+    ],
+    "text": "Romania - Declarație vector fiscal (D700)\nl10n_ro_anaf_d700\nModulul permite completarea și exportul în XML al Declarației 700, prin care se înregistrează sau se modifică, în mediu electronic, categoriile de obligații fiscale declarative din vectorul fiscal. Se folosește la fiecare schimbare de regim: intrarea sau ieșirea din sistemul de TVA, trecerea de la lunar la trimestrial, adăugarea ori radierea unei obligații declarative.\nAntet complet: perioada solicitării, declarantul și identificarea contribuabilului.\nSecțiunile D, E și F: obligațiile din vectorul fiscal, cu nomenclatorul fiecărei secțiuni, periodicitatea (numai la D) și datele de adăugare sau radiere; limite de apariții (4 la D, 6 la E, 12 la F), coduri unice în secțiune, data de început și cea de sfârșit se exclud.\nSecțiunea B: bifele de subsecțiune pentru înregistrarea în scopuri de TVA (B.I, B.II, B.VII, B.VIII), schimbarea perioadei fiscale și TVA la încasare.\nNu acoperă sediile secundare, datele contabilului, codurile CAEN, reprezentantul fiscal, stările 61/62 și subsecțiunile B rare; pentru acestea se folosește formularul de pe portalul ANAF.\nAcces din Contabilitate → Raportare → Declarații ANAF; flux Confirmă → Exportă XML.\nFormular acceptat: OPANAF 15/09.01.2026; ANAF nu publică XSD pentru D700, deci structura urmează documentația oficială, verificată cu DUKIntegrator la 12.09.2026."
+  },
+  {
+    "path": "l10n_ro_anaf_d710/index.md",
+    "module": "l10n_ro_anaf_d710",
+    "version": "20.0.1.0.6",
+    "github": "https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d710",
+    "local_path": "odoo-addons/l10n_ro_ent/l10n_ro_anaf_d710",
+    "last_ingest": null,
+    "friendly_name": "Romania - Declarație rectificativă (D710)",
+    "summary": "Modulul permite completarea și exportul în XML al Declarației 710, prin care se rectifică obligațiile de plată declarate la bugetul de stat (de regulă D100, dar și D112 sau alte declarații cu creanțe fiscale). Pentru fiecare obligație se raportează suma inițială și cea corectată, iar ANAF operează diferența.",
+    "features": [
+      "Linii de obligații, fiecare cu perechea inițial/corectat pentru suma datorată, deduceri, plăți, rest, reduceri și sponsorizări.",
+      "Bifele din antet: anulare, depusă de succesor (CUI-ul succesorului devine obligatoriu), dizolvare, sector energie, modificare, plus temeiul rectificării.",
+      "Numărul de evidență (`nr_evid`) se preia de pe recipisa depunerii inițiale și este obligatoriu pe fiecare obligație.",
+      "Gărzi înainte de export: succesor fără CIF, obligație fără număr de evidență, declarație fără linii, sume negative.",
+      "Acces din Contabilitate → Raportare → Declarații ANAF → D710 Declarație rectificativă; flux Confirmă → Exportă XML (cu Readu în ciornă). Nu generează note contabile.",
+      "Formular acceptat: OPANAF 57/19.01.2026, schema `d710_20012025.xsd`; verificat cu DUKIntegrator la 12.09.2026."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_anaf_base"
+    ],
+    "connections": [
+      "l10n_ro_anaf_base",
+      "l10n_ro_anaf_duk",
+      "l10n_ro_anaf_submission"
+    ],
+    "text": "Romania - Declarație rectificativă (D710)\nl10n_ro_anaf_d710\nModulul permite completarea și exportul în XML al Declarației 710, prin care se rectifică obligațiile de plată declarate la bugetul de stat (de regulă D100, dar și D112 sau alte declarații cu creanțe fiscale). Pentru fiecare obligație se raportează suma inițială și cea corectată, iar ANAF operează diferența.\nLinii de obligații, fiecare cu perechea inițial/corectat pentru suma datorată, deduceri, plăți, rest, reduceri și sponsorizări.\nBifele din antet: anulare, depusă de succesor (CUI-ul succesorului devine obligatoriu), dizolvare, sector energie, modificare, plus temeiul rectificării.\nNumărul de evidență (`nr_evid`) se preia de pe recipisa depunerii inițiale și este obligatoriu pe fiecare obligație.\nGărzi înainte de export: succesor fără CIF, obligație fără număr de evidență, declarație fără linii, sume negative.\nAcces din Contabilitate → Raportare → Declarații ANAF → D710 Declarație rectificativă; flux Confirmă → Exportă XML (cu Readu în ciornă). Nu generează note contabile.\nFormular acceptat: OPANAF 57/19.01.2026, schema `d710_20012025.xsd`; verificat cu DUKIntegrator la 12.09.2026."
   },
   {
     "path": "l10n_ro_anaf_duk/index.md",

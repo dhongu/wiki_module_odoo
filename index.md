@@ -241,6 +241,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_object_history](deltatech_object_history/index.md): Istoric paralel al documentelor Odoo, separat de mesajele standard, ale cărui intrări nu sunt șterse periodic.
 - [deltatech_object_history_service](deltatech_object_history_service/index.md): Extinde istoricul obiectelor către modelele Acord de service și Echipament de service.
 - [deltatech_obyc](deltatech_obyc/index.md): Determinare automată a conturilor contabile pentru tranzacțiile de stoc în stil SAP OBYC: matrice cheie de tranzacție × clasă și arie de evaluare × modificator × companie, cu costul mărfii vândute înregistrat la livrare.
+- [deltatech_obyc_landed_cost](deltatech_obyc_landed_cost/index.md): Rutarea creditului de clasa 6 al landed costs printr-un cont intermediar și precompletarea landed cost din factura furnizorului.
 - [deltatech_partner_discount](deltatech_partner_discount/index.md): Reducere propusă pe partener, cu banner de avertizare pe factură.
 - [deltatech_partner_generic](deltatech_partner_generic/index.md): Partener generic pentru clienți anonimi, cu restricții contabile: blochează validarea facturilor pe el, filtrează jurnalele de plată și îl protejează la modificări accidentale.
 - [deltatech_partner_gifts](deltatech_partner_gifts/index.md): Gestionează cadourile oferite partenerilor — generare linii de cadou, etichete de livrare, date partener și copiere/modificare în masă.
@@ -433,11 +434,14 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_stock_orderpoint_multiple](deltatech_stock_orderpoint_multiple/index.md): Reintroduce multiplul de cantitate pe regulile de aprovizionare, eliminat în Odoo 19.
 - [deltatech_stock_picking_activity_report](deltatech_stock_picking_activity_report/index.md): Evidența modificărilor, mesajelor din chatter și evenimentelor de validare pe transferurile de stoc, cu raport statistic în Inventar și curățare automată a datelor vechi.
 - [deltatech_stock_picking_image](deltatech_stock_picking_image/index.md): Imaginea produsului pe liniile transferului, avizul de livrare și raportul de picking.
+- [deltatech_stock_reclass](deltatech_stock_reclass/index.md): Reclasificarea stocului între conturi printr-un document cu transfer și notă contabilă, reguli de perechi de conturi și stornare.
 - [deltatech_stock_removal_priority](deltatech_stock_removal_priority/index.md): Strategie de eliminare a stocului bazată pe prioritate, derivată automat din regulile de putaway, pentru a ridica întâi stocul din locațiile cele mai accesibile.
 - [deltatech_stock_report](deltatech_stock_report/index.md): Raport analitic pivot/listă peste pozițiile din transferurile de stoc finalizate, cu filtre multiple.
 - [deltatech_stock_reseller](deltatech_stock_reseller/index.md): Raport de stoc per locație cu preț de revânzare pe listă/partener și cantități opțional mascate ca text.
 - [deltatech_stock_reservation_lock](deltatech_stock_reservation_lock/index.md): Protejează rezervările de stoc: fără eliberare, livrare peste cerere sau produse necomandate.
 - [deltatech_stock_valuation](deltatech_stock_valuation/index.md): Evaluarea stocului pe produs, arie de evaluare și cont contabil (AVCO), derivată din notele contabile postate, cu istoric lunar și recalculare în fundal.
+- [deltatech_stock_valuation_guard](deltatech_stock_valuation_guard/index.md): O singură metodă de cost pe companie și blocarea mișcărilor de stoc fără valoare, cu liste de control.
+- [deltatech_stock_valuation_guard_pos](deltatech_stock_valuation_guard_pos/index.md): Blochează la coșul POS produsele stocabile fără cost, înainte de tipărirea bonului.
 - [deltatech_task_progress](deltatech_task_progress/index.md): Rulează o sarcină lungă pas cu pas, în paralel, într-un dialog de progres.
 - [deltatech_tc](deltatech_tc/index.md): Modul de bază Terrabit Connect — registrul de stații, coada de job-uri și endpoint-urile REST care conectează Odoo la hardware/servicii locale (token ANAF, imprimante fiscale, Zebra, DUKIntegrator).
 - [deltatech_team_logo](deltatech_team_logo/index.md): Logo de firmă în rapoarte (factură, ofertă, aviz) în funcție de echipa de vânzare.

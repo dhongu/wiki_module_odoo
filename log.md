@@ -4,6 +4,14 @@ This is an append-only log of all operations performed on the wiki.
 
 ---
 
+## [2026-11-28] Lot deltatech_stock_valuation — ingestie 20.0 (4 module fără pagină)
+
+- **Acțiune:** Pagini noi, procesate în paralel (subagenți `documentarist-wiki`, câte 5 module per agent), pentru modulele de pe `origin/20.0` care nu aveau pagină wiki: `deltatech_obyc_landed_cost`, `deltatech_stock_reclass`, `deltatech_stock_valuation_guard`, `deltatech_stock_valuation_guard_pos`.
+- **Sursă:** `readme/` (DESCRIPTION, USAGE, CONFIGURE, FISA_CONSULTANT), `__manifest__.py`, cod; export `git archive origin/20.0`. Fișe consultant copiate (cu capturi) pentru 4 module.
+- **Dependențe/Conexiuni:** legate doar către paginile existente; restul rămase text.
+- **Avertismente:** `deltatech_stock_valuation_guard`: manifestul nu are consultant_sheet dar există fișă; `deltatech_stock_valuation_guard_pos`: auto_install.
+- **Fișiere actualizate:** 4 directoare de modul, `index.md`, `log.md`, `.index/`.
+
 ## [2026-11-28] Lot deltatech — ingestie 20.0 (55 module fără pagină)
 
 - **Acțiune:** Pagini noi, procesate în paralel (subagenți `documentarist-wiki`, câte 5 module per agent), pentru modulele de pe `origin/20.0` care nu aveau pagină wiki: `deltatech_account_ubl_import`, `deltatech_card_payment`, `deltatech_change_uom`, `deltatech_cron_progress`, `deltatech_doc_screenshots`, `deltatech_document_weight`, `deltatech_ecr_fiscal`, `deltatech_expected_receipt`, `deltatech_fleet`, `deltatech_fleet_geo`, `deltatech_iap_online`, `deltatech_import_lines`, `deltatech_import_lines_stock`, `deltatech_invoice_delivery`, `deltatech_invoice_storable_source`, `deltatech_mail_signature`, `deltatech_mrp_bom_alternative`, `deltatech_partner_discount`, `deltatech_partner_match`, `deltatech_payment_default`, `deltatech_payment_report`, `deltatech_payment_term_working_days`, `deltatech_picking_split`, `deltatech_price_change`, `deltatech_price_change_label`, `deltatech_pricelist_bulk`, `deltatech_pricelist_vat_cost`, `deltatech_product_attribute_role`, `deltatech_purchase_refund`, `deltatech_replenish`, `deltatech_report_layout`, `deltatech_sale_commission_manufacturer`, `deltatech_sale_linie_config_details`, `deltatech_sale_margin_pos`, `deltatech_sale_merge`, `deltatech_sale_order_image`, `deltatech_sale_transfer`, `deltatech_stock_consumption_report`, `deltatech_stock_disassembly`, `deltatech_stock_disassembly_mrp`, `deltatech_stock_orderpoint_multiple`, `deltatech_stock_picking_image`, `deltatech_task_progress`, `deltatech_uom_domain`, `deltatech_uom_unece`, `deltatech_warranty`, `deltatech_web_kpi_cards`, `deltatech_web_scan`, `deltatech_web_side_panel`, `deltatech_website_access_design`, `deltatech_website_category_icon`, `deltatech_website_delivery_address`, `deltatech_website_indexnow`, `deltatech_website_legal_guarantee`, `deltatech_website_llms_txt`.
