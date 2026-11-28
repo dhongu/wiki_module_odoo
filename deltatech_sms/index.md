@@ -1,23 +1,23 @@
-# Deltatech SMS (localizat la `deltatech_sms/index.md`)
+# SMS Custom Gateway (localizat la `deltatech_sms/index.md`)
 
 - **Nume Tehnic:** `deltatech_sms`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sms`
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_sms
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sms`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul permite trimiterea de mesaje SMS din Odoo prin furnizori (gateway-uri) externi proprii, ca alternativă la serviciul IAP implicit oferit de Odoo. Practic, înlocuiește mecanismul standard de expediere a SMS-urilor cu apeluri directe către un endpoint configurabil, astfel încât întregul flux nativ de SMS din Odoo (notificări, marketing, confirmări) să folosească contul comercial al clientului la un provider local. Sunt suportați din cofigurare doi furnizori: SMS 4Pay și SMS Wapi.
+Modulul trimite SMS-urile generate de Odoo prin contul propriu la un furnizor de SMS (4Pay sau Wapi), în loc de creditele IAP Odoo. Toate mesajele puse în coadă de Odoo (din chatter, marketing SMS, șabloane, acțiuni automate) sunt expediate pe rând prin furnizorul configurat, astfel că firma folosește contractul propriu la un provider local.
 
 #### 2. Funcționalități Cheie
 
-- Trimitere SMS prin endpoint extern configurabil, fără a depinde de creditele IAP native Odoo.
-- Suport pentru doi furnizori: SMS 4Pay și SMS Wapi (selectabili la nivelul contului IAP).
-- Configurare directă în contul IAP de tip „sms" a parametrilor de acces: furnizor, secret (parolă/cheie) și gateway (servID / device).
-- Integrare transparentă cu fluxul nativ `sms.sms`: toate SMS-urile trimise din Odoo sunt rutate automat către providerul configurat.
-- Normalizarea conținutului mesajului prin eliminarea diacriticelor (unidecode) înainte de expediere.
-- Gestionarea stărilor de livrare (succes / eroare server) și actualizarea corespunzătoare a înregistrărilor SMS.
+- Furnizorul înlocuiește IAP pentru SMS: nu se consumă credite IAP, iar furnizorul Twilio din Odoo 20, dacă este configurat, este ocolit.
+- Doi furnizori: **4Pay** (cerere HTTP GET către API-ul de client, cu ID-ul serviciului și parola) și **Wapi** (cerere HTTP POST, printr-unul dintre dispozitivele Android legate de cont, SIM 1).
+- Configurare în *Setări > Tehnic > IAP > Conturi In-App Purchase* (mod dezvoltator), pe contul serviciului **SMS**: **SMS Provider**, **SMS Secret** (parola 4Pay sau secretul API Wapi) și **SMS Gateway** (servID 4Pay sau ID-ul dispozitivului Wapi).
+- Textul se trimite fără diacritice (ex. „ă” devine „a”), pentru a se încadra în setul de caractere GSM.
+- Stare de expediere: mesajul acceptat de furnizor trece în starea standard *Pending* și este scos din coadă; mesajul respins trece în *Error* (eroare de server), cu motivul returnat de furnizor afișat în notificarea de eșec, și rămâne în coadă pentru retrimitere.
+- Limitări: adresele furnizorilor sunt fixe în cod; nu se primesc rapoarte de livrare (SMS-ul rămâne *Pending*); fluxurile Odoo IAP de înregistrare a contului și de verificare a numelui expeditorului nu funcționează cât timp modulul este instalat.
 
 #### 3. Dependențe
 
@@ -29,19 +29,19 @@ Dependență externă Python: `unidecode`.
 
 **Modele**
 
-- `iap.account` (extins): adaugă câmpurile de configurare a furnizorului de SMS (`sms_provider`, `sms_secret`, `sms_gateway`) și metoda `send_sms`, cu implementări separate pentru 4Pay (`_send_sms_4pay`) și Wapi (`_send_sms_wapi`).
-- `sms.sms` (extins): suprascrie metoda `_send` pentru a ruta expedierea prin gateway-ul custom și a actualiza stările de livrare.
-- `SmsApi` (extinde `odoo.addons.sms.tools.sms_api.SmsApi`): redefinește `_contact_iap` pentru a apela contul IAP custom în locul serviciului IAP Odoo.
+- `iap.account` (extins): câmpurile de configurare a furnizorului (`sms_provider`, `sms_secret`, `sms_gateway`) și metodele de trimitere pentru 4Pay și Wapi.
+- `sms.sms` (extins): suprascrie expedierea pentru a o ruta prin furnizorul configurat și a actualiza stările.
+- `SmsApi` (extinde `odoo.addons.sms.tools.sms_api.SmsApi`): apelul către IAP este înlocuit cu apelul către contul IAP configurat.
 
 **Vizualizări**
 
-- `iap_account_view_form`: extinde formularul contului IAP pentru a expune câmpurile `sms_provider`, `sms_secret` și `sms_gateway`.
+- `views/iap_views.xml`: extinde formularul contului IAP cu câmpurile furnizorului de SMS.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server în acest modul.
+- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
 - [deltatech_delivery_send_sms](../deltatech_delivery_send_sms/index.md): trimite SMS la livrare, folosind infrastructura de SMS expusă de acest modul.
-- `deltatech_sms_sale`: modul soră care extinde funcționalitatea SMS pe zona de vânzări.
+- [deltatech_sms_sale](../deltatech_sms_sale/index.md): modul soră care extinde funcționalitatea SMS pe zona de vânzări.

@@ -1,10 +1,11 @@
-# Deltatech Product Secondary UoM (localizat la `deltatech_secondary_uom/index.md`)
+# Product Secondary UoM (localizat la `deltatech_secondary_uom/index.md`)
 
 - **Nume Tehnic:** `deltatech_secondary_uom`
-- **Versiune:** `19.0.1.1.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_secondary_uom
+- **Versiune:** `20.0.1.2.5`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_secondary_uom
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_secondary_uom`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -17,6 +18,7 @@ Acest modul adaugă factori de conversie între unități de măsură definiți 
 - Pe liniile de comandă de vânzare, liniile de comandă de achiziție și pe mutările de stoc, utilizatorul poate introduce cantitatea într-o unitate alternativă (kg, m² etc.), iar cantitatea liniei se calculează automat — și invers: modificarea cantității liniei actualizează cantitatea secundară.
 - Prețul rămâne mereu în unitatea de bază: cantitatea secundară este doar informativă/de input și nu afectează niciodată prețul, facturarea sau valorizarea stocului.
 - Rotunjirea cantității de bază la numărul întreg de bucăți atunci când se introduce cantitatea în unitatea alternativă (nu se pot livra fracțiuni de bucată).
+- Alternativa standard (o unitate reală per factor) și limitările abordării sunt în secțiunea „Use Cases / Context” a modulului; pașii de configurare (activarea „Units of Measure”, unitate fără referință, tab „Alternative Units”) sunt în fișa consultantului.
 - Propagarea unității secundare alese pe linia de vânzare/achiziție către mutarea de stoc generată (inclusiv la regulile de aprovizionare `stock.rule`) și păstrarea acesteia ca și criteriu distinct la comasarea mutărilor de stoc.
 
 #### 3. Dependențe

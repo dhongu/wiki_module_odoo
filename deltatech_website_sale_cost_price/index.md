@@ -1,21 +1,25 @@
-# Website Sale Cost Price (localizat la `deltatech_website_sale_cost_price/index.md`)
+# Website Cost Price Protection (localizat la `deltatech_website_sale_cost_price/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_cost_price`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_cost_price
+- **Versiune:** `20.0.1.0.3`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_website_sale_cost_price
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_cost_price`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde funcționalitatea standard Odoo "Previne Vânzarea Produselor cu Preț Zero" din magazinul online, astfel încât să blocheze și vânzarea produselor al căror preț este mai mic decât costul lor (prețul standard). Practic, protejează comercianții de vânzarea sub cost pe website, cu posibilitatea de a impune și o marjă minimă de profit configurabilă.
+Acest modul extinde opțiunea standard Odoo „Prevent Sale of Zero Priced Product” din magazinul online, astfel încât să blocheze și vânzarea produselor al căror preț este mai mic decât costul lor plus o marjă minimă. Pentru un astfel de produs clientul nu mai vede prețul și butonul **Add to Cart**, ci butonul **Contact Us** (ca la produsele cu preț zero), iar butonul de coș dispare din lista de produse. Astfel, comerciantul este protejat de vânzarea sub cost pe website.
 
 #### 2. Funcționalități Cheie
 
-- **Prevenire dinamică a vânzării sub cost**: blochează automat adăugarea în coș a unui produs dacă prețul de vânzare este sub prețul de cost.
-- **Marjă configurabilă**: se poate seta un procent minim de marjă în setările website-ului (ex: dacă e setat la 10%, prețul de vânzare trebuie să fie cel puțin 110% din costul produsului).
-- **Comparație corectă cu/fără TVA**: se poate configura dacă prețul de cost include sau nu taxa, pentru o comparație corectă față de prețul afișat pe website.
-- **Conversie valutară**: gestionează automat diferențele de monedă între moneda de cost a produsului și moneda listei de prețuri a website-ului.
+- **Protecție la preț sub cost**: prețul de pe website (după lista de prețuri a website-ului) este comparat cu costul produsului (câmpul **Cost**).
+- **Marjă minimă**: procent setat pe website (cu 10%, prețul trebuie să fie cel puțin 110% din cost).
+- **Comparație cu/fără taxe**: costul (ținut fără taxe) este majorat cu taxele atunci când website-ul afișează prețuri cu taxe; opțiunea **Cost Price Includes Tax** se lasă debifată când costul e ținut fără taxe.
+- **Conversie valutară**: costul este convertit în moneda website-ului.
+- **Setări**: *Website > Configuration > Settings*, secțiunea **eCommerce**; câmpurile apar după bifarea **Prevent Sale of Zero Priced Product**.
+- Utilizatorii din grupul *Settings* pot totuși adăuga în coș un produs blocat, de aceea verificarea se face ca vizitator.
+- Fluxul pas cu pas, cu capturi, este în fișa consultant.
 
 #### 3. Dependențe
 
@@ -26,7 +30,7 @@ Acest modul extinde funcționalitatea standard Odoo "Previne Vânzarea Produselo
 
 **Modele**
 
-- `product.template` (extindere): adaugă `_get_cost_price_for_comparison()` — calculează pragul de cost (ajustat pentru TVA, monedă și marjă) folosit pentru comparație; suprascrie `_get_additionnal_combination_info()` pentru a seta `prevent_zero_price_sale` când prețul e sub cost, și `_website_show_quick_add()` pentru a ascunde butonul "Adăugare rapidă" în același caz.
+- `product.template` (extindere): adaugă `_get_cost_price_for_comparison()` — calculează pragul de cost (ajustat pentru TVA, monedă și marjă) folosit pentru comparație; suprascrie `_get_additional_combination_info()` pentru a seta `prevent_zero_price_sale` când prețul e sub cost, și `_website_show_quick_add()` pentru a ascunde butonul "Adăugare rapidă" în același caz.
 - `product.product` (extindere): suprascrie `_website_show_quick_add()` și `_is_add_to_cart_allowed()` — blochează adăugarea în coș dacă prețul e sub costul calculat, cu excepția utilizatorilor din grupul `base.group_system` (administratori).
 - `website` (extindere): adaugă câmpurile `cost_price_include_tax` (Boolean) și `cost_price_margin_percentage` (Float).
 - `res.config.settings` (extindere, tranzitoriu): expune câmpurile de mai sus (`related` pe `website_id`) în ecranul de configurare Website.

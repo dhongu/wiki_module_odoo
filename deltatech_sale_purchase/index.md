@@ -1,33 +1,35 @@
-# Sale Purchase (localizat la `deltatech_sale_purchase/index.md`)
+# Sale-Purchase Sync (localizat la `deltatech_sale_purchase/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_purchase`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_purchase`
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_sale_purchase`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_purchase`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul curăță automat comenzile de achiziție generate prin regulile de aprovizionare (procurement) atunci când oferta de vânzare care le-a declanșat este anulată. Astfel se evită liniile de achiziție „orfane" — comenzi de achiziție netrimise furnizorului, rămase în ciornă fără o comandă de vânzare corespunzătoare — și se păstrează sincronizarea între echipa de vânzări și cea de aprovizionare.
+Când o comandă de vânzare cu produse aprovizionate la comandă generează o cerere de ofertă (RFQ) prin regulile de aprovizionare, anularea comenzii în Odoo standard lasă liniile de achiziție pe loc, iar cumpărătorul fie le caută și le șterge manual, fie comandă marfa fără client. Modulul curăță automat aceste linii la anularea comenzii de vânzare, păstrând sincronizarea între echipa de vânzări și cea de achiziții.
 
 #### 2. Funcționalități Cheie
 
-- La anularea unei oferte/comenzi de vânzare, elimină automat liniile de achiziție legate care se află încă în comenzi de achiziție în starea ciornă (draft).
-- O comandă de achiziție deja confirmată (trimisă furnizorului) NU este atinsă — rămâne în sarcina cumpărătorului să decidă ce face cu ea.
-- Previne acumularea de comenzi de achiziție ciornă fără corespondent activ în vânzări, menținând curat modulul de aprovizionare.
-
-*Corecție față de `readme/DESCRIPTION.md`:* descrierea menționează și redimensionarea liniei de achiziție la scăderea cantității comandate în oferta de vânzare. În 19.0 acest comportament este acum tratat nativ de nucleul Odoo (nu mai există o suprascriere `_log_decrease_ordered_quantity` ca în versiunea 18.0) — testul `test_decrease_resizes_draft_purchase_line` din modul verifică explicit acest comportament al nucleului, ca gardă pentru cazul în care ar regresa. Modulul propriu-zis implementează astăzi doar comportamentul de anulare.
+- **Liniile de achiziție se elimină la anularea comenzii de vânzare:** la **Anulare**, liniile de achiziție create pentru mișcările de stoc ale comenzii sunt șterse, cât timp comanda de achiziție este încă RFQ (ciornă). O comandă de achiziție deja trimisă sau confirmată rămâne în grija cumpărătorului.
+- **Liniile partajate se reduc, nu se șterg:** dacă furnizorul grupează RFQ-urile (**Group RFQ** pe *Daily*, *Weekly* sau *Always*, în fila **Sales & Purchase** a furnizorului), o linie poate acoperi mai multe comenzi de vânzare. Linia se păstrează, mișcările anulate se detașează de ea, iar cantitatea lor, convertită în unitatea de măsură de achiziție, se scade din linie.
+- Nu există configurare: comportamentul este activ după instalare.
+- **Limitări:** se tratează doar anularea întregii comenzi de vânzare (scăderea cantității pe o linie confirmată nu modifică linia de achiziție), iar comenzile de achiziție în starea *RFQ Sent* sau *Purchase Order* nu se modifică.
+- Fluxul detaliat pentru consultant este în fișa consultantului.
 
 #### 3. Dependențe
 
 - `sale_purchase`
 - `sale_stock`
+- `purchase_stock`
 
 #### 4. Componente Cheie
 
 **Modele**
 
-- `sale.order` (extins): suprascrie `_action_cancel()` pentru a șterge liniile de achiziție generate (`order_line.move_ids.created_purchase_line_ids`) aflate încă în comenzi de achiziție ciornă, înainte de a continua fluxul standard de anulare.
+- `sale.order` (extins): suprascrie `_action_cancel()` pentru a șterge sau a reduce liniile de achiziție generate (`order_line.move_ids.created_purchase_line_ids`) aflate în comenzi de achiziție ciornă, înainte de fluxul standard de anulare.
 
 **Vizualizări**
 
@@ -35,9 +37,9 @@ Modulul curăță automat comenzile de achiziție generate prin regulile de apro
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau `ir.actions.server`; logica rulează sincron, în cadrul metodei suprascrise `_action_cancel`.
+- Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau `ir.actions.server`; logica rulează sincron în `_action_cancel`.
 
 #### 5. Conexiuni
 
-- `sale_stock`: furnizează legătura dintre liniile de comandă de vânzare și mișcările de stoc (`move_ids`) din care se determină liniile de achiziție generate.
-- `purchase_stock`: modulul standard care populează `created_purchase_line_ids` pe mișcările de stoc atunci când regulile de aprovizionare (MTO/Buy) generează o comandă de achiziție.
+- `sale_stock`: leagă liniile comenzii de vânzare de mișcările de stoc (`move_ids`) din care se determină liniile de achiziție generate.
+- `purchase_stock`: populează `created_purchase_line_ids` pe mișcările de stoc când regulile de aprovizionare generează o comandă de achiziție.

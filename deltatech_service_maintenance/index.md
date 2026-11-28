@@ -1,10 +1,10 @@
-# Deltatech Services Maintenance (localizat la `deltatech_service_maintenance/index.md`)
+# Services Maintenance (localizat la `deltatech_service_maintenance/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_maintenance`
-- **Versiune:** `19.0.1.2.1`
-- **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_maintenance
+- **Versiune:** `20.0.1.2.9`
+- **Cale:** https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_maintenance
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_maintenance`
-- **Ultima Ingestie:** `2026-06-08`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -12,14 +12,15 @@ Modulul gestionează activitatea de service și mentenanță a echipamentelor. P
 
 #### 2. Funcționalități Cheie
 
-- Gestionare sesizări
-- Gestionare comenzi de service
-- Gestionare planuri de revizii
-- Generare automată a comenzilor de service pe baza planului
+- Gestionare sesizări.
+- Gestionare comenzi de service, fiecare cu propriul token de acces la portal (generat distinct la crearea comenzii).
+- Gestionare planuri de revizii.
+- Generare automată a comenzilor de service pe baza planului.
+- Documentele de service (sesizare, comandă, garanție) pot genera livrări de stoc cu produsele și cantitățile aferente.
 
 #### 3. Dependențe
 
-- `deltatech_service_equipment_base`
+- [deltatech_service_equipment_base](../deltatech_service_equipment_base/index.md)
 - `sale`
 - `sales_team`
 - `sale_stock`
@@ -27,9 +28,9 @@ Modulul gestionează activitatea de service și mentenanță a echipamentelor. P
 
 #### 4. Componente Cheie
 
-Conform fișierului `readme/DESCRIPTION.md`, această secțiune nu este detaliată: descrierea acoperă Sumarul și Funcționalitățile Cheie fără a solicita explicit documentarea componentelor tehnice. Analiza codului pentru Modele, Vizualizări și Acțiuni Automate a fost omisă conform schemei wiki.
+Secțiune omisă: `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie și nu solicită explicit analiza componentelor tehnice. (Notă: DESCRIPTION.md menționează ca temă viitoare utilizarea și a modulului standard de mentenanță.)
 
 #### 5. Conexiuni
 
-- `deltatech_service_equipment_base`: dependență de bază pentru gestionarea echipamentelor de service.
+- [deltatech_service_equipment_base](../deltatech_service_equipment_base/index.md): dependență de bază pentru gestionarea echipamentelor de service.
 - `sale_stock`: legătură cu comenzile de vânzare și mișcările de stoc aferente intervențiilor de service.

@@ -1,37 +1,37 @@
 # Services Consumable (localizat la `deltatech_service_consumable/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_consumable`
-- **Versiune:** `19.0.1.1.6`
-- **Cale:** `https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_consumable`
+- **Versiune:** `20.0.1.1.10`
+- **Cale:** `https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_consumable`
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_consumable`
-- **Ultima Ingestie:** `2026-06-08`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul extinde suita de service Deltatech cu gestiunea consumabilelor măsurate prin contoare. Permite urmărirea echipamentelor și a contoarelor asociate, înregistrarea citirilor de contor și facturarea pe baza acestor citiri. Pentru perioadele în care nu există o citire reală, modulul poate calcula estimări de consum și poate introduce automat, la sfârșitul perioadei, valori estimate. Valoarea principală constă în legarea consumului real (sau estimat) de procesul de facturare a serviciilor, reducând efortul manual și erorile.
+Modulul extinde suita de service Deltatech cu gestiunea consumabilelor măsurate prin contoare. Permite urmărirea echipamentelor și a contoarelor asociate, înregistrarea citirilor și facturarea pe baza lor. Pentru perioadele fără citire reală, modulul calculează estimări și poate introduce automat, la sfârșitul perioadei, valori estimate, reducând efortul manual și erorile de facturare.
 
 #### 2. Funcționalități Cheie
 
-- Gestiunea echipamentelor.
-- Gestiunea contoarelor.
+- Gestiunea echipamentelor și a contoarelor.
 - Gestiunea citirilor de contor.
 - Facturare pe baza citirilor.
-- Calculul estimat al citirilor.
+- Calculul estimărilor de citire.
 - Introducerea automată, la sfârșitul perioadei, a valorilor estimate.
+- Raport de eficiență a serviciilor (`service.efficiency.report`), restricționat la companiile active ale utilizatorului.
+- Costul livrărilor legate de contract se adaugă la costurile contractului doar la finalizarea transferului.
 
 #### 3. Dependențe
 
-- `deltatech_service_agreement`
-- `deltatech_service_equipment`
-- `deltatech_product_extension`
-- `deltatech_stock_report`
+- [deltatech_service_agreement](../deltatech_service_agreement/index.md)
+- [deltatech_service_equipment](../deltatech_service_equipment/index.md)
+- [deltatech_product_extension](../deltatech_product_extension/index.md)
+- [deltatech_stock_report](../deltatech_stock_report/index.md)
 
 #### 4. Componente Cheie
 
-Conform fișierului `readme/DESCRIPTION.md`, această secțiune nu a fost detaliată: descrierea acoperă Sumarul și Funcționalitățile Cheie, iar conform schemei de ingestie analiza codului pentru componente este omisă atunci când Readme-ul este prezent și nu o solicită explicit.
+Secțiune omisă: `readme/DESCRIPTION.md` este prezent și nu solicită explicit analiza codului pentru componente.
 
 #### 5. Conexiuni
 
-- `deltatech_service_agreement`: contractele de service pe baza cărora se generează facturarea consumului.
-- `deltatech_service_equipment`: echipamentele și contoarele extinse de acest modul.
-- `deltatech_stock_report`: raportarea de stoc reutilizată în contextul consumabilelor.
+- [deltatech_service_equipment](../deltatech_service_equipment/index.md): echipamentele, contoarele și citirile pe care se bazează consumabilele.
+- [deltatech_service_agreement](../deltatech_service_agreement/index.md): contractele și consumurile din care rezultă facturarea.

@@ -1,21 +1,25 @@
 # Raport Stoc pentru Reselleri (localizat la `deltatech_stock_reseller/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_reseller`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_reseller`
+- **Versiune:** `20.0.1.0.7`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_stock_reseller`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_reseller`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul oferă un raport de stoc gândit pentru partenerii revânzători (reselleri). Pornind de la o locație de stoc aleasă, generează o listă a produselor disponibile, afișând atât prețul de catalog, cât și prețul de revânzare calculat pe baza unei liste de prețuri sau a unui partener. Pentru situațiile în care cantitatea exactă nu trebuie comunicată revânzătorului, raportul poate înlocui cifrele cu etichete text (de exemplu „Stoc limitat", „În stoc"), pe baza unor praguri configurabile. Astfel, echipa de vânzări poate trimite rapid unui reseller o ofertă cu disponibilitate și prețuri adaptate fără a expune informații interne sensibile.
+Modulul oferă un raport de stoc gândit pentru partenerii revânzători (reselleri). Pornind de la o locație de stoc aleasă, generează lista produselor disponibile, cu prețul de listă și prețul de revânzare calculat din lista de prețuri a partenerului. Cantitățile pot fi înlocuite cu etichete de nivel de stoc (de exemplu „Stoc redus”, „Stoc limitat”, „Stoc”), astfel încât partenerul să primească informația de disponibilitate fără cifrele exacte.
 
 #### 2. Funcționalități Cheie
 
-- Raport cu pozițiile dintr-o locație de stoc, însoțit de lista de prețuri.
-- Alegerea locației de stoc pentru care se generează raportul.
-- Alegerea unui partener sau a unei liste de prețuri pentru calculul prețului de revânzare.
-- Două praguri configurabile pentru afișarea cantităților ca text (ex. Stoc redus, Stoc limitat, În stoc), fiecare cu textul aferent.
+- Raport cu pozițiile din stocul unei locații, cu prețuri din lista de prețuri.
+- Alegerea locației sursă de stoc.
+- Alegerea partenerului sau a listei de prețuri pentru calculul prețului de revânzare (fără listă, prețul de revânzare este egal cu prețul de listă).
+- Două praguri configurabile pentru afișarea cantităților sub formă de text, fiecare cu textul propriu (sub primul prag, sub al doilea prag, peste al doilea prag).
+- Acces din *Vânzări > Raportare > Stoc pe locație*; raportul listă doar cantitățile libere (fără cele rezervate), cu grupare pe categorie sau produs și vedere pivot.
+- Liniile se pot exporta cu *Acțiuni > Export*; coloana cantitate se omite când partenerul trebuie să vadă doar textele de nivel de stoc.
+- Fluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -25,22 +29,18 @@ Modulul oferă un raport de stoc gândit pentru partenerii revânzători (resell
 
 **Modele**
 
-- `stock.quant.report` (model tranzient): wizardul de configurare a raportului — locația sursă, partenerul/lista de prețuri pentru calculul prețului de revânzare și pragurile pentru afișarea cantităților ca text.
-- `stock.quant.report.value` (model tranzient): liniile rezultate ale raportului, fiecare reprezentând un produs cu cantitatea disponibilă, categoria, prețul de catalog și prețul de revânzare.
+- `stock.quant.report` (model tranzient): wizardul de configurare a raportului — locația sursă, partenerul/lista de prețuri și pragurile pentru textele de stoc.
+- `stock.quant.report.value` (model tranzient): liniile raportului, cu produsul, cantitatea, categoria, prețul de listă și prețul de revânzare.
 
 **Vizualizări**
 
-- `view_stock_quant_report_form`: formularul wizardului de generare a raportului.
-- `view_stock_quant_report_value_tree`: lista cu rezultatele raportului (produse, cantități/text, prețuri).
-- `view_stock_quant_report_report_filter`: filtrele de căutare pentru liniile raportului.
-- `action_stock_quant_report` / `menu_stock_quant_report`: acțiunea și elementul de meniu pentru deschiderea raportului.
-- `action_stock_quant_report_value`: acțiunea care afișează rezultatele calculate.
+- Formularul wizardului `stock.quant.report` și lista/filtrele liniilor raportului, definite în `wizard/stock_quant_report_view.xml`, cu acțiunea și meniul de deschidere.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server în modul.
+- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
-- `sale_stock`: modul standard Odoo pe care se bazează raportul pentru integrarea vânzări–stoc.
-- `product.pricelist`: listele de prețuri standard Odoo sunt folosite pentru calculul prețului de revânzare.
+- `sale_stock`: integrarea vânzări–stoc pe care se bazează raportul.
+- `product.pricelist`: listele de prețuri standard sunt folosite pentru prețul de revânzare.

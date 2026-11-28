@@ -1,10 +1,10 @@
 # Watermark (Filigran) (localizat la `deltatech_watermark/index.md`)
 
 - **Nume Tehnic:** `deltatech_watermark`
-- **Versiune:** `19.0.3.0.0`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_watermark`
+- **Versiune:** `20.0.3.0.1`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_watermark`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_watermark`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 

@@ -1,10 +1,10 @@
 # Website City (localizat la `deltatech_website_city/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_city`
-- **Versiune:** `19.0.1.2.1`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_city`
+- **Versiune:** `20.0.1.2.5`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_website_city`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_city`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -15,7 +15,7 @@ Modulul îmbunătățește gestionarea adreselor în zonele de eCommerce și Por
 - **Selecție structurată a orașului:** înlocuiește câmpul liber de oraș cu un mecanism de selecție structurat pe paginile de checkout din magazin și pe paginile de adresă din portal; se integrează cu modulul `base_address_extended` pentru a folosi gestionarea orașelor nativă din Odoo.
 - **Mapare automată cod poștal / ZIP:** facilitează completarea sau validarea automată a codului poștal în funcție de orașul selectat, reducând erorile de introducere și îmbunătățind acuratețea livrării.
 - **Integrare frontend și portal:** oferă JavaScript personalizat (module ES) pentru gestionarea dinamică a interacțiunilor oraș/cod poștal în browser, asigurând o experiență consecventă de completare a adresei între magazinul public și portalul privat al clientului.
-- **Filtrare oraș după catalogul curierului (adăugat în 19.0.1.2.0):** pe adresa de livrare din checkout, lista de localități se limitează la cele cunoscute de curierul selectat, dacă acesta expune propriul catalog de localități (`delivery.carrier._get_city_domain()`). Filtrul se aplică atât la randare, cât și la interogarea `/portal/state_infos`, iar o localitate trimisă în afara catalogului este respinsă și la validarea pe server. Se aplică doar adresei de livrare — cea de facturare nu este afectată. Filtrul este sărit când nu e ales încă niciun curier, când curierul nu are catalog propriu, sau când catalogul nu acoperă județul respectiv, astfel încât clientul nu rămâne niciodată cu o listă goală.
+- **Filtrare oraș după catalogul curierului (adăugat în versiunea 1.2.0):** pe adresa de livrare din checkout, lista de localități se limitează la cele cunoscute de curierul selectat, dacă acesta expune propriul catalog de localități (`delivery.carrier._get_city_domain()`). Filtrul se aplică atât la randare, cât și la interogarea `/portal/state_infos`, iar o localitate trimisă în afara catalogului este respinsă și la validarea pe server. Se aplică doar adresei de livrare — cea de facturare nu este afectată. Filtrul este sărit când nu e ales încă niciun curier, când curierul nu are catalog propriu, sau când catalogul nu acoperă județul respectiv, astfel încât clientul nu rămâne niciodată cu o listă goală.
 
 #### 3. Dependențe
 

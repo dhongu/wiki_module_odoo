@@ -1,10 +1,10 @@
 # eCommerce Sale Short Description (localizat la `deltatech_website_short_description/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_short_description`
-- **Versiune:** `19.0.1.0.4`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_short_description`
+- **Versiune:** `20.0.1.0.5`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_website_short_description`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_short_description`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -13,7 +13,8 @@ Modulul adaugă pe produsele din magazinul online un câmp dedicat de descriere 
 #### 2. Funcționalități Cheie
 
 - Câmp nou `website_short_description` pe produse, destinat unei descrieri scurte utilizate în feed-uri.
-- Buton / acțiune de publicare a produselor pe website, disponibil direct din lista de produse pentru mai multe produse simultan.
+- Buton de publicare a produsului pe website în formularul de produs și acțiune „Publish on Website" disponibilă din lista de produse, pentru mai multe produse simultan.
+- Pe formularul produsului, în pagina *Vânzări*, apar grupurile „Website description" și „Website short description".
 
 #### 3. Dependențe
 
@@ -36,4 +37,3 @@ Modulul adaugă pe produsele din magazinul online un câmp dedicat de descriere 
 #### 5. Conexiuni
 
 - [deltatech_feed](../deltatech_feed/index.md): consumă câmpul `website_short_description` pentru a popula descrierea scurtă în feed-urile de produse generate.
-- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md): dependență funcțională care folosește descrierea scurtă a produselor în contextul marketplace-ului.

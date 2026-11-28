@@ -1,10 +1,10 @@
 # Services Equipment Base (localizat la `deltatech_service_equipment_base/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_equipment_base`
-- **Versiune:** `19.0.1.2.7`
-- **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment_base
+- **Versiune:** `20.0.1.2.11`
+- **Cale:** https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_equipment_base
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_equipment_base`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -39,6 +39,9 @@ facturarea pe consum a suitei de service.
   alegerea *Tipului* pe un echipament nou); șabloanele de **contoare** de pe tip nu creează contoare
   în acest modul — sunt ignorate de `deltatech_service_equipment`, care le ia din categoria de
   echipament aleasă pe tip.
+- Selectorul de echipament afișează seria într-o a doua coloană estompată; numele simplu (`referință / serie`) folosit pe facturi și rapoarte rămâne neschimbat.
+- Selectoarele de persoane (contact, citit de) acceptă contactele unei companii, pe care Odoo 20 le poate marca drept companii prin CUI.
+- Schimbarea tipului de echipament completează din șablon doar listele de operații încă goale, fără a suprascrie ajustările făcute pe echipament; butonul **Încarcă operațiile din șablon** (cu confirmare) permite resincronizarea deliberată.
 - Acces restricționat: doar grupul **Serviciu / Manager** poate deschide fișa unui echipament care
   are piese, verificări sau măsurători, și doar el poate alege *Tipul* echipamentului (încarcă
   aceleași șabloane); un utilizator obișnuit poate crea echipamente doar fără *Tip*.

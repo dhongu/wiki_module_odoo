@@ -1,10 +1,10 @@
-# Romania - Cash Sequence (localizat la `l10n_ro_account_sequence/index.md`)
+# Romania - Cash Journal Numbering (localizat la `l10n_ro_account_sequence/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_sequence`
-- **Versiune:** `19.0.1.0.3`
-- **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_account_sequence
+- **Versiune:** `20.0.1.0.7`
+- **Cale:** https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_account_sequence
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_account_sequence`
-- **Ultima Ingestie:** `2026-06-08`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -21,9 +21,10 @@ Acest modul asigură numerotarea separată a documentelor din jurnalul de casă,
 
 #### 4. Componente Cheie
 
-Această secțiune a fost omisă deoarece fișierul `readme/DESCRIPTION.md` este prezent și nu solicită explicit analiza componentelor tehnice (modele, vizualizări, acțiuni). Conform fluxului de ingestie din schemă, analiza suplimentară a codului nu a fost efectuată.
+Secțiune omisă: `readme/DESCRIPTION.md` este prezent și nu solicită explicit analiza componentelor tehnice (modele, vizualizări, acțiuni).
 
 #### 5. Conexiuni
 
+- [l10n_ro_cash_register](../l10n_ro_cash_register/index.md): registrul de casă zilnic, care folosește numerotarea separată a jurnalului de casă.
 - `account`: modulul extinde fluxul nativ de plăți/încasări pentru a aplica numerotarea separată în jurnalul de casă.
 - `l10n_ro`: face parte din ecosistemul de localizare contabilă pentru România.

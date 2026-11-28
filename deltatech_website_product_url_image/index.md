@@ -1,20 +1,23 @@
-# eCommerce Product Image URL Link (localizat la `deltatech_website_product_url_image/index.md`)
+# Product Image from URL (localizat la `deltatech_website_product_url_image/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_product_url_image`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_product_url_image`
+- **Versiune:** `20.0.1.0.7`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_website_product_url_image
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_product_url_image`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul simplifică gestionarea imaginilor de produs în magazinul online, permițând încărcarea unei poze direct dintr-un link (URL) extern, fără a fi nevoie să descarci manual fișierul și apoi să-l urci în Odoo. Este util mai ales la importul în masă al cataloagelor de produse, când imaginile sunt deja găzduite pe site-ul unui furnizor sau pe un server propriu, scurtând astfel timpul de pregătire a produselor pentru publicare în eCommerce.
+Acest modul simplifică gestionarea imaginilor de produs în magazinul online, permițând încărcarea unei poze direct dintr-o adresă web (URL), fără a fi nevoie să descarci manual fișierul și apoi să-l urci în Odoo. Este util mai ales la importul în masă al cataloagelor de produse, când imaginile sunt deja găzduite pe site-ul unui furnizor sau pe un server propriu. Descărcarea este protejată: se preiau doar adrese publice, iar răspunsul trebuie să fie o imagine.
 
 #### 2. Funcționalități Cheie
 
-- Încărcarea imaginii principale a produsului dintr-un URL extern (introducerea adresei descarcă automat poza).
-- Încărcarea imaginilor suplimentare din galeria produsului tot pe baza unui URL.
-- Curățarea automată a numelui fișierului (din URL se păstrează doar numele imaginii).
+- **Imaginea principală**: adresa lipită în **Image File Name** (formularul produsului, fila de eCommerce, grupul *Shop*) descarcă imaginea și o setează ca imagine a produsului; câmpul păstrează apoi doar numele fișierului. Dacă adresa rămâne în câmp, imaginea nu a putut fi încărcată.
+- **Imagini suplimentare**: adresa lipită în **Image Name** al unei imagini din *Ecommerce Media* încarcă acea imagine (se apasă apoi *Save* în fereastra imaginii și se salvează produsul).
+- **Import**: la actualizarea produselor existente prin import (cu coloana ID), coloana **Image File Name** cu adrese web încarcă imaginile; produsele create prin import păstrează adresa ca text, fără imagine.
+- **Descărcare sigură**: se preiau doar adrese publice `http`/`https`, fiecare redirecționare este verificată, răspunsul trebuie să fie o imagine de maximum 10 MB, iar descărcarea poate fi declanșată doar de utilizatorii care pot edita produse.
+- Fluxul pas cu pas, cu capturi, este în fișa consultant.
 
 #### 3. Dependențe
 

@@ -1,10 +1,10 @@
 # eCommerce Product sort (localizat la `deltatech_website_sale_sort/index.md`)
 
 - **Nume Tehnic:** `deltatech_website_sale_sort`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_website_sale_sort`
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_website_sale_sort
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_website_sale_sort`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 

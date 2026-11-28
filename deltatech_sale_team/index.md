@@ -1,23 +1,24 @@
-# Sale Team Access (localizat la `deltatech_sale_team/index.md`)
+# Sale Team Access Control (localizat la `deltatech_sale_team/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_team`
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_team`
+- **Versiune:** `20.0.1.0.5`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_sale_team`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_team`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul restricționează accesul utilizatorilor la documentele asociate echipei de vânzări din care fac parte. Un agent de vânzări vede doar ofertele, comenzile și facturile propriei echipe, în timp ce un coordonator de echipă obține un grup dedicat ce îi oferă vizibilitate asupra tuturor documentelor echipei sale. Suplimentar, modulul permite asocierea unui depozit implicit fiecărei echipe, astfel încât comenzile de vânzare preiau automat depozitul echipei selectate.
+Companiile organizate pe magazine, sucursale sau canale vor, de regulă, ca fiecare echipă de vânzări să lucreze doar pe documentele ei și să livreze din propriul depozit. Modulul adaugă un nivel de acces „Team Manager” și un depozit implicit pentru fiecare echipă de vânzări, astfel încât agenții văd doar ce le aparține, iar șefii de echipă văd documentele întregii echipe.
 
 #### 2. Funcționalități Cheie
 
-- Restricționarea accesului la documentele de vânzare (oferte, comenzi, linii de comandă, analize vânzări) în funcție de echipa de vânzări a utilizatorului.
-- Restricționarea accesului la facturi (`account.move`) pe baza echipei de vânzări.
-- Grup de securitate nou „Team Manager", care oferă acces la documentele echipei din care face parte utilizatorul.
-- Setarea unui depozit implicit (`Default Warehouse`) la nivel de echipă de vânzări.
-- Preluarea automată a depozitului echipei pe comanda de vânzare la schimbarea echipei.
-- Tip de echipă (`Team Type`: Sales / Website) pentru diferențierea resurselor folosite de echipă.
+- Grupul „Team Manager”: include grupul de agent de vânzări (`sales_team.group_sale_salesman`) și este inclus în `sales_team.group_sale_salesman_all_leads`. Membrii lui văd ofertele, comenzile, liniile de comandă, analiza vânzărilor și facturile propriei echipe, plus pe cele fără echipă; regula pe facturi este doar de citire.
+- Echipă proprie: membrii „Team Manager” fără `sales_team.group_sale_salesman_all_leads` văd în lista echipelor de vânzări doar echipa lor.
+- Facturi și contacte personale: utilizatorii grupului de agent văd doar facturile la care sunt vânzători sau la care nu e setat niciunul; cei din `sales_team.group_sale_salesman_all_leads` văd toate facturile. Agenții din afara `sales_team.group_sale_manager` văd doar contactele care le sunt atribuite, neatribuite sau proprii.
+- Depozit implicit pe echipă: formularul echipei are câmpul „Default Warehouse”; la alegerea echipei pe o ofertă în formular, comanda preia depozitul echipei, dacă există.
+- Limitări: depozitul echipei nu se aplică pe comenzile create prin import sau API; regulile de grup se cumulează, deci o regulă mai largă a altui grup al aceluiași utilizator rămâne valabilă.
+- Fluxul pas-cu-pas (configurare echipă, agent, șef de echipă) este în fișa consultantului.
 
 #### 3. Dependențe
 
@@ -30,23 +31,18 @@ Modulul restricționează accesul utilizatorilor la documentele asociate echipei
 
 **Modele**
 
-- `crm.team` (extins): adaugă câmpul `team_type` (Sales/Website), câmpul `warehouse_id` (depozit implicit) și metode pentru afișarea ofertelor validate și a produselor disponibile în depozitul echipei.
-- `sale.order` (extins): la modificarea echipei (`team_id`), setează automat `warehouse_id` cu depozitul implicit al echipei.
+- `crm.team` (extins): adaugă `team_type` (Sales/Website), `warehouse_id` (depozit implicit) și metode pentru afișarea ofertelor validate și a produselor din depozitul echipei.
+- `sale.order` (extins): la schimbarea echipei (`team_id`), setează `warehouse_id` cu depozitul implicit al echipei.
 
 **Vizualizări**
 
-- `crm_team_view_form`: extinde formularul echipei de vânzări pentru a afișa câmpul `warehouse_id` și (vizibil doar în mod developer) câmpul `team_type`.
+- `crm_team_view_form`: extinde formularul echipei cu `warehouse_id` și, doar în mod developer, cu `team_type`.
 
 **Acțiuni Automate / Acțiuni Server**
 
 - Nu sunt definite acțiuni `ir.cron`, `base.automation` sau `ir.actions.server`.
 
-Regulile de acces sunt implementate prin reguli de înregistrare (`ir.rule`) și un grup de securitate definite în `security/sales_team_security.xml`:
-
-- `group_sale_team_manager`: grup „Team Manager", implică `sales_team.group_sale_salesman`.
-- `sale_order_team_rule`, `sale_order_line_team_rule`, `sale_order_report_team_rule`: limitează comenzile, liniile și analizele la echipa utilizatorului.
-- `account_invoice_team_rule`, `account_invoice_personal_rule`, `account_invoice_see_all`: control acces facturi pe echipă / personal / toate.
-- `sales_team_team_rule`: limitează vizualizarea echipei proprii.
+Accesul este implementat prin grupul `group_sale_team_manager` (`security/sales_team_security.xml`) și prin înregistrările `ir.access` din `security/ir.access.csv`: `sale_order_team_rule`, `sale_order_line_team_rule`, `sale_order_report_team_rule`, `account_invoice_team_rule`, `account_invoice_personal_rule`, `account_invoice_see_all`, `sales_team_team_rule` și `res_partner_personal_rule`.
 
 #### 5. Conexiuni
 

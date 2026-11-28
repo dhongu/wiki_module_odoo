@@ -1,23 +1,25 @@
 # eCommerce Qty Multiple (localizat la `deltatech_sale_multiple_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_multiple_website`
-- **Versiune:** `19.0.1.1.0`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_multiple_website`
+- **Versiune:** `20.0.1.1.3`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_sale_multiple_website`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_multiple_website`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde regulile de cantitate minimă și cantitate multiplu de vânzare (definite de modulul `deltatech_sale_multiple`) și pe canalul eCommerce. Restricțiile pot fi aplicate doar în coșul de pe website sau global, iar valorile active (minim și multiplu) sunt afișate direct pe pagina produsului și în coșul de cumpărături, astfel încât clientul își dă seama imediat ce cantități poate comanda. Cantitatea din coș este normalizată înainte ca Odoo să verifice stocul disponibil; dacă stocul limitează cantitatea cerută, coșul revine automat la cea mai mare cantitate posibilă care respectă în continuare regulile de minim și multiplu.
+Modulul extinde regulile de cantitate minimă și de multiplu de vânzare (definite de [deltatech_sale_multiple](../deltatech_sale_multiple/index.md)) și pe canalul eCommerce. Restricțiile pot fi aplicate doar coșurilor de pe website sau global, iar restricțiile active sunt afișate pe pagina produsului și în coș, astfel încât clientul vede imediat ce cantități poate comanda. Cantitatea din coș este normalizată înainte ca Odoo să verifice stocul; dacă stocul limitează cererea, coșul revine la cea mai mare cantitate disponibilă care respectă ambele reguli.
 
 #### 2. Funcționalități Cheie
 
-- Aplicarea regulilor de cantitate minimă/multiplu doar pentru comenzile de pe website (opțiune `check_min_website` per produs) sau global.
-- Afișarea pe pagina produsului a restricțiilor active (cantitate minimă, multiplu de vânzare) cu explicații tip popover.
-- Afișarea acelorași restricții pe linia produsului din coșul de cumpărături.
-- Actualizarea dinamică a restricțiilor afișate la schimbarea variantei de produs (fără reîncărcarea paginii).
-- Normalizarea cantității din coș conform regulilor înainte de verificarea stocului disponibil.
-- Recalcularea cantității la cea mai mare valoare validă (respectând minimul/multiplul) atunci când stocul limitează cantitatea cerută.
+- Reguli de cantitate aplicate doar comenzilor de pe website sau și ofertelor din backend, prin bifa **Website Check Quantity** de pe produs (activă implicit); în tabul **Sales**, grupul **Quantity**, se setează **Qty Multiple** și **Qty Minim**.
+- Afișarea restricțiilor (**Min** și **Multiple of**) sub butonul de adăugare în coș, cu pictogramă informativă care explică fiecare regulă.
+- Afișarea acelorași reguli sub numele produsului în coș.
+- Reîmprospătarea restricțiilor la schimbarea variantei; regulile se setează pe fiecare variantă.
+- Rotunjirea cantității din coș mai întâi la minim, apoi la următorul multiplu (130 cerute devin 150).
+- Când stocul limitează cantitatea, coșul păstrează cea mai mare cantitate disponibilă care respectă ambele reguli; sub minim, produsul nu se adaugă.
+- Comenzile venite de pe website păstrează regulile și la editarea în backend.
 
 #### 3. Dependențe
 
@@ -28,22 +30,22 @@ Acest modul extinde regulile de cantitate minimă și cantitate multiplu de vân
 
 **Modele**
 
-- `product.template`: adaugă câmpul `check_min_website` (aplică regulile de cantitate doar pe website) și extinde `_get_additionnal_combination_info` pentru a transmite în frontend minimul, multiplul și precizia de cantitate ale variantei curente.
-- `product.product`: extinde `_should_enforce_sale_quantity_rules` pentru a dezactiva verificarea regulilor în afara contextului website atunci când `check_min_website` este activ.
-- `sale.order`: extinde `_verify_updated_quantity` pentru a normaliza cantitatea conform regulilor înainte de verificările standard (ex. stoc) și pentru a o recapa la cea mai mare valoare validă dacă a fost limitată ulterior.
-- `sale.order.line`: extinde `_prepare_quantity_rule_values` pentru a injecta contextul `website_id` al comenzii atunci când regulile de cantitate sunt evaluate pentru o comandă provenită din website.
+- `product.template`: câmpul `check_min_website` și informațiile de combinație transmise în frontend (minim, multiplu, precizie).
+- `product.product`: `_should_enforce_sale_quantity_rules` dezactivă verificarea în afara website-ului când `check_min_website` este activ.
+- `sale.order`: `_verify_updated_quantity` normalizează cantitatea înainte de verificările standard de stoc.
+- `sale.order.line`: `_prepare_quantity_rule_values` transmite `website_id` al comenzii la evaluarea regulilor.
 
 **Vizualizări**
 
-- `views/templates.xml` — `product_qty_restrictions`: extinde `website_sale.cta_wrapper` pentru a afișa pe pagina produsului cantitatea minimă și multiplul de vânzare, cu popover informativ.
-- `views/templates.xml` — `cart_line_description_following_lines`: extinde `website_sale.cart_line_description_following_lines` pentru a afișa restricțiile de cantitate pe linia produsului din coș.
-- `views/product_view.xml` — `product_template_form_view` / `product_variant_easy_edit_view`: adaugă câmpul `check_min_website` pe formularul de produs (șablon și variantă), lângă câmpul `qty_minim`.
+- `product_qty_restrictions` (`views/templates.xml`): extinde `website_sale.cta_wrapper` cu minimul și multiplul, plus popover.
+- `cart_line_description_following_lines`: restricțiile pe linia din coș.
+- `product_template_form_view` / `product_variant_easy_edit_view`: câmpul `check_min_website` pe formularul produsului și al variantei.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt definite acțiuni automate (`ir.cron`), reguli `base.automation` sau acțiuni server (`ir.actions.server`) în acest modul.
+- Nu sunt definite acțiuni automate, cron sau acțiuni server.
 
 #### 5. Conexiuni
 
-- [deltatech_sale_multiple](../deltatech_sale_multiple/index.md): modulul de bază care definește cantitatea minimă și cantitatea multiplu de vânzare la nivel de produs; acest modul extinde regulile respective pe eCommerce.
-- `website_sale_stock`: modulul standard Odoo care leagă disponibilitatea stocului de vânzarea pe website; acest modul se integrează cu el pentru a recapa cantitatea din coș atunci când stocul limitează cererea.
+- [deltatech_sale_multiple](../deltatech_sale_multiple/index.md): definește minimul și multiplul la nivel de produs; acest modul le extinde pe eCommerce.
+- `website_sale_stock`: legarea stocului de vânzarea pe website; coșul se recalibrează când stocul limitează cererea.

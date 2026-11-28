@@ -1,23 +1,23 @@
-# Deltatech Team Logo (localizat la `deltatech_team_logo/index.md`)
+# Siglă pe Echipa de Vânzări (localizat la `deltatech_team_logo/index.md`)
 
 - **Nume Tehnic:** `deltatech_team_logo`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_team_logo
+- **Versiune:** `20.0.1.0.3`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_team_logo`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_team_logo`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul permite afișarea unui logo diferit în rapoartele PDF (factură, ofertă/comandă, aviz de livrare) în funcție de echipa de vânzare a documentului. Este util pentru companiile care operează mai multe branduri sub aceeași firmă juridică: fiecare echipă de vânzare poate avea propriul logo, iar acesta este folosit automat în antetul rapoartelor. Dacă echipa nu are un logo configurat, comportamentul rămâne identic cu cel standard, folosind logo-ul firmei.
+O singură firmă, mai multe mărci: în Odoo standard toate rapoartele PDF poartă aceeași siglă a companiei. Cu acest modul fiecare echipă de vânzări poate avea sigla proprie, iar facturile, ofertele, comenzile de vânzare și avizele de livrare emise pentru echipa respectivă o afișează automat în antet.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă un câmp **Logo** pe echipa de vânzare (`crm.team`).
-- La randarea raportului, dacă documentul are o echipă de vânzare cu logo propriu, se folosește acel logo; altfel se folosește logo-ul firmei.
-- Mecanism generic implementat în dispecerul `web.external_layout`, care acoperă toate variantele de layout (standard, striped, boxed, bold, folder, wave, bubble) și orice document care are câmpul `team_id`:
-  - `sale.order` (ofertă/comandă) — `team_id` nativ.
-  - `account.move` (factură) — `team_id` nativ.
-  - `stock.picking` (aviz/livrare) — `team_id` calculat din comanda sursă.
+- **Siglă pe echipa de vânzări**: câmpul **Logo** pe echipă, completat ca sigla companiei (*Vânzări > Configurare > Echipe de vânzări*).
+- **Folosită automat**: un document a cărui echipă are siglă se tipărește cu ea; celelalte documente păstrează sigla companiei.
+- **Facturi, oferte și livrări**: funcționează pentru comenzi și oferte, facturi și avize provenite dintr-o comandă de vânzare (avizul preia echipa comenzii sursă).
+- **Toate aspectele de raport**: Standard, Wave, Bubble, Folder, Center, Dual, Lines și Compact.
+- **Fără siglă, nimic nu se schimbă**: o echipă fără siglă (sau un document fără echipă) tipărește ca Odoo standard.
 
 #### 3. Dependențe
 
@@ -27,17 +27,18 @@ Modulul permite afișarea unui logo diferit în rapoartele PDF (factură, ofert�
 
 **Modele**
 
-- `crm.team` (extins): primește un câmp nou `logo` (Binary), folosit ca antet în rapoartele emise pentru echipa de vânzare respectivă.
-- `stock.picking` (extins): primește un câmp calculat `team_id`, derivat din comanda de vânzare sursă (`sale_id.team_id`), pentru a permite selectarea logo-ului în avizele/livrările de marfă.
+- `crm.team` (extins): câmpul `logo` (Binary), folosit în antetul rapoartelor echipei.
+- `stock.picking` (extins): câmp calculat `team_id`, derivat din comanda de vânzare sursă, pentru alegerea siglei pe avize.
 
 **Vizualizări**
 
-- `views/crm_team_views.xml`: extinde formularul echipei de vânzare pentru a expune câmpul `logo`.
+- `views/crm_team_views.xml`: extinde formularul echipei cu câmpul `logo`.
+- `report/report_layout.xml`: suprascrie aspectele de raport pentru a alege sigla echipei.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu există sarcini `ir.cron`, reguli `base.automation` sau acțiuni server definite în acest modul. Personalizarea de antet se face prin override-ul layout-ului de raport (`report/report_layout.xml`).
+- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
-- `sale_stock`: sursa câmpurilor native `team_id` pe `sale.order` și a legăturii dintre comandă și livrare (`stock.picking`).
+- `sale_stock`: sursa echipei de vânzări (`team_id`) pe comenzi și a legăturii comandă–livrare.

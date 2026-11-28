@@ -1,21 +1,22 @@
-# Deltatech Stock Count Zero (localizat la `deltatech_stock_count_zero/index.md`)
+# Stock Count Zero (localizat la `deltatech_stock_count_zero/index.md`)
 
 - **Nume Tehnic:** `deltatech_stock_count_zero`
-- **Versiune:** `19.0.0.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_stock_count_zero
+- **Versiune:** `20.0.0.0.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_stock_count_zero
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_stock_count_zero`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul adaugă o opțiune care permite stabilirea automată a cantității inventariate la zero atunci când se solicită o numărare a stocului. Este util în timpul inventarierii fizice, unde produsele care nu sunt găsite trebuie marcate explicit cu cantitate zero, simplificând astfel procesul de ajustare a stocului prin reducerea introducerii manuale a datelor pentru articolele lipsă.
+Modulul adaugă o opțiune prin care cantitatea inventariată se setează automat la zero atunci când se cere o numărare de stoc. Este util la inventarierea fizică, unde produsele negăsite trebuie marcate explicit cu zero, reducând introducerea manuală pentru articolele lipsă.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă bifa „Set Count to Zero" (Setează numărarea la zero) în asistentul de solicitare a inventarului.
-- Setează automat cantitatea la 0.0 pentru liniile de inventar selectate atunci când bifa este activată.
-- Simplifică procesul de ajustare a stocului prin reducerea introducerii manuale a datelor pentru articolele lipsă.
-- Flux de utilizare: Inventar > Operațiuni > Inventar fizic, se selectează liniile de inventar și se apasă butonul „Request Count" (Solicită numărare); în asistentul afișat se bifează „Set Count to Zero", iar la confirmare sistemul setează cantitatea inventariată la zero și aplică ajustarea.
+- Bifa „Set Count to Zero” în asistentul de solicitare a numărării.
+- Cantitatea se setează la 0.0 doar pe liniile selectate; la produsele urmărite pe lot/serie, celelalte loturi ale produsului din aceeași locație rămân neschimbate.
+- Opțiunea este disponibilă doar administratorilor de inventar (la fel ca „Set to 0” standard).
+- Dacă o linie selectată s-a mișcat de la numărare, se deschide fereastra standard de conflict, pentru a decide ce cantitate se păstrează.
+- Flux: *Inventar > Operațiuni > Inventar fizic*, se selectează liniile, se apasă „Request Count”, se bifează „Set Count to Zero” și se confirmă; sistemul setează cantitatea inventariată la zero și aplică ajustarea.
 
 #### 3. Dependențe
 
@@ -23,7 +24,17 @@ Acest modul adaugă o opțiune care permite stabilirea automată a cantității 
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile pentru Componente Cheie au fost acoperite de fișierul `readme/DESCRIPTION.md`, care descrie funcționalitatea principală a modulului (extinderea asistentului de solicitare a numărării de inventar din modulul `stock` și fișierul de vizualizare `views/stock_request_count_views.xml`). Analiza suplimentară a codului a fost omisă în conformitate cu regula de prioritizare a Readme-ului.
+**Modele**
+
+- `stock.request.count` (asistent, extins): aplică setarea la zero pe liniile selectate.
+
+**Vizualizări**
+
+- `stock_inventory_request_count_form_view`: adaugă bifa „Set Count to Zero” în asistent.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 

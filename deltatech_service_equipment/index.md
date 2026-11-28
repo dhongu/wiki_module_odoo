@@ -1,10 +1,10 @@
 # Services Equipment (localizat la `deltatech_service_equipment/index.md`)
 
 - **Nume Tehnic:** `deltatech_service_equipment`
-- **Versiune:** `19.0.1.1.13`
-- **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment
+- **Versiune:** `20.0.1.1.17`
+- **Cale:** https://github.com/dhongu/deltatech_service/tree/20.0/deltatech_service_equipment
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_equipment`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -73,10 +73,8 @@ Secțiune omisă: pagina urmează fișa consultant, care acoperă Sumarul, Func�
 fluxul operațional; analiza suplimentară a codului pentru Modele/Vizualizări/Acțiuni nu e solicitată
 explicit în fișă.
 
-**Limitări cunoscute** (din fișa consultant, secțiunea de verificări și flux):
+**Limitări cunoscute** (din fișa consultant, secțiunea de verificări și flux; conversia unităților de măsură a fost corectată în 20.0.1.1.15):
 
-- Conversia unităților de măsură de facturare este inversată pe Odoo 19 — categoria de contor
-  trebuie configurată cu *Unitatea de măsură pentru facturare* **egală** cu unitatea citirii.
 - Citirea făcută la instalare este facturată față de *Valoarea inițială* a contorului (implicit 0):
   dacă nu se completează *Valoarea inițială* = indexul de la punere în funcțiune, prima factură ia
   tot indexul, nu doar consumul real.

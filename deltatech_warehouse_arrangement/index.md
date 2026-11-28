@@ -1,24 +1,26 @@
-# Deltatech Warehouse Arrangement (localizat la `deltatech_warehouse_arrangement/index.md`)
+# Warehouse Arrangement (localizat la `deltatech_warehouse_arrangement/index.md`)
 
 - **Nume Tehnic:** `deltatech_warehouse_arrangement`
-- **Versiune:** `19.0.0.1.2`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_warehouse_arrangement`
+- **Versiune:** `20.0.0.1.8`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_warehouse_arrangement`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_warehouse_arrangement`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul oferă un sistem propriu de organizare fizică a depozitului, în paralel cu locațiile standard din Odoo. Permite definirea unei ierarhii de amplasamente — magazie, zonă, raft, secțiune și grilă (rack) — și asocierea acestora la produse, loturi/numere de serie și cantitățile din stoc. Astfel, personalul de depozit poate ști rapid unde anume este așezat fizic un produs sau un lot, fără a modifica structura logistică standard a stocului.
+Modulul ține aranjarea fizică a depozitului în paralel cu locațiile standard de stoc din Odoo, pe cinci niveluri: magazie, zonă, raft, secțiune și poliță (rack). Marfa se găsește astfel pe polița corectă, fără a crea câte o locație de stoc Odoo pentru fiecare poliță. Aranjarea este doar informativă: nu modifică locațiile de stoc, cantitățile sau evaluarea stocului.
 
 #### 2. Funcționalități Cheie
 
-- Gestionează amplasamentele de depozit în paralel cu locațiile standard Odoo, printr-o ierarhie pe cinci niveluri: Magazie (Storehouse) → Zonă (Zone) → Raft (Shelf) → Secțiune (Section) → Grilă (Rack).
-- Asociază amplasamentul implicit la nivel de produs (pe fișa produsului), care este apoi propagat automat către loturi/numere de serie la crearea acestora.
-- Actualizează automat amplasamentul lotului la recepție: când un lot/serie intră în locația-master a produsului, primește amplasamentul definit pe produs.
-- Eliberează automat amplasamentul lotului la epuizare: când cantitatea lotului în locația-master ajunge la zero, câmpurile de amplasament sunt golite.
-- Wizard de relocare prin scanare cod de bare: se scanează lotul/seria, apoi codul de bare al grilei (rack), iar amplasamentul lotului este reasignat.
-- Vizualizează amplasamentul fizic direct în stoc (`stock.quant`), cu posibilitatea de filtrare/grupare după nivelurile ierarhiei.
-- Raport tipăribil pentru grile (rack), util pentru etichetare.
+- Ierarhie Magazie → Zonă → Raft → Secțiune → Poliță (meniul *Inventar > Locații*), fiecare nivel afișând calea completă; magazia se leagă de locația principală de stoc Odoo.
+- Cod de bare pe poliță și etichete tipăribile pentru polițe (cod Code128 și calea completă).
+- Aranjare implicită pe produs (tab *Locații*); fiecare lot / număr de serie își păstrează propria aranjare.
+- Un lot nou preia aranjarea produsului; un lot recepționat în locația principală a magaziei o preia din nou, iar aranjarea se golește când lotul se epuizează în acea locație.
+- Coloane, câmpuri de căutare și grupări după aranjare în lista de stoc (*Inventar > Raportare > Locații*).
+- Ecran cu scanare pentru lot și noua poliță (*Inventar > Operațiuni > Ajustări > Schimbare lot*).
+- Doar grupul *Manager locații depozit* poate crea sau modifica ierarhia; ceilalți utilizatori interni o pot citi.
+- Fluxul pas cu pas este descris în fișa consultantului.
 
 #### 3. Dependențe
 
@@ -58,4 +60,4 @@ Modulul oferă un sistem propriu de organizare fizică a depozitului, în parale
 
 #### 5. Conexiuni
 
-- [deltatech_warehouse_map](../deltatech_warehouse_map/index.md): modul complementar pentru reprezentarea/harta amplasamentelor de depozit; folosește același concept de organizare fizică a locațiilor.
+- [deltatech_warehouse_map](../deltatech_warehouse_map/index.md): hartă vizuală a locațiilor de depozit, complementară organizării fizice.
