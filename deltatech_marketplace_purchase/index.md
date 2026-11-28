@@ -1,22 +1,24 @@
-# Marketplace Purchase Order addon (localizat la `deltatech_marketplace_purchase/index.md`)
+# Marketplace Purchase Orders (localizat la `deltatech_marketplace_purchase/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_purchase`
-- **Versiune:** `19.0.1.0.3`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_purchase
+- **Versiune:** `20.0.1.0.9`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_purchase
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_purchase`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul extinde ecosistemul marketplace prin integrarea proceselor de aprovizionare cu vânzările din marketplace, permițând decizii de achiziție bazate pe date. Din perspectivă de afaceri, el face legătura între cererea de vânzări externă și gestionarea internă a lanțului de aprovizionare, asigurând că vânzările din marketplace sunt susținute de achiziții oportune și corecte. Practic, comenzile de achiziție sunt aliniate la cererea reală din marketplace, iar achizițiile destinate vânzărilor din marketplace sunt corelate automat cu înregistrările de stoc și de vânzări din Odoo.
+Strat de bază care leagă comenzile de achiziție Odoo de un backend al cadrului Marketplace. Înregistrează ce comenzi aparțin unui sistem extern, permite acelui sistem să creeze comenzi de achiziție în Odoo și trimite înapoi, prin conector, modificările făcute în Odoo. Este folosit de conectorul Odoo-către-Odoo, care trimite comenzile confirmate către baza de date a furnizorului.
 
 #### 2. Funcționalități Cheie
 
-- Achiziții orientate spre cerere: aliniază comenzile de achiziție la performanța reală a vânzărilor din marketplace și la cererea previzionată.
-- Gestionarea furnizorilor: urmărește performanța și costurile furnizorilor pentru produsele destinate vânzării în marketplace.
-- Flux de numerar îmbunătățit: optimizează nivelurile de stoc și frecvența achizițiilor pentru a se potrivi mai bine cu ciclurile de vânzare din marketplace.
-- Analiză precisă a marjei: combină costurile de achiziție cu datele de vânzare din marketplace pentru o imagine completă a profitabilității produselor.
-- Operațiuni eficientizate: corelează automat achizițiile legate de marketplace cu înregistrările corespunzătoare de stoc și de vânzări din Odoo.
+- Legătură (binding) pentru fiecare comandă de achiziție asociată unui backend, cu **External ID**, **External Code** și liniile legate; lista este în **Marketplace > Bindings > Purchase Orders**, cu butonul standard **Reimport**.
+- Comenzi create din exterior prin metoda `create_api`, autentificată cu tokenul de securitate al backend-ului; comanda se creează în compania backend-ului.
+- Import din marketplace: comenzile și liniile primite de la conector se creează sau se actualizează; o comandă existentă se actualizează doar cât timp este cerere de ofertă; produsele se găsesc după ID-ul sau codul extern.
+- Modificările unei comenzi legate se pun în coadă ca job pentru backend, dacă elementul **Purchase Order** este activ la scriere (**Active On Write**).
+- Câmpul **Purchase Order Days** (implicit 2) în fila **Technical**, grupul **Limits**: conectorul Odoo-către-Odoo trimite doar comenzile din ultimele zile indicate.
+- Limite: fără conector propriu și fără import programat; nu calculează necesar de achiziție din vânzările marketplace și nu oferă analiză de furnizor sau marjă.
 
 #### 3. Dependențe
 
@@ -25,29 +27,23 @@ Acest modul extinde ecosistemul marketplace prin integrarea proceselor de aprovi
 
 #### 4. Componente Cheie
 
-> Notă: secțiunea este derivată din `__manifest__.py` și din structura tehnică a modulului, deoarece `readme/DESCRIPTION.md` nu acoperă componentele tehnice.
-
 **Modele**
 
-- `marketplace.purchase.order` (model nou, binding): leagă o comandă de achiziție Odoo (`purchase.order`) de o comandă externă din marketplace; gestionează importul comenzilor (`save_from_marketplace`) și exportul la confirmare (`on_confirm`), acum cu `identity_key` pe job-ul de export pentru a deduplica reconfirmările repetate în loc să pună în coadă job-uri duplicate.
-- `marketplace.purchase.order.line` (model nou, binding): leagă liniile de comandă de achiziție de liniile externe din marketplace, rezolvând produsele după ID sau cod extern.
-- `purchase.order` (extins): adaugă API-ul `create_api` (creare comandă pe baza unui token de securitate al backend-ului) și propagă scrierile către binding-urile marketplace prin `write` (cu excepția contextului `from_marketplace`).
-- `marketplace.backend` (extins): adaugă câmpul `purchase_order_days` (implicit 2 zile).
-- `marketplace.backend.item` (extins): adaugă tipul de element `purchase_order` și pictograma asociată (`fa-shopping-cart`).
+- `marketplace.purchase.order` (binding): leagă `purchase.order` de comanda externă; import (`save_from_marketplace`) și export la confirmare (`on_confirm`).
+- `marketplace.purchase.order.line` (binding): leagă liniile comenzii de liniile externe.
+- `purchase.order` (extins): API-ul `create_api` și propagarea scrierilor către binding-uri.
+- `marketplace.backend` (extins): câmpul `purchase_order_days`.
+- `marketplace.backend.item` (extins): tipul de element `purchase_order`.
 
 **Vizualizări**
 
-- `view_marketplace_purchase_order_form`: formular pentru comanda de achiziție marketplace, cu date externe, comanda Odoo asociată, buton „Reimport" și liniile importate.
-- `view_marketplace_purchase_order_tree`: listă a comenzilor de achiziție marketplace.
-- `view_marketplace_purchase_order_search`: vizualizare de căutare după nume, ID/cod extern și comandă Odoo.
-- `view_marketplace_backend_form` (moștenită din `deltatech_marketplace`): adaugă câmpul `purchase_order_days` în secțiunea de limite a backend-ului.
-- `menu_marketplace_purchase_order`: element de meniu „Purchase Orders" sub meniul de binding-uri marketplace.
+- `view_marketplace_purchase_order_form`, `view_marketplace_purchase_order_tree`, `view_marketplace_purchase_order_search` (acțiunea `action_marketplace_purchase_order`): binding-urile comenzilor de achiziție.
+- `views/backend_views.xml`, `views/purchase_order_view.xml`: `purchase_order_days` pe backend și legătura marketplace pe comanda de achiziție.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `ir_cron_marketplace_get_purchase_order` (`ir.cron`): „Marketplace: Get Purchase Orders" — configurat să ruleze la interval de 1 oră; este **inactiv** implicit (`active = False`). Notă tehnică: metoda pe care o apela (`cron_import_purchase_orders`) a fost eliminată din `models/backend.py` odată cu versiunea 19.0.1.0.3 (marcată drept „stub mort" în `HISTORY.md`), dar înregistrarea `ir.cron` din `data/ir_cron_data.xml` nu a fost curățată — rămâne inactivă și nefolosită, fără efect cât timp nu e activată manual.
+- Modulul nu mai definește sarcini `ir.cron` pe 20.0 (fișierul de date cu cron-ul inactiv a dispărut).
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md): modulul de bază al ecosistemului marketplace (backend, binding-uri, item-uri, canal de export prin joburi `with_delay`); acest addon adaugă suportul pentru comenzile de achiziție.
-- `purchase_stock`: aprovizionare și legătura achiziție-stoc Odoo, pe care se construiește importul comenzilor de achiziție.
+- [deltatech_marketplace_odoo](../deltatech_marketplace_odoo/index.md): conectorul Odoo-către-Odoo, singurul care implementează schimbul de comenzi de achiziție.

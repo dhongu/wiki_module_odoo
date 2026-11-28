@@ -1,10 +1,10 @@
 # Extended Marketplace Connector (localizat la `deltatech_marketplace_extended/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_extended`
-- **Versiune:** `19.0.0.0.19`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_extended`
+- **Versiune:** `20.0.0.1.0`
+- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_extended`
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_extended`
-- **Ultima Ingestie:** `2026-09-23`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,6 +19,9 @@ Acest modul este conectorul specific care leagă platforma de e-commerce extern�
 - Comenzile citite prin V2 trec prin aceeași rutină de import ca cele din V1 (potrivire client, reduceri, linie de transport, plată identice); reducerea globală a comenzii, care pe V2 nu are linie proprie, este reconstituită din `totals.total` și redevine linia obișnuită de discount, iar **taxa de ramburs (cash-on-delivery) ajunge pe linia de transport**, la fel ca pe API-ul vechi.
 - **Webhook-uri de comandă semnate (V2):** butonul **Register Webhooks** abonează `order.created` și `order.status_changed` în Extended și salvează secretul de semnare; fiecare notificare primită este verificată după semnătura `X-Extended-Signature` (HMAC-SHA256), iar importul comenzii este pus în coadă ca job, la câteva secunde după plasare — importul programat rămâne activ, ca plasă de siguranță. **Unregister Webhooks** anulează abonamentul. Extended livrează webhook-uri doar către o adresă publică și doar dacă modulul de webhook face parte din pachetul magazinului.
 - Limitele de ritm ale cheii V2 (4 cereri/secundă, 80/minut, 3.600/oră, 60.000/zi) sunt aliniate automat de limitatorul de ritm al backend-ului la trecerea pe V2; erorile 429 și 5xx reprogramează job-ul în loc să-l oprească.
+- **Date trimise înapoi în magazin**: la predarea coletului la curier, AWB-ul ajunge pe comanda din Extended (de fiecare dată, indiferent de **Active On Write**, cu curierul mapat pe backend); la postarea unei facturi pe comandă pleacă numărul, seria, data și linkul către PDF (tot indiferent de **Active On Write**); starea comenzii urmează etapa de vânzare Odoo doar cu **Active On Write** bifat pe cardul **Sale Order** (implicit oprit). Pe V2 toate trei trec prin V2.
+- **Ordinea primei sincronizări** (tab-ul **Objects**, meniul ⋮ al fiecărui card): furnizori, categorii publice, etape de vânzare, metode de plată și curieri, produse (aduc și liniile de furnizor, dicționarul de mesaje de stoc și, cu **Use Attribute**, caracteristicile), clienți (ferestre de 15 zile de la **Extended Start Date**), la final comenzile. **Test connection** verifică doar cheia V2; pe V1 prima importare validează cheia.
+- **Taxe**: Extended trimite prețurile cu TVA inclus, deci produsele, produsul transportatorului și **Discount Product** trebuie să poarte taxa de vânzare cu cota magazinului, inclusă în preț.
 - Import de produse de pe platforma Extended, paginat și procesat asincron prin cozi de joburi.
 - Import de furnizori (legacy `/?furnizori`, V2 `/suppliers`) în maparea `marketplace.supplier`, folosită pentru identificarea sursei de stoc la export.
 - Import de clienți pe intervale de timp (segmente de 15 zile), pornind de la o dată configurabilă.
@@ -43,11 +46,11 @@ Acest modul este conectorul specific care leagă platforma de e-commerce extern�
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, această secțiune este sintetizată din `readme/DESCRIPTION.md`, care documentează în detaliu comportamentul (nu lista de modele). Detaliile tehnice de configurare pas-cu-pas sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md); pe scurt, modulul este structurat în:
+Conform fluxului de ingestie, această secțiune este sintetizată din cod, deoarece `readme/DESCRIPTION.md` descrie comportamentul, nu lista de modele. Pașii de configurare sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md); pe scurt, modulul este structurat în:
 
 - Modele (`models`) — extind `marketplace.backend` cu providerul `extended` (câmpuri de configurare V1/V2, webhook, reaprovizionare automată) și extind modelele de produs, furnizor, client, comandă de vânzare, curier de livrare, provider de plată și categorie publică ale familiei de marketplace; adaugă modelul propriu `marketplace.extended.stock.info` pentru dicționarul de mesaje de disponibilitate.
-- Vizualizări (`views`) — extind formularul backend-ului de marketplace cu câmpurile specifice Extended și butoanele de înregistrare/dezînregistrare a webhook-urilor.
-- Securitate (`security`) — drepturi de acces pentru modelul propriu de dicționar de stoc informativ.
+- Vizualizări (`views`) — `view_marketplace_backend_form` extinde formularul backend-ului de marketplace cu câmpurile specifice Extended și butoanele de înregistrare/dezînregistrare a webhook-urilor.
+- Securitate (`security`) — drepturi de acces (`ir.access.csv`) pentru modelul propriu de dicționar de stoc informativ.
 - Internaționalizare (`i18n`).
 
 #### 5. Conexiuni

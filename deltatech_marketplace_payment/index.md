@@ -1,22 +1,23 @@
 # Marketplace Payment Acquirer addon (localizat la `deltatech_marketplace_payment/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_payment`
-- **Versiune:** `19.0.0.0.6`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_payment
+- **Versiune:** `20.0.0.1.3`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_payment
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_payment`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul oferă un sistem dedicat de gestionare a procesatorilor de plată (payment acquirers) pentru tranzacțiile din marketplace-uri, asigurând o reconciliere financiară corectă și eficientă pentru vânzările omnichannel. Din perspectivă de business, permite companiilor să gestioneze o gamă largă de metode de plată folosite pe diferitele platforme de marketplace, păstrând totodată o vizualizare centralizată a plăților în Odoo.
+Modulul oferă o gestiune dedicată a procesatorilor de plată folosiți în tranzacțiile din marketplace-uri. Permite companiei să urmărească într-un singur loc, în Odoo, metodele de plată întâlnite pe canalele conectate și să le coreleze corect cu contabilitatea, pentru reconciliere financiară precisă și mai puține erori de introducere manuală.
 
 #### 2. Funcționalități Cheie
 
-- **Gestionare unificată a plăților:** Configurarea și administrarea tuturor procesatorilor de plată asociați marketplace-urilor dintr-o singură interfață Odoo.
-- **Reconciliere financiară fluidă:** Sincronizarea automată a statusului plăților și a detaliilor tranzacțiilor din marketplace-uri în modulul de contabilitate Odoo.
-- **Vizibilitate îmbunătățită a fluxului de numerar:** Urmărirea și gestionarea cu mai mare acuratețe a plăților și decontărilor așteptate din marketplace-uri.
-- **Încredere sporită a clienților:** Asigurarea unei procesări consecvente a plăților și a actualizărilor de status pe toate canalele de marketplace conectate.
-- **Reducerea erorilor:** Minimizarea introducerii manuale a datelor și a erorilor prin automatizarea procesului de sincronizare a plăților.
+- Configurarea tuturor procesatorilor de plată din marketplace dintr-o singură interfață Odoo, ca element **Payment Acquirer** în fila **Objects** a backend-ului.
+- Mapare între procesatorul din marketplace și un procesator de plată Odoo existent; dacă nu există potrivire, se folosește ca rezervă procesatorul de tip transfer bancar.
+- Sincronizarea stării plăților și a detaliilor tranzacțiilor în contabilitate, cu vizibilitate mai bună asupra încasărilor așteptate.
+- Opțiuni pe backend pentru confirmarea automată a plății (`confirm_payment`, `confirm_card_payment`).
+- Tranzacția de plată păstrează legătura cu backend-ul marketplace; plata contabilă se generează doar dacă procesatorul are jurnal și linie de metodă de plată de tip inbound.
 
 #### 3. Dependențe
 
@@ -27,23 +28,24 @@ Acest modul oferă un sistem dedicat de gestionare a procesatorilor de plată (p
 
 **Modele**
 
-- `marketplace.payment.provider`: Model de legătură (binding) între procesatorul de plată Odoo (`payment.provider`) și procesatorul de plată al marketplace-ului. Moștenește `marketplace.binding` și folosește `_inherits` către `payment.provider`. Conține metoda `save_from_marketplace`, care mapează procesatorul din marketplace la unul existent în Odoo (sau, ca fallback, la procesatorul de tip transfer bancar).
-- `payment.transaction` (extins): Suprascrie `_create_payment` pentru a controla crearea plăților contabile — sare peste procesatorii de tip `custom` și validează existența unui jurnal și a unei linii de metodă de plată de tip inbound asociată procesatorului înainte de a genera `account.payment`.
-- `marketplace.backend` (extins): Adaugă opțiunile de configurare `confirm_payment` și `confirm_card_payment`.
-- `marketplace.backend.item` (extins): Adaugă tipul de element `payment_acquirer` (cu pictogramă card de credit) și mapează acest tip la modelul de binding `marketplace.payment.provider` / modelul Odoo `payment.provider`.
+- `marketplace.payment.provider`: legătura (binding) dintre procesatorul de plată Odoo (`payment.provider`) și cel din marketplace; `save_from_marketplace` face maparea.
+- `payment.transaction` (extins): leagă tranzacția de backend și controlează `_create_payment` (sare peste procesatorii de tip `custom`, validează jurnalul și metoda de plată inbound).
+- `marketplace.backend` (extins): opțiunile `confirm_payment` și `confirm_card_payment`.
+- `marketplace.backend.item` (extins): tipul de element `payment_acquirer`, legat de `marketplace.payment.provider` / `payment.provider`.
 
 **Vizualizări**
 
-- `view_marketplace_payment_acquirer_form`: Formularul procesatorului de plată din marketplace, cu butoanele de acțiune `Reimport` și `Delete`.
-- `view_marketplace_payment_acquirer_tree`: Lista procesatorilor de plată asociați marketplace-urilor.
-- `view_marketplace_payment_acquirer_search`: Vizualizarea de căutare/filtrare după nume, identificator extern și backend.
-- `action_payment_acquirer`: Acțiunea de fereastră pentru deschiderea listei și formularului de procesatori de plată.
+- `view_marketplace_payment_acquirer_form`, `view_marketplace_payment_acquirer_tree`, `view_marketplace_payment_acquirer_search`: formular, listă și căutare pentru mapările procesatorilor (`action_payment_acquirer`).
+- `view_payment_transaction_form`, `view_payment_transaction_list`, `view_payment_transaction_search`: tranzacția de plată cu backend-ul marketplace.
+- `view_marketplace_backend_form` (moștenită): opțiunile de confirmare a plății.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni server (`ir.actions.server`).
+- Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau acțiuni server.
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md): Modul de bază pentru integrarea cu marketplace-uri; furnizează modelele `marketplace.binding`, `marketplace.backend` și `marketplace.backend.item` pe care acest addon le extinde pentru a gestiona procesatorii de plată.
-- `payment`: Modulul standard Odoo de plăți; furnizează `payment.provider` și `payment.transaction`, modelele pe care acest addon le leagă de procesatorii din marketplace.
+- [deltatech_marketplace_opencart](../deltatech_marketplace_opencart/index.md): conector care mapează metodele de plată OpenCart prin acest modul.
+- [deltatech_marketplace_prestashop](../deltatech_marketplace_prestashop/index.md): conector care sincronizează metodele de plată PrestaShop prin acest modul.
+- [deltatech_marketplace_odoo](../deltatech_marketplace_odoo/index.md): conector Odoo-către-Odoo care depinde de acest modul.
+- `payment`: modulul standard Odoo, sursa `payment.provider` și `payment.transaction`.

@@ -1,22 +1,24 @@
 # Marketplace website addon (localizat la `deltatech_marketplace_website/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_website`
-- **Versiune:** `19.0.0.0.4`
-- **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_marketplace_website
-- **Cale Locală:** `odoo-addons/bitshop/deltatech_marketplace_website`
-- **Ultima Ingestie:** `2026-06-03`
+- **Versiune:** `20.0.0.2.1`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_website
+- **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_website`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul îmbogățește website-ul Odoo orientat către client, integrând date specifice marketplace-ului și oferind informații descriptive suplimentare potențialilor cumpărători. Din punct de vedere business, extensia ajută la construirea încrederii și a clarității cu cumpărătorii online, afișând detaliile relevante de marketplace direct în magazinul online. Astfel, conținutul de pe website-ul Odoo și cel din magazinele de tip marketplace rămân aliniate, oferind o experiență de brand unitară și consecventă, gestionată dintr-un singur backend Odoo centralizat.
+Modulul aduce conținutul de produs din marketplace pe website-ul Odoo, astfel încât magazinul online să arate aceleași informații ca ofertele din marketplace. Descrierile, categoriile și imaginile importate dintr-un canal extern ajung în categoriile publice și în fișa de produs de pe site, fără a fi reintroduse manual. Este un modul „Hidden”, care se instalează ca dependență a conectorului de marketplace ales.
 
 #### 2. Funcționalități Cheie
 
-- Informații bogate despre produs: valorifică descrierile scurte de marketplace pentru a oferi conținut concis și informativ pe paginile de produs.
-- Vizibilitate îmbunătățită: scoate în evidență atributele și branding-ul specifice marketplace-ului pe website, îmbunătățind experiența de căutare și descoperire.
-- Experiență consecventă pentru client: aliniază informațiile între website-ul Odoo și magazinele de tip marketplace pentru un parcurs de brand fără întreruperi.
-- Optimizarea conversiei: conținut descriptiv mai bun și branding clar pot duce la o implicare mai mare și la rate de conversie a vânzărilor îmbunătățite.
-- Platformă unificată: gestionează conținutul website-ului și informațiile legate de marketplace dintr-un backend Odoo unic, centralizat.
+- Descrierea de produs din marketplace se salvează ca descriere de website; descrierea scurtă se completează doar dacă este instalat `deltatech_website_short_description`.
+- Categoriile din marketplace se mapează pe categoriile publice de eCommerce, inclusiv imaginea categoriei.
+- Produsele exportate în marketplace folosesc maparea categoriei lor de eCommerce.
+- Imaginile suplimentare ale produsului se păstrează într-o galerie dedicată (`marketplace.product.image`), fără a goli galeria existentă la fiecare reimport.
+- Caracteristicile din marketplace se importă în catalogul marketplace, dar nu se afișează pe website, iar modulul nu adaugă informații despre marcă în magazin.
+- Fluxul de configurare și verificare, în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -25,9 +27,25 @@ Acest modul îmbogățește website-ul Odoo orientat către client, integrând d
 
 #### 4. Componente Cheie
 
-> Documentat pe baza fișierului `readme/DESCRIPTION.md`. Analiza detaliată a codului (Modele, Vizualizări, Acțiuni Automate / Acțiuni Server) nu a fost efectuată, conform fluxului de ingestie care prioritizează Readme-ul.
+**Modele**
+
+- `marketplace.public.category` (nou): categoria publică din marketplace, legată de `product.public.category`.
+- `marketplace.product.image` (nou): imaginile suplimentare ale produsului din marketplace.
+- `marketplace.product`, `marketplace.product.template`, `marketplace.product.category`, `marketplace.backend`, `marketplace.backend.item`, `marketplace.binding` (extinse): descrierea de website, maparea categoriilor și importul imaginilor.
+- `product.public.category` (extins): legătura cu categoria din marketplace.
+
+**Vizualizări**
+
+- `view_marketplace_public_category_form` / `_tree` / `_search` și `action_marketplace_public_category`: categoriile publice din marketplace.
+- `view_marketplace_product_image_form` / `_tree` / `_search` și `action_marketplace_product_image`: galeria de imagini.
+- `view_marketplace_product_category_form` / `_tree` (extinse) și `view_marketplace_backend_form` (extinsă): maparea categoriilor și setările backend-ului.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Nu are.
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace](../deltatech_marketplace/index.md): modulul de bază pentru funcționalitatea de marketplace, pe care această extensie îl aduce către website.
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): extinde marketplace-ul pe zona de vânzări, complementar integrării din storefront.
+- [deltatech_marketplace_woocommerce](../deltatech_marketplace_woocommerce/index.md): conector care depinde de acest modul.
+- [deltatech_website_short_description](../deltatech_website_short_description/index.md): opțional, adaugă descrierea scurtă de pe website, completată din marketplace.
+- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): zona de vânzări a aceluiași cadru marketplace.

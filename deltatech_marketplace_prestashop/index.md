@@ -1,57 +1,57 @@
-# Conector Marketplace PrestaShop (localizat la `deltatech_marketplace_prestashop/index.md`)
+# Prestashop Marketplace Connector (localizat la `deltatech_marketplace_prestashop/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_prestashop`
-- **Versiune:** `19.0.0.2.15`
-- **Cale:** `https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_prestashop`
+- **Versiune:** `20.0.0.7.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_prestashop
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_prestashop`
-- **Ultima Ingestie:** `2026-09-11`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Conectorul Deltatech pentru marketplace PrestaShop permite integrarea directă între sistemul ERP Odoo și PrestaShop, una dintre cele mai populare platforme open-source de comerț electronic. Modulul asigură sincronizarea datelor esențiale de business, astfel încât magazinele online PrestaShop pot fi administrate direct din Odoo. Rezultatul este o soluție unificată pentru gestionarea produselor, a clienților și a comenzilor, eliminând introducerea dublă de date și păstrând o singură sursă de adevăr pentru informațiile comerciale.
+Conectorul PrestaShop sincronizează un magazin PrestaShop cu Odoo, peste cadrul Marketplace al suitei, prin API-ul de servicii web al PrestaShop. Produsele, clienții și comenzile se gestionează din Odoo, fără dublă introducere: catalogul, comenzile și starea lor circulă între cele două sisteme, iar stocul vine din PrestaShop în Odoo.
 
 #### 2. Funcționalități Cheie
 
-- **Gestionarea completă a produselor:** sincronizarea catalogului de produse între Odoo și PrestaShop, suport pentru variante, atribute și caracteristici, import/export de imagini și conținut multimedia, gestionarea categoriilor de produse și a categoriilor publice. Exportul (creare/actualizare pe PrestaShop) trimite preț, denumire, EAN, greutate și categorii publice, la cerere sau automat la scriere (comutatorul *Active On Write*). Stocul circulă într-un singur sens: **doar din PrestaShop către Odoo** — modulul nu implementează export de stoc către PrestaShop.
-- **Integrare avansată a clienților:** importul clienților PrestaShop în baza de contacte Odoo, sincronizarea datelor de client, a adreselor și a istoricului de cumpărături, gestionarea grupurilor de clienți și a asocierilor.
-- **Gestionarea cuprinzătoare a comenzilor:** importul comenzilor de vânzare din PrestaShop în Odoo, cu posibilitatea de a filtra importul după statusul comenzii (pe baza statusurilor deja sincronizate prin Sale Stage), crearea automată a comenzilor de vânzare Odoo și urmărirea îndeplinirii și livrării comenzilor.
-- **Push dinspre Odoo spre PrestaShop:** statusul comenzii se trimite către PrestaShop doar dacă *Active On Write* e activat pe elementul „Sale Order"; în schimb, numărul de tracking (la trimiterea coletului către curier) și legătura facturii (la postarea facturii) se trimit **necondiționat**, indiferent de acest comutator.
-- **Webhook de intrare (nu ieșire):** fiecare tip de date sincronizat expune un link de webhook pe care **PrestaShop îl apelează către Odoo** (nu invers) pentru a declanșa imediat importul unei comenzi, fără a aștepta cron-ul orar.
-- **Wizard „Marketplace sync":** acțiune contextuală de pe produse/șabloane de produs pentru export la cerere (implicit `Direction = Export`, `Update Mode = Stock`; comutat manual pe `All` include și preț/nume) — ignoră comutatorul Active On Write.
-- **Capabilități internaționale:** suport multilingv prin legături de limbă, gestionarea multi-valută, sincronizarea țărilor și a județelor (regiuni/state), gestionarea livrărilor și a taxelor internaționale.
-- **Integrare livrare și plată:** suport pentru curierii de livrare PrestaShop, sincronizarea metodelor de plată și a procesatorilor, integrarea cu depozitele pentru îndeplinirea comenzilor.
-- **Îmbunătățirea procesului de vânzare:** suport pentru etapele de vânzare și urmărirea statusului comenzilor, sincronizarea etichetelor de vânzare, atribuirea comenzilor pe echipe cu asociere de depozit.
-- **Operațiuni automatizate:** sarcini programate de sincronizare (cron comun „Marketplace: Get Orders"), procesare în fundal cu gestionare prin coadă (queue_job) și opțiuni de sincronizare incrementală (bifa „Only Missing").
-- **API pentru facturi:** ruta `/marketplace/sale_order/get_invoice`, autentificată cu token-ul de securitate al backend-ului, prin care PrestaShop (sau alt sistem extern) poate cere URL-ul PDF-ului facturii unei comenzi importate.
+- Conectare cu cheia de webservice (**Location** = URL-ul care se termină în `/api`, tip de acces *Client_id and client_secret*, cheia în **Client Secret / API key**). **Test connection** nu contactă magazinul: o eroare reală apare abia la primul import sau export.
+- Import produse (șabloane, variante/combinații, caracteristici, atribute, accesorii, imagini), categorii publice, clienți, țări, județe, limbi, valute, depozite, transportatori, procesatori de plată și etape de comandă; fiecare tip are un card în fila **Objects**, cu **Import** în meniul ⋮ (nu există **Import All**; **Only Missing** limitează importul la ce lipsește).
+- Setări de limbă și taxe: **Prestashop Lang** (gol pentru magazin multilingv; importul de limbi îl rescrie) și **Prestashop Tax Included** (afectează și prețurile produselor importate); **Disable Import Sale Order** scoate backend-ul din cron-ul comun de comenzi.
+- Import comenzi cu client, adrese, linii, livrare, reduceri și plată, marcate cu starea PrestaShop; filtrare opțională pe statusuri prin **Import Orders With Status (PrestaShop)**, în limita ferestrei **Order Days**.
+- Import automat prin **Marketplace: Get Orders** (orară, inactivă implicit) sau prin webhook (apelat de PrestaShop spre Odoo), cu import imediat al comenzii indicate.
+- Export produse (preț din lista backend-ului sau `list_price`, nume, EAN, greutate, categorii, imagini): manual din cardul **Product Template** (setați întâi un **Domain**), automat cu **Active On Write** sau prin wizardul *Marketplace sync* în modul *All*. Exportul de stoc și de preț separat nu este implementat (acțiunile programate comune sunt fără efect).
+- Din Odoo spre PrestaShop: starea comenzii (doar cu **Active On Write** pe **Sale Order**), numărul de urmărire și linkul facturii (necondiționat).
+- Rută pentru factura unei comenzi importate: `/marketplace/sale_order/get_invoice`, autentificată cu **Security Token** al backend-ului.
+- Indicator de sănătate pe kanban-ul backend-urilor (ultima sincronizare, contoare, joburi eșuate) și acțiunea *Map Products* pentru legarea produselor existente după referință sau cod de bare.
+- Mapare câmpuri produs: vezi tabelul din secțiunea 4.
 
 #### 3. Dependențe
 
 - [deltatech_marketplace](../deltatech_marketplace/index.md)
-- [deltatech_marketplace_website](../deltatech_marketplace_website/index.md)
 - [deltatech_marketplace_sale_stage](../deltatech_marketplace_sale_stage/index.md)
 - [deltatech_marketplace_delivery](../deltatech_marketplace_delivery/index.md)
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md)
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunile de componente nu au fost extrase din cod deoarece fișierul `readme/DESCRIPTION.md` este prezent și acoperă Sumarul și Funcționalitățile Cheie. Pentru context, descrierea menționează că implementarea folosește API-ul de servicii web PrestaShop (autentificare HTTP Basic Auth pe o singură cheie) și un sistem de binding-uri (legături) care conectează entitățile Odoo cu corespondentele lor din PrestaShop (șabloane și variante de produs, categorii și atribute, clienți și adrese, comenzi și linii de comandă, stoc, metode de plată și livrare, țări, limbi, valute), plus un controller (`controller/main.py`) pentru webhook-ul de intrare (apelat de PrestaShop către Odoo) și pentru ruta de facturi, cu procesare de joburi în fundal prin `queue_job`.
+Conform fluxului de ingestie, componentele nu au fost extrase din cod (readme-ul acoperă funcționalitatea); lista de modele este din prezentarea modulului.
 
 **Modele**
 
-- Nu au fost extrase din cod (vezi nota de mai sus).
+- `marketplace.backend` (extins): provider-ul `prestashop` și opțiunile lui.
+- Legături extinse: `marketplace.product.template`, `marketplace.product`, `marketplace.product.attribute`, `marketplace.product.attribute.value`, `marketplace.product.image`, `marketplace.public.category`, `marketplace.customer`, `marketplace.sale.order`, `marketplace.sale.phase`, `marketplace.sale.tag`, `marketplace.delivery.carrier`, `marketplace.payment.provider`, `marketplace.country`, `marketplace.county`, `marketplace.currency`, `marketplace.lang`, `marketplace.warehouse`, `marketplace.stock`.
 
 **Vizualizări**
 
-- Nu au fost extrase din cod (vezi nota de mai sus). Modulul include `views/backend_views.xml` și `views/menu.xml`.
+- `views/backend_views.xml`, `views/menu.xml`: setările backend-ului și meniul conectorului.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu au fost extrase din cod (vezi nota de mai sus). Descrierea menționează existența unor joburi programate de sincronizare și procesare în fundal; cron-ul comun „Marketplace: Get Orders" (inactiv implicit) importă comenzile pentru backend-urile fără „Disable Import Sale Order" bifat.
+- `ir_cron_prestashop_late_customer_messages`: „PrestaShop: Customer Messages After Confirmation", orar, inactiv implicit.
+- Importul comenzilor folosește cron-ul comun **Marketplace: Get Orders** (orar, inactiv implicit).
 
 **Mapare câmpuri produs**
 
-Documentată integral în `readme/USAGE.md` (punctul 11), derivată din `prestashop_import_by_id()`, `prestashop_create()`, `prestashop_write()` și binderul de stoc. Câmpurile traductibile circulă pe fiecare limbă din `marketplace.lang` (structura multilingvă construită de `prestashop_get_translatable_payload()`); fără nicio limbă mapată se trimit ca șiruri simple, în limba backend-ului.
+"Ambele" înseamnă că starea circulă în ambele sensuri, pe acțiunea proprie. Câmpurile traductibile circulă pe fiecare limbă din `marketplace.lang`.
 
 | Câmp | Câmp Odoo | Câmp PrestaShop | Direcție |
 |------|-----------|-----------------|----------|
@@ -68,17 +68,16 @@ Documentată integral în `readme/USAGE.md` (punctul 11), derivată din `prestas
 | Meta descriere | `website_meta_description` | `meta_description` (traductibil) | ambele |
 | Meta cuvinte-cheie | `website_meta_keywords` | `meta_keywords` (traductibil) | ambele |
 | Categorii eCommerce | `public_categ_ids` | `associations.categories` | ambele (cu **Use public category**) |
-| Caracteristici | valori `product.attribute.value`, prin `marketplace.product.attribute.value` (`product_feature_values`) | `associations.product_features` | PrestaShop → Odoo |
-| Atribute de variantă | `attribute_line_ids`, prin `marketplace.product.attribute.value` (`product_option_values`) | `associations.product_option_values` | PrestaShop → Odoo |
+| Caracteristici | `product.attribute.value` | `associations.product_features` | PrestaShop → Odoo |
+| Atribute de variantă | `attribute_line_ids` | `associations.product_option_values` | PrestaShop → Odoo |
 | Variante | legături `marketplace.product` | `associations.combinations`, `/combinations` | PrestaShop → Odoo |
-| Referință variantă | `default_code`, `external_code` (legătură) | `/combinations` `reference` | PrestaShop → Odoo |
+| Referință variantă | `default_code`, `external_code` | `/combinations` `reference` | PrestaShop → Odoo |
 | Preț variantă | `list_price` | `/combinations` `price` | PrestaShop → Odoo |
 | Accesorii | `accessory_product_ids` | `associations.accessories` | PrestaShop → Odoo |
 | Imagine principală | `image_1920` | `id_default_image`, `/images/products/{id}` | ambele |
-| Imagini suplimentare | înregistrări `product.image` | `associations.images` | ambele |
-| Stoc | `odoo_stock` (legătură), `external_quantity` (`marketplace.stock`) | `/stock_availables` `quantity` | ambele |
+| Imagini suplimentare | `product.image` | `associations.images` | ambele |
+| Stoc | `odoo_stock` (legătură), `external_quantity` | `/stock_availables` `quantity` | PrestaShop → Odoo |
 
 #### 5. Conexiuni
 
-- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): gestionarea comenzilor de vânzare provenite din marketplace, importate și din PrestaShop.
-- [deltatech_marketplace_purchase](../deltatech_marketplace_purchase/index.md): latura de achiziții a ecosistemului de marketplace Deltatech.
+- [deltatech_marketplace_sale](../deltatech_marketplace_sale/index.md): comenzile de vânzare din marketplace (dependență tranzitivă prin `deltatech_marketplace_delivery`).

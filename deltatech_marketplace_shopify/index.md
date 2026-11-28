@@ -1,10 +1,10 @@
 # Conector Shopify Marketplace (localizat la `deltatech_marketplace_shopify/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_shopify`
-- **Versiune:** `19.0.1.3.1`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_shopify
+- **Versiune:** `20.0.1.9.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_shopify
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_shopify`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -39,8 +39,8 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - O comandă deja încasată (`PAID`/`PARTIALLY_PAID`/`PARTIALLY_REFUNDED` sau tranzacție Odoo capturată) nu mai este anulată automat în Shopify — `orderCancel` ar rambursa încasarea, ceea ce ar trimite o rambursare neceruta clientului; comanda rămâne anulată doar în Odoo, cu motivul în chatter. O comandă doar autorizată (`AUTHORIZED`) se anulează în continuare (Shopify anulează autorizarea, fără rambursare).
   - Suport pentru webhook-uri Shopify (`orders/create`, `orders/updated`, `orders/paid`, `orders/cancelled`) pentru actualizarea automată a comenzilor în Odoo.
   - Rutarea depozitului comenzii pe baza locației Shopify (`location_id` / locația de onorare), prin binding-ul `marketplace.warehouse` — comenzile din locații nemapate cad pe depozitul implicit; opțiunea **Skip location lookup** de pe backend sare peste interogarea locației atunci când aplicația nu are permisiunea `read_locations`, ca să nu mai apară o cerere refuzată la fiecare restart de worker.
-  - Un produs marcat pentru **livrare amânată** (`postpone_delivery`) nu mai confirmă comanda direct prin `action_confirm()` — trece prin `try_to_confirm()`, aceeași cale ca orice altă comandă, deci gărzile de confirmare automată (mesajul către client, ramburs peste limită, motivele de verificare) se aplică și aici; scrierea câmpului `postponed_delivery` de pe această cale a fost eliminată, fiindcă valoarea e calculată din transferuri și scrierea nu avea niciun efect (19.0.1.3.1).
-  - Un locker primit la un re-import (comandă cu valori „discarded") reevaluează verificarea comenzii (`_review_evaluate()`) imediat după scriere — motivul „locker nealeasă încă" dispare din verificare de îndată ce clientul alege un punct de ridicare, fără să aștepte un alt eveniment care să o reevalueze (19.0.1.3.1).
+  - Un produs marcat pentru **livrare amânată** (`postpone_delivery`) nu mai confirmă comanda direct prin `action_confirm()` — trece prin `try_to_confirm()`, aceeași cale ca orice altă comandă, deci gărzile de confirmare automată (mesajul către client, ramburs peste limită, motivele de verificare) se aplică și aici; scrierea câmpului `postponed_delivery` de pe această cale a fost eliminată, fiindcă valoarea e calculată din transferuri și scrierea nu avea niciun efect.
+  - Un locker primit la un re-import (comandă cu valori „discarded") reevaluează verificarea comenzii (`_review_evaluate()`) imediat după scriere — motivul „locker nealeasă încă" dispare din verificare de îndată ce clientul alege un punct de ridicare, fără să aștepte un alt eveniment care să o reevalueze.
   - Verificarea totalului comenzii importate față de totalul Shopify, cu raportare a diferențelor în chatter.
   - Reguli de protecție la re-import: pe o comandă ale cărei valori sunt marcate ca „discarded" (backend `only_missing` sau „No Refresh" pe comandă), doar locker-ul, curierul și liniile de livrare deschise mai sunt actualizate — restul (linii, sume, fază, adrese) rămân neatinse.
   - **Export opțional al liniilor de comandă** (**Export Order Lines**, oprit implicit): o cantitate schimbată, o linie adăugată sau ștearsă în Odoo se trimite înapoi în Shopify prin API-ul de editare a comenzii (`orderEditBegin` → `orderEditSetQuantity`/`orderEditAddVariant` → `orderEditCommit`). Necesită permisiunea `write_order_edits`, separată de `write_orders` și care trebuie acordată explicit magazinului (re-autorizare); fără ea exportul e inert și motivul apare în chatter, fără reîncercare. Nu se trimite nimic dacă modificarea nu poate fi exprimată de API (cantitate sub ce e deja onorat/rambursat, produs fără variantă Shopify mapată, comandă cu peste 250 de linii) sau dacă pe o comandă deja plătită editarea ar lăsa un sold necompensat (Shopify nu încasează/rambursează diferența la editare) — o modificare care se echilibrează la zero trece și pe o comandă plătită. Prețul unitar al unei linii existente nu poate fi trimis (API-ul Shopify oferă doar o reducere peste prețul original); o schimbare de preț în Odoo e semnalată pe comandă, dar nu blochează exportul cantităților/liniilor.
@@ -71,20 +71,24 @@ Conectorul Shopify Marketplace dezvoltat de Terrabit creează o integrare direct
   - Suport pentru comenzi în monedă diferită de moneda magazinului (multi-valută), prin binding-uri `marketplace.product.pricelist` pe cod ISO de monedă.
   - Import al Codului Vamal (HS Code) și al Țării de Origine de pe `InventoryItem` Shopify, direct pe `product.template`; când e instalat modulul Enterprise `account_intrastat`, se completează la fel și `intrastat_code_id`/`intrastat_origin_country_id`.
 
+- **Import incremental de produse:** opțiunea **Import Only Modified Products** cere de la Shopify doar produsele modificate de la importul anterior (`updated_at`, cu o oră de marjă); începutul importului se reține în **Products Imported Until** doar când se ajunge la ultima pagină, iar golirea câmpului declanșează un import complet. Webhook-ul `products/create` importă imediat un produs nou.
+- **AWB regenerat:** transferul păstrează numărul de tracking trimis (**Shopify Tracking Sent**); un AWB nou îl înlocuiește pe onorările existente fără notificarea clientului. O onorare respinsă de Shopify oprește jobul imediat (erorile de rețea și limitările se reîncearcă). Fără scope de locație (`read_locations`, `read_inventory`, `read_markets_home`), fiecare ordin de onorare primește propria onorare, pe o singură locație.
+- **Cod fiscal din câmpul Company:** când câmpul „Company" al adresei conține laolaltă numele firmei și CUI-ul, CUI-ul se extrage ca număr, iar restul textului rămâne numele firmei. În Odoo 20 `is_company` e calculat, deci un cumpărător cu CUI este firmă, iar un nume de firmă fără CUI rămâne persoană.
 - **Depozite / locații**:
-  - Import al locațiilor Shopify ca binding-uri de depozit (`marketplace.warehouse`), o locație Shopify = un depozit Odoo — mapare pe care se bazează atât exportul de stoc, cât și rutarea comenzilor; depozitele Odoo trebuie create *înainte* de acest import.
+  - Import al locațiilor Shopify ca binding-uri de depozit (`marketplace.warehouse`), o locație Shopify = un depozit Odoo — mapare pe care se bazează atât exportul de stoc, cât și rutarea comenzilor; depozitele Odoo trebuie create *înainte* de acest import. Importul nu mai creează și nu mai redenumește depozite: o locație nouă se leagă de depozitul principal al companiei ca *Unmapped*, iar depozitul real se alege în *Marketplace > Warehouses*; stocul se exportă doar către locațiile *Mapped* și active în Shopify, iar o locație respinsă de Shopify (404/422) e sărită și raportată, fără să oprească celelalte locații.
 
 - **Autentificare și operații automate**:
   - Suport pentru două moduri de autentificare, alese din câmpul **Access Type**: Legacy Private Apps (token permanent, `Access Token` completat manual — de la 1 ianuarie 2026 Shopify nu mai permite crearea de aplicații legacy noi, doar cele existente anterior rămân utilizabile) și Dev Dashboard Apps (OAuth `client_credentials`, `Client Id`/`Client Secret`, token cu expirare la 24h, cu reîmprospătare automată sub 30 minute rămase și proactiv la fiecare 23 de ore prin job-ul „Shopify: Refresh Access Tokens").
   - `Client Secret` este necesar și pentru verificarea semnăturii HMAC (`X-Shopify-Hmac-Sha256`) a webhook-urilor primite — fără el, verificarea eșuează silențios (doar avertisment în log).
-  - Sincronizare programată și asincronă prin `queue_job`, cu retry automat la limitări de rată (HTTP 429 / GraphQL `THROTTLED`) și erori de server.
+  - Sincronizare programată și asincronă prin motorul de joburi instalat, cu retry automat la limitări de rată (HTTP 429 / GraphQL `THROTTLED`) și erori de server.
   - Import de colecții Shopify (custom și smart) ca și categorii publice de produs.
-  - Fiecare subsistem (produse, stoc, expediere, clienți, comenzi, webhook-uri) are propriul comutator GraphQL/REST pe backend, implicit oprit — tranziția se face treptat, subsistem cu subsistem, reversibilă dintr-un singur comutator.
+  - Comenzile (import, tranzacții de plată, anulare, etichete de fază, stare financiară) merg **întotdeauna** prin GraphQL — nu mai există cale REST pentru ele. Celelalte subsisteme (produse, stoc, expediere, clienți, webhook-uri) au fiecare propriul comutator GraphQL/REST pe backend, implicit oprit — tranziția se face treptat, reversibilă dintr-un singur comutator.
+  - Funcționează cu oricare dintre motoarele de joburi: `queue_job` sau [deltatech_background_job](../deltatech_background_job/index.md); canalele sunt cele din *Inbound Channel* / *Outbound Channel* ale backend-ului, iar joburile sunt declarate ca `marketplace.job.spec`.
   - Indicator de sănătate (verde/portocaliu/roșu/gri) pe cardul kanban al backend-ului, cu ora ultimei sincronizări și linkuri către log-uri/job-uri eșuate din ultimele 24h.
   - Wizard **Check webhooks** (buton de antet) care compară webhook-urile efectiv înregistrate în Shopify cu cele așteptate de Odoo (Matched/Missing/Orphan), cu remediere directă (înregistrare sau ștergere din Shopify). Un webhook blocat pe „Missing" la nesfârșit este aproape mereu parametrul de sistem `web.base.url` setat pe `http://` în loc de `https://` — API-ul Admin al Shopify refuză tăcut să înregistreze un webhook a cărui adresă de callback nu e HTTPS, fără nicio eroare vizibilă în Odoo.
   - Buton **Test connection** care validează credențialele printr-un query GraphQL `shop`, înainte de orice import.
 
-- **Rambursări** (19.0.1.3.0): import din `Order.refunds` pe comenzile rambursate / parțial rambursate din fereastra de retururi, câte un `marketplace.refund` per `Refund` — totalul raportat (`totalRefundedSet`), TVA-ul, transportul rambursat și, pe linie, suma, TVA-ul și dacă marfa s-a întors în stoc (`restockType`). Legat de retur când îl numește; o rambursare fără retur (cazul normal la Shopify) rămâne fără. Rulează din același cron ca retururile.
+- **Rambursări**: import din `Order.refunds` pe comenzile rambursate / parțial rambursate din fereastra de retururi, câte un `marketplace.refund` per `Refund` — totalul raportat (`totalRefundedSet`), TVA-ul, transportul rambursat și, pe linie, suma, TVA-ul și dacă marfa s-a întors în stoc (`restockType`). Legat de retur când îl numește; o rambursare fără retur (cazul normal la Shopify) rămâne fără. Rulează din același cron ca retururile.
 
 #### 3. Dependențe
 
@@ -104,6 +108,9 @@ Dependență externă Python: `ShopifyAPI`.
 - `marketplace.backend` (extins, `backend.py`): configurarea specifică Shopify a backend-ului — credențiale (token permanent sau OAuth, `Access Type`), opțiuni de import/export (atribute din opțiuni, creare variante, categorie publică, tip produs ca și categorie internă), comutatoare GraphQL per subsistem, filtre de comandă, declanșator de onorare, reîmprospătare token, permisiuni acordate/lipsă (`Granted Access Scopes`/`Missing Scopes`), opțiunea `shopify_skip_location_lookup`, indicator de sănătate.
 - `backend_adapter.py`: adaptorul de comunicare REST cu API-ul Shopify (autentificare, apeluri cu retry la rate-limit/erori de server).
 - `shopify_graphql.py` și modulele `shopify_graphql_*.py` (`catalog`, `customer`, `fulfillment`, `inventory`, `order`, `order_edit`, `product`, `return`, `webhook`): mixin-uri cu interogările/mutațiile GraphQL Admin API pentru fiecare subsistem, folosite ca alternativă la transportul REST, activabile per comutator pe backend. `order_edit` conține mutațiile Order Editing API (`orderEditBegin`/`orderEditSetQuantity`/`orderEditAddVariant`/`orderEditCommit`) pentru exportul opțional de linii; `return` conține query-ul de retururi (`Order.returns`, doar citire).
+- `shopify_http.py`: sesiunea HTTP comună (conexiune persistentă, reîncercare când Shopify închide conexiunea) folosită de apelurile REST și GraphQL.
+- `shopify_company_vat.py`: extragerea CUI-ului și a numelui firmei din câmpul „Company" al adresei.
+- `binding_refund.py` / `shopify_graphql_refund.py`: importul rambursărilor în `marketplace.refund`.
 - `shopify_order_filters.py`: traducerea filtrelor de listare a comenzilor (status/plată/livrare) între vocabularul REST și cel GraphQL.
 - `binding_product_template.py` / `binding_product.py`: binding-uri de șablon și variantă de produs, inclusiv import/export atribute, opțiuni, imagini, stoc (`shopify_import_stock`, `shopify_stock_export`), preț și potrivirea unui produs Shopify cu un șablon Odoo existent prin SKU/cod de bare al variantelor.
 - `binding_product_image.py`: binding pentru imaginile de produs, cu asociere pe variante.
@@ -125,7 +132,7 @@ Dependență externă Python: `ShopifyAPI`.
 **Acțiuni Automate / Acțiuni Server**
 
 - `cron_shopify_refresh_tokens` (`data/cron.xml`): rulează la fiecare 23 de ore, reînnoiește token-urile OAuth pentru backend-urile Dev Dashboard Apps active (vizibilă doar în Settings → Technical → Scheduled Actions, nu în meniul Marketplace → Configuration → Crons).
-- `job_function_sale_order_job_shopify_import` și `job_function_sale_order_shopify_job_from_webhook` (`data/job_function.xml`): joburi `queue_job` pentru importul comenzilor, pe canalele `shopify_inbound`/`shopify_outbound`, cu tipar de retry configurat.
+- `job_spec_sale_order_job_shopify_import`, `job_spec_sale_order_shopify_job_from_webhook` și celelalte `marketplace.job.spec` din `data/job_spec.xml` (import comenzi, clienți și produse pe id): specificațiile de job (canal și tipar de retry) pe care puntea motorului de joburi instalat (`queue_job` sau Background Jobs) le copiază; canalele vin din backend (*Inbound Channel* / *Outbound Channel*).
 
 **Mapare câmpuri produs**
 

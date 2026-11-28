@@ -205,25 +205,25 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_marketplace_dashboard](deltatech_marketplace_dashboard/index.md): Un singur ecran pentru toate marketplace-urile: de făcut acum, vânzări și marjă brută.
 - [deltatech_marketplace_delivery](deltatech_marketplace_delivery/index.md): Leagă metodele de livrare din marketplace de transportatorii Odoo și păstrează punctul de ridicare ales de cumpărător.
 - [deltatech_marketplace_doraly](deltatech_marketplace_doraly/index.md): Conector pentru marketplace-ul Doraly: import produse și comenzi, export parțial de produse și trimiterea linkului PDF al facturii.
-- [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md): Conector eMAG Marketplace — produse, stocuri (în loturi de 50), comenzi, plăți, vouchere, importul retururilor (RMA, doar citire) și al rambursărilor; AWB-urile s-au mutat în `deltatech_marketplace_emag_delivery`.
-- [deltatech_marketplace_emag_delivery](deltatech_marketplace_emag_delivery/index.md): Emite AWB-uri prin eMAG Courier direct din livrarea Odoo — etichete A4/A5/A6/ZPL și urmărirea coletului prin curierul partener real al eMAG.
-- [deltatech_marketplace_extended](deltatech_marketplace_extended/index.md): Conector Odoo pentru platforma Extended.ro (produse, comenzi, stoc, categorii), cu API V2 opțional, webhook-uri semnate și mesaj de termen de livrare calculat automat.
-- [deltatech_marketplace_magento](deltatech_marketplace_magento/index.md): Conector ERP Odoo ↔ platforma de e-commerce Magento, pentru sincronizare de produse, clienți, comenzi și stocuri (export stoc real prin `magento_stock_export`, pe sursa MSI implicită).
-- [deltatech_marketplace_merchantpro](deltatech_marketplace_merchantpro/index.md): Conector între Odoo și marketplace-ul MerchantPro pentru sincronizarea produselor, stocurilor și comenzilor, cu API V2, webhook-uri și import paginat de siguranță.
-- [deltatech_marketplace_odoo](deltatech_marketplace_odoo/index.md): Conector Odoo-către-Odoo prin marketplace, care importă catalog de produse (șabloane, variante, atribute, categorii) și parteneri.
-- [deltatech_marketplace_opencart](deltatech_marketplace_opencart/index.md): Conector între platforma de comerț electronic OpenCart și Odoo (catalog, stoc, comenzi, clienți) pe baza REST Admin API.
-- [deltatech_marketplace_payment](deltatech_marketplace_payment/index.md): Gestionează procesatorii de plată din marketplace-uri și sincronizează plățile/tranzacțiile pentru reconciliere financiară.
-- [deltatech_marketplace_prestashop](deltatech_marketplace_prestashop/index.md): Conector pentru sincronizarea produselor, clienților și comenzilor între Odoo și magazinele PrestaShop, cu export de produse și push necondiționat de tracking/factură (webhook e PrestaShop → Odoo, nu invers).
-- [deltatech_marketplace_purchase](deltatech_marketplace_purchase/index.md): Integrează procesele de achiziție cu vânzările din marketplace, pentru decizii de aprovizionare bazate pe date.
+- [deltatech_marketplace_emag](deltatech_marketplace_emag/index.md): Conector eMAG: produse, comenzi, retururi, stoc, buy box și geografia României, pe cadrul marketplace.
+- [deltatech_marketplace_emag_delivery](deltatech_marketplace_emag_delivery/index.md): AWB prin eMAG Courier direct din livrarea Odoo, cu etichetă A4/A5/A6 sau ZPL și urmărire.
+- [deltatech_marketplace_extended](deltatech_marketplace_extended/index.md): Conector pentru platforma Extended.ro (API V1 și V2): comenzi, produse, furnizori, stoc și termen de livrare.
+- [deltatech_marketplace_magento](deltatech_marketplace_magento/index.md): Conector Magento: produse, categorii, clienți, comenzi, stoc și preț, cu webhook-uri.
+- [deltatech_marketplace_merchantpro](deltatech_marketplace_merchantpro/index.md): Conector MerchantPro (API V2): produse, categorii, stoc, prețuri și comenzi prin webhook.
+- [deltatech_marketplace_odoo](deltatech_marketplace_odoo/index.md): Conector Odoo-către-Odoo: importă produse, atribute, categorii, parteneri și liste de prețuri și trimite comenzile de achiziție către furnizor.
+- [deltatech_marketplace_opencart](deltatech_marketplace_opencart/index.md): Conector OpenCart: sincronizează produse, clienți, comenzi, livrare, plată și stoc prin REST Admin API.
+- [deltatech_marketplace_payment](deltatech_marketplace_payment/index.md): Gestionează procesatorii de plată din marketplace-uri și îi mapează pe cei din Odoo pentru reconciliere.
+- [deltatech_marketplace_prestashop](deltatech_marketplace_prestashop/index.md): Conector PrestaShop: sincronizează produse, clienți, comenzi și stări prin webservice.
+- [deltatech_marketplace_purchase](deltatech_marketplace_purchase/index.md): Leagă comenzile de achiziție Odoo de un backend marketplace și trimite modificările prin conector.
 - [deltatech_marketplace_queue_job](deltatech_marketplace_queue_job/index.md): Punte între conectorii de marketplace și queue_job (OCA).
-- [deltatech_marketplace_review](deltatech_marketplace_review/index.md): Motive de verificare pentru comenzile importate din marketplace (mesaj client, ramburs peste limita backendului, total diferit, locker lipsă), cu reluarea confirmării automate la 5 minute.
-- [deltatech_marketplace_sale](deltatech_marketplace_sale/index.md): Punct central pentru gestionarea comenzilor de vânzare importate din conectorii de marketplace (eMAG, Shopify, Magento etc.).
-- [deltatech_marketplace_sale_stage](deltatech_marketplace_sale_stage/index.md): Sistem de gestionare a etapelor (stages) pentru comenzile de vânzare din marketplace, pentru vizibilitate și control pe tot ciclul de procesare.
-- [deltatech_marketplace_sale_type](deltatech_marketplace_sale_type/index.md): Clasificarea comenzilor de vânzare din marketplace pe tipuri de comandă, pentru analiză și strategii de vânzare granulare.
-- [deltatech_marketplace_shopify](deltatech_marketplace_shopify/index.md): Conector Odoo–Shopify (GraphQL) — produse, clienți, comenzi cu anulare în ambele sensuri, export opțional al liniilor de comandă, importul retururilor și al rambursărilor (doar citire) și wizard de verificare a webhook-urilor.
-- [deltatech_marketplace_trendyol](deltatech_marketplace_trendyol/index.md): Conector Odoo pentru sincronizarea produselor, prețurilor, stocurilor și comenzilor cu marketplace-ul Trendyol; tracking-ul automat depinde de un transportator real atribuit manual (maparea automată a curierului nu funcționează încă).
-- [deltatech_marketplace_website](deltatech_marketplace_website/index.md): Integrează datele de marketplace în website-ul Odoo, afișând descrieri scurte și branding specific pe paginile de produs din storefront.
-- [deltatech_marketplace_woocommerce](deltatech_marketplace_woocommerce/index.md): Conectează Odoo cu magazine WooCommerce — aduce produse, clienți și comenzi din WooCommerce în Odoo și exportă stocul Odoo înapoi printr-un cron dedicat (nu în timp real).
+- [deltatech_marketplace_review](deltatech_marketplace_review/index.md): Face vizibile pe comandă motivele pentru care o comandă din marketplace nu se confirmă sau nu pleacă la livrare (mesaj client, ramburs peste limită, total diferit, status nepermis, locker lipsă).
+- [deltatech_marketplace_sale](deltatech_marketplace_sale/index.md): Importă comenzile din marketplace ca comenzi de vânzare Odoo, cu registre de retururi și rambursări, anulare controlată și plăți aplicate pe factură.
+- [deltatech_marketplace_sale_stage](deltatech_marketplace_sale_stage/index.md): Leagă statusurile comenzilor din marketplace de fazele de vânzare (deltatech_sale_stage).
+- [deltatech_marketplace_sale_type](deltatech_marketplace_sale_type/index.md): Clasifică comenzile din marketplace după tip, setat pe backend, pentru analiza vânzărilor pe canale.
+- [deltatech_marketplace_shopify](deltatech_marketplace_shopify/index.md): Sincronizează produse, clienți, comenzi, stoc, retururi și AWB cu Shopify prin GraphQL Admin API.
+- [deltatech_marketplace_trendyol](deltatech_marketplace_trendyol/index.md): Conector Trendyol: produse, comenzi, stoc, preț, retururi și facturi sincronizate prin API-ul V2 și endpoint-uri batch.
+- [deltatech_marketplace_website](deltatech_marketplace_website/index.md): Aduce pe website descrierile, categoriile publice și imaginile de produs din marketplace.
+- [deltatech_marketplace_woocommerce](deltatech_marketplace_woocommerce/index.md): Conector WooCommerce: produse, clienți și comenzi în Odoo, stoc exportat înapoi.
 - [deltatech_mcp_server](deltatech_mcp_server/index.md): Acces guvernat al clienților AI la Odoo: politici pe rol, acces temporar, date mascate, jurnal complet.
 - [deltatech_mentor](deltatech_mentor/index.md): Export al partenerilor, articolelor, facturilor și documentelor de stoc din Odoo pentru importul în WinMentor.
 - [deltatech_move_negative_stock](deltatech_move_negative_stock/index.md): Completează automat transferurile de stoc cu cantitățile necesare pentru corectarea stocului negativ și notifică zilnic managerul locației.
@@ -348,7 +348,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_rma](deltatech_rma/index.md): Retururi comerciale și reclamații de garanție, cu fișă de retur cu cod de bare și recepție în depozit prin scanare.
 - [deltatech_rma_helpdesk](deltatech_rma_helpdesk/index.md): Cerere de retur completă deschisă dintr-un tichet Helpdesk, cu legătură și rezultat pe tichet.
 - [deltatech_rma_lot](deltatech_rma_lot/index.md): Lot sau serie pe cererea de retur, verificat față de livrare și dus pe transferul de retur.
-- [deltatech_rma_marketplace](deltatech_rma_marketplace/index.md): Duce retururile eMAG / Shopify pe fluxul de depozit al retururilor — cererea se deschide la scanarea coletului, cu rambursarea marketplace-ului lângă nota de credit.
+- [deltatech_rma_marketplace](deltatech_rma_marketplace/index.md): Puntea dintre retururile eMAG/Shopify și fluxul RMA: recepție prin scanare, motive mapate, rambursarea lângă nota de credit.
 - [deltatech_rma_withdrawal](deltatech_rma_withdrawal/index.md): Retragerea din contract primește fișa de retur cu cod de bare și recepția prin scanare.
 - [deltatech_rpc_audit](deltatech_rpc_audit/index.md): Loghează apelurile XML-RPC/JSON-RPC externe (IP client real, model, metodă) pentru audit tehnic, configurabil on/off fără dezinstalare.
 - [deltatech_safety_register](deltatech_safety_register/index.md): Registru de aproape-accidente, incidente și accidente de muncă, cu acțiuni corective și LTIFR.
@@ -461,7 +461,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_vehicle_fitment](deltatech_vehicle_fitment/index.md): Compatibilitatea pieselor cu vehicule și utilaje (marcă, serie, model).
 - [deltatech_vehicle_fitment_category](deltatech_vehicle_fitment_category/index.md): Compatibilitatea pieselor cu utilajele preluată din categoriile eCommerce: tip, marcă, serie și model pe categorie.
 - [deltatech_vendor_bill_ubl_review](deltatech_vendor_bill_ubl_review/index.md): Verificarea produselor, prețurilor și TVA-ului unei facturi furnizor importate din UBL XML, înainte de postare.
-- [deltatech_vendor_products](deltatech_vendor_products/index.md): Import și sincronizare a cataloagelor de produse de la furnizori (prețuri, disponibilitate, imagini), cu creare/actualizare automată de produse.
+- [deltatech_vendor_products](deltatech_vendor_products/index.md): Import de cataloage de furnizori: produse, prețuri, disponibilitate și imagini.
 - [deltatech_vendor_products_bepco](deltatech_vendor_products_bepco/index.md): Verificarea prețurilor Bepco prin API-ul TVH, câte un cod de piesă pe rând.
 - [deltatech_vendor_products_granit](deltatech_vendor_products_granit/index.md): Conector specializat pentru importul și sincronizarea catalogului furnizorului Granit în Odoo.
 - [deltatech_vendor_products_kramp](deltatech_vendor_products_kramp/index.md): Conector specializat pentru importul și sincronizarea catalogului furnizorului Kramp în Odoo.

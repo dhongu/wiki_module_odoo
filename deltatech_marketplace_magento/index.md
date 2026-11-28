@@ -1,10 +1,10 @@
 # Conector Marketplace Magento (localizat la `deltatech_marketplace_magento/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_magento`
-- **Versiune:** `19.0.0.0.15`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_magento
+- **Versiune:** `20.0.0.2.0`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_magento
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_magento`
-- **Ultima Ingestie:** `2026-09-11`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,7 +16,7 @@ Conectorul Magento Marketplace este o extensie Odoo dezvoltată de Terrabit care
 - **Sincronizare completă a produselor**:
   - Import de produse configurabile (cu variante) din Magento în Odoo
   - Gestionarea șabloanelor de produs și a variantelor cu atributele lor
-  - Sincronizarea categoriilor de produs și a categoriilor publice
+  - Import al categoriilor Magento ca categorii publice (eCommerce)
   - Suport pentru seturi de atribute și atribute de produs
   - Procesare în loturi a importului de produse, cu paginare
 - **Gestionarea stocurilor**:
@@ -32,7 +32,7 @@ Conectorul Magento Marketplace este o extensie Odoo dezvoltată de Terrabit care
     filtrare provin din cele deja sincronizate prin importul "Sale Stage", astfel încât statusurile
     custom ale magazinului funcționează la fel ca cele native Magento
   - Crearea automată de comenzi de vânzare Odoo pentru achizițiile din Magento
-  - Sincronizarea actualizărilor de stare a comenzilor între sisteme
+  - Actualizările de stare trimise înapoi la Magento (confirmare, expediere, facturare) prin `/erp/order-update`, automat, fără buton; `/erp/order-update` nu face parte din Magento standard — magazinul are nevoie de extensia care o expune, altfel fiecare confirmare, expediere sau factură lasă un job eșuat
   - Suport pentru echipe de vânzări cu asociere de depozit
   - Sincronizarea etapelor de vânzare (stările comenzilor)
   - Suport pentru webhook-uri Magento pentru procesarea comenzilor aproape în timp real
@@ -41,10 +41,13 @@ Conectorul Magento Marketplace este o extensie Odoo dezvoltată de Terrabit care
   - Suport pentru mai mulți procesatori de plată
   - Sincronizarea informațiilor de livrare și de plată
 - **Operațiuni automatizate**:
-  - Procesare în fundal a sarcinilor cu gestionare a cozii de job-uri
+  - Procesare în fundal a sarcinilor, pe motorul de joburi ales în *Marketplace > Configuration > Settings* (`queue_job` sau Background Jobs) — fără un motor instalat, importurile și exporturile nu rulează
   - Paginare și dimensiuni de lot configurabile pentru optimizarea performanței
   - Sarcini de sincronizare programate
-
+- **Prima sincronizare**: se rulează întâi **Import** pe cardul **Sale Stage** (tab-ul **Objects**), apoi se alege în **Import Orders With Status (Magento)** doar statusurile dorite (gol = toate); urmează caracteristicile, categoriile publice, șabloanele de produs, produsele și clienții, iar la final comenzile. Filtrul de status lucrează împreună cu fereastra **Sale Order Days**: o comandă care ajunge în statusul ales după expirarea ferestrei nu mai e importată. Importul de comenzi pune un job per comandă, iar produsul unei linii lipsă se importă din mers.
+- **Import Magento de produse**: doar produse `simple` (cele `configurable` și `virtual` sunt sărite intenționat; variantele vin prin legătura produsului configurabil), cu setul de atribute citit o dată per lot; imaginile se extrag doar dacă **Ignore image** e debifat și **Import basic data** a adus **Media URL**.
+- **Map Products**: leagă produsele Odoo existente de cele Magento cu același SKU (identic, inclusiv majusculele; doar `simple`), fără a le modifica; codul de bare nu se caută, iar produsele fără referință internă sunt raportate ca negăsite.
+- **Monitorizare**: insigna de sănătate pe cardul backend-ului, butoanele **Jobs** și **Run jobs**.
 #### 3. Dependențe
 
 - [deltatech_marketplace](../deltatech_marketplace/index.md)
@@ -56,7 +59,7 @@ Conectorul Magento Marketplace este o extensie Odoo dezvoltată de Terrabit care
 
 #### 4. Componente Cheie
 
-Documentația principală pentru acest modul provine din `readme/DESCRIPTION.md`, conform fluxului de ingestie; prin urmare analiza detaliată a codului pentru această secțiune este omisă. Implementarea tehnică descrisă în Readme se bazează pe API-ul REST Magento și pe un sistem de binding sofisticat:
+Conform fluxului de ingestie, secțiunea se bazează pe `readme/DESCRIPTION.md`. Implementarea tehnică descrisă în Readme se bazează pe API-ul REST Magento și pe un sistem de binding sofisticat:
 
 **Modele**
 
@@ -65,7 +68,7 @@ Documentația principală pentru acest modul provine din `readme/DESCRIPTION.md`
 
 Implementarea urmează modele de procesare asincronă cu cozi de job-uri pentru a gestiona eficient volume mari de date, cu paginare, procesare în fundal prin `with_delay()` și dimensiuni de lot configurabile prin setarea `items_per_page`.
 
-**Mecanismul real de export stoc** (confirmat din `readme/USAGE.md` și `FISA_CONSULTANT.md`, corectat față de o versiune anterioară a paginii care menționa eronat metoda `update_stock`): stocul se exportă către Magento în bulk, printr-un singur apel `POST /inventory/source-items` per backend (`magento_stock_export`, pe `marketplace.product`), cu toate SKU-urile afectate, cantitatea și starea de stoc, întotdeauna pe sursa MSI `default` a Magento (fixă, neconfigurabilă — Multi-Source Inventory cu mai multe surse nu este suportat). Exportul este cablat prin lanțul comun al framework-ului (`_cron_export_stock` / `_cron_export_all_stock` pe `marketplace.backend`, `export_stock_for_items` / `stock_export` pe binder-ul item-ului), necesită bifa **Can Update Stock** activată pe backend și funcționează doar când **Stock Level** rămâne pe valoarea implicită `product` (Product Variant) — pe `template` (Product Template), binder-ul de șablon nu are `magento_stock_export`, iar exportul eșuează tăcut (doar log, fără eroare vizibilă). Fișierul propriu `models/backend_stock.py` al modulului (`magento_cron_export_stock` și altele similare) este cod mort, necablat la niciun cron. Prețul se exportă similar, în bulk, prin `POST /products/base-prices`, cu TVA inclus. Nu există import de stoc sau preț dinspre Magento către Odoo — ambele fluxuri sunt strict Odoo → Magento.
+**Mecanismul real de export stoc** (din `readme/USAGE.md` și `FISA_CONSULTANT.md`): stocul se exportă către Magento în bulk, printr-un singur apel `POST /inventory/source-items` per backend (`magento_stock_export`, pe `marketplace.product`), cu toate SKU-urile afectate, cantitatea și starea de stoc, întotdeauna pe sursa MSI `default` a Magento (fixă, neconfigurabilă — Multi-Source Inventory cu mai multe surse nu este suportat). Exportul este cablat prin lanțul comun al framework-ului (`_cron_export_stock` / `_cron_export_all_stock` pe `marketplace.backend`, `export_stock_for_items` / `stock_export` pe binder-ul item-ului), necesită bifa **Can Update Stock** activată pe backend și funcționează doar când **Stock Level** rămâne pe valoarea implicită `product` (Product Variant) — pe `template` (Product Template), binder-ul de șablon nu are `magento_stock_export`, iar exportul eșuează tăcut (doar log, fără eroare vizibilă). Fișierul propriu `models/backend_stock.py` al modulului (`magento_cron_export_stock` și altele similare) este cod mort, necablat la niciun cron (confirmat și în `readme/USAGE.md`). Prețul se exportă similar, în bulk, prin `POST /products/base-prices`, cu TVA inclus. Nu există import de stoc sau preț dinspre Magento către Odoo — ambele fluxuri sunt strict Odoo → Magento.
 
 **Mapare câmpuri produs**
 
@@ -93,4 +96,5 @@ Documentată integral în `readme/USAGE.md` (secțiunea „Product field mapping
 
 - [deltatech_marketplace_purchase](../deltatech_marketplace_purchase/index.md): extensie de aprovizionare a aceleiași suite marketplace; nu este dependență, dar completează fluxul de comenzi de cumpărare.
 - [deltatech_marketplace_emag](../deltatech_marketplace_emag/index.md): conector frate pentru un alt marketplace (eMAG), bazat pe aceeași infrastructură marketplace.
-- [deltatech_marketplace_extended](../deltatech_marketplace_extended/index.md): extinderi suplimentare ale funcționalității de bază marketplace.
+- [deltatech_marketplace_extended](../deltatech_marketplace_extended/index.md): conector frate pentru platforma Extended.ro, pe același cadru marketplace.
+- [deltatech_marketplace_queue_job](../deltatech_marketplace_queue_job/index.md) / [deltatech_marketplace_background_job](../deltatech_marketplace_background_job/index.md): motoarele de joburi pe care rulează importurile și exporturile în fundal.

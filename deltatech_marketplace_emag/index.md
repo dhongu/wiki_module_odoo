@@ -1,17 +1,17 @@
 # EMAG Marketplace Connector (localizat la `deltatech_marketplace_emag/index.md`)
 
 - **Nume Tehnic:** `deltatech_marketplace_emag`
-- **Versiune:** `19.0.2.8.0`
-- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/19.0/deltatech_marketplace_emag
+- **Versiune:** `20.0.2.20.1`
+- **Cale:** https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_emag
 - **Cale Locală:** `odoo-addons/bitshop_marketplace/deltatech_marketplace_emag`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
 Un cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenzi și stoc ținute manual în două locuri — și, spre deosebire de un magazin propriu, prețul afișat pe eMAG nu e neapărat cel pe care îl vede primul cumpărătorul: o ofertă mai bine clasată pe același produs câștigă butonul „Adaugă în coș" (buy box). Modulul închide acest gol pentru piața din România specific: produsele, categoriile (cu caracteristicile lor obligatorii), comenzile, retururile și stocul circulă automat între Odoo și eMAG, iar adresele de livrare cu geografia românească (județe, localități, sectoarele Bucureștiului) se potrivesc automat cu identificatorii eMAG. Conectorul se leagă de același framework comun (`deltatech_marketplace`) folosit și de conectorii Shopify, WooCommerce sau Magento, deci adăugarea eMAG lângă un canal deja folosit nu înseamnă învățarea unui al doilea sistem.
 
-Începând cu `19.0.2.5.0`, emiterea propriu-zisă a AWB-urilor (etichete, urmărire, conturile de curier) a fost mutată într-un modul separat, [deltatech_marketplace_emag_delivery](../deltatech_marketplace_emag_delivery/index.md), care se instalează automat alături de acest conector oriunde e prezent `deltatech_delivery` — un seller care livrează cu propriul curier nu mai primește ecranele eMAG de AWB.
+Emiterea propriu-zisă a AWB-urilor (etichete, urmărire, conturile de curier) se face într-un modul separat, [deltatech_marketplace_emag_delivery](../deltatech_marketplace_emag_delivery/index.md), care se instalează automat alături de acest conector oriunde e prezent `deltatech_delivery` — un seller care livrează cu propriul curier nu mai primește ecranele eMAG de AWB.
 
 #### 2. Funcționalități Cheie
 
@@ -27,11 +27,12 @@ Un cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenz
   - Import comenzi din eMAG aflate în starea `NEW`, `IN_PROGRESS` sau `PREPARED` (filtru fix în cod, valabil și pe calea webhook) — comenzile `CANCELED`, `FINALIZED` sau `RETURNED` nu sunt aduse pe această cale
   - Creare automată a comenzilor de vânzare în Odoo, cu județe, localități și sectoarele Bucureștiului mapate la geografia eMAG
   - Confirmarea comenzii la import urmează setarea globală **Confirm Sale Order** a backend-ului; dezactivată, comanda rămâne ca ofertă trimisă, de confirmat manual
-  - Comenzile noi sunt confirmate automat înapoi la eMAG (`/order/acknowledge`) dacă bifa **Active On Write** e activă; NU există o sincronizare generică de status înapoi spre eMAG, în afara acestui acknowledge și a push-ului de factură
-  - O comandă deja importată care trece ulterior în `CANCELED` pe eMAG **nu** se anulează automat — necesită un **Reimport** manual pe acea comandă; o comandă cu `cancellation_request` și fără picking făcut e anulată automat la orice import, inclusiv webhook
+  - Comenzile noi sunt confirmate automat înapoi la eMAG (`/order/acknowledge`) dacă bifa **Active On Write** e activă; webhook-ul eMAG (**Order callback URL**, link-ul din cardul `orders`, cu **Security Token** propriu per backend) importă comanda pe loc, cu reluare în coadă dacă importul eșuează
+  - **Starea eMAG a comenzii** (**eMAG Status**, **eMAG Status Since**) se păstrează pe comanda de marketplace; importul periodic citește și comenzile anulate, finalizate sau returnate de eMAG în ultima zi: cele `CANCELED` se anulează în Odoo (după setarea **Cancel Sale Order**), pentru celelalte se înregistrează doar starea; o comandă cu `cancellation_request` și fără picking făcut e anulată automat la orice import, inclusiv webhook
+  - **Starea comenzii trimisă înapoi la eMAG** (`/order/save`), pentru comenzile onorate de vânzător (tip 3; cele onorate de eMAG nu pot fi modificate prin API) și doar cu **Active On Write**: **Prepared** când toate transferurile de ieșire sunt făcute, **Finalized** când o factură postată e deja atașată pe eMAG (inclusiv când factura se trimite ulterior); **Cancelled** doar din dialogul de anulare, cu **Cancel & Notify Marketplace** și motivul ales în **eMAG Cancellation Reason** (fără valoare implicită), respectiv motivul 24 „By customer request" pentru o cerere de anulare a clientului; **Cancel in Odoo Only** și anularea în masă nu trimit nimic. Comanda e recitită de la eMAG înainte de fiecare modificare și retrimisă integral, cu doar starea schimbată; nu se trimite nimic dacă eMAG are deja starea sau una ulterioară. Anularea unei comenzi finalizate e acceptată de eMAG doar în primele 48 de ore
   - **Vouchere eMAG** (carduri cadou): partea suportată de eMAG ajunge pe o linie de comandă cu valoare, pe produsul **Voucher Product** (fără taxă, cotă TVA 0 — eMAG decontează diferența separat, printr-un „decont de voucher"); partea suportată de vânzător merge pe **Discount Product**, cu TVA, ca o reducere comercială obișnuită; un voucher mixt primește ambele linii; la livrare prin locker, partea alocată taxei de transport nu apare pe factură
 - **Retururi (RMA)**: `/rma/read` alimentează registrul comun `marketplace.return.request` din `deltatech_marketplace_sale` — status, ce a cerut cumpărătorul, motivul, liniile returnate cu cantități, legătura la comandă și la linia pe care a fost vândut articolul; se păstrează și tipul de fulfilment eMAG (**Fulfilled by eMAG** / **Fulfilled by seller**). Fereastra de import e limitată pe dată, nu pe status (API-ul RMA acceptă un singur status de filtru); o cerere deja în bază e re-citită la fiecare import până ajunge într-o stare finală (Refuzat/Anulat/Finalizat) — webhook-ul eMAG nu anunță acele tranziții. **Doar citire, intenționat**: `/rma/save` există, dar documentația eMAG nu clarifică cine trebuie să deschidă un retur, așa că modulul nu scrie niciodată înapoi; nu se creează picking de retur, notă de credit sau rambursare din această citire — acelea rămân manuale (vezi și puntea [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md), pentru retururile care trebuie să treacă prin fluxul de depozit).
-- **Rambursări** (19.0.2.8.0): un RMA cu `return_type = 3` care are `refund_value` pe produse aduce o rambursare în `marketplace.refund`, legată de retur — câte o linie pe produs, total însumat (*Total Computed*), moneda și contul bancar al cumpărătorului. `refund_value` e text opțional, parsat defensiv; un RMA fără sume nu aduce rambursare. `return_tax_value` (taxa suportată de client la un retur refuzat) nu se mapează.
+- **Rambursări**: un RMA cu `return_type = 3` care are `refund_value` pe produse aduce o rambursare în `marketplace.refund`, legată de retur — câte o linie pe produs, total însumat (*Total Computed*), moneda și contul bancar al cumpărătorului. `refund_value` e text opțional, parsat defensiv; un RMA fără sume nu aduce rambursare. `return_tax_value` (taxa suportată de client la un retur refuzat) nu se mapează.
 - **Integrare stocuri**:
   - Export periodic, configurabil, al nivelurilor de stoc către eMAG (nu în timp real), prin API-ul „light" de ofertă (`POST /offer/save`), în loturi de 50 de oferte per request — nu câte un `PATCH` per ofertă — pentru a nu epuiza bugetul comun de 3 cereri/secundă al contului (partajat cu AWB și RMA); un lot respins de eMAG e reluat ofertă cu ofertă, ca o singură eroare să nu blocheze restul lotului
   - Un stoc Odoo negativ se trimite ca 0, nu e respins de eMAG
@@ -42,11 +43,12 @@ Un cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenz
   - **Atenție**: dacă Min/Max sale price rămân necompletate (0) pe un produs cu Auto Price activ și rang cunoscut, cron-ul nu sare produsul — trimite efectiv prețul 0 la eMAG (și îl scrie înapoi în Odoo); limitele trebuie completate ÎNAINTE de activarea Auto Price
   - Re-ajustare recursivă limitată la 10 pași per rulare, ca să nu ruleze necontrolat
 - **Facturare**:
+  - Facturile și notele de credit se trimit câte o dată fiecare; înainte de trimitere comanda e citită de la eMAG și o factură deja atașată sub același nume e sărită
   - Push automat al unui **link** către PDF-ul facturii din portalul Odoo (nu conținutul PDF-ului) când o factură legată de o comandă eMAG e validată, dacă backend-ul are activă bifa **Enable Order Push Invoice** ȘI **Active On Write**; cere ca `web.base.url` să fie public — nu e depunere e-Factura/SPV
 - **Plăți**:
   - Metodele de plată eMAG sunt mapate la payment provideri Odoo; metodele nerecunoscute cad pe Wire Transfer, ca o comandă să nu rămână fără metodă de plată
   - **Fără borderou/decontare prin API**: eMAG Marketplace API (v4.x) nu expune nicio resursă pentru raportul de decontare/comisioane — borderoul se obține doar prin descărcare manuală (Excel/CSV) din panoul de vânzător eMAG (Financiar > Rapoarte); conectorul nu îl importă/reconciliază automat
-- **Geografie românească**: import al județelor (create automat ca `res.country.state`) și al localităților/sectoarelor Bucureștiului de pe `/locality`, prin butonul **Get city** de pe metoda de livrare eMAG (din `deltatech_marketplace_emag_delivery`) — pas manual, unic per backend, obligatoriu înainte de primul AWB
+- **Geografie românească**: import al județelor (create automat ca `res.country.state`) și al localităților/sectoarelor Bucureștiului de pe `/locality`, prin butonul **Get city** de pe metoda de livrare eMAG (din `deltatech_marketplace_emag_delivery`) — pas manual, unic per backend, obligatoriu înainte de primul AWB; se recomandă instalarea în prealabil a [l10n_ro_city](../l10n_ro_city/index.md), care încarcă lista oficială de localități și dă importului o referință consistentă
 - **Operațiuni programate**:
   - Sincronizare în fundal prin job-uri cron și coada de job-uri comună; joburile de import paginat, webhook-ul de rezervă, acknowledge-ul comenzii și exportul de măsurători folosesc `identity_key`, ca un import reluat să nu dubleze job-uri
   - Intervale de sincronizare configurabile; cron-ul de auto-pricing pe buy box vine dezactivat implicit
@@ -64,10 +66,12 @@ Un cont de seller eMAG lângă Odoo, fără conector, înseamnă catalog, comenz
 
 #### 4. Componente Cheie
 
-Modulul este construit peste cadrul marketplace al Deltatech și implementează adaptoare și binder-e specifice cerințelor API ale eMAG. Conform documentației din `readme/DESCRIPTION.md`, implementarea urmează o abordare modulară cu separarea responsabilităților:
+Modulul este construit peste cadrul marketplace al Deltatech și implementează adaptoare și binder-e specifice cerințelor API ale eMAG. Conform `readme/DESCRIPTION.md`, implementarea urmează o abordare modulară cu separarea responsabilităților:
 
 - **Backend Adapter**: gestionează comunicarea API cu eMAG (`https://marketplace-api.emag.ro/api-3`), autentificare Basic Auth (nu API key, nu OAuth); rate-limiting-ul (3 apeluri/secundă cumulat, per cont eMAG) e generic, moștenit din `deltatech_marketplace` (token bucket) — partajat între catalog, comenzi, stoc, RMA și AWB.
-- **Modele de binding (binding)**: leagă entitățile Odoo de omoloagele lor din eMAG — binding de produs (`binding_product.py`), comandă (`binding_sale_order.py`), categorie (`binding_product_category.py`), cerere de retur (`binding_return_request.py`) și metodă de plată (`binding_payment_acquirer.py`); AWB și transportator eMAG au fost mutate în `deltatech_marketplace_emag_delivery`.
+- **Modele de binding (binding)**: leagă entitățile Odoo de omoloagele lor din eMAG — binding de produs (`marketplace.product`), comandă (`marketplace.sale.order`, cu starea eMAG și vouchere), categorie (`marketplace.product.category`), cerere de retur (`marketplace.return.request`), metodă de plată (`marketplace.payment.provider`) și șablon de produs; extinde și `res.city` (identificatori eMAG) și `sale.order`. AWB și transportator eMAG sunt în `deltatech_marketplace_emag_delivery`.
+- **Wizard de anulare**: `marketplace.sale.order.cancel` extins (`view_marketplace_sale_order_cancel_form_emag`) cu **eMAG Cancellation Reason**, ca anularea să poată fi trimisă la eMAG.
+- **Vizualizări**: `view_marketplace_backend_form` (setări eMAG, inclusiv produsele de voucher), `view_marketplace_product_form`/`tree`/`search` (oferta eMAG, prețuri buy box) și `view_marketplace_sale_order_form`/`tree`/`search` (starea eMAG a comenzii).
 - **Servicii de sincronizare**: gestionează fluxul de date între sisteme; webhook-ul care primește push-uri de comenzi de la eMAG este un controller comun din `deltatech_marketplace`, nu unul definit de acest modul.
 - **Job-uri programate**: automatizează sincronizarea în fundal — `ir_cron_emag_set_price` (definit în `data/ir_cron_data.xml`) rulează auto-pricing-ul pe buy box (dezactivat implicit).
 
@@ -117,6 +121,7 @@ Din `binding_return_request.py`: cele șapte statusuri eMAG sunt mapate pe vocab
 - [deltatech_marketplace_payment](../deltatech_marketplace_payment/index.md): maparea metodei de plată eMAG către payment provider Odoo (fallback pe Wire Transfer).
 - [deltatech_marketplace_website](../deltatech_marketplace_website/index.md): link-ul de produs eMAG folosește rutele website-ului Odoo la export.
 - [deltatech_delivery](../deltatech_delivery/index.md): contractul de capabilități al curierilor (`cities`, `ship`, `tracking`) folosit de metoda de livrare eMAG.
-- [deltatech_marketplace_emag_delivery](../deltatech_marketplace_emag_delivery/index.md): emiterea efectivă a AWB-urilor (etichete PDF/ZPL, urmărire, conturi de curier), scoasă din acest modul în `19.0.2.5.0`; se instalează automat alături de acest conector oriunde e prezent `deltatech_delivery`.
+- [deltatech_marketplace_emag_delivery](../deltatech_marketplace_emag_delivery/index.md): emiterea efectivă a AWB-urilor (etichete PDF/ZPL, urmărire, conturi de curier), scoasă din acest modul; se instalează automat alături de acest conector oriunde e prezent `deltatech_delivery`.
 - [deltatech_rma_marketplace](../deltatech_rma_marketplace/index.md): puntea care duce retururile eMAG importate aici (`marketplace.return.request`) pe fluxul de depozit al [deltatech_rma](../deltatech_rma/index.md) — recepție prin scanare, verificare, transfer de retur, notă de credit — fără ca acest conector să scrie vreodată înapoi în eMAG.
+- [l10n_ro_city](../l10n_ro_city/index.md): lista oficială a localităților României, recomandată înaintea conectorului pentru potrivirea curată a județelor, localităților și sectoarelor cu identificatorii eMAG.
 - `l10n_ro_edi` / `l10n_ro_edi_stock`: e-Factura (SPV) și eTransport — rămân neatinse de acest conector; push-ul de factură eMAG e doar un link către PDF, nu o depunere SPV.
