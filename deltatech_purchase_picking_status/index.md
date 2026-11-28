@@ -1,29 +1,40 @@
 # Purchase Picking Status (localizat la `deltatech_purchase_picking_status/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_picking_status`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_picking_status`
+- **Versiune:** `20.0.2.0.1`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_purchase_picking_status
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_picking_status`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul **Purchase Picking Status** adaugă pe comanda de achiziție un indicator sintetic al stadiului livrărilor asociate, calculat automat pe baza transferurilor de stoc (pickings) legate de acea comandă. Astfel, un agent de achiziții poate vedea dintr-o privire dacă o comandă este complet recepționată/finalizată sau dacă mai are livrări în curs, fără a fi nevoit să deschidă fiecare transfer în parte.
+Modulul completează statusul standard de recepție al comenzii de achiziție (Nerecepționat, Parțial recepționat, Complet recepționat), calculat de Odoo din recepții. Un agent de achiziții vede stadiul recepțiilor direct în listele de cereri de ofertă și comenzi, le poate filtra și grupa după el, iar schimbările de status rămân în istoricul comenzii.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă statusul de livrare (picking status) pe comanda de achiziție
-- Marchează statusul ca **Done** (finalizat) atunci când toate transferurile asociate sunt în stare `done` sau `cancel`
-- Marchează statusul ca **In Progress** (în curs) atunci când cel puțin un transfer asociat nu este încă în stare `done` sau `cancel`
+- Statusul de recepție este afișat implicit în listele de cereri de ofertă și de comenzi de achiziție.
+- Filtre de căutare *Recepție în curs*, *Parțial recepționat* și *Complet recepționat*, plus grupare după statusul de recepție.
+- Schimbările de status sunt urmărite (tracking) în chatter-ul comenzii.
+- Până la versiunea 19 modulul calcula propriul „Delivery Status” (Done / In Progress); la actualizare, filtrele salvate, șabloanele de export și gruparea pe câmpul vechi sunt mutate pe statusul standard de recepție.
 
 #### 3. Dependențe
 
 - `purchase_stock`
+- `mail_tracking`
 
 #### 4. Componente Cheie
 
-Documentația acestei secțiuni se bazează pe fișierul `readme/DESCRIPTION.md`, care nu detaliază componentele tehnice individuale. Conform fluxului de ingestie, analiza codului pentru modele, vizualizări și acțiuni automate a fost omisă, deoarece Readme-ul este prezent și nu solicită explicit această analiză.
+Descrierea modulului (`readme/DESCRIPTION.md`) nu detaliază componente tehnice individuale; analiza suplimentară a codului a fost omisă conform schemei.
+
+**Modele**
+
+- `purchase.order`: câmpul standard `receipt_status` primește `tracking=True`.
+
+**Vizualizări**
+
+- `view_rfq_tree_picking_status`, `view_purchase_tree_picking_status`: coloana de status în liste.
+- `view_purchase_order_filter_picking_status`: filtrele de căutare după statusul recepției.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale documentate către alte module cu pagină în wiki.
+Nu au fost identificate conexiuni funcționale către alte module cu pagină în wiki.

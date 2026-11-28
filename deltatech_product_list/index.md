@@ -1,21 +1,23 @@
-# Listă de Produse (localizat la `deltatech_product_list/index.md`)
+# Liste de Produse (localizat la `deltatech_product_list/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_list`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_list
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_product_list
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_list`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul permite definirea de liste de produse — colecții denumite de produse selectate printr-un filtru (domeniu) configurabil. În loc să întrețină manual o listă fixă de produse, utilizatorul descrie odată criteriile (de exemplu „produsele vandabile" sau o anumită categorie), iar lista returnează automat produsele care le îndeplinesc, până la o limită stabilită. Modulul oferă structura de bază pe care alte module o folosesc pentru a expune grupuri de produse, fără să introducă el însuși o funcționalitate vizibilă suplimentară.
+Fluxurile de produse (feed-urile) și exporturile similare au nevoie de o listă de produse definită printr-o regulă, care rămâne la zi când se adaugă produse. Modulul păstrează o astfel de regulă ca *Listă de produse* reutilizabilă, citită de alte module.
 
 #### 2. Funcționalități Cheie
 
-- Definirea de liste de produse, fiecare cu un nume propriu.
-- Selectarea produselor pe baza unui filtru (domeniu) configurabil, în loc de selecție manuală.
-- Stabilirea unei limite a numărului de produse returnate de listă.
-- Listele pot fi arhivate (dezactivate) fără a fi șterse.
+- **Regulă, nu produse**: o listă are denumire, un filtru de produse (*Produse*) și o *Limită*. Filtrul se construiește cu editorul de domeniu pe variante de produs; o listă nouă pornește cu filtrul pe produsele vandabile (`sale_ok`).
+- **Limită**: numărul maxim de produse, implicit 80. Modulul nu o aplică el însuși; o aplică modulul care folosește lista.
+- **Arhivare**: lista poate fi arhivată, iar formularul afișează atunci panglica *Arhivat*.
+- **Companie**: lista nouă primește compania curentă; o regulă multi-companie arată listele companiilor active și pe cele fără companie.
+- Meniul *Product List* se află în catalogul de produse din Vânzări. Toți utilizatorii interni pot citi listele; utilizatorii din `sales_team.group_sale_salesman` le pot crea, modifica și șterge.
 
 #### 3. Dependențe
 
@@ -26,14 +28,16 @@ Modulul permite definirea de liste de produse — colecții denumite de produse 
 
 **Modele**
 
-- `product.list`: Listă de produse denumită. Câmpuri principale: `name` (denumire), `products_domain` (filtrul de tip domeniu care selectează produsele, implicit `[["sale_ok", "=", True]]`), `limit` (numărul maxim de produse, implicit 80), `active` (arhivare) și `company_id` (compania).
+- `product.list`: `name`, `products_domain` (filtrul, implicit `[["sale_ok", "=", True]]`), `limit` (implicit 80), `active`, `company_id`.
 
 **Vizualizări**
 
-- `view_product_list_tree`: Vizualizare listă cu denumirea listelor de produse.
-- `view_product_list_form`: Vizualizare formular pentru configurarea unei liste — denumire, filtru de produse (widget `domain` pe `product.product`) și limită; afișează un indicator „Archived" pentru listele dezactivate.
-- `action_product_list` / `menu_product_list`: Acțiune și element de meniu „Product List" plasat în catalogul de produse din Vânzări (`sale.product_menu_catalog`).
+- `views/product_list_view.xml`: lista, formularul (widget de domeniu pe `product.product`, panglica *Arhivat*), acțiunea și meniul din catalogul de produse din Vânzări.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu există.
 
 #### 5. Conexiuni
 
-- [deltatech_feed](../deltatech_feed/index.md): folosește listele de produse definite aici ca sursă de produse pentru generarea fluxurilor (feed-uri); depinde direct de acest modul.
+- [deltatech_feed](../deltatech_feed/index.md): citește filtrul și limita listelor definite aici ca sursă de produse pentru fluxuri.

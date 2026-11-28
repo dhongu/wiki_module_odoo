@@ -1,18 +1,22 @@
-# Products Category Color (localizat la `deltatech_product_category_color/index.md`)
+# Culori pe Categoriile de Produse (localizat la `deltatech_product_category_color/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_category_color`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_category_color`
+- **Versiune:** `20.0.1.0.3`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_product_category_color
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_category_color`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul adaugă o culoare distinctă fiecărei categorii de produse, culoare care se regăsește apoi pe operațiunile de stoc. Astfel, la o simplă privire asupra unui transfer (recepție, livrare, transfer intern), utilizatorul poate identifica vizual din ce categorii fac parte produsele mișcate, fără a mai deschide fiecare linie în parte. Valoarea de business constă în viteza de citire și triere a operațiunilor de stoc, mai ales în depozite cu multe categorii de produse.
+Modulul adaugă o culoare fiecărei categorii de produse și afișează, pe cardurile transferurilor în vizualizarea Kanban, etichete colorate cu categoriile produselor din transfer. Operatorul de depozit vede dintr-o privire ce fel de marfă conține un transfer, fără să deschidă documentul. Culoarea este doar informație de afișare, fără efect asupra stocului sau contabilității.
 
 #### 2. Funcționalități Cheie
 
-- Adaugă o culoare pe categoria de produse.
+- Câmpul de culoare (**Color Index**) pe categoria de produse, cu valoare aleatorie implicită.
+- Etichete colorate cu categoriile produselor pe cardurile Kanban ale transferurilor.
+- Modificarea culorii cere dreptul **Produse: Creează**; etichetele sunt vizibile utilizatorilor **Inventar: Utilizator**.
+- Detaliile de utilizare sunt în fișa consultantului.
 
 #### 3. Dependențe
 
@@ -21,8 +25,20 @@ Modulul adaugă o culoare distinctă fiecărei categorii de produse, culoare car
 
 #### 4. Componente Cheie
 
-*Secțiune populată din `readme/DESCRIPTION.md`; analiza detaliată a codului a fost omisă conform fluxului de ingestie.*
+**Modele**
+
+- `product.category`: câmpul `color`.
+- `stock.picking`: câmpul calculat `categ_ids` cu categoriile produselor din transfer.
+
+**Vizualizări**
+
+- `views/product_category_view.xml`: câmpul de culoare pe categorie.
+- `views/stock_picking_view.xml`: etichetele colorate pe cardul Kanban al transferului.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni către alte module documentate în acest wiki.
+- [deltatech_product_category_group](../deltatech_product_category_group/index.md): modul înrudit, tot pe categoriile de produse și transferurile de stoc, fără dependență declarată.

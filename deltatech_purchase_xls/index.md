@@ -1,22 +1,23 @@
-# Deltatech Purchase XLS (localizat la `deltatech_purchase_xls/index.md`)
+# Purchase XLS Import / Export (localizat la `deltatech_purchase_xls/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_xls`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_xls`
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_purchase_xls
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_xls`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul **Deltatech Purchase XLS** oferă o modalitate rapidă de a gestiona liniile comenzilor de achiziție prin import și export din/în fișiere Excel. Este util în special pentru achiziții cu multe articole, unde introducerea manuală a liniilor ar consuma mult timp, permițând utilizatorilor să pregătească sau să editeze listele de aprovizionare direct într-un fișier Excel, în afara Odoo.
+Modulul încarcă liniile unei cereri de ofertă dintr-un fișier Excel și exportă în Excel liniile comenzilor de achiziție, astfel încât listele lungi de la furnizori să nu mai fie tastate manual.
 
 #### 2. Funcționalități Cheie
 
-- Import direct al liniilor de comandă de achiziție dintr-un fișier Excel.
-- Export al liniilor existente ale unei comenzi de achiziție într-un fișier Excel, pentru editare ulterioară sau raportare externă.
-- Simplifică procesul de creare a comenzilor de achiziție voluminoase, cu multe articole.
-- Interfață simplă și flexibilă pentru lucrul cu date în masă în procesul de aprovizionare.
-- Butoane dedicate ("Import Lines from Excel" / "Export Lines to Excel") direct pe formularul comenzii de achiziție.
+- **Import linii din Excel**: pe o comandă în starea *RFQ*, meniul Acțiuni oferă **Import Purchase Line**; wizardul citește prima foaie a unui `.xlsx` și adaugă câte o linie pe rând. Opțiuni: *Fields* (coloanele, implicit `product_code,default_code,product_name,quantity,price,uom_name`), *Header row*, *Search by internal code*, *Create missing product* (produs stocabil cu preț de la furnizor) și *Is amount* (prețul e valoarea liniei).
+- Produsele se găsesc după codul furnizorului, apoi, opțional, după referința internă; un cod ambiguu sau o unitate de măsură diferită oprește importul; fără coloană de preț se folosește lista de prețuri a furnizorului.
+- **Export linii**: din meniul Print, **Export Purchase Lines** produce `purchase_order.xlsx` (Code, Internal Code, Name, Qty, Price, Unit of Measure).
+- Butonul inteligent **Order lines** deschide liniile comenzii; importul standard de înregistrări de acolo actualizează liniile existente, potrivite după produs.
+- Limitări: rândurile fără cod de furnizor sau cu preț nenumeric sunt ignorate fără mesaj; wizardul adaugă mereu linii noi; importul din lista de linii eșuează dacă același produs apare pe mai multe linii. Pașii detaliați sunt în fișa consultantului.
 
 #### 3. Dependențe
 
@@ -24,8 +25,18 @@ Modulul **Deltatech Purchase XLS** oferă o modalitate rapidă de a gestiona lin
 
 #### 4. Componente Cheie
 
-Documentația acestei secțiuni se bazează pe fișierul `readme/DESCRIPTION.md`, care nu detaliază componentele tehnice individuale. Conform fluxului de ingestie, analiza codului pentru modele, vizualizări și acțiuni automate a fost omisă, deoarece Readme-ul este prezent și nu solicită explicit această analiză.
+**Modele**
+
+- `import.purchase.line`: wizardul de import al liniilor din Excel.
+- `export.purchase.line`: wizardul de export în Excel.
+- `purchase.order`: buton inteligent pentru liniile comenzii (`show_order_lines`).
+- `purchase.order.line`: import standard adaptat (`load`, `_parse_import_data`).
+
+**Vizualizări**
+
+- `purchase_order_form`: acțiunile de import/export și butonul Order lines.
+- `purchase_order_line_tree`: lista liniilor comenzii pentru import.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale documentate către alte module cu pagină în wiki.
+Nu au fost identificate conexiuni funcționale către alte module cu pagină în wiki.

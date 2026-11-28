@@ -1,22 +1,24 @@
 # Report Packaging (localizat la `deltatech_report_packaging/index.md`)
 
 - **Nume Tehnic:** `deltatech_report_packaging`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_report_packaging
+- **Versiune:** `20.0.1.3.4`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_report_packaging
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_report_packaging`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul calculează automat cantitățile de materiale de ambalare (plastic, lemn, hârtie, PET, sticlă, metal, aluminiu) folosite pentru produsele facturate, pornind de la o configurare a materialelor pe fiecare produs. La confirmarea unei facturi, cantitățile sunt recalculate pe baza liniilor facturii, iar dintr-o listă de facturi se poate genera un raport agregat cu totalul materialelor de ambalare consumate.
+Modulul calculează cantitățile de materiale de ambalare folosite pentru produsele facturate și oferă, din lista de facturi, un raport agregat al acestora. Fiecare material se configurează cu o cantitate de achiziție și una de vânzare, pentru produsele ambalate într-un fel de furnizor și în alt fel la expediere: facturile de furnizor folosesc prima cantitate, cele către clienți pe a doua.
 
 #### 2. Funcționalități Cheie
 
-- Configurarea materialelor de ambalare (tip material și cantitate) direct pe fișa produsului (filă Inventar).
-- Recalcularea automată a materialelor de ambalare pe factură la postarea acesteia (`action_post`).
-- Buton de reîmprospătare manuală a materialelor de ambalare pe factură, pentru cazul în care liniile facturii s-au modificat.
-- Filă dedicată "Packaging materials" pe formularul facturii, cu lista materialelor și cantităților calculate.
-- Wizard de raport (acționabil din lista de facturi) care agregă cantitățile de materiale de ambalare pentru facturile selectate.
+- Configurarea materialelor de ambalare (tip material, cantitate de achiziție și cantitate de vânzare, per unitate) în secțiunea **Packaging materials** a fișei produsului; un material folosit într-o singură direcție are cealaltă cantitate pe zero.
+- Configurare implicită pe categoria de produs: un produs fără materiale proprii le folosește pe cele ale categoriei sale sau ale celei mai apropiate categorii părinte care are configurare. Nu se copiază nimic pe produs, deci o modificare pe categorie se aplică imediat produselor ei.
+- Opțiunea **No packaging material** pe produs oprește moștenirea pentru produsele care nu folosesc deloc ambalaj; un produs cu materiale proprii și le păstrează.
+- Fila **Packaging materials** pe factură: cantitatea fiecărui material = cantitatea facturată înmulțită cu cantitatea configurată (de achiziție pe facturi/retururi de furnizor, de vânzare pe facturi/note de credit către clienți); materialele cu cantitate zero în direcția respectivă nu apar.
+- Recalcularea cantităților la postarea facturii, atât timp cât factura este în actualizare automată.
+- Corecție manuală: editarea sau ștergerea unei cantități scoate factura din actualizarea automată (comutatorul **Auto-update packaging materials**), astfel încât corecția supraviețuiește validării; butonul **Refresh** recalculează cantitățile și repune factura în actualizare automată.
+- Raport agregat: din lista de facturi, selectând mai multe facturi, se rulează acțiunea de raport al materialelor de ambalare.
 
 #### 3. Dependențe
 
@@ -27,23 +29,23 @@ Modulul calculează automat cantitățile de materiale de ambalare (plastic, lem
 
 **Modele**
 
-- `product.template` (extindere): adaugă `packaging_material_ids`, materialele de ambalare configurate pentru un produs.
-- `packaging.product.material`: linie de configurare material-cantitate legată de un `product.template`.
-- `account.move` (extindere): adaugă `packaging_material_ids` și metoda `refresh_packaging_material()` care recalculează materialele din liniile facturii; suprascrie `action_post()` pentru a declanșa recalcularea automată la postare (doar pentru facturi, nu pentru înregistrări contabile de tip `entry`).
-- `packaging.invoice.material`: linie cu cantitatea unui tip de material calculată pentru o factură.
-- `packaging.report.material` (tranzitoriu, wizard): agregă materialele de ambalare pentru facturile selectate (`active_ids` din context) și le afișează în raport.
-- `packaging.report.material.line` (tranzitoriu): liniile de rezultat ale raportului wizard.
+- `packaging.product.material`: linie de configurare (tip material, cantitate de achiziție, cantitate de vânzare) legată de un produs sau de o categorie de produs.
+- `product.template` (extindere): `packaging_material_ids`, indicatorul `packaging_material_no_inherit` și lista calculată a materialelor moștenite de la categorie.
+- `product.category` (extindere): `packaging_material_ids`, materialele implicite pentru produsele categoriei.
+- `account.move` (extindere): `packaging_material_ids`, comutatorul de actualizare automată și recalcularea materialelor la postare.
+- `packaging.invoice.material`: cantitatea unui tip de material calculată pentru o factură.
+- `packaging.report.material` și `packaging.report.material.line` (tranzitorii): wizardul raportului agregat și liniile sale de rezultat.
 
 **Vizualizări**
 
-- `product_template_form_view`: extinde formularul produsului cu grupul "Packaging materials" în fila Inventar.
-- `account_move_form_view`: extinde formularul facturii cu fila "Packaging materials" (ascunsă pentru mișcări contabile de tip `entry`) și butonul "Refresh".
-- `invoice_packaging_material_form`: formular wizard cu două stări (`choose`/`get`) pentru raportul agregat de materiale.
+- `product_template_form_view`, `product_category_form_view`: secțiunea **Packaging materials** pe produs și pe categorie.
+- `account_move_form_view`: fila **Packaging materials** și butonul **Refresh** pe factură.
+- `invoice_packaging_material_form`: formularul wizardului de raport agregat.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `action_packaging_wizard`: acțiune de fereastră legată (`binding_model_id`) de lista de facturi (`account.move`), disponibilă ca acțiune contextuală în vizualizarea listă, care deschide wizard-ul de raport materiale de ambalare.
+- `action_packaging_wizard`: acțiune de fereastră legată de lista de facturi (`account.move`), care deschide raportul materialelor de ambalare.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale suplimentare, în afara dependențelor directe (`account`, `product`).
+Nu au fost identificate conexiuni funcționale suplimentare, în afara dependențelor directe.

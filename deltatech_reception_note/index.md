@@ -1,23 +1,26 @@
-# Notă de Recepție pe Bază de Cereri de Ofertă (localizat la `deltatech_reception_note/index.md`)
+# Batch Reception Note (localizat la `deltatech_reception_note/index.md`)
 
 - **Nume Tehnic:** `deltatech_reception_note`
-- **Versiune:** `19.0.0.1.2`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_reception_note`
+- **Versiune:** `20.0.0.1.7`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_reception_note`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_reception_note`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul oferă un instrument specializat pentru gestionarea notelor de recepție în masă (batch) în cadrul modulelor de stoc și achiziții din Odoo. Este conceput pentru a simplifica procesul de recepție a mai multor articole sau de gestionare a documentației de recepție în volum mare, permițând gruparea mai multor cereri de ofertă (RFQ) într-o singură notă de recepție pentru o urmărire și o documentare mai ușoară între aprovizionare și operațiunile de depozit.
+Modulul permite recepția mărfii de la furnizor pe note de recepție care consumă cantitățile deschise ale mai multor comenzi de achiziție deodată, în loc să se valideze separat recepția fiecărei comenzi. Este util când o livrare acoperă mai multe comenzi sau când o comandă sosește în mai multe livrări.
 
 #### 2. Funcționalități Cheie
 
-- **Procesarea recepției în masă (batch):** Adaugă un wizard dedicat pentru crearea și gestionarea notelor de recepție în volum, permițând gruparea mai multor comenzi de achiziție într-o singură notă de recepție.
-- **Tipuri de comandă diferențiate:** Introduce un tip de comandă de achiziție (Normal, RFQ Only, Notă de recepție) care controlează fluxul de confirmare și de recepție.
-- **Integrare cu fluxul de stoc:** Se integrează cu modulul `purchase_stock` pentru a asigura un flux de date consistent între aprovizionare și operațiunile de depozit.
-- **Reducerea automată din RFQ:** La confirmarea unei note de recepție, cantitățile sunt scăzute automat din cererile de ofertă (RFQ) deschise ale aceluiași furnizor, cu validări de cantitate și opțiunea de a forța cantitățile mai mari (`Ignore quantities`).
-- **Mesaje de eroare mai clare:** Cele două erori afișate la confirmarea unei note de recepție (produs negăsit / cantitate neacoperită într-un RFQ trimis) indică acum explicit soluția — bifarea „Ignore quantities” pentru a recepționa oricum marfa — nu doar faptul că produsul sau cantitatea nu au fost găsite.
-- **Documentație îmbunătățită și meniuri dedicate:** Oferă vizualizări și meniuri specializate (pregătire notă de recepție, recepții de sosit, recepții de facturat) pentru informații de recepție sintetizate, utile pentru audit intern și verificarea furnizorilor.
+- **Tipuri de comenzi de achiziție:** fiecare comandă are un *Type*:
+  - *Normal*: comanda standard;
+  - *RFQ Only*: o cerere care păstrează cantitățile încă așteptate de la furnizor; nu poate fi confirmată și are butonul *Set as sent*;
+  - *Reception Note*: livrarea efectiv primită, cu *Delivery Note No* al furnizorului.
+- **Create reception note:** pe o comandă *Normal*, *Actions > Create reception note* mută cantitățile deschise pe o comandă nouă *RFQ Only* în starea *RFQ Sent* (același furnizor, companie, monedă, poziție fiscală, termene de plată, prețuri și taxe, cu cantitatea încă nerecepționată pe fiecare linie). Recepțiile *Ready* ale comenzii sursă sunt anulate, deci marfa se recepționează doar prin note de recepție.
+- **Nota de recepție:** la confirmare, cantitățile se iau din comenzile *RFQ Only* trimise, ale aceluiași furnizor și companii, începând cu cele mai vechi, în unitatea de măsură a produsului; recepția se creează prin confirmarea standard. O comandă *RFQ Only* consumată integral este marcată ca goală.
+- **Ignore quantities:** dacă un produs sau o cantitate nu se găsește pe o comandă *RFQ Only* trimisă, confirmarea se oprește cu un mesaj; bifa *Ignore quantities* permite confirmarea, iar cantitățile forțate sunt listate în chatter.
+- **Meniuri și filtre:** *Achiziții > Reception notes* are *Prepare reception note* (note neconfirmate sau nefacturate), *To arrive* (transferuri de intrare *Ready*) și *To invoice* (transferuri de intrare *Done*, indiferent dacă au fost facturate). Listele afișează opțional *Type* și *Date sent*; căutarea are filtrele *Not empty* și *Empty* pentru comenzile *RFQ Only*.
+- **Limitare:** modulul nu adaugă document tipărit propriu; nota se tipărește cu rapoartele standard de achiziție.
 
 #### 3. Dependențe
 
@@ -27,21 +30,17 @@ Acest modul oferă un instrument specializat pentru gestionarea notelor de recep
 
 **Modele**
 
-- `purchase.order` (extins): Adaugă câmpurile `reception_type` (Normal / RFQ Only / Reception Note), `delivery_note_no`, `is_empty`, `date_sent` și `ignore_quantities`. Conține logica de confirmare (`button_confirm`), de marcare ca trimis (`set_sent`), de reducere a cantităților din RFQ-uri (`reduce_from_rfq`) și de verificare a golirii comenzii (`check_if_empty`).
-- `reception.note.create` (`models.TransientModel`): Wizard care creează note de recepție pe baza comenzilor selectate, generând comenzi noi de tip `rfq_only` cu cantitățile rămase de recepționat și anulând picking-urile rezervate.
+- `purchase.order` (extins): tipul comenzii, numărul notei de livrare, logica de creare și consum a notelor de recepție.
+- `reception.note.create` (wizard): crearea notei de recepție din comanda de achiziție.
 
 **Vizualizări**
 
-- `purchase_order_form_discount`: Adaugă pe formularul de comandă câmpurile de tip recepție și note de livrare și înlocuiește butoanele de confirmare în funcție de `reception_type`.
-- `purchase_order_form_sent`: Adaugă butonul „Set as sent” pentru comenzile de tip `rfq_only`.
-- `purchase_order_search_type`: Adaugă filtrele „Not empty” / „Empty” pentru RFQ-uri.
-- `view_reception_note_create_form`: Formularul wizard-ului de confirmare a creării notei de recepție.
+- `views/purchase_view.xml`: formulare, liste și căutare cu tipul comenzii; acțiunile de meniu *Prepare reception note*, *To arrive* și *To invoice*.
+- `wizard/reception_note.xml`: wizardul de creare a notei de recepție.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `prepare_reception_note_action`: Acțiune de fereastră pentru pregătirea notelor de recepție (comenzi de tip `note`).
-- `view_reception_assigned_action` / `view_receptions`: Acțiuni pentru recepțiile de sosit (state `assigned`) și de facturat (state `done`).
-- `action_reception_note_create`: Acțiune contextuală (binding pe `purchase.order`, formular) care lansează wizard-ul de creare a notei de recepție.
+- Nu sunt definite acțiuni automate sau server.
 
 #### 5. Conexiuni
 

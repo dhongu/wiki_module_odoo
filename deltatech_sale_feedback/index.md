@@ -1,21 +1,26 @@
 # Sale Feedback (localizat la `deltatech_sale_feedback/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_feedback`
-- **Versiune:** `19.0.1.0.5`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_feedback`
+- **Versiune:** `20.0.1.0.9`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_sale_feedback
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_feedback`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul automatizează colectarea de feedback de la clienți după vânzarea produselor. Pe baza facturilor emise, sistemul trimite automat clientului un e-mail prin care îi solicită părerea despre produsele cumpărate. Astfel, compania poate aduna opinii și evaluări de la clienți fără efort manual, ajutând la îmbunătățirea calității serviciilor și a relației cu clienții.
+Modulul cere clienților, prin e-mail, să evalueze produsele cumpărate, la câteva zile după emiterea facturii. E-mailul listează fiecare produs din factură cu imagine, link către pagina produsului și trei linkuri de evaluare, iar răspunsul clientului este înregistrat pe produs. Astfel firma primește feedback despre produse fără muncă manuală.
 
 #### 2. Funcționalități Cheie
 
-- Trimite automat clientului un e-mail pentru a-i cere feedback referitor la produsele vândute, pe baza facturilor emise.
-- Trimiterea se face printr-o sarcină programată (cron job), inactivă la instalare, care expediază e-mailurile implicit la 3 zile după data facturii.
-- Intervalul de trimitere poate fi configurat printr-un alt număr de zile, folosind parametrul de sistem `sale.days_request_feedback`.
-- Utilizează un șablon de e-mail dedicat: „Invoice: request feedback".
+- Șablonul de e-mail **Invoice: request feedback** listează liniile facturii clientului (imagine, link către produs, cantitate, trei linkuri de evaluare: *Satisfied*, *Not satisfied*, *Highly Dissatisfied*); secțiunile și notele apar ca titluri. E-mailul este postat în chatter-ul facturii și trimis imediat.
+- Fiecare linie de produs are propria evaluare pe șablonul de produs, înregistrată prin pagina standard `/rate` din Odoo.
+- Acțiunea programată **Request Feedback** (inactivă la instalare) rulează zilnic și trimite e-mailul pentru facturile clienților postate cu un număr de zile în urmă (implicit 3), la companiile cu opțiunea **Email feedback after sale** activă.
+- Întârzierea se citește din parametrul de sistem `sale.days_request_feedback` (`Setări > Tehnic > Parametri > Parametri de sistem`); nu are câmp în setări.
+- Trimitere manuală: pe facturile clienților, `Acțiuni > Request feedback`, indiferent de opțiunea companiei.
+- Șablon per companie: în `Vânzări > Configurare > Setări`, câmpul **Email Template Request Feedback**; fără el se folosește șablonul modulului.
+- Dacă compania facturii are adresă de website, linkurile din e-mail se construiesc pe acea adresă, nu pe `web.base.url`.
+- Fluxul pas cu pas și capturile sunt în fișa consultantului.
 
 #### 3. Dependențe
 
@@ -26,13 +31,22 @@ Modulul automatizează colectarea de feedback de la clienți după vânzarea pro
 
 #### 4. Componente Cheie
 
+**Modele**
+
+- `account.move`: `cron_request_feedback` și `request_feedback`, trimiterea e-mailului; `get_base_url` alege adresa website-ului companiei.
+- `account.move.line`: `rating_get_access_token`, token pentru linkurile de evaluare pe linie.
+- `res.company`: `sale_feedback` și `sale_feedback_template_id`.
+- `res.config.settings`: expune opțiunea, șablonul și parametrul `sale.days_request_feedback`.
+
+**Vizualizări**
+
+- `res_config_settings_view_form`: opțiunea și șablonul în setările de vânzări.
+
 **Acțiuni Automate / Acțiuni Server**
 
-- Sarcină programată (`ir.cron`) — inactivă la instalare; trimite e-mailurile de solicitare feedback, implicit la 3 zile după data facturii (interval configurabil prin parametrul de sistem `sale.days_request_feedback`).
-
-**Date / Șabloane**
-
-- Șablonul de e-mail „Invoice: request feedback" (definit în `data/mail_data.xml`) — corpul mesajului trimis clientului pentru a solicita feedback.
+- `ir_cron_feedback`: acțiunea programată zilnică **Request Feedback** (inactivă la instalare).
+- `action_request_feedback`: acțiune server pe facturi, trimitere manuală.
+- `mail_template_sale_feedback`: șablonul de e-mail al cererii de feedback.
 
 #### 5. Conexiuni
 

@@ -1,25 +1,24 @@
 # Stock Auto Transfer (localizat la `deltatech_picking_transit/index.md`)
 
 - **Nume Tehnic:** `deltatech_picking_transit`
-- **Versiune:** `19.0.0.0.9`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_picking_transit`
+- **Versiune:** `20.0.0.0.16`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_picking_transit
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_picking_transit`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul automatizează transferurile interne în doi pași prin intermediul unei locații de tranzit. Pe tipul de operațiune de stoc se poate defini o „operațiune următoare", iar atunci când se efectuează un transfer intern cu un astfel de tip de operațiune, sistemul oferă posibilitatea de a transforma mutarea într-un transfer în doi pași: primul transfer ajunge într-o locație de tranzit, iar al doilea preia mărfurile din tranzit și le duce la destinația finală. Astfel se câștigă trasabilitate și control asupra mărfurilor aflate „în drum" între două locații, fără a bloca posibilitatea de a urmări fiecare etapă separat.
+Modulul mută marfa între două depozite în doi pași, printr-o locație de tranzit: depozitul expeditor trimite marfa în tranzit, iar depozitul primitor primește un transfer propriu, cu aceleași produse, din tranzit în stocul său. Se câștigă trasabilitate asupra mărfii aflate în drum.
 
 #### 2. Funcționalități Cheie
 
-- Pe formularul tipului de operațiune de stoc se poate adăuga o „operațiune următoare" (next operation).
-- La un transfer intern cu un tip de operațiune ce are setată „operațiunea următoare", sistemul oferă, prin butonul „create transfer", opțiunea de a transforma transferul într-unul în doi pași.
-- Butonul creează un al doilea transfer, din locația de tranzit către locația selectată în wizard, cu aceleași linii de mutare.
-- După crearea celui de-al doilea transfer, liniile de mutare ale transferului inițial nu mai pot fi modificate.
-- Opțiune de creare automată a celui de-al doilea transfer, fără a fi nevoie de wizard (din v17.0.0.0.9):
-  - Pe tipul de operațiune de stoc apare un checkbox „Auto Second Transfer", vizibil doar dacă „Two Step Transfer Use" este setat pe Delivery.
-  - Dacă este bifat, la validarea primului transfer sistemul caută locația de Recepție pe baza partenerului transferului (folosește contactul asociat celui de-al doilea depozit).
-  - Dacă pe transfer este setat „Source Document", sistemul **nu** creează automat al doilea transfer.
+- **Tipuri de operațiune pentru cei doi pași:** pe un tip de operațiune internă, **Two Step Transfer Use** are valorile *Delivery* (transferul spre tranzit) și *Reception* (transferul din tranzit în depozitul primitor).
+- **Buton Create Transfer:** pe un transfer intern de tip *Delivery*, fără **Source Document**, deschide un wizard în care se alege tipul de operațiune de recepție. Se creează și se confirmă al doilea transfer, cu aceleași produse și cantități, iar cele două transferuri sunt legate prin mesaje în chatter. Butonul dispare după crearea celui de-al doilea transfer.
+- **Al doilea transfer automat:** cu **Auto Second Transfer** bifat pe tipul *Delivery*, transferul de recepție se creează la validarea primului, fără wizard. Depozitul primitor este cel a cărui **Address** este **Contact** pe transfer; transferurile cu **Source Document** sunt omise.
+- **Verificări la recepție:** al doilea transfer se validează doar cu produse venite din primul transfer sau din backorder-urile lui; un backorder nu creează un nou transfer secund, ci un mesaj în chatter indică transferul care va primi produsele.
+- **Reassign Location (opțional):** dacă parametrul de sistem `deltatech_picking_transit.use_sub_locations` este setat, transferurile interne arată butonul care setă, pe fiecare operațiune detaliată, prima sublocație a sursei ce are produsul în stoc.
+- **Configurare:** se creează o locație de tranzit; în *Inventory > Configuration > Warehouse Management > Operations Types* se definesc tipul *Delivery* (destinație implicită tranzitul) în depozitul expeditor și tipul *Reception* (sursă implicită tranzitul) în cel primitor; pentru modul automat se completează **Address** pe fiecare depozit.
+- Limitare: primul transfer rămâne editabil după crearea celui de-al doilea, iar modificările nu se copiază.
 
 #### 3. Dependențe
 
@@ -27,22 +26,23 @@ Modulul automatizează transferurile interne în doi pași prin intermediul unei
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie (Readme prezent), analiza detaliată a codului pentru componente este omisă. Structura de fișiere a modulului (din `__manifest__.py`) indică următoarele zone:
+Sumarul provine din `readme/DESCRIPTION.md`.
 
 **Modele**
 
-- Extinderi în `models/` pentru `stock.picking` și `stock.picking.type` (operațiune următoare, transfer în doi pași, creare automată).
+- `stock.picking` (extins): crearea celui de-al doilea transfer, verificările la recepție și reasignarea locației.
+- `stock.picking.type` (extins): câmpurile **Two Step Transfer Use** și **Auto Second Transfer**.
 
 **Vizualizări**
 
-- `views/stock_picking_views.xml`: extinderi ale formularului de transfer (buton „create transfer", blocare linii de mutare).
-- `views/stock_picking_type_view.xml`: extinderi ale formularului tipului de operațiune (operațiune următoare, „Auto Second Transfer").
-- `wizard/stock_picking_transfer_wizard_views.xml`: wizard-ul pentru crearea celui de-al doilea transfer.
+- `views/stock_picking_views.xml`: butoanele **Create Transfer** și **Reassign Location** pe transfer.
+- `views/stock_picking_type_view.xml`: câmpurile de transfer în doi pași pe tipul de operațiune.
+- `wizard/stock_picking_transfer_wizard_views.xml`: wizardul de alegere a tipului de operațiune de recepție.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- Nu sunt declarate în fișierele de date din manifest.
+- Nu sunt definite.
 
 #### 5. Conexiuni
 
-- `stock`: modulul extinde direct fluxul de transferuri și tipurile de operațiuni din modulul standard de stoc Odoo.
+- `stock`: extinde direct transferurile și tipurile de operațiune din modulul standard.

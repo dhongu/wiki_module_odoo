@@ -1,19 +1,22 @@
-# Products Category User Group (localizat la `deltatech_product_category_group/index.md`)
+# Grup de Utilizatori pe Categoria de Produse (localizat la `deltatech_product_category_group/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_category_group`
-- **Versiune:** `19.0.1.0.4`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_category_group`
+- **Versiune:** `20.0.1.0.7`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_product_category_group
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_category_group`
-- **Ultima Ingestie:** `2026-07-31`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Modulul leagă categoriile de produse de grupurile de utilizatori Odoo, astfel încât fiecare categorie de produs să aibă un „responsabil de echipă" implicit. Pe această bază, transferurile de stoc (`stock.picking`) își pot atribui automat responsabilul, echilibrând volumul de lucru între utilizatorii din grupul asociat categoriei produselor din transfer. Valoarea de business este operațională: elimină atribuirea manuală a responsabilului pe fiecare transfer și distribuie automat sarcinile de pregătire a comenzilor între operatorii de depozit competenți pentru acel tip de produs.
+Modulul leagă categoriile de produse de un grup de utilizatori și atribuie responsabilul transferurilor din acel grup, repartizând munca echilibrat între membri. Într-un depozit în care fiecare echipă se ocupă de propriile familii de produse, transferurile pregătite ajung la oamenii potriviți.
 
 #### 2. Funcționalități Cheie
 
-- Grup de utilizatori (User Group) pe categoria de produs.
-- Atribuire automată a responsabilului pe transfer, pe baza grupului de utilizatori asociat categoriei produselor din linia de transfer.
+- Câmpul **User Group** pe categoria de produse; membrii grupului sunt cei care procesează produsele categoriei.
+- Butonul **Responsible** pe lista de transferuri: completează **Responsible** doar pe transferurile în starea **Ready** fără responsabil, celelalte rămân neschimbate. Butonul este vizibil administratorilor Inventar.
+- Repartizare echilibrată: pentru fiecare transfer se adună grupurile categoriilor produselor (până la trei niveluri de părinți), apoi membrii activi, utilizatori interni cu dreptul Inventar **User** și permiși în compania transferului. Se alege întâi un utilizator fără transferuri Ready, altfel cel cu cele mai puține.
+- Metoda `responsible_determination` poate fi apelată și din cod, de exemplu după rezervare.
+- Limitări: atribuirea nu este automată (doar din buton sau din cod) și contează doar membrii direcți ai grupului, nu cei care îl primesc printr-un grup implicat.
 
 #### 3. Dependențe
 
@@ -22,8 +25,20 @@ Modulul leagă categoriile de produse de grupurile de utilizatori Odoo, astfel �
 
 #### 4. Componente Cheie
 
-Conform fluxului de ingestie, secțiunea Componente Cheie este omisă deoarece fișierul `readme/DESCRIPTION.md` este prezent și acoperă Sumarul și Funcționalitățile Cheie, fără a solicita explicit analiza codului.
+**Modele**
+
+- `product.category`: câmpul `user_group_id`.
+- `stock.picking`: câmpul `user_group_id` și metoda `responsible_determination`.
+
+**Vizualizări**
+
+- `views/product_category_view.xml`: câmpul pe categoria de produse.
+- `views/stock_picking_view.xml`: butonul **Responsible** pe lista de transferuri.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale verificate în cod către alte module cu pagină wiki proprie, în afara dependențelor directe (`product`, `stock`).
+- [deltatech_product_category_color](../deltatech_product_category_color/index.md): modul înrudit, tot pe categoriile de produse și transferurile de stoc, fără dependență declarată.

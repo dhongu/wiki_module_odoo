@@ -1,10 +1,10 @@
 # Sale Add Extra Line (localizat la `deltatech_sale_add_extra_line/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_add_extra_line`
-- **Versiune:** `19.0.1.4.0`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_add_extra_line`
+- **Versiune:** `20.0.1.6.0`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_sale_add_extra_line`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_add_extra_line`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -37,13 +37,13 @@ Acest modul introduce un proces automat de adăugare a unor linii suplimentare p
 **Modele**
 
 - `product.template` (extins): adaugă câmpurile `extra_product_id` (produsul adăugat automat ca linie extra), `extra_percent` (procentul din prețul liniei principale folosit la calculul prețului liniei extra; zero = se aplică recalculul standard Odoo pe produsul extra) și `extra_qty` (multiplicatorul de cantitate pentru produsul extra, implicit 1.0).
-- `sale.order` (extins): `onchange_order_line` declanșează `check_extra_product()` cu `backend=True` la editarea comenzii în formular; `_verify_cart_after_update` (înlocuiește vechiul `_cart_update`, eliminat în Odoo 19) resincronizează liniile extra după orice actualizare a coșului din `website_sale`, înaintea `super()`, ca prețul livrării și `cart_quantity` din sesiune să țină cont de liniile suplimentare.
-- `sale.order.line` (extins): adaugă `line_uuid` (identificator stabil care perechează linia principală cu linia extra generată) și `extra_price_computed` (ultimul preț calculat de modul pe linia extra, folosit pentru a distinge o intervenție manuală de un simplu recalcul de listă de prețuri). Metoda `_get_extra_product()` returnează produsul care trebuie adăugat ca linie extra pentru linia curentă — implicit `product_id.extra_product_id`, dar suprascriabilă de module terțe pentru a decide produsul din linie, nu din configurarea globală a produsului. Metoda `check_extra_product()` creează/actualizează linia extra și îi recalculează cantitatea, folosind acest hook; `_has_manual_price()` decide dacă prețul curent a fost tastat de utilizator (nu coincide nici cu `extra_price_computed`, nici cu `technical_price_unit`); `unlink()` șterge în cascadă linia extra perechea liniei principale.
+- `sale.order` (extins): `onchange_order_line` declanșează `check_extra_product()` cu `backend=True` la editarea comenzii în formular; `_verify_cart_after_update` (hook-ul standard `website_sale`) resincronizează liniile extra după orice actualizare a coșului din `website_sale`, înaintea `super()`, ca prețul livrării și `cart_quantity` din sesiune să țină cont de liniile suplimentare.
+- `sale.order.line` (extins): adaugă `line_uuid` (identificator stabil care perechează linia principală cu linia extra generată), `is_extra_line` (marchează linia generată ca linie extra; este ștearsă sau înlocuită împreună cu linia principală) și `extra_price_computed` (ultimul preț calculat de modul pe linia extra, folosit pentru a distinge o intervenție manuală de un simplu recalcul de listă de prețuri). Metoda `_get_extra_product()` returnează produsul care trebuie adăugat ca linie extra pentru linia curentă — implicit `product_id.extra_product_id`, dar suprascriabilă de module terțe pentru a decide produsul din linie, nu din configurarea globală a produsului. Metoda `check_extra_product()` creează/actualizează linia extra și îi recalculează cantitatea, folosind acest hook; `_has_manual_price()` decide dacă prețul curent a fost tastat de utilizator (nu coincide nici cu `extra_price_computed`, nici cu `technical_price_unit`); `unlink()` șterge în cascadă linia extra perechea liniei principale.
 
 **Vizualizări**
 
 - `product_template_form_view`: extinde formularul de produs cu grupul **Linie suplimentară** (`extra_product_id`, `extra_percent`, `extra_qty`) în fila Vânzări.
-- `view_order_form_extra`: extinde formularul comenzii de vânzare cu câmpurile tehnice invizibile `line_uuid` și `extra_price_computed` pe liniile comenzii, necesare mecanismului de asociere și de detectare a prețului manual.
+- `view_order_form_extra`: extinde formularul comenzii de vânzare cu câmpurile tehnice invizibile `line_uuid` și `extra_price_computed` pe liniile comenzii, (plus `is_extra_line`), necesare mecanismului de asociere și de detectare a prețului manual.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -51,7 +51,8 @@ Acest modul introduce un proces automat de adăugare a unor linii suplimentare p
 
 **Migrări**
 
-- `migrations/19.0.1.1.0/post-migration.py`: după actualizarea la 19.0.1.1.0 (care a introdus reținerea prețului manual), completează `extra_price_computed = price_unit` pe toate liniile extra existente (identificate prin `line_uuid`), altfel ar fi fost considerate tăcut linii cu preț manual și ar fi ieșit din sincronizarea cu prețul liniei principale.
+- `migrations/19.0.1.1.0/post-migration.py`: după introducerea reținerii prețului manual, completează `extra_price_computed = price_unit` pe toate liniile extra existente (identificate prin `line_uuid`), altfel ar fi fost considerate linii cu preț manual și ar fi ieșit din sincronizarea cu prețul liniei principale.
+- `migrations/19.0.1.5.0/post-migration.py`: marchează cu `is_extra_line` liniile extra generate de versiunile anterioare (din cele două linii cu același `line_uuid`, linia extra este cea creată ultima).
 
 #### 5. Conexiuni
 

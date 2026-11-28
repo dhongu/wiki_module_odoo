@@ -1,21 +1,21 @@
 # Price Category (localizat la `deltatech_price_categ/index.md`)
 
 - **Nume Tehnic:** `deltatech_price_categ`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_price_categ
+- **Versiune:** `20.0.1.0.3`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_price_categ
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_price_categ`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul introduce un sistem de prețuri pe niveluri (categorii de preț) pentru produse în Odoo. Permite companiilor să definească mai multe trepte de preț — Bronze, Copper, Silver și Gold — pornind de la un preț de bază și aplicând adaosuri procentuale configurabile. Astfel, fiecare produs poate avea automat prețuri diferențiate pentru diverse categorii de clienți sau canale de vânzare, fără calcule manuale.
+Modulul introduce prețuri pe niveluri (Bronze, Copper, Silver, Gold) pentru produse, calculate prin adaosuri procentuale configurabile peste un preț de bază. Fiecare produs poate avea astfel automat prețuri diferențiate pe categorii de clienți sau canale de vânzare.
 
 #### 2. Funcționalități Cheie
 
-- **Structură de prețuri pe niveluri**: adaugă pe șablonul de produs câmpuri de adaos procentual pentru Bronze, Copper, Silver și Gold și calculează automat prețurile corespunzătoare pe baza prețului de bază selectat.
-- **Selectarea flexibilă a prețului de bază**: prețul de bază pentru calculul adaosului poate fi prețul de listă (List Price), prețul de cost (Cost Price) sau ultimul preț de achiziție (Last Purchase Price); gestionează corect prețurile cu sau fără TVA inclus.
-- **Integrare cu listele de prețuri**: extinde elementele standard de pricelist din Odoo pentru a include noile trepte de preț ca opțiuni de bază, permițând reguli de prețuri dinamice care fac referire la prețurile calculate (Bronze, Silver etc.).
-- **Monitorizarea problemelor de preț**: include un câmp calculat care detectează inconsistențe în ierarhia de prețuri (de exemplu, când prețul Gold este mai mare decât prețul Silver).
+- **Prețuri pe niveluri:** pe șablonul de produs se completează adaosul procentual pentru fiecare nivel, iar prețurile se calculează automat din prețul de bază ales.
+- **Preț de bază:** **List Price**, **Cost Price** sau **Last Purchase Price** (implicit); prețurile cu sau fără TVA inclus sunt tratate corect. Câmpurile se găsesc pe tabul **Sales** sau **Inventory** al produsului.
+- **Liste de prețuri:** elementele de listă de prețuri primesc nivelurile ca opțiuni de bază, pentru reguli dinamice care pornesc de la prețul Bronze, Silver etc.
+- **Monitorizarea problemelor de preț:** un câmp calculat semnalează inconsecvențe în ierarhie (de exemplu Gold mai mare decât Silver).
 
 #### 3. Dependențe
 
@@ -27,8 +27,21 @@ Acest modul introduce un sistem de prețuri pe niveluri (categorii de preț) pen
 
 #### 4. Componente Cheie
 
-Documentat din `readme/DESCRIPTION.md`; analiza detaliată a codului (modele, vizualizări, acțiuni) nu a fost necesară conform fluxului de ingestie. La nivel general, modulul extinde modelele de produs (`product.template`) cu câmpuri pentru treptele de preț și adaosurile procentuale, extinde elementele de listă de prețuri (`product.pricelist.item`) cu noile baze de preț și adaugă câmpurile aferente în vizualizarea de formular a produsului (`views/product_view.xml`).
+Sumarul provine din `readme/DESCRIPTION.md`; componentele au fost verificate punctual în cod.
+
+**Modele**
+
+- `product.template` (extins): adaosurile `percent_*`, prețurile `list_price_*`, `list_price_base` și `price_issue`; urmărire în chatter pentru `list_price` și `standard_price`.
+- `product.pricelist.item` (extins): câmpul `base` primește opțiunile de preț pe niveluri.
+
+**Vizualizări**
+
+- `views/product_view.xml`: câmpurile de nivel de preț în formularul produsului.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite.
 
 #### 5. Conexiuni
 
-- [deltatech_purchase_price](../deltatech_purchase_price/index.md): furnizează ultimul preț de achiziție folosit ca posibilă bază pentru calculul adaosurilor pe trepte.
+- [deltatech_purchase_price](../deltatech_purchase_price/index.md): furnizează ultimul preț de achiziție, folosit ca bază de calcul.

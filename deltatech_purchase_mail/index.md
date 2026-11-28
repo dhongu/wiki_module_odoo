@@ -1,21 +1,25 @@
-# Achiziții: Trimitere comenzi multiple pe email cu XLSX (localizat la `deltatech_purchase_mail/index.md`)
+# Purchase Orders Bulk Email with XLSX (localizat la `deltatech_purchase_mail/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_mail`
-- **Versiune:** `19.0.1.1.0`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_mail`
+- **Versiune:** `20.0.1.1.6`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_purchase_mail`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_mail`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul adaugă o funcție avansată de trimitere prin email pentru modulul de Achiziții din Odoo. Permite echipelor de aprovizionare să selecteze mai multe comenzi de achiziție și să le transmită simultan furnizorilor sau persoanelor interesate din companie, însoțite de un sumar agregat în format XLSX și de atașamentele PDF individuale ale fiecărei comenzi. Astfel se reduce semnificativ efortul manual în operațiunile de achiziție cu volum mare.
+Când mai multe cereri de ofertă sau comenzi merg către același furnizor, trimiterea lor una câte una înseamnă un e-mail pentru fiecare. Modulul le trimite împreună, într-un singur e-mail, cu un rezumat Excel al tuturor liniilor și cu PDF-ul fiecărei comenzi.
 
 #### 2. Funcționalități Cheie
 
-- **Trimitere în lot pe email**: adaugă o acțiune dedicată **Send Multi Orders** în vizualizarea de tip listă a comenzilor de achiziție, permițând expedierea simultană a mai multor comenzi.
-- **Sumar XLSX automat**: generează și atașează automat un fișier Excel (XLSX) cu detaliile cheie din toate comenzile selectate, oferind o privire de ansamblu agregată asupra lotului de achiziții.
-- **Atașamente PDF individuale**: include în emailul de ieșire rapoartele PDF oficiale ale fiecărei comenzi de achiziție selectate, pentru confirmare formală.
-- **Șabloane de email personalizabile**: folosește un șablon de email dedicat, ușor de adaptat la standardele de comunicare ale companiei.
+- Un singur e-mail pentru mai multe comenzi: se selectează comenzile în lista *Purchase > Orders > Requests for Quotation* sau *Purchase > Orders > Purchase Orders* și se alege *Actions > Send Email*; se deschide compozitorul standard, cu furnizorul ca destinatar.
+- Rezumat XLSX cu un rând pe linie de comandă: referința comenzii, codul produsului, descrierea, cantitatea și prețul unitar fără taxe; coloanele text sunt scrise ca text, deci o valoare care începe cu „=" nu este citită ca formulă.
+- PDF-ul standard al fiecărei comenzi selectate este atașat aceluiași e-mail.
+- Trasabilitate pe fiecare comandă: doar la trimiterea efectivă se adaugă o notă cu corpul e-mailului, rezumatul și PDF-ul propriu, iar cererile de ofertă din starea draft trec în *RFQ Sent*; închiderea compozitorului fără trimitere nu schimbă nimic.
+- Textul vine din șablonul „Purchase Orders: Send with XLSX", editabil în *Settings > Technical > Email > Templates* (mod dezvoltator).
+- Limitări: toate comenzile selectate trebuie să aibă același furnizor, iar furnizorul trebuie să aibă adresă de e-mail (altfel apare mesajul „You must select exactly one vendor to send the email to."); doar adresa furnizorului este precompletată, alți destinatari se adaugă manual.
+- Fișa consultant: [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -26,19 +30,19 @@ Modulul adaugă o funcție avansată de trimitere prin email pentru modulul de A
 
 **Modele**
 
-- `purchase.send.xlsx.wizard`: vrăjitor (wizard) care orchestrează compunerea emailului, generarea sumarului XLSX agregat și atașarea PDF-urilor pentru comenzile de achiziție selectate.
-- `purchase.order`: model extins pentru a expune logica de trimitere a mai multor comenzi pe email.
+- `purchase.order` (extins): construiește rezumatul XLSX, pregătește atașamentele (XLSX și PDF-uri) și deschide compozitorul (`action_compose_batch_email`).
+- `mail.compose.message` (extins): după trimiterea efectivă înregistrează nota pe fiecare comandă.
+- `purchase.send.xlsx.wizard`: wizard cu comenzile, șablonul, destinatarul și opțiunile de atașare a rezumatului XLSX și a PDF-urilor.
 
 **Vizualizări**
 
-- `purchase_order_actions.xml`: definește acțiunea **Send Multi Orders by Email** disponibilă din meniul Action al listei de comenzi de achiziție.
+- Nu există vizualizări noi; funcția apare ca acțiune în meniul *Actions* al listelor de achiziții.
 
 **Acțiuni Automate / Acțiuni Server**
 
-- `data/mail_template.xml`: șablonul de email folosit pentru transmiterea comenzilor multiple.
+- `action_purchase_compose_batch_email` (`ir.actions.server`): acțiunea „Send Email" din listele de comenzi.
+- `mail_template_purchase_send_xlsx` (`mail.template`): șablonul e-mailului.
 
 #### 5. Conexiuni
 
-- [deltatech_fast_purchase](../deltatech_fast_purchase/index.md): extinde fluxul de achiziții din aceeași suită deltatech.
-- [deltatech_purchase_price](../deltatech_purchase_price/index.md): completează modulul de achiziții cu logică de prețuri.
-- [deltatech_purchase_add_extra_line](../deltatech_purchase_add_extra_line/index.md): extensie pe comenzile de achiziție.
+Nu au fost identificate conexiuni funcționale către alte module cu pagină în wiki.

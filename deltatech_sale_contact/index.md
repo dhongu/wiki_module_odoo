@@ -1,10 +1,10 @@
 # Sale Contact (localizat la `deltatech_sale_contact/index.md`)
 
 - **Nume Tehnic:** `deltatech_sale_contact`
-- **Versiune:** `19.0.1.0.21`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_sale_contact`
+- **Versiune:** `20.0.1.1.1`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_sale_contact`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_sale_contact`
-- **Ultima Ingestie:** `2026-06-03`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -17,7 +17,7 @@ Modulul limitează și ghidează modul în care sunt selectate contactele pe com
 - Restrângerea adresei de livrare la contactele copil de tip „livrare" ale clientului selectat.
 - Limitarea partenerului de pe factură (`account.move`) la parteneri de nivel superior.
 - Marcarea unui contact drept adresă implicită de facturare sau livrare (`contact_default`), cu selecție automată la rezolvarea adreselor și unicitate per tip de adresă.
-- Marcaj „Factură verde" (`print_green_invoice`) pe partener, care dezactivează descărcarea/tipărirea facturii la trimitere.
+- Marcaj „Factură verde" (`print_green_invoice`) pe partener: la trimiterea facturii, PDF-ul nu mai este descărcat implicit (metoda de trimitere „manual" este înlocuită cu e-mail); descărcarea rămâne posibilă la cerere, alegând manual metoda în wizard.
 
 #### 3. Dependențe
 
@@ -33,7 +33,7 @@ Modulul limitează și ghidează modul în care sunt selectate contactele pe com
 - `res.partner` (extins): adaugă câmpurile `contact_default` (contact implicit pentru facturare/livrare) și `print_green_invoice` (factură verde). Suprascrie `address_get` pentru a returna contactul implicit și `write` pentru a păstra un singur contact implicit per tip.
 - `sale.order` (extins): aplică domenii pe `partner_id`, `partner_invoice_id` și `partner_shipping_id` pentru a limita selecția la parteneri de nivel superior și la contactele copil potrivite.
 - `account.move` (extins): aplică domeniu pe `partner_id` pentru a limita selecția la parteneri de nivel superior.
-- `account.move.send` (extins, abstract): dezactivează descărcarea facturii când partenerul are bifat `print_green_invoice` (mod `invoice_single`).
+- `account.move.send` (extins, abstract): suprascrie `_get_default_sending_methods`: când partenerul comercial are bifat `print_green_invoice`, metoda implicită „manual" (descărcare) este înlocuită cu e-mail; alegerea manuală în wizard rămâne posibilă.
 
 **Vizualizări**
 

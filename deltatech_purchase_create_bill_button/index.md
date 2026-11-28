@@ -1,21 +1,22 @@
 # Purchase Create Bill Button (localizat la `deltatech_purchase_create_bill_button/index.md`)
 
 - **Nume Tehnic:** `deltatech_purchase_create_bill_button`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** `https://github.com/dhongu/deltatech/tree/19.0/deltatech_purchase_create_bill_button`
+- **Versiune:** `20.0.1.1.2`
+- **Cale:** `https://github.com/dhongu/deltatech/tree/20.0/deltatech_purchase_create_bill_button`
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_purchase_create_bill_button`
-- **Ultima Ingestie:** `2026-09-14`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-În Odoo 19, butonul clasic „Create Bill" de pe formularul comenzii de achiziție a fost înlocuit cu un widget „Upload Bill" care obligă utilizatorul să atașeze un fișier înainte de a putea genera factura. Acest modul restabilește butonul clasic, cu un singur clic, lângă widget-ul de încărcare, astfel încât comenzile de achiziție să poată fi facturate direct, fără a fi nevoie de un fișier atașat — exact ca în Odoo 18. Modulul restaurează totodată și copierea automată a „Referinței Furnizorului" de pe comanda de achiziție în câmpurile „Referință" și „Referință Plată" ale facturii de furnizor generate, comportament eliminat în Odoo 19.
+Modulul readuce butonul clasic „Create Bill" pe comanda de achiziție și în liste. În Odoo standard, crearea facturii din formular trece prin widget-ul „Upload Bill", care cere un fișier; cu acest modul comenzile se pot factura direct, dintr-un singur clic, fără atașarea unui document.
 
 #### 2. Funcționalități Cheie
 
-- Restabilește butonul „Create Bill" (facturare cu un singur clic) pe formularul comenzii de achiziție, alături de widget-ul „Upload Bill", evidențiat vizual (culoare primară) pentru a fi ușor de identificat
-- Permite crearea facturii de furnizor direct din comanda de achiziție, fără a fi necesară atașarea unui fișier
-- Restaurează copierea automată a „Referinței Furnizorului" din comanda de achiziție în câmpurile „Referință" și „Referință Plată" ale facturii generate, replicând comportamentul din Odoo 18
+- Buton „Create Bill" pe formularul comenzii de achiziție, lângă widget-ul de încărcare a facturii.
+- Butonul „Create Bills" și pe lista cererilor de ofertă (lista implicită a tabloului de bord), pentru a selecta mai multe comenzi și a le factura odată; retururile devin automat notă de credit furnizor când totalul este negativ.
+- Copierea automată a „Vendor Reference" din comandă în câmpurile „Reference" și „Payment Reference" ale facturii furnizor create din comandă.
+- Fluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -23,8 +24,22 @@
 
 #### 4. Componente Cheie
 
-Documentația acestei secțiuni se bazează pe fișierul `readme/DESCRIPTION.md`, care nu detaliază componentele tehnice individuale. Conform fluxului de ingestie, analiza codului pentru modele, vizualizări și acțiuni automate a fost omisă, deoarece Readme-ul este prezent și nu solicită explicit această analiză.
+**Modele**
+
+- `purchase.order` (extins): `_prepare_invoice` copiază referința furnizorului în factură.
+
+**Vizualizări**
+
+- `purchase_order_form`: adaugă butonul „Create Bill" înaintea widget-ului `purchase_file_uploader`.
+- `purchase_order_kpis_tree`: adaugă butonul „Create Bills" în antetul listei.
+- `static/src/views/purchase_listview.xml`: extensie de șablon al listei (asset `web.assets_backend`) care readuce butonul în lista de cereri de ofertă.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu sunt definite acțiuni automate, sarcini `ir.cron` sau acțiuni server.
 
 #### 5. Conexiuni
 
-Nu au fost identificate conexiuni funcționale documentate către alte module cu pagină în wiki.
+- [deltatech_fast_purchase](../deltatech_fast_purchase/index.md): extinde fluxul de achiziții din aceeași suită deltatech.
+- [deltatech_purchase_price](../deltatech_purchase_price/index.md): completează modulul de achiziții cu logică de prețuri.
+- [deltatech_purchase_add_extra_line](../deltatech_purchase_add_extra_line/index.md): extensie pe comenzile de achiziție.

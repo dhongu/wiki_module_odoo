@@ -1,49 +1,53 @@
 # Partner Merge in Bulk (localizat la `deltatech_partner_merge/index.md`)
 
 - **Nume Tehnic:** `deltatech_partner_merge`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_partner_merge
+- **Versiune:** `20.0.1.2.1`
+- **Cale:** https://github.com/dhongu/deltatech/tree/20.0/deltatech_partner_merge
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_partner_merge`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul unifică în masă fișele de parteneri duplicate care au același CUI, în minute în loc de ore. Wizardul standard de unificare din Odoo parcurge foaie cu foaie fiecare pereche de duplicate, prin toate cele ~158 de coloane care referă `res_partner` — abordare suficientă pentru câteva duplicate, dar nefezabilă pe mii de grupuri. Acest modul inversează logica — o singură instrucțiune SQL per coloană, pentru tot lotul deodată — și păstrează cheile externe active pe tot parcursul, astfel încât integritatea e garantată de PostgreSQL, nu de corectitudinea procedurii. Pe o bază de producție cu 538.000 de parteneri, unificarea a 5.350 de fișe a durat aproximativ patru minute și jumătate.
+Modulul unifică în masă fișele de parteneri care au același CUI și caută și dublurile probabile dincolo de CUI. Asistentul standard Odoo parcurge grup cu grup toate cele ~158 de coloane care referă `res_partner`, ceea ce nu se termină într-un timp rezonabil pe mii de grupuri. Modulul inversează buclele: o singură instrucțiune per coloană pentru tot lotul, cu cheile externe active pe tot parcursul, deci integritatea e garantată de PostgreSQL. Pe o bază de producție cu 538.000 de parteneri, unificarea a 5.350 de fișe a durat aproximativ patru minute și jumătate.
 
 #### 2. Funcționalități Cheie
 
-- Grupează automat partenerii companii active cu același CUI (normalizat) și îi clasifică în 4 categorii: A (restul fișelor sunt complet goale), B (documente pe o singură fișă), C (facturi pe mai multe fișe) și D (sold nereconciliat pe mai multe fișe) — ultimele două se lasă pe mâna contabilului, deoarece mută bani între jurnale.
-- Alege automat fișa păstrată după volumul de documente (facturi, apoi comenzi de vânzare, apoi vechime), și semnalează cu un steag fișele al căror nume pare corupt la import, alături de numele fișelor absorbite pentru corectare ulterioară.
-- Exclude automat din unificare grupurile care conțin compania proprie, grupurile cu utilizatori portal pe mai multe fișe și grupurile ale căror denumiri diferă complet pe același CUI.
-- Etapă de simulare obligatorie: rulează întreaga unificare pe un savepoint separat și îl anulează, deci nu poate scrie date chiar dacă procedura ar avea o eroare; aplicarea efectivă e un pas distinct, protejat de un grup de securitate propriu.
-- Refuză să finalizeze aplicarea dacă a rămas vreo referință care încă indică o fișă absorbită.
-- Verificare post-unificare: compară totalurile reale ale fișelor păstrate (facturi, comenzi, sold) cu o fotografie luată înainte de unificare.
-- Opțiune de arhivare în loc de ștergere a fișelor absorbite (recomandat pentru primele rulări în producție, recuperabil fără restaurare din backup).
-- Detectează și oferă creare cu un click pentru coloanele cheie externă către `res_partner` care nu au index — altfel ștergerea partenerilor devine lentă din cauza scanărilor complete de tabel.
-- Aceeași procedură e disponibilă și ca scripturi SQL simple în `deltatech/scripts/partner_merge/`, pentru rulare directă din psql, în afara Odoo.
+- **Loturi de comasare** (*Settings > Partner Merge > Merge Batches*): fluxul *Analyze*, *Simulate*, *Apply* și, după aplicare, *Verify*. Operatorul alege categoriile de grupuri, numărul de grupuri (*Group Limit*, 0 pentru toate) și dacă fișele absorbite se șterg sau se arhivează (*Archive instead of delete*). Partenerii se grupează după CUI și companie, deci cei din companii diferite nu se unesc niciodată.
+- **Simulare sigură**: rulează întreaga unificare într-un savepoint și îl anulează, deci nu poate scrie. Aplicarea e un pas separat, rezervat grupului *Partner Merge / Apply* (administratorii îl au); verifică că partenerii sunt în companiile utilizatorului și refuză finalizarea dacă rămâne vreo referință către o fișă absorbită. Grupul *Partner Merge / Prepare and simulate* poate analiza și simula, dar nu aplica.
+- **Verificare**: compară rezultatul cu cifrele de la analiză (facturi, comenzi de vânzare, sold nereconciliat per fișă păstrată).
+- **Categorii**: A (o fișă deține documentele, restul sunt goale), B (documente pe o singură fișă), C (facturi pe mai multe fișe), D (sold nereconciliat pe mai multe fișe). Implicit se iau A și B; C și D mută cifre între registre și rămân contabilului. Rămân în afară grupurile cu compania proprie, cele cu utilizatori portal pe mai multe fișe și cele cu nume complet diferite pe același CUI.
+- **Fișa păstrată** se alege după volumul de documente (cele mai multe facturi, apoi comenzi, apoi vechime); dacă numele pare corupt la import, e marcată, cu numele fișelor absorbite alături.
+- **Indexuri**: dacă lipsesc indexuri pe coloanele cu chei externe către parteneri, lotul afișează un avertisment și butonul *Create the indexes*.
+- **Scripturi SQL** echivalente pentru rulare în afara Odoo, în repo-ul suitei (`scripts/partner_merge/`), neincluse în pachetul din Odoo Apps.
+- **Căutare dubluri** (*Settings > Partner Merge > Find Duplicates*): nu modifică niciun partener. Potriviri exacte pe CUI (fără prefixul de țară), telefon (E.164) și email (litere mici), plus nume asemănătoare (fără diacritice și forme juridice) la aceeași stradă sau cod poștal, ori doar după nume, la alegere. Fiecare grup are scor și motiv; *Merge* deschide asistentul standard Odoo, iar *Not duplicates* reține perechea pentru scanările viitoare. Se exclud utilizatorii interni, companiile proprii, un partener cu propriile contacte, adresele aceluiași client, parteneri din companii diferite și valorile partajate de prea mulți parteneri (listate în raport).
+- Compararea numelor folosește `rapidfuzz` dacă e instalat; altfel `difflib`, mai lent și doar pe blocuri de până la 1.500 de parteneri. `phonenumbers` și `unidecode` se folosesc la fel, dacă există; niciunul nu e obligatoriu.
+- Fluxul pas cu pas e în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
 - `base`
+- [deltatech_partner_match](../deltatech_partner_match/index.md)
 
 #### 4. Componente Cheie
 
 **Modele**
 
-- `partner.merge.batch`: modelul central al unui lot de unificare — configurează categoriile și limita de grupuri, rulează analiza (construiește tabelele de lucru `pm_face`/`pm_group`/`pm_map`/`pm_snapshot`), simularea (pe savepoint, cu rollback garantat), aplicarea efectivă (remap FK-uri și legături polimorfe, completare câmpuri goale pe fișa păstrată, ștergere/arhivare fișe absorbite) și verificarea finală a totalurilor.
-- `partner.merge.batch.line`: o linie per grup de duplicate dintr-un lot — reține fișa păstrată, CUI-ul normalizat, categoria, numărul și ID-urile fișelor absorbite, numele lor (capturate înainte de ștergere) și un indicator calculat `name_suspect` pentru nume care par corupte la import.
-- `models/sql_queries.py`: nu e model Odoo, ci modulul Python cu toate interogările SQL brute folosite de unificare (construirea tabelelor de lucru, deduplicarea coliziunilor pe indecși unici, remap-ul cheilor externe și al legăturilor polimorfe, completarea câmpurilor goale, ștergerea/arhivarea și verificarea totalurilor) — sincronizat manual cu scripturile psql din `deltatech/scripts/partner_merge/`.
+- `partner.merge.batch`: lotul de unificare (analiză, simulare, aplicare, verificare).
+- `partner.merge.batch.line`: o linie per grup de dubluri dintr-un lot.
+- `partner.duplicate.scan`: scanarea dublurilor probabile.
+- `partner.duplicate.group`: un grup de dubluri găsit, cu scor și motiv.
+- `partner.duplicate.ignore`: perechile marcate „Not duplicates”.
 
 **Vizualizări**
 
-- `view_partner_merge_batch_form`: formularul lotului de unificare, cu butoane de flux (Analyze, Simulate, Apply, Verify, Back to draft) condiționate de stare, avertisment pentru coloane FK fără index, lista grupurilor din lot (cu evidențiere pentru nume suspecte) și rapoartele de analiză/simulare/aplicare/clasificare.
-- `view_partner_merge_batch_list`: lista loturilor, cu numărul de grupuri, numărul de fișe și starea (badge colorat).
-- `action_partner_merge_batch` / meniul `Partner Merge` (sub Setări → Administrare): punctul de intrare în funcționalitate, vizibil doar grupului `group_partner_merge_prepare`.
+- `views/partner_merge_views.xml`: formularul și lista loturilor de comasare.
+- `views/partner_duplicate_views.xml`: scanarea și grupurile de dubluri.
 
 **Acțiuni Automate / Acțiuni Server**
 
-Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` — fluxul este integral declanșat manual de utilizator, prin butoanele din formularul lotului (`action_analyze`, `action_simulate`, `action_apply`, `action_verify`, `action_reset`, `action_create_indexes`).
+- Nu sunt definite `ir.cron`, `base.automation` sau acțiuni server; fluxul se declanșează manual.
 
 #### 5. Conexiuni
 
-Nu au fost identificate module cu pagină wiki proprie legate funcțional de acest modul; el interoperează direct la nivel de tabele SQL cu modelele `account.move`, `sale.order`, `purchase.order`, `stock.picking` și `res.users` (verificate condiționat prin `to_regclass`, ca modulul să rămână dependent doar de `base`), fără a le declara ca dependențe Odoo.
+- [deltatech_partner_match](../deltatech_partner_match/index.md): oferă unelte de normalizare și potrivire (`tools.partner_match`) folosite la căutarea dublurilor.
