@@ -429,6 +429,33 @@
     "text": "Accounting Scenario AI Generator\ndeltatech_account_scenario_ai\nModulul `deltatech_account_scenario_ai` extinde modulul `deltatech_account_scenario` adăugând generarea de scenarii contabile cu ajutorul inteligenței artificiale. Utilizatorul descrie un proces de afaceri în text simplu (de exemplu „achiziție de marfă de la furnizor, recepție în stoc, factură furnizor și plată\"), iar Odoo folosește un agent AID dedicat pentru a genera automat o definiție JSON validă a scenariului, gata de a fi executată și validată de cadrul de scenarii. Astfel, crearea scenariilor contabile devine mult mai rapidă și accesibilă, eliminând necesitatea scrierii manuale a structurii JSON complexe.\nGenerarea unui scenariu contabil în format JSON pornind de la o descriere în text liber a procesului de afaceri.\nCâmp suplimentar AI Prompt pentru instrucțiuni adiționale către AI (conturi specifice, sume, parteneri, reguli de validare).\nButon Generate with AI pe fișa scenariului, vizibil când starea este `Draft` sau `Failed`, care trimite descrierea și promptul către agentul AI și completează automat câmpul `json_data`.\nAgent AI dedicat (`ai_agent_scenario_generator`), creat automat la instalare, configurat cu un prompt de sistem care îl direcționează să respecte strict documentația cadrului de scenarii.\nSursă de cunoștințe atașată agentului: fișierul `USAGE.MD` din `deltatech_account_scenario`, încărcat ca `ir.attachment` și legat prin `source_ids`, conținând formatul JSON, toate cele 25 de tipuri de pași, descrierile câmpurilor, verificările (`checks`), `expected_account_moves` și un exemplu complet.\nFlux integrat cu cadrul de scenarii: după generare, JSON-ul poate fi revizuit, apoi marcat Set Ready și executat ca orice scenariu standard."
   },
   {
+    "path": "deltatech_account_ubl_import/index.md",
+    "module": "deltatech_account_ubl_import",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/deltatech/tree/20.0/deltatech_account_ubl_import",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_account_ubl_import",
+    "summary": "Modul tehnic de bază, folosit în comun de instrumentele care importă facturi de furnizor în format UBL XML. Nu are meniu, vizualizări sau setări proprii și nu modifică fluxurile standard; oferă doar logica de citire a fișierului și de potrivire a datelor cu cele din Odoo.",
+    "features": [
+      "Citirea UBL: antetul documentului (număr, date, monedă, referința comenzii, totaluri, CUI și nume furnizor; nota de credit este recunoscută după tipul documentului sau codul 381) și liniile facturii (cod furnizor, cod de bare, denumire, cantitate, unitate, preț, discount din `AllowanceCharge`, cotă și categorie TVA).",
+      "Căutarea furnizorului după CUI (cu sau fără prefixul `RO`) sau după nume.",
+      "Potrivirea produselor după cod de bare, cod furnizor, referință internă, denumirea la furnizor sau denumirea produsului, cu raportarea modului în care a fost găsit produsul.",
+      "Conversia unităților de măsură din codurile UBL (C62, KGM, LTR etc.) în unitățile Odoo.",
+      "Actualizarea prețului în lista de prețuri a furnizorului și crearea produsului dintr-o linie de factură.",
+      "Căutarea facturilor duplicat și citirea cotei de TVA declarate pe fiecare linie.",
+      "Fluxul de utilizare pas-cu-pas este în fișa consultantului."
+    ],
+    "dependencies": [
+      "account"
+    ],
+    "connections": [
+      "deltatech_purchase_ubl",
+      "deltatech_vendor_bill_ubl_review"
+    ],
+    "text": "deltatech_account_ubl_import\ndeltatech_account_ubl_import\nModul tehnic de bază, folosit în comun de instrumentele care importă facturi de furnizor în format UBL XML. Nu are meniu, vizualizări sau setări proprii și nu modifică fluxurile standard; oferă doar logica de citire a fișierului și de potrivire a datelor cu cele din Odoo.\nCitirea UBL: antetul documentului (număr, date, monedă, referința comenzii, totaluri, CUI și nume furnizor; nota de credit este recunoscută după tipul documentului sau codul 381) și liniile facturii (cod furnizor, cod de bare, denumire, cantitate, unitate, preț, discount din `AllowanceCharge`, cotă și categorie TVA).\nCăutarea furnizorului după CUI (cu sau fără prefixul `RO`) sau după nume.\nPotrivirea produselor după cod de bare, cod furnizor, referință internă, denumirea la furnizor sau denumirea produsului, cu raportarea modului în care a fost găsit produsul.\nConversia unităților de măsură din codurile UBL (C62, KGM, LTR etc.) în unitățile Odoo.\nActualizarea prețului în lista de prețuri a furnizorului și crearea produsului dintr-o linie de factură.\nCăutarea facturilor duplicat și citirea cotei de TVA declarate pe fiecare linie.\nFluxul de utilizare pas-cu-pas este în fișa consultantului."
+  },
+  {
     "path": "deltatech_actions/index.md",
     "module": "deltatech_actions",
     "version": "19.0.0.0.9",
@@ -1650,6 +1677,36 @@
     "text": "Deltatech Equipment Category Group\ndeltatech_category_group_equipment\nModulul adaugă elemente de grupare pentru echipamente, preluate din grupurile definite pe categoria internă a produsului asociat echipamentului. Astfel, echipamentele pot fi organizate și filtrate după „tipul categoriei\" și „clasa categoriei\", facilitând clasificarea și raportarea parcului de echipamente în mod consecvent cu categoriile de produse.\nAdaugă două elemente de grupare pentru echipamente: „tipul categoriei\" (Category type) și „clasa categoriei\" (Category class).\nAceste grupări sunt legate de categoria internă a produsului echipamentului."
   },
   {
+    "path": "deltatech_change_uom/index.md",
+    "module": "deltatech_change_uom",
+    "version": "20.0.1.0.3",
+    "github": "https://github.com/dhongu/deltatech/tree/20.0/deltatech_change_uom",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_change_uom",
+    "summary": "Un produs creat cu unitatea de măsură greșită este adesea deja folosit în comenzi, facturi și mișcări de stoc. Modulul adaugă acțiunea *Change Uom*, care înlocuiește unitatea pe produs și pe aceste documente dintr-un singur pas.",
+    "features": [
+      "Acțiunea Change Uom pe formularul produsului (meniul de acțiuni ⋮); fereastra arată *Unit of Measure* și *Default Purchase Unit*, iar *Apply* execută schimbarea.",
+      "Alegerea unităților: *Unit of Measure* acceptă orice unitate; *Default Purchase Unit* oferă doar unități convertibile în noua unitate și se golește dacă nu se mai potrivește.",
+      "Documente actualizate, pentru toate variantele: comenzi de vânzare, comenzi de achiziție, facturi, mișcări de stoc, linii de mișcare și liste de prețuri de furnizor. Liniile din vechea unitate de achiziție trec în noua unitate de achiziție implicită sau, dacă aceasta lipsește, în noua unitate.",
+      "Fără conversie: cantitățile, prețurile și sumele rămân neschimbate; unitatea este doar reetichetată. Actualizarea merge direct în baza de date, deci facturile postate și perioadele blocate nu o opresc.",
+      "Acțiunea este disponibilă doar grupului *Allow to change unit of measure* (administratorii o au implicit); necesită activarea setării Units of Measure în Inventar.",
+      "Pașii detaliați, cu capturi, sunt în fișa consultantului."
+    ],
+    "dependencies": [
+      "product",
+      "account",
+      "stock",
+      "sale",
+      "purchase",
+      "deltatech_uom_domain"
+    ],
+    "connections": [
+      "deltatech_uom_domain"
+    ],
+    "text": "deltatech_change_uom\ndeltatech_change_uom\nUn produs creat cu unitatea de măsură greșită este adesea deja folosit în comenzi, facturi și mișcări de stoc. Modulul adaugă acțiunea *Change Uom*, care înlocuiește unitatea pe produs și pe aceste documente dintr-un singur pas.\nAcțiunea Change Uom pe formularul produsului (meniul de acțiuni ⋮); fereastra arată *Unit of Measure* și *Default Purchase Unit*, iar *Apply* execută schimbarea.\nAlegerea unităților: *Unit of Measure* acceptă orice unitate; *Default Purchase Unit* oferă doar unități convertibile în noua unitate și se golește dacă nu se mai potrivește.\nDocumente actualizate, pentru toate variantele: comenzi de vânzare, comenzi de achiziție, facturi, mișcări de stoc, linii de mișcare și liste de prețuri de furnizor. Liniile din vechea unitate de achiziție trec în noua unitate de achiziție implicită sau, dacă aceasta lipsește, în noua unitate.\nFără conversie: cantitățile, prețurile și sumele rămân neschimbate; unitatea este doar reetichetată. Actualizarea merge direct în baza de date, deci facturile postate și perioadele blocate nu o opresc.\nAcțiunea este disponibilă doar grupului *Allow to change unit of measure* (administratorii o au implicit); necesită activarea setării Units of Measure în Inventar.\nPașii detaliați, cu capturi, sunt în fișa consultantului."
+  },
+  {
     "path": "deltatech_chart_of_accounts/index.md",
     "module": "deltatech_chart_of_accounts",
     "version": "19.0.0.1.1",
@@ -2193,6 +2250,30 @@
     "text": "Deltatech Cron Monitor Webhook\ndeltatech_cron_monitor_webhook\nModulul oferă o soluție simplă și sigură pentru a declanșa sarcinile programate (cron) din Odoo prin webhook-uri, folosind un token de acces global. Astfel, execuția sarcinilor poate fi controlată din platforme externe de monitorizare și programare (ex. cron-job.org, healthchecks.io, EasyCron), independent de planificatorul intern al Odoo.\nActivare webhook per sarcină cron: fiecare acțiune programată poate fi configurată să permită declanșarea externă.\nCod unic de webhook: se definește un cod unic pentru fiecare cron, folosit pentru a construi URL-ul dedicat de endpoint.\nSecuritate prin token global: protecție printr-un token de acces global (Bearer sau parametru), fără semnături HMAC complexe.\nEndpoint-uri dedicate:\nDeclanșare: `/cron/webhook/<webhook_code>` (POST/GET)\nStare: `/cron/webhook/<webhook_code>/status` (GET)\nConfigurare simplă: un singur token global gestionează accesul pentru toate webhook-urile activate, simplificând integrarea cu servicii externe."
   },
   {
+    "path": "deltatech_cron_progress/index.md",
+    "module": "deltatech_cron_progress",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/deltatech/tree/20.0/deltatech_cron_progress",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_cron_progress",
+    "summary": "Modul tehnic care oferă un ajutor comun pentru acțiunile planificate (cron) ce procesează date pe loturi. Folosește progresul nativ al cron-urilor din Odoo, astfel încât planificatorul reia singur lucrarea cât timp mai sunt înregistrări de procesat, fără ca fiecare cron să se declanșeze manual după fiecare lot.",
+    "features": [
+      "Metoda `ir.cron._cron_report_progress(done, remaining)`, apelată o singură dată, la finalul lotului.",
+      "Dacă `remaining > 0`, planificatorul rulează lucrarea din nou imediat (cel puțin 10 rulări și 120 de secunde per preluare, apoi la următoarea interogare); „Run manually” se repetă în același fel.",
+      "`done == 0` forțează `remaining = 0`, deci un lot fără progres oprește bucla.",
+      "În rularea cron, progresul este comis (`_commit_progress`) și supraviețuiește unui timeout al unui lot ulterior; în afara cron-ului (apel direct din cod) nu se comite nimic, iar metoda apelează `_trigger()` pentru restul.",
+      "`done` este numărul de înregistrări din lotul curent, nu un total cumulat; se raportează `remaining = 0` în dry run sau când restul nu poate fi procesat.",
+      "Apelul se face după lot, niciodată în mijlocul unei operații care trebuie să rămână atomică.",
+      "Aceeași semnătură există și în versiunile 18.0 și 19.0, deci codul cron care o folosește este identic."
+    ],
+    "dependencies": [
+      "base"
+    ],
+    "connections": [],
+    "text": "deltatech_cron_progress\ndeltatech_cron_progress\nModul tehnic care oferă un ajutor comun pentru acțiunile planificate (cron) ce procesează date pe loturi. Folosește progresul nativ al cron-urilor din Odoo, astfel încât planificatorul reia singur lucrarea cât timp mai sunt înregistrări de procesat, fără ca fiecare cron să se declanșeze manual după fiecare lot.\nMetoda `ir.cron._cron_report_progress(done, remaining)`, apelată o singură dată, la finalul lotului.\nDacă `remaining > 0`, planificatorul rulează lucrarea din nou imediat (cel puțin 10 rulări și 120 de secunde per preluare, apoi la următoarea interogare); „Run manually” se repetă în același fel.\n`done == 0` forțează `remaining = 0`, deci un lot fără progres oprește bucla.\nÎn rularea cron, progresul este comis (`_commit_progress`) și supraviețuiește unui timeout al unui lot ulterior; în afara cron-ului (apel direct din cod) nu se comite nimic, iar metoda apelează `_trigger()` pentru restul.\n`done` este numărul de înregistrări din lotul curent, nu un total cumulat; se raportează `remaining = 0` în dry run sau când restul nu poate fi procesat.\nApelul se face după lot, niciodată în mijlocul unei operații care trebuie să rămână atomică.\nAceeași semnătură există și în versiunile 18.0 și 19.0, deci codul cron care o folosește este identic."
+  },
+  {
     "path": "deltatech_customer_analysis/index.md",
     "module": "deltatech_customer_analysis",
     "version": "20.0.1.0.4",
@@ -2637,6 +2718,32 @@
     "text": "Courier COD Settlement Bridge\ndeltatech_delivery_cod\nModulul importă decontările de ramburs (cash on delivery) primite de la curieri sub formă de extrase de cont bancar, astfel încât banii încasați în numele companiei de către curier să fie reconciliați prin mecanismul standard de reconciliere al Odoo, nu printr-un proces paralel. Două tipuri de surse converg spre același tratament: curierii care publică un fișier de borderou (parsat local) și curierii care expun un endpoint de decontare (interogat pe un interval de date). Odată ajunse în acest punct comun, protecția la duplicate, verificarea totalului de control și linia de echilibrare a transferului bancar sunt scrise o singură dată, nu separat pentru fiecare curier. Extrasul aterizează într-un jurnal de tip „clearing\", nu direct în contul bancar real: banii rămân la curier până la sosirea transferului, iar linia de transfer este cea care se potrivește cu mișcarea reală din bancă.\nImport unificat al decontărilor de ramburs, indiferent dacă sursa este un fișier borderou sau un API de decontare al curierului.\nProtecție la import duplicat, pe baza unei chei unice per AWB și jurnal (`unique_import_id`), astfel încât reimportul unor intervale suprapuse nu dublează sumele.\nVerificarea totalului de control transmis de curier față de suma efectivă a rândurilor, cu blocarea importului dacă nu se potrivesc.\nSepararea automată a rândurilor pe zile de decontare (payout), fiecare payout generând propriul extras, pentru a se putea potrivi individual cu mișcarea din bancă.\nLinie automată de comision (pentru curierii care decontează net) și linie automată de transfer bancar (opțională, configurabilă per jurnal) care echilibrează extrasul la zero.\nIdentificarea automată a partenerului pe fiecare linie, pe baza AWB-ului legat de expedierea (`stock.picking`) proprie, nu după numele destinatarului transmis de curier.\nParsare robustă și strictă a sumelor și datelor din surse eterogene (formate numerice RO/EN, separatori de mii diferiți), cu respingerea explicită a valorilor ambigue în loc de rotunjire silențioasă.\nWizard „Fetch Courier Settlement\" pentru extragerea manuală a decontărilor pe un interval de date, direct dintr-un jurnal bancar/casă configurat cu un curier.\nPunct de extensie simplu pentru curieri: implementarea unei singure metode `<delivery_type>_cod_fetch_rows(date_from, date_to)` pe `delivery.carrier` este suficientă pentru a activa fluxul de decontare API."
   },
   {
+    "path": "deltatech_delivery_dashboard/index.md",
+    "module": "deltatech_delivery_dashboard",
+    "version": "20.0.1.4.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_dashboard",
+    "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_dashboard",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_delivery_dashboard",
+    "summary": "Un rând de carduri cu indicatori (KPI) deasupra listei de AWB-uri, astfel încât cine urmărește coletele să vadă dintr-o privire ce necesită atenție și să ajungă cu un clic la lista din spatele fiecărui număr. Cardurile folosesc doar datele deja colectate de `deltatech_delivery` (starea livrării raportată de curieri), fără câmpuri noi pe livrări sau comenzi.",
+    "features": [
+      "Carduri: În tranzit, Livrate azi (fusul orar al utilizatorului), Întârziate (peste SLA-ul curierului, în zile lucrătoare de la predare; fără SLA, N zile de la data AWB), La timp, 4 săptămâni (procent livrat în SLA în ultimele 28 de zile, apare când un curier are SLA), Risc retur ≥ N zile (colet la sediu/locker/în livrare de N zile sau mai mult), Returnate luna aceasta, Ramburs pe drum (total pe monedă) și Fără urmărire (colete în tranzit a căror stare nu mai este interogată).",
+      "Clic pe un card filtrează lista exact pe ce a numărat cardul; clic pe alt card înlocuiește filtrul, al doilea clic îl șterge. Filtrele de curier, text și dată rămân active.",
+      "Cardurile se suprapun intenționat (un colet la locker o săptămână e și *Întârziat*, și la *Risc retur*).",
+      "Meniu: *Inventar → Operațiuni → Delivery AWB → Delivery Tracking*, listă deschisă pe *În tranzit*; coloana *Days with Courier*; acțiuni pe selecție *View Order* și *Resume Status Polling*. Se listează doar AWB-ul curent al unei livrări.",
+      "Configurare: *Delivery SLA (business days)* pe metoda de livrare (curier), cu *SLA Due Date* calculat pe AWB; parametri de sistem `delivery_dashboard.overdue_days` (implicit 5) și `delivery_dashboard.return_risk_days` (implicit 3). Cronul de status din `deltatech_delivery` trebuie să rămână activ; în multi-company fiecare companie își vede doar AWB-urile (necesită `deltatech_delivery` 20.0.6.8.1+).",
+      "Disponibil utilizatorilor de inventar (*Inventory / User*). Flux detaliat: vezi fișa consultant."
+    ],
+    "dependencies": [
+      "deltatech_delivery",
+      "deltatech_web_kpi_cards"
+    ],
+    "connections": [
+      "deltatech_delivery_handover"
+    ],
+    "text": "deltatech_delivery_dashboard\ndeltatech_delivery_dashboard\nUn rând de carduri cu indicatori (KPI) deasupra listei de AWB-uri, astfel încât cine urmărește coletele să vadă dintr-o privire ce necesită atenție și să ajungă cu un clic la lista din spatele fiecărui număr. Cardurile folosesc doar datele deja colectate de `deltatech_delivery` (starea livrării raportată de curieri), fără câmpuri noi pe livrări sau comenzi.\nCarduri: În tranzit, Livrate azi (fusul orar al utilizatorului), Întârziate (peste SLA-ul curierului, în zile lucrătoare de la predare; fără SLA, N zile de la data AWB), La timp, 4 săptămâni (procent livrat în SLA în ultimele 28 de zile, apare când un curier are SLA), Risc retur ≥ N zile (colet la sediu/locker/în livrare de N zile sau mai mult), Returnate luna aceasta, Ramburs pe drum (total pe monedă) și Fără urmărire (colete în tranzit a căror stare nu mai este interogată).\nClic pe un card filtrează lista exact pe ce a numărat cardul; clic pe alt card înlocuiește filtrul, al doilea clic îl șterge. Filtrele de curier, text și dată rămân active.\nCardurile se suprapun intenționat (un colet la locker o săptămână e și *Întârziat*, și la *Risc retur*).\nMeniu: *Inventar → Operațiuni → Delivery AWB → Delivery Tracking*, listă deschisă pe *În tranzit*; coloana *Days with Courier*; acțiuni pe selecție *View Order* și *Resume Status Polling*. Se listează doar AWB-ul curent al unei livrări.\nConfigurare: *Delivery SLA (business days)* pe metoda de livrare (curier), cu *SLA Due Date* calculat pe AWB; parametri de sistem `delivery_dashboard.overdue_days` (implicit 5) și `delivery_dashboard.return_risk_days` (implicit 3). Cronul de status din `deltatech_delivery` trebuie să rămână activ; în multi-company fiecare companie își vede doar AWB-urile (necesită `deltatech_delivery` 20.0.6.8.1+).\nDisponibil utilizatorilor de inventar (*Inventory / User*). Flux detaliat: vezi fișa consultant."
+  },
+  {
     "path": "deltatech_delivery_dpd/index.md",
     "module": "deltatech_delivery_dpd",
     "version": "19.0.0.5.0",
@@ -2788,6 +2895,34 @@
     "text": "Fan Curier Shipping\ndeltatech_delivery_fc\nModulul Fan Curier Shipping este o extensie Odoo dezvoltată de Terrabit care asigură integrarea directă între sistemul de gestiune a livrărilor din Odoo și Fan Courier, unul dintre principalii curieri din România. Modulul permite companiilor să își automatizeze operațiunile de expediere cu Fan Courier direct din Odoo, simplificând întregul proces de livrare — de la calculul tarifelor și generarea AWB-ului, până la urmărirea coletelor. Este deosebit de util pentru companiile din România care expediază produse pe plan intern prin Fan Courier și care doresc să automatizeze generarea documentelor de transport și urmărirea în timp real a expedierilor.\nGenerarea AWB în mai multe formate: PDF (pentru tipărire standard), ZPL (pentru imprimante termice de etichete) și HTML (pentru afișare web).\nOpțiuni complete de expediere: colete multiple într-o singură expediere, dimensiuni și greutate, valoare declarată (asigurare), ramburs (cash on delivery), livrare sâmbăta, deschidere colet la livrare și notă de retur în AWB.\nCrearea AWB-ului direct din comenzile de vânzare sau din comenzile de livrare din Odoo, precum și ștergerea AWB-ului pentru expedierile anulate.\nUrmărirea în timp real a statusului expedierii și accesul la istoricul stărilor coletului.\nCalcularea automată a costului de transport, integrată cu sistemul de calcul al prețului de livrare din Odoo.\nGestionarea locațiilor: sincronizarea cu lista de orașe și județe Fan Courier și posibilitatea de a expedia folosind numele orașului, fără a fi nevoie de ID-ul orașului.\nIntegrare cu lockerele FanBox (puncte de ridicare): import și sincronizare automată a lockerelor în Odoo, specificarea numelui lockerului în AWB, selectarea lockerului pe hartă în checkout și curățarea automată a lockerelor cu coordonate GPS invalide.\nOpțiuni de configurare dedicate integrării Fan Courier, personalizarea ambalării produselor conform cerințelor curierului și configurarea punctului de ridicare (din adresa contractuală)."
   },
   {
+    "path": "deltatech_delivery_fc_online/index.md",
+    "module": "deltatech_delivery_fc_online",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_fc_online",
+    "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_fc_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_delivery_fc_online",
+    "summary": "AWB, etichetă, anulare și urmărire FAN Courier direct din livrare, inclusiv pe Odoo Online: modulul nu are cod Python și se importă ca zip, împreună cu `deltatech_delivery_online` și `deltatech_iap_online`; apelurile către FAN Courier le face serverul Terrabit. Este ascuns în Odoo Apps, în stadiul Alpha, și exclude `deltatech_delivery_fc`.",
+    "features": [
+      "Serviciul FAN Courier, gata de activat, cu setările FAN: tip serviciu (Standard), plătitor, dimensiune etichetă (A4, A5, A6), livrare sâmbătă, ePOD, colet deschis, SMS către destinatar.",
+      "Metoda de livrare FAN Courier deja legată de serviciu și de pagina de urmărire (preț fix 0, de stabilit).",
+      "Contractul propriu FAN Courier: AWB-urile se creează pe contul selfAWB (utilizator, parolă, client ID), trimis o dată din butonul *Courier Account* (doar administratori); FAN facturează expedierile ca înainte.",
+      "Refuzul FAN (localitate necunoscută, date lipsă) se postează pe livrare cu mesajul FAN și nu se taxează.",
+      "Credite: 0,001 credite Terrabit per AWB nou; primul credit (1000 AWB) este gratuit.",
+      "Pași: import zip, *Settings > Technical > Terrabit Services > Services* → FAN Courier → Activate, apoi cont de curier și preț pe metoda de livrare; restul fluxului e cel din `deltatech_delivery_online` (vezi fișa consultant)."
+    ],
+    "dependencies": [
+      "deltatech_delivery_online"
+    ],
+    "connections": [
+      "deltatech_delivery_fc",
+      "excludes",
+      "deltatech_delivery_sd_online",
+      "deltatech_iap_online"
+    ],
+    "text": "deltatech_delivery_fc_online\ndeltatech_delivery_fc_online\nAWB, etichetă, anulare și urmărire FAN Courier direct din livrare, inclusiv pe Odoo Online: modulul nu are cod Python și se importă ca zip, împreună cu `deltatech_delivery_online` și `deltatech_iap_online`; apelurile către FAN Courier le face serverul Terrabit. Este ascuns în Odoo Apps, în stadiul Alpha, și exclude `deltatech_delivery_fc`.\nServiciul FAN Courier, gata de activat, cu setările FAN: tip serviciu (Standard), plătitor, dimensiune etichetă (A4, A5, A6), livrare sâmbătă, ePOD, colet deschis, SMS către destinatar.\nMetoda de livrare FAN Courier deja legată de serviciu și de pagina de urmărire (preț fix 0, de stabilit).\nContractul propriu FAN Courier: AWB-urile se creează pe contul selfAWB (utilizator, parolă, client ID), trimis o dată din butonul *Courier Account* (doar administratori); FAN facturează expedierile ca înainte.\nRefuzul FAN (localitate necunoscută, date lipsă) se postează pe livrare cu mesajul FAN și nu se taxează.\nCredite: 0,001 credite Terrabit per AWB nou; primul credit (1000 AWB) este gratuit.\nPași: import zip, *Settings > Technical > Terrabit Services > Services* → FAN Courier → Activate, apoi cont de curier și preț pe metoda de livrare; restul fluxului e cel din `deltatech_delivery_online` (vezi fișa consultant)."
+  },
+  {
     "path": "deltatech_delivery_gls/index.md",
     "module": "deltatech_delivery_gls",
     "version": "19.0.2.0.12",
@@ -2817,6 +2952,31 @@
       "deltatech_delivery_status"
     ],
     "text": "GLS Shipping\ndeltatech_delivery_gls\nModulul GLS Shipping integrează direct în Odoo serviciile de curierat GLS (General Logistics Systems), unul dintre marii furnizori europeni de livrare colete. Permite companiilor să își automatizeze operațiunile de expediere cu GLS fără a părăsi mediul Odoo, acoperind întregul flux de livrare: de la generarea AWB-urilor și a etichetelor de transport, la urmărirea statusului coletelor și reconcilierea plăților ramburs (COD). Beneficiile principale sunt economisirea timpului (elimină crearea manuală a AWB-urilor), reducerea erorilor de transcriere, transparența costurilor de transport și o experiență mai bună pentru client prin informații de urmărire exacte.\nIntegrare cu serviciile GLS: suport pentru ambele versiuni de API (GLS Online și MyGLS), autentificare securizată cu serviciile web GLS, suport multi-țară (România, Croația, Cehia, Ungaria, Slovenia, Slovacia), configurare ID expeditor și suport PSD (Parcel Shop Delivery).\nGenerare și gestionare etichete: generarea etichetelor de transport în mai multe formate (PDF, ZPL), suport pentru dimensiuni variate (A4, A6, termic) și machete multiple (A4_2x2, A4_4x1, Thermo etc.), cu atașare automată a etichetei la livrare.\nManagement expedieri: creare AWB direct din comenzi de vânzare sau din livrări, anulare AWB pentru comenzi respinse sau modificate, urmărire completă a statusului livrării.\nUrmărire (tracking): generare linkuri de urmărire, preluarea și afișarea istoricului de status al coletului, actualizarea statusului de livrare în Odoo pe baza statusului GLS.\nManagement tranzacții: import tranzacții de plată din GLS, urmărirea plăților ramburs (cash-on-delivery), potrivirea tranzacțiilor GLS cu înregistrările Odoo și raportare istorică.\nGestionare listă AWB: preluarea listei de AWB-uri din sistemul GLS, auto-crearea înregistrărilor AWB în Odoo, potrivirea informațiilor expeditor/destinatar și stocarea referințelor.\nOpțiuni avansate de expediere: ramburs (COD), valoare declarată (asigurare), colete multiple, instrucțiuni speciale de livrare, livrare sâmbăta, colet deschis la livrare.\nLivrare la locker: import automat al punctelor de livrare GLS (lockere) pentru România și Ungaria, selecție interactivă a locker-ului în checkout-ul Odoo și sugestii de locker pe bază de proximitate față de client; posibilitatea trimiterii ID-ului de locker în AWB."
+  },
+  {
+    "path": "deltatech_delivery_handover/index.md",
+    "module": "deltatech_delivery_handover",
+    "version": "20.0.1.1.2",
+    "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_handover",
+    "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_handover",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_delivery_handover",
+    "summary": "Predarea coletelor către curier direct din lista de AWB-uri sau de livrări, cu un proces-verbal de predare-primire tipăribil, semnat de șofer. Confirmarea predării marchează momentul în care coletele pleacă din depozit și poate solicita curierului ridicarea, ca o singură comandă pentru toate coletele.",
+    "features": [
+      "Action → Hand Over to Courier pe AWB-uri sau livrări selectate: se creează câte o predare per curier, cu AWB-urile încă predabile (AWB-ul curent al unei livrări de ieșire, necunoscut încă curierului și neaflat pe altă predare); celelalte sunt omise, iar predarea spune de ce.",
+      "Predarea conține curierul, data, cine a predat, șoferul, vehiculul și coletele (destinatar, oraș, număr colete, greutate, ramburs) cu totaluri.",
+      "Confirm Handover: livrările trec *În tranzit*, data predării se păstrează pe ele, iar o interogare de status care răspunde încă cu pre-avizul nu le mai readuce; un AWB poate fi pe o singură predare, dacă aceasta nu e anulată.",
+      "Raport Courier Handover Report (proces-verbal de predare-primire colete) cu totaluri (AWB-uri, colete, greutate, ramburs pe monedă) și casete de semnătură; scanarea semnată se atașează în *Signed Report*.",
+      "Ridicare curier: FAN Courier se comandă din predare (Order Courier Pickup, în fereastra setată pe curier, anulabilă); Cargus își rezervă singur comenzile, iar Check Pickup doar citește comanda; GLS și Sameday ridică odată cu AWB-ul.",
+      "Predările se văd în *Inventar → Operațiuni → Delivery AWB → Courier Handovers*; o predare ciornă o anulează orice utilizator de inventar, una confirmată doar un manager (coletele revin la *Pre advice*). Cu `deltatech_delivery_dashboard`, confirmarea datează predarea pe AWB. Flux pas cu pas: vezi fișa consultant."
+    ],
+    "dependencies": [
+      "deltatech_delivery"
+    ],
+    "connections": [
+      "deltatech_delivery_dashboard"
+    ],
+    "text": "deltatech_delivery_handover\ndeltatech_delivery_handover\nPredarea coletelor către curier direct din lista de AWB-uri sau de livrări, cu un proces-verbal de predare-primire tipăribil, semnat de șofer. Confirmarea predării marchează momentul în care coletele pleacă din depozit și poate solicita curierului ridicarea, ca o singură comandă pentru toate coletele.\nAction → Hand Over to Courier pe AWB-uri sau livrări selectate: se creează câte o predare per curier, cu AWB-urile încă predabile (AWB-ul curent al unei livrări de ieșire, necunoscut încă curierului și neaflat pe altă predare); celelalte sunt omise, iar predarea spune de ce.\nPredarea conține curierul, data, cine a predat, șoferul, vehiculul și coletele (destinatar, oraș, număr colete, greutate, ramburs) cu totaluri.\nConfirm Handover: livrările trec *În tranzit*, data predării se păstrează pe ele, iar o interogare de status care răspunde încă cu pre-avizul nu le mai readuce; un AWB poate fi pe o singură predare, dacă aceasta nu e anulată.\nRaport Courier Handover Report (proces-verbal de predare-primire colete) cu totaluri (AWB-uri, colete, greutate, ramburs pe monedă) și casete de semnătură; scanarea semnată se atașează în *Signed Report*.\nRidicare curier: FAN Courier se comandă din predare (Order Courier Pickup, în fereastra setată pe curier, anulabilă); Cargus își rezervă singur comenzile, iar Check Pickup doar citește comanda; GLS și Sameday ridică odată cu AWB-ul.\nPredările se văd în *Inventar → Operațiuni → Delivery AWB → Courier Handovers*; o predare ciornă o anulează orice utilizator de inventar, una confirmată doar un manager (coletele revin la *Pre advice*). Cu `deltatech_delivery_dashboard`, confirmarea datează predarea pe AWB. Flux pas cu pas: vezi fișa consultant."
   },
   {
     "path": "deltatech_delivery_innoship/index.md",
@@ -3027,6 +3187,38 @@
       "deltatech_delivery_cm"
     ],
     "text": "Nemo Express Shipping\ndeltatech_delivery_ne\nModulul conectează Odoo la serviciul de curierat **Nemo Express**, permițând expedierea coletelor direct din livrările de stoc și urmărirea lor online. Practic, adaugă Nemo Express ca opțiune de transportator, iar generarea AWB-urilor și schimbul de date cu API-ul curierului se fac prin infrastructura comună Courier Manager, deja folosită de alți curieri din suita Terrabit.\nGenerare AWB în format PDF\nGenerare AWB în format ZPL\nȘtergere AWB\nObținere tarife (rate) pentru o expediere\nObținere listă orașe\nObținere listă județe\nObținere istoric status pentru o expediere\nExpediere cu mai multe colete (multi-parcel)\nExpediere cu valoare declarată (asigurare)\nExpediere cu ramburs (cash on delivery)\nExpediere cu id de oraș și județ\nExpediere cu nume de oraș fără id de oraș\nGenerare AWB în format HTML\nListă lockere\nListă puncte de ridicare (pickup point)\nExpediere cu dimensiuni\nNotă de restituire în AWB\nOpțiune livrare sâmbăta\nOpțiune \"pachet deschis\"\nLivrare limitată strict la punctul de ridicare indicat\nTrimiterea id-ului de locker în AWB"
+  },
+  {
+    "path": "deltatech_delivery_online/index.md",
+    "module": "deltatech_delivery_online",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_online",
+    "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_delivery_online",
+    "summary": "AWB, etichetă, anulare și urmărire direct din livrare, pentru curierii serviciului Terrabit, inclusiv pe Odoo Online: modulul nu are cod Python și se importă ca zip, iar munca o face serverul Terrabit. Fiecare curier este un modul mic separat (primul: FAN Courier), iar butoanele și câmpurile sunt aceleași pentru toți. Modulul este ascuns în Odoo Apps și are stadiul Alpha.",
+    "features": [
+      "Buton AWB lângă referința de urmărire: AWB imediat, eticheta PDF atașată livrării și postată în chatter; fără răspuns de la serviciu, AWB-ul intră în coadă și livrarea se actualizează după câteva secunde.",
+      "Acțiuni pe selecție de livrări: *Generate AWB*, *Print AWB Label*, *Refresh AWB Status*, *Cancel AWB*; opțional AWB la validarea livrării (*AWB on Validation*).",
+      "Un singur AWB per livrare: o livrare retrimisă primește același AWB, netaxat din nou.",
+      "Urmărire: la fiecare 30 de minute se reîmprospătează starea AWB-urilor nelivrate de pe livrările validate în ultimele 30 de zile ale unui serviciu activ, cu ultimul eveniment al curierului; filtrul *AWB Not Delivered*.",
+      "Pe livrare: colete, ramburs, valoare declarată; greutatea este cea de expediere, expeditorul adresa depozitului, destinatarul partenerul.",
+      "Contul de curier rămâne la Terrabit: administratorul îl trimite o dată din butonul *Courier Account* al serviciului; parola se golește din baza de date după trimitere, iar contul e citibil doar de administratori. Tokenul serviciului este citit de utilizatorii de stoc (compromis asumat pentru răspunsul imediat).",
+      "Credite: doar AWB-ul nou se taxează; eticheta, anularea și urmărirea sunt gratuite; creditele se văd și se cumpără din *Settings > Technical > Terrabit Services*.",
+      "Refuzul curierului (localitate necunoscută, date lipsă) apare ca avertisment și în chatter, fără AWB scris.",
+      "Nu pe Odoo Online: prețul live în comandă/coș; se folosește preț fix sau reguli pe metoda de livrare. Flux pas cu pas: vezi fișa consultant."
+    ],
+    "dependencies": [
+      "base_automation",
+      "deltatech_iap_online",
+      "stock_delivery"
+    ],
+    "connections": [
+      "deltatech_delivery_fc_online",
+      "deltatech_delivery_sd_online",
+      "deltatech_iap_online"
+    ],
+    "text": "deltatech_delivery_online\ndeltatech_delivery_online\nAWB, etichetă, anulare și urmărire direct din livrare, pentru curierii serviciului Terrabit, inclusiv pe Odoo Online: modulul nu are cod Python și se importă ca zip, iar munca o face serverul Terrabit. Fiecare curier este un modul mic separat (primul: FAN Courier), iar butoanele și câmpurile sunt aceleași pentru toți. Modulul este ascuns în Odoo Apps și are stadiul Alpha.\nButon AWB lângă referința de urmărire: AWB imediat, eticheta PDF atașată livrării și postată în chatter; fără răspuns de la serviciu, AWB-ul intră în coadă și livrarea se actualizează după câteva secunde.\nAcțiuni pe selecție de livrări: *Generate AWB*, *Print AWB Label*, *Refresh AWB Status*, *Cancel AWB*; opțional AWB la validarea livrării (*AWB on Validation*).\nUn singur AWB per livrare: o livrare retrimisă primește același AWB, netaxat din nou.\nUrmărire: la fiecare 30 de minute se reîmprospătează starea AWB-urilor nelivrate de pe livrările validate în ultimele 30 de zile ale unui serviciu activ, cu ultimul eveniment al curierului; filtrul *AWB Not Delivered*.\nPe livrare: colete, ramburs, valoare declarată; greutatea este cea de expediere, expeditorul adresa depozitului, destinatarul partenerul.\nContul de curier rămâne la Terrabit: administratorul îl trimite o dată din butonul *Courier Account* al serviciului; parola se golește din baza de date după trimitere, iar contul e citibil doar de administratori. Tokenul serviciului este citit de utilizatorii de stoc (compromis asumat pentru răspunsul imediat).\nCredite: doar AWB-ul nou se taxează; eticheta, anularea și urmărirea sunt gratuite; creditele se văd și se cumpără din *Settings > Technical > Terrabit Services*.\nRefuzul curierului (localitate necunoscută, date lipsă) apare ca avertisment și în chatter, fără AWB scris.\nNu pe Odoo Online: prețul live în comandă/coș; se folosește preț fix sau reguli pe metoda de livrare. Flux pas cu pas: vezi fișa consultant."
   },
   {
     "path": "deltatech_delivery_packeta/index.md",
@@ -3374,6 +3566,36 @@
     "text": "Sameday Shipping EasyBox\ndeltatech_delivery_sd_easybox\nAcest modul adaugă livrarea către lockerele Easybox ale curierului Sameday în magazinul online. Practic, extinde integrarea de bază Sameday astfel încât, la finalizarea comenzii, cumpărătorul să poată alege ca punct de livrare un automat de tip Easybox în loc de o adresă clasică. Modulul aduce și clase CSS pentru a personaliza butoanele de selectare a adresei de livrare și a metodei de curierat în pagina de checkout, oferind o experiență vizuală adaptată magazinului.\nPlugin Easybox pentru integrarea Sameday, care permite alegerea unui locker Easybox ca punct de livrare în comerțul online.\nClase CSS pentru personalizarea butoanelor de selectare a adresei de livrare: `.select-button-carrier`, `.select-button-easybox`.\nClasă CSS pentru butonul de adăugare a adresei: `.add-delivery-button`.\nPentru ca un produs să fie disponibil pentru livrare la Easybox, trebuie bifată o opțiune specifică pe produs."
   },
   {
+    "path": "deltatech_delivery_sd_online/index.md",
+    "module": "deltatech_delivery_sd_online",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_delivery/tree/20.0/deltatech_delivery_sd_online",
+    "local_path": "odoo-addons/bitshop_delivery/deltatech_delivery_sd_online",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_delivery_sd_online",
+    "summary": "AWB, etichetă, anulare și urmărire Sameday direct din livrare, inclusiv pe Odoo Online: modulul nu are cod Python și se importă ca zip, cu `deltatech_delivery_online` și `deltatech_iap_online`; apelurile către Sameday le face serverul Terrabit. Este ascuns în Odoo Apps, în stadiul Alpha, și exclude `deltatech_delivery_sd`.",
+    "features": [
+      "Serviciul Sameday, gata de activat: livrare la domiciliu cu serviciul implicit al contului (de regulă Nextday 24H) sau alt serviciu după id/nume; etichetă A4 sau A6; colet deschis la livrare.",
+      "Metoda de livrare Sameday legată de serviciu și de pagina de urmărire (preț fix 0, de stabilit).",
+      "Contractul propriu Sameday: AWB-urile se creează pe contul API (utilizator și parolă, *Courier Client ID* rămâne gol), trimis o dată din *Courier Account* (doar administratori). Coletele pleacă din punctul de ridicare implicit al contului; județul și localitatea se potrivesc după nume cu lista Sameday.",
+      "Ramburs încasat de Sameday și plătit conform contractului.",
+      "Opțiuni în secțiunea Courier: *Courier Service Type* (gol sau id/nume, ex. `7` sau `24H`), *Shipping Paid By* (doar *Sender*), *Label Size* (A5 se tipărește ca A6), *Open Package at Delivery* (serviciul contului trebuie să aibă taxa OPCG); sâmbăta, ePOD și SMS nu sunt folosite.",
+      "Refuzul Sameday se postează în chatter după *Courier:*, fără AWB și fără taxare. O livrare retrimisă după anulare primește referință nouă.",
+      "Credite: 0,01 credite Terrabit per AWB (1 credit = 1 EUR); 5 credite de probă (500 AWB).",
+      "Nu include: livrare la lockere easybox și Sameday Points, expedieri plătite de destinatar. Import oprit cât timp `deltatech_delivery_sd` e instalat. Flux: vezi fișa consultant."
+    ],
+    "dependencies": [
+      "deltatech_delivery_online"
+    ],
+    "connections": [
+      "deltatech_delivery_sd",
+      "excludes",
+      "deltatech_delivery_fc_online",
+      "deltatech_iap_online"
+    ],
+    "text": "deltatech_delivery_sd_online\ndeltatech_delivery_sd_online\nAWB, etichetă, anulare și urmărire Sameday direct din livrare, inclusiv pe Odoo Online: modulul nu are cod Python și se importă ca zip, cu `deltatech_delivery_online` și `deltatech_iap_online`; apelurile către Sameday le face serverul Terrabit. Este ascuns în Odoo Apps, în stadiul Alpha, și exclude `deltatech_delivery_sd`.\nServiciul Sameday, gata de activat: livrare la domiciliu cu serviciul implicit al contului (de regulă Nextday 24H) sau alt serviciu după id/nume; etichetă A4 sau A6; colet deschis la livrare.\nMetoda de livrare Sameday legată de serviciu și de pagina de urmărire (preț fix 0, de stabilit).\nContractul propriu Sameday: AWB-urile se creează pe contul API (utilizator și parolă, *Courier Client ID* rămâne gol), trimis o dată din *Courier Account* (doar administratori). Coletele pleacă din punctul de ridicare implicit al contului; județul și localitatea se potrivesc după nume cu lista Sameday.\nRamburs încasat de Sameday și plătit conform contractului.\nOpțiuni în secțiunea Courier: *Courier Service Type* (gol sau id/nume, ex. `7` sau `24H`), *Shipping Paid By* (doar *Sender*), *Label Size* (A5 se tipărește ca A6), *Open Package at Delivery* (serviciul contului trebuie să aibă taxa OPCG); sâmbăta, ePOD și SMS nu sunt folosite.\nRefuzul Sameday se postează în chatter după *Courier:*, fără AWB și fără taxare. O livrare retrimisă după anulare primește referință nouă.\nCredite: 0,01 credite Terrabit per AWB (1 credit = 1 EUR); 5 credite de probă (500 AWB).\nNu include: livrare la lockere easybox și Sameday Points, expedieri plătite de destinatar. Import oprit cât timp `deltatech_delivery_sd` e instalat. Flux: vezi fișa consultant."
+  },
+  {
     "path": "deltatech_delivery_send_mail/index.md",
     "module": "deltatech_delivery_send_mail",
     "version": "19.0.1.0.4",
@@ -3610,6 +3832,33 @@
       "product"
     ],
     "text": "Deltatech Discount Policy\ndeltatech_discount_policy\nModulul readuce în Odoo 19 politica de discount din Odoo 17, oferind posibilitatea de a alege cum sunt afișate reducerile pe comenzile de vânzare. Standardul Odoo elimină în versiunile mai noi opțiunea de a alege între prețul cu discount inclus și afișarea prețului public plus procentul de discount — acest modul restaurează acel comportament, util mai ales pentru companiile migrate din Odoo 17 care doresc să-și păstreze modul de prezentare a prețurilor către clienți.\nRestaurarea selecției politicii de discount: adaugă câmpul `discount_policy` pe lista de prețuri (Pricelist), cu două opțiuni:\nDiscount inclus în preț: prețul unitar de pe linia comenzii de vânzare este prețul final, redus, iar câmpul de discount rămâne 0.\nAfișează prețul public și discountul către client: prețul unitar afișează prețul public (de bază), iar procentul de discount este evidențiat explicit.\nSuport pentru reguli de preț fix: restaurează comportamentul din Odoo 17 pentru regulile de tip preț fix — atunci când politica este \"afișează prețul public și discountul\", modulul calculează procentul de discount echivalent chiar și pentru regulile cu preț fix, astfel încât clientul vede prețul original și reducerea aplicată.\nParcurgerea lanțului de reguli din lista de prețuri: identifică corect prețul de bază urmărind lanțul de reguli al listei de prețuri (inclusiv liste de prețuri bazate pe alte liste de prețuri), replicând logica disponibilă în Odoo 17.\nTransparență îmbunătățită: oferă flexibilitate în modul de prezentare a prețurilor către clienți, comportament care a fost modificat în versiunile standard mai noi ale Odoo."
+  },
+  {
+    "path": "deltatech_doc_screenshots/index.md",
+    "module": "deltatech_doc_screenshots",
+    "version": "20.0.1.3.0",
+    "github": "https://github.com/dhongu/deltatech/tree/20.0/deltatech_doc_screenshots",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "deltatech_doc_screenshots",
+    "summary": "Modul de unelte pentru dezvoltare, fără funcționalitate de business. Oferă un mixin de teste care generează automat capturile de ecran ale fișelor de consultant, pornind de la date create determinist în teste. Este vizibil doar dezvoltatorilor și documentariștilor.",
+    "features": [
+      "`ScreenshotCase` (în `tests/screenshot_case.py`): clasă de bază `HttpCase` + Playwright (Chrome de sistem), reutilizabilă în orice modul; capturile se descriu ca listă de dicționare și se generează cu o singură comandă, direct în `static/description/`.",
+      "`prepare_ro_company` (date românești: țară, RON, CUI, adresă, drepturi de contabilitate, limba română, temă luminoasă) și `prepare_demo_company` (pentru module cu date demo); `account_move_shot`, `force_light_theme`, `_autotrim` (taie marginile uniforme).",
+      "`highlight` pe fiecare captură: conturează elemente cu portocaliu Odoo și insigne numerotate ①②③.",
+      "Capturile se generează doar la cerere (`--test-tags` cu `fise_screenshots` sau orice tag care se termină în `_screenshots`, ori `FISE_SCREENSHOTS=1`); `SKIP_FISE_SCREENSHOTS=1` are prioritate. Fără `playwright`, testele de capturi sunt omise, iar suita trece.",
+      "Două limbi: capturi în română pentru fișa consultantului și în engleză (`static/description/en/`) pentru USAGE.md.",
+      "`capture_gif`: GIF demo animat pentru pagina Apps Store (cursor simulat, text tastat literă cu literă, subtitrări, slide de început și de final din `banner.json`).",
+      "Înlocuiește `l10n_ro_doc_screenshots`, care doar reexportă `ScreenshotCase` de aici.",
+      "Cerințe de instalare pentru generare: `playwright`, `websocket-client`, `pillow` (opțional) și `playwright install chrome`."
+    ],
+    "dependencies": [
+      "web"
+    ],
+    "connections": [
+      "l10n_ro_doc_screenshots"
+    ],
+    "text": "deltatech_doc_screenshots\ndeltatech_doc_screenshots\nModul de unelte pentru dezvoltare, fără funcționalitate de business. Oferă un mixin de teste care generează automat capturile de ecran ale fișelor de consultant, pornind de la date create determinist în teste. Este vizibil doar dezvoltatorilor și documentariștilor.\n`ScreenshotCase` (în `tests/screenshot_case.py`): clasă de bază `HttpCase` + Playwright (Chrome de sistem), reutilizabilă în orice modul; capturile se descriu ca listă de dicționare și se generează cu o singură comandă, direct în `static/description/`.\n`prepare_ro_company` (date românești: țară, RON, CUI, adresă, drepturi de contabilitate, limba română, temă luminoasă) și `prepare_demo_company` (pentru module cu date demo); `account_move_shot`, `force_light_theme`, `_autotrim` (taie marginile uniforme).\n`highlight` pe fiecare captură: conturează elemente cu portocaliu Odoo și insigne numerotate ①②③.\nCapturile se generează doar la cerere (`--test-tags` cu `fise_screenshots` sau orice tag care se termină în `_screenshots`, ori `FISE_SCREENSHOTS=1`); `SKIP_FISE_SCREENSHOTS=1` are prioritate. Fără `playwright`, testele de capturi sunt omise, iar suita trece.\nDouă limbi: capturi în română pentru fișa consultantului și în engleză (`static/description/en/`) pentru USAGE.md.\n`capture_gif`: GIF demo animat pentru pagina Apps Store (cursor simulat, text tastat literă cu literă, subtitrări, slide de început și de final din `banner.json`).\nÎnlocuiește `l10n_ro_doc_screenshots`, care doar reexportă `ScreenshotCase` de aici.\nCerințe de instalare pentru generare: `playwright`, `websocket-client`, `pillow` (opțional) și `playwright install chrome`."
   },
   {
     "path": "deltatech_document_template/index.md",
@@ -4875,6 +5124,32 @@
     "text": "Marketplace Base Connector\ndeltatech_marketplace\nMarketplace Base Connector este modulul de bază al familiei de module marketplace din Odoo, conceput pentru a facilita integrarea între Odoo și diverse platforme de marketplace online (eMAG, Shopify, WooCommerce, PrestaShop, Magento, Trendyol, alt Odoo etc.). Singur, modulul nu vorbește cu niciun magazin — asta o fac conectorii dedicați fiecărei platforme —, dar oferă tot ce e comun pe orice canal: backend-ul (magazinul conectat, cu acces, companie și reguli), obiectele sincronizate (produse, clienți, categorii, stoc) cu regulile lor de import/export, asocierile (legăturile) dintre înregistrările Odoo și cele din magazin, exportul de stoc și preț cu acțiunile programate aferente, coada de joburi în fundal și jurnalul centralizat al operațiunilor. Este fundația unui ecosistem complet de management al marketplace-urilor, cu control centralizat asupra prezenței online pe mai multe platforme.\nBackend de magazin conectat, cu date de acces, companie, echipă de vânzări, listă de prețuri și reguli de stoc.\nObiecte sincronizate (produse, șablon de produs, clienți, categorii, stoc), fiecare cu regula lui de import (creează/actualizează, doar unul din cele două, sau niciunul) și de export (automat la scriere sau doar manual).\nAsocieri (legături) Odoo ↔ magazin, pe șablon și pe variantă, cu stocul și prețul din Odoo comparate cu cele din magazin și filtre pentru diferențe (stoc/preț nesincronizat).\nExport de stoc și de preț, cu acțiuni programate dedicate — livrate dezactivate la instalare, activate abia după verificarea importului.\nMapare TVA cotă din magazin → taxă de vânzare Odoo, completată de conector la importul datelor de bază: e o tabelă de referință, nu decide TVA-ul comenzilor — acesta vine din taxele de vânzare ale produsului și din poziția fiscală a comenzii.\nCategorie implicită — doar o categorie de rezervă pentru produsele noi create fără categorie din magazin; nu leagă categoriile magazinului de ea și nu oprește schimbarea categoriei produselor existente.\nProdus pentru comision (*Fee Product*) — în ciuda etichetei, nu e comisionul platformei: e produsul cu care conectorul WooCommerce adaugă pe comanda clientului taxele/suprataxele din magazin (venit facturat clientului). Comisionul platformei vine pe factura de furnizor a platformei.\nAsistent de sincronizare la cerere pe produs (export/import, tot/stoc/preț), pentru un produs urgent între două rulări.\nJurnal centralizat al operațiunilor de marketplace (stoc, preț, import, export, webhook, limitare), cu stare de sănătate per backend (Neconfirmat / Erori / Avertismente / În regulă) și curățare automată după un număr configurabil de zile.\nCoadă de joburi (`queue_job`), cu canale proprii per backend și reîncercare automată a joburilor eșuate."
   },
   {
+    "path": "deltatech_marketplace_background_job/index.md",
+    "module": "deltatech_marketplace_background_job",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_background_job",
+    "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_background_job",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Marketplace Jobs on Background Jobs",
+    "summary": "Rulează sincronizările marketplace-urilor pe motorul Terrabit *Background Jobs*, fără `queue_job`. Conectorii de marketplace nu depind de un motor de joburi, iar acest modul-punte îi leagă de *Background Jobs*. Joburile pornesc în câteva secunde pe workerii HTTP, inclusiv pe odoo.sh, unde runner-ul `queue_job` nu poate rula.",
+    "features": [
+      "Copiază funcțiile de job declarate de conectori (canal, model de reîncercare) în *Running Processes > Configuration > Job Functions* și creează canalele backend-urilor, fără limită; capacitatea se setează în *Channels* pentru canalele care trebuie plafonate.",
+      "Scrie eșecul unui job de marketplace în jurnalul marketplace-ului și închide intrarea când o reîncercare reușește; se reîncearcă doar erorile temporare (rate limit, timeout).",
+      "Oferă backend-urilor contoarele și listele *Failed jobs* și *Jobs*, plus butonul *Run jobs*.",
+      "Permite managerului de marketplace să citească joburile tuturor utilizatorilor; reîncearcă doar joburile pornite de el (pentru reîncercare/anulare generală se acordă grupul *Background Jobs Manager*).",
+      "Se instalează automat când în *Marketplace > Configuration > Settings*, secțiunea Job engine, este ales *Background Jobs*. Trecerea la `queue_job` cere oprirea cron-urilor și golirea cozii, apoi schimbarea opțiunii."
+    ],
+    "dependencies": [
+      "deltatech_marketplace",
+      "deltatech_background_job"
+    ],
+    "connections": [
+      "deltatech_marketplace_queue_job",
+      "queue_job"
+    ],
+    "text": "Marketplace Jobs on Background Jobs\ndeltatech_marketplace_background_job\nRulează sincronizările marketplace-urilor pe motorul Terrabit *Background Jobs*, fără `queue_job`. Conectorii de marketplace nu depind de un motor de joburi, iar acest modul-punte îi leagă de *Background Jobs*. Joburile pornesc în câteva secunde pe workerii HTTP, inclusiv pe odoo.sh, unde runner-ul `queue_job` nu poate rula.\nCopiază funcțiile de job declarate de conectori (canal, model de reîncercare) în *Running Processes > Configuration > Job Functions* și creează canalele backend-urilor, fără limită; capacitatea se setează în *Channels* pentru canalele care trebuie plafonate.\nScrie eșecul unui job de marketplace în jurnalul marketplace-ului și închide intrarea când o reîncercare reușește; se reîncearcă doar erorile temporare (rate limit, timeout).\nOferă backend-urilor contoarele și listele *Failed jobs* și *Jobs*, plus butonul *Run jobs*.\nPermite managerului de marketplace să citească joburile tuturor utilizatorilor; reîncearcă doar joburile pornite de el (pentru reîncercare/anulare generală se acordă grupul *Background Jobs Manager*).\nSe instalează automat când în *Marketplace > Configuration > Settings*, secțiunea Job engine, este ales *Background Jobs*. Trecerea la `queue_job` cere oprirea cron-urilor și golirea cozii, apoi schimbarea opțiunii."
+  },
+  {
     "path": "deltatech_marketplace_brand/index.md",
     "module": "deltatech_marketplace_brand",
     "version": "19.0.1.0.3",
@@ -4898,6 +5173,33 @@
       "deltatech_marketplace_sale"
     ],
     "text": "Marketplace Brand addon\ndeltatech_marketplace_brand\nAcest modul extinde funcționalitatea Odoo Marketplace cu un sistem complet de gestionare a brandurilor pentru produsele vândute pe diverse platforme de tip marketplace. Din perspectivă de business, permite companiilor să mențină o identitate de brand unitară și asigură faptul că produsele sunt corect categorizate și pot fi căutate după brand pe toate canalele conectate.\nGestionarea centralizată a brandurilor de produse în cadrul ecosistemului Odoo.\nReprezentare consecventă a brandului pe mai multe platforme marketplace (de exemplu eMAG, MerchantPro, Odoo-to-Odoo).\nRaportare și analize îmbunătățite, prin urmărirea vânzărilor în funcție de performanța pe brand.\nExperiență de client îmbunătățită, prin afișarea clară a informațiilor de brand în vitrinele marketplace."
+  },
+  {
+    "path": "deltatech_marketplace_dashboard/index.md",
+    "module": "deltatech_marketplace_dashboard",
+    "version": "20.0.1.0.4",
+    "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_dashboard",
+    "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_dashboard",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Marketplace Dashboard",
+    "summary": "Un singur ecran pentru toate marketplace-urile (eMAG, Trendyol, Shopify, PrestaShop etc.), care răspunde, în ordinea importanței de dimineață, la trei întrebări: ce am de făcut acum, cum merg vânzările și dacă se câștigă ceva.",
+    "features": [
+      "Banda de conexiune: starea sincronizării fiecărui backend (erori în ultimele 24 de ore, joburi eșuate, nesincronizat niciodată), backend-uri cu importul comenzilor dezactivat și starea jobului de import.",
+      "Contoare pe pașii listei de lucru (de mapat, de confirmat, de expediat, de predat, plus cele aduse de conectori: de confirmat la eMAG, întârziate, anulare solicitată) și *de încasat* (facturi postate neplătite); click deschide lista comenzilor numărate, pe același domeniu.",
+      "Lista *De făcut*, sortată după termenul de expediere stabilit de marketplace; butoane pe rând pentru pașii pe care conectorul îi poate rula (eMAG: acceptare).",
+      "Vânzări pe zile, produse best-seller și marja brută (vânzări fără TVA - cost de achiziție - comision estimat) pe 7, 30, 90 sau 365 de zile; marja se vede doar utilizatorilor cu drept de a vedea costul produsului.",
+      "Retururi deschise ale marketplace-urilor; sumele în alte valute se convertesc la cursul zilei.",
+      "Meniu: *Marketplace > Dashboard*, pentru grupul *Marketplace Manager*. Comisionul estimat se setează pe backend (*Estimated Commission (%)*), iar parametrul de sistem `deltatech_marketplace_dashboard.worklist_days` (implicit 90) limitează vechimea comenzilor din listă.",
+      "Conectorii pot extinde ecranul prin hook-urile `_dashboard_steps()`, `_dashboard_kpis()`, `_dashboard_row_actions()`, `_dashboard_row_values()`."
+    ],
+    "dependencies": [
+      "deltatech_marketplace_sale"
+    ],
+    "connections": [
+      "deltatech_marketplace",
+      "deltatech_marketplace_emag"
+    ],
+    "text": "Marketplace Dashboard\ndeltatech_marketplace_dashboard\nUn singur ecran pentru toate marketplace-urile (eMAG, Trendyol, Shopify, PrestaShop etc.), care răspunde, în ordinea importanței de dimineață, la trei întrebări: ce am de făcut acum, cum merg vânzările și dacă se câștigă ceva.\nBanda de conexiune: starea sincronizării fiecărui backend (erori în ultimele 24 de ore, joburi eșuate, nesincronizat niciodată), backend-uri cu importul comenzilor dezactivat și starea jobului de import.\nContoare pe pașii listei de lucru (de mapat, de confirmat, de expediat, de predat, plus cele aduse de conectori: de confirmat la eMAG, întârziate, anulare solicitată) și *de încasat* (facturi postate neplătite); click deschide lista comenzilor numărate, pe același domeniu.\nLista *De făcut*, sortată după termenul de expediere stabilit de marketplace; butoane pe rând pentru pașii pe care conectorul îi poate rula (eMAG: acceptare).\nVânzări pe zile, produse best-seller și marja brută (vânzări fără TVA - cost de achiziție - comision estimat) pe 7, 30, 90 sau 365 de zile; marja se vede doar utilizatorilor cu drept de a vedea costul produsului.\nRetururi deschise ale marketplace-urilor; sumele în alte valute se convertesc la cursul zilei.\nMeniu: *Marketplace > Dashboard*, pentru grupul *Marketplace Manager*. Comisionul estimat se setează pe backend (*Estimated Commission (%)*), iar parametrul de sistem `deltatech_marketplace_dashboard.worklist_days` (implicit 90) limitează vechimea comenzilor din listă.\nConectorii pot extinde ecranul prin hook-urile `_dashboard_steps()`, `_dashboard_kpis()`, `_dashboard_row_actions()`, `_dashboard_row_values()`."
   },
   {
     "path": "deltatech_marketplace_delivery/index.md",
@@ -5365,6 +5667,32 @@
       "purchase_stock"
     ],
     "text": "Marketplace Purchase Order addon\ndeltatech_marketplace_purchase\nAcest modul extinde ecosistemul marketplace prin integrarea proceselor de aprovizionare cu vânzările din marketplace, permițând decizii de achiziție bazate pe date. Din perspectivă de afaceri, el face legătura între cererea de vânzări externă și gestionarea internă a lanțului de aprovizionare, asigurând că vânzările din marketplace sunt susținute de achiziții oportune și corecte. Practic, comenzile de achiziție sunt aliniate la cererea reală din marketplace, iar achizițiile destinate vânzărilor din marketplace sunt corelate automat cu înregistrările de stoc și de vânzări din Odoo.\nAchiziții orientate spre cerere: aliniază comenzile de achiziție la performanța reală a vânzărilor din marketplace și la cererea previzionată.\nGestionarea furnizorilor: urmărește performanța și costurile furnizorilor pentru produsele destinate vânzării în marketplace.\nFlux de numerar îmbunătățit: optimizează nivelurile de stoc și frecvența achizițiilor pentru a se potrivi mai bine cu ciclurile de vânzare din marketplace.\nAnaliză precisă a marjei: combină costurile de achiziție cu datele de vânzare din marketplace pentru o imagine completă a profitabilității produselor.\nOperațiuni eficientizate: corelează automat achizițiile legate de marketplace cu înregistrările corespunzătoare de stoc și de vânzări din Odoo."
+  },
+  {
+    "path": "deltatech_marketplace_queue_job/index.md",
+    "module": "deltatech_marketplace_queue_job",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-solutions/bitshop_marketplace/tree/20.0/deltatech_marketplace_queue_job",
+    "local_path": "odoo-addons/bitshop_marketplace/deltatech_marketplace_queue_job",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Marketplace Jobs on queue_job",
+    "summary": "Rulează sincronizările marketplace-urilor pe `queue_job` (OCA). Conectorii de marketplace nu depind de un motor de joburi, iar acest modul-punte îi leagă de `queue_job`. Pentru odoo.sh, unde runner-ul `queue_job` nu poate rula, se folosește în schimb *Background Jobs* cu `deltatech_marketplace_background_job`.",
+    "features": [
+      "Copiază funcțiile de job declarate de conectori (canal, model de reîncercare) în *Job Queue > Queue > Job Functions* și creează canalele lipsă ale backend-urilor (părinții primii), plus `root.inbound` și `root.outbound`.",
+      "Scrie eșecul unui job în jurnalul marketplace-ului și îl marchează *Resolved* când joburile repuse în coadă reușesc; se reîncearcă doar erorile temporare.",
+      "Oferă backend-urilor contoarele și listele *Failed jobs* și *Jobs*, plus butonul *Run jobs* (pornește cron-ul `queue_job_cron_jobrunner`, dacă e activ).",
+      "Cere un runner: `queue_job` încărcat în `server_wide_modules` cu un worker de joburi, sau `queue_job_cron_jobrunner`; fără runner joburile rămân *Pending*.",
+      "Se instalează automat când în *Marketplace > Configuration > Settings*, secțiunea Job engine, este ales `queue_job`. Grupul *Job Queue Manager* se acordă celor care repun în coadă sau anulează joburi eșuate."
+    ],
+    "dependencies": [
+      "deltatech_marketplace",
+      "queue_job"
+    ],
+    "connections": [
+      "deltatech_marketplace_background_job",
+      "deltatech_background_job"
+    ],
+    "text": "Marketplace Jobs on queue_job\ndeltatech_marketplace_queue_job\nRulează sincronizările marketplace-urilor pe `queue_job` (OCA). Conectorii de marketplace nu depind de un motor de joburi, iar acest modul-punte îi leagă de `queue_job`. Pentru odoo.sh, unde runner-ul `queue_job` nu poate rula, se folosește în schimb *Background Jobs* cu `deltatech_marketplace_background_job`.\nCopiază funcțiile de job declarate de conectori (canal, model de reîncercare) în *Job Queue > Queue > Job Functions* și creează canalele lipsă ale backend-urilor (părinții primii), plus `root.inbound` și `root.outbound`.\nScrie eșecul unui job în jurnalul marketplace-ului și îl marchează *Resolved* când joburile repuse în coadă reușesc; se reîncearcă doar erorile temporare.\nOferă backend-urilor contoarele și listele *Failed jobs* și *Jobs*, plus butonul *Run jobs* (pornește cron-ul `queue_job_cron_jobrunner`, dacă e activ).\nCere un runner: `queue_job` încărcat în `server_wide_modules` cu un worker de joburi, sau `queue_job_cron_jobrunner`; fără runner joburile rămân *Pending*.\nSe instalează automat când în *Marketplace > Configuration > Settings*, secțiunea Job engine, este ales `queue_job`. Grupul *Job Queue Manager* se acordă celor care repun în coadă sau anulează joburi eșuate."
   },
   {
     "path": "deltatech_marketplace_review/index.md",
@@ -11235,6 +11563,31 @@
     "text": "Produse Furnizori\ndeltatech_vendor_products\nDeltatech Vendor Products automatizează și simplifică gestiunea datelor de produs provenite de la mai mulți furnizori. Modulul creează o punte între cataloagele de produse ale furnizorilor și inventarul Odoo, facilitând importul, actualizarea și sincronizarea informațiilor despre produse — inclusiv prețuri, disponibilitate și imagini. Astfel, companiile care lucrează cu mulți furnizori pot administra cataloage mari fără intervenție manuală: economisesc timp, păstrează informațiile la zi, asigură consistența prețurilor și reduc erorile de introducere a datelor. Un avantaj important este că permite definirea unui catalog de produse furnizor fără ca acestea să fie create obligatoriu ca produse în baza de date Odoo, iar pe baza listei importate se pot crea produse noi sau actualiza cele existente.\nImport produse furnizor din formate variate de fișier (XLSX, CSV, XML)\nImport date de produs din URL-uri sau feed-uri de furnizor\nProcesarea feed-urilor de produse de la furnizori, inclusiv format feed XML [Google Merchant Center](https://support.google.com/merchants/answer/7052112)\nPotrivire automată a produselor cu cele existente în Odoo (algoritmi avansați de matching)\nCreare de produse noi din datele furnizorului\nActualizare prețuri pe baza unor reguli configurabile (preț de bază, adaos, discount) cu suport pentru conversie valutară\nSincronizarea disponibilității produselor de la furnizori\nDescărcarea și atașarea automată a imaginilor de produs\nAtribuire automată a categoriei de produs și maparea codurilor de produs furnizor către coduri interne\nImportul unui număr foarte mare de produse (50.000 în ~30 secunde) cu procesare în fundal\nStă la baza altor module care permit căutarea pe website după codul de produs al furnizorului"
   },
   {
+    "path": "deltatech_vendor_products_bepco/index.md",
+    "module": "deltatech_vendor_products_bepco",
+    "version": "20.0.1.0.5",
+    "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/20.0/deltatech_vendor_products_bepco",
+    "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_bepco",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Vendor Products Bepco",
+    "summary": "Modulul conectează catalogul de produse al furnizorilor la Bepco, prin API-ul TVH, astfel încât prețurile Bepco să poată fi verificate direct din Odoo, fără copiere manuală. Este util echipelor care cumpără piese și vor să cunoască prețul de achiziție actual înainte de a emite o comandă sau o ofertă.",
+    "features": [
+      "Tip de conexiune nou, Bepco, pe fluxul furnizorului (`vendor.feed`).",
+      "Căutare online: la căutarea unui cod de piesă, se interoghează API-ul TVH și se cere o cotație de preț, care întoarce prețul de achiziție.",
+      "Coduri, descrieri și prețuri preluate direct de la Bepco, deci mai puține erori de tastare.",
+      "Verificarea unei piese înainte de adăugarea ei într-o comandă de achiziție sau într-o ofertă pentru client.",
+      "Limitări: caută câte un singur cod pe rând; nu importă catalogul Bepco, nu creează variante, iar butoanele *Load Price* de pe flux nu actualizează prețurile pentru acest tip de conexiune.",
+      "Fluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "deltatech_vendor_products_website"
+    ],
+    "connections": [
+      "deltatech_vendor_products"
+    ],
+    "text": "Vendor Products Bepco\ndeltatech_vendor_products_bepco\nModulul conectează catalogul de produse al furnizorilor la Bepco, prin API-ul TVH, astfel încât prețurile Bepco să poată fi verificate direct din Odoo, fără copiere manuală. Este util echipelor care cumpără piese și vor să cunoască prețul de achiziție actual înainte de a emite o comandă sau o ofertă.\nTip de conexiune nou, Bepco, pe fluxul furnizorului (`vendor.feed`).\nCăutare online: la căutarea unui cod de piesă, se interoghează API-ul TVH și se cere o cotație de preț, care întoarce prețul de achiziție.\nCoduri, descrieri și prețuri preluate direct de la Bepco, deci mai puține erori de tastare.\nVerificarea unei piese înainte de adăugarea ei într-o comandă de achiziție sau într-o ofertă pentru client.\nLimitări: caută câte un singur cod pe rând; nu importă catalogul Bepco, nu creează variante, iar butoanele *Load Price* de pe flux nu actualizează prețurile pentru acest tip de conexiune.\nFluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "deltatech_vendor_products_granit/index.md",
     "module": "deltatech_vendor_products_granit",
     "version": "19.0.1.0.2",
@@ -11282,6 +11635,66 @@
       "deltatech_vendor_products"
     ],
     "text": "Vendor Products Kramp\ndeltatech_vendor_products_kramp\nAcest modul oferă un conector specializat pentru importul și sincronizarea datelor despre produse din catalogul furnizorului Kramp în Odoo, simplificând aprovizionarea și gestiunea stocurilor. Din punct de vedere business, automatizarea elimină introducerea manuală a produselor Kramp, asigurând că în Odoo catalogul este mereu actualizat cu cele mai recente informații despre produse și prețuri.\nImport automat al catalogului: construiește și actualizează rapid catalogul de produse folosind date preluate direct de la Kramp.\nAcuratețe sporită a datelor: elimină erorile de tastare și asigură reflectarea corectă în Odoo a specificațiilor și a codurilor de produs.\nAprovizionare simplificată: identifici și comanzi ușor produsele Kramp, având toate detaliile lor disponibile în ERP.\nVizibilitate mai bună a stocului: menține informații corecte despre stoc și variante pentru toate produsele Kramp, pentru o planificare mai eficientă.\nManagement scalabil al furnizorului: gestionezi eficient un volum mare de produse Kramp printr-un conector integrat și automatizat."
+  },
+  {
+    "path": "deltatech_vendor_products_site/index.md",
+    "module": "deltatech_vendor_products_site",
+    "version": "20.0.1.0.2",
+    "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/20.0/deltatech_vendor_products_site",
+    "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_site",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Vendor Products from Website Pages",
+    "summary": "Modulul citește prețul de achiziție, stocul, codurile, pozele și descrierea produselor de pe site-ul unui furnizor care nu oferă flux (CSV, XML sau API), inclusiv de pe magazine B2B cu autentificare. Datele merg în catalogul furnizorului, ca la un flux obișnuit; ce ajunge la produse este verificat mai întâi, iar pozele și descrierile sunt alese de o persoană.",
+    "features": [
+      "Tip de conexiune nou, Vendor Website, pe fluxul furnizorului: adresa site-ului, autentificarea, pauza dintre pagini, numărul de pagini per rulare.",
+      "Citire prin date schema.org (JSON-LD, Microdata) cu ajutorul modulului Web Scan Base; pentru alte site-uri, selectori XPath, CSS, expresie regulată sau cale JSON-LD, cu tabel de valori (ex. *In stoc*). Butonul *Test on 5 Pages* arată ce se citește, fără a scrie nimic.",
+      "Găsirea paginilor: import CSV/Excel (cod și *Page URL*), citirea `sitemap.xml` cu filtru pe adresă, căutare pe site după codul furnizorului sau codul de bare (pagina se leagă de produs doar dacă arată același cod).",
+      "Autentificare B2B: formular de login (inclusiv câmpurile ascunse, ex. token CSRF), HTTP Basic sau token de acces; sesiunea trăiește doar în memorie, parola nu apare în mesaje sau loguri. Fără ocolirea protecțiilor: CAPTCHA, verificarea în doi pași sau protecția anti-roboți opresc citirea (stare *Blocked*); după două autentificări eșuate la rând fluxul nu mai încearcă.",
+      "Verificări înainte de produse: *Other Product* pentru pagini cu alt cod sau cod de bare; preț suspect (variație peste procentul setat, implicit 30%, sau altă monedă) care așteaptă *Confirm Price*; butoanele *Update Purchase Price* / *Update Price List* și acțiunile programate sar peste rândurile suspecte, blocate sau cu alt produs.",
+      "*Propose Content*: afișează poza și descrierea produsului lângă cele de pe pagina furnizorului; implicit se aplică doar ce lipsește.",
+      "Istoric de prețuri pe intervale: linie nouă doar când se schimbă prețul de achiziție sau disponibilitatea.",
+      "Citire programată, inactivă implicit: în fiecare oră, paginile scadente ale fluxurilor cu termenii confirmați (*Automatic Reading Allowed*); se respectă robots.txt și o pauză de 3 secunde între pagini.",
+      "Configurare: *Achiziții › Produse › Vendor Feed*, apoi tab-ul *Website*; ordinea completă a pașilor este în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "deltatech_vendor_products",
+      "deltatech_web_scan"
+    ],
+    "connections": [
+      "deltatech_vendor_products_website"
+    ],
+    "text": "Vendor Products from Website Pages\ndeltatech_vendor_products_site\nModulul citește prețul de achiziție, stocul, codurile, pozele și descrierea produselor de pe site-ul unui furnizor care nu oferă flux (CSV, XML sau API), inclusiv de pe magazine B2B cu autentificare. Datele merg în catalogul furnizorului, ca la un flux obișnuit; ce ajunge la produse este verificat mai întâi, iar pozele și descrierile sunt alese de o persoană.\nTip de conexiune nou, Vendor Website, pe fluxul furnizorului: adresa site-ului, autentificarea, pauza dintre pagini, numărul de pagini per rulare.\nCitire prin date schema.org (JSON-LD, Microdata) cu ajutorul modulului Web Scan Base; pentru alte site-uri, selectori XPath, CSS, expresie regulată sau cale JSON-LD, cu tabel de valori (ex. *In stoc*). Butonul *Test on 5 Pages* arată ce se citește, fără a scrie nimic.\nGăsirea paginilor: import CSV/Excel (cod și *Page URL*), citirea `sitemap.xml` cu filtru pe adresă, căutare pe site după codul furnizorului sau codul de bare (pagina se leagă de produs doar dacă arată același cod).\nAutentificare B2B: formular de login (inclusiv câmpurile ascunse, ex. token CSRF), HTTP Basic sau token de acces; sesiunea trăiește doar în memorie, parola nu apare în mesaje sau loguri. Fără ocolirea protecțiilor: CAPTCHA, verificarea în doi pași sau protecția anti-roboți opresc citirea (stare *Blocked*); după două autentificări eșuate la rând fluxul nu mai încearcă.\nVerificări înainte de produse: *Other Product* pentru pagini cu alt cod sau cod de bare; preț suspect (variație peste procentul setat, implicit 30%, sau altă monedă) care așteaptă *Confirm Price*; butoanele *Update Purchase Price* / *Update Price List* și acțiunile programate sar peste rândurile suspecte, blocate sau cu alt produs.\n*Propose Content*: afișează poza și descrierea produsului lângă cele de pe pagina furnizorului; implicit se aplică doar ce lipsește.\nIstoric de prețuri pe intervale: linie nouă doar când se schimbă prețul de achiziție sau disponibilitatea.\nCitire programată, inactivă implicit: în fiecare oră, paginile scadente ale fluxurilor cu termenii confirmați (*Automatic Reading Allowed*); se respectă robots.txt și o pauză de 3 secunde între pagini.\nConfigurare: *Achiziții › Produse › Vendor Feed*, apoi tab-ul *Website*; ordinea completă a pașilor este în [fișa consultantului](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "deltatech_vendor_products_storage/index.md",
+    "module": "deltatech_vendor_products_storage",
+    "version": "20.0.1.2.2",
+    "github": "https://github.com/terrabit-solutions/bitshop_vendor/tree/20.0/deltatech_vendor_products_storage",
+    "local_path": "odoo-addons/bitshop_vendor/deltatech_vendor_products_storage",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Vendor Products Storage",
+    "summary": "Prototip care păstrează pozele și fișierele PDF ale articolelor din catalogul furnizorilor (`vendor.product`) într-o stocare în cloud, prin mecanismul standard `cloud_storage`. Folosește doar API-ul generic, deci funcționează cu orice furnizor de stocare instalat și ales în Setări.",
+    "features": [
+      "Chatter pe formularul articolului din catalog: fișierele atașate ajung în cloud când depășesc *Minimum File Size* din setările stocării (implicit 20 MB); cele mai mici rămân în baza de date.",
+      "Articol provizoriu (de exemplu o etichetă tipărită încă nedescrisă) creat doar cu cod: numele preia codul, prețul de vânzare este 0.",
+      "`POST /vendor_product_storage/upload_info` (JSON-RPC, utilizator cu drept de scriere): creează atașamentul unui articol (după id sau cod) și întoarce URL-ul semnat pentru încărcare directă din telefon sau browser. Se acceptă doar imagini raster (SVG refuzat) și PDF, până la dimensiunea maximă.",
+      "`POST /vendor_product_storage/confirm_upload`: verifică fișierul încărcat, înregistrează dimensiunea reală și șterge atașamentul dacă încărcarea lipsește sau e prea mare.",
+      "Miniatura primei pagini din PDF funcționează pentru fișierele din cloud.",
+      "Parametri de sistem: `deltatech_vendor_products_storage.max_file_size` (octeți, implicit 25 MB) și `deltatech_vendor_products_storage.unconfirmed_hours` (24 h).",
+      "Fișierul rămâne în bucket la ștergerea articolului sau a atașamentului; curățarea se face cu scriptul modulului de stocare cloud.",
+      "Pașii de configurare și testare sunt în [fișa consultantului](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "deltatech_vendor_products",
+      "cloud_storage"
+    ],
+    "connections": [
+      "deltatech_cloud_storage_r2",
+      "deltatech_cloud_storage_s3",
+      "deltatech_cloud_storage_b2",
+      "deltatech_cloud_storage_hetzner"
+    ],
+    "text": "Vendor Products Storage\ndeltatech_vendor_products_storage\nPrototip care păstrează pozele și fișierele PDF ale articolelor din catalogul furnizorilor (`vendor.product`) într-o stocare în cloud, prin mecanismul standard `cloud_storage`. Folosește doar API-ul generic, deci funcționează cu orice furnizor de stocare instalat și ales în Setări.\nChatter pe formularul articolului din catalog: fișierele atașate ajung în cloud când depășesc *Minimum File Size* din setările stocării (implicit 20 MB); cele mai mici rămân în baza de date.\nArticol provizoriu (de exemplu o etichetă tipărită încă nedescrisă) creat doar cu cod: numele preia codul, prețul de vânzare este 0.\n`POST /vendor_product_storage/upload_info` (JSON-RPC, utilizator cu drept de scriere): creează atașamentul unui articol (după id sau cod) și întoarce URL-ul semnat pentru încărcare directă din telefon sau browser. Se acceptă doar imagini raster (SVG refuzat) și PDF, până la dimensiunea maximă.\n`POST /vendor_product_storage/confirm_upload`: verifică fișierul încărcat, înregistrează dimensiunea reală și șterge atașamentul dacă încărcarea lipsește sau e prea mare.\nMiniatura primei pagini din PDF funcționează pentru fișierele din cloud.\nParametri de sistem: `deltatech_vendor_products_storage.max_file_size` (octeți, implicit 25 MB) și `deltatech_vendor_products_storage.unconfirmed_hours` (24 h).\nFișierul rămâne în bucket la ștergerea articolului sau a atașamentului; curățarea se face cu scriptul modulului de stocare cloud.\nPașii de configurare și testare sunt în [fișa consultantului](FISA_CONSULTANT.md)."
   },
   {
     "path": "deltatech_vendor_products_website/index.md",
