@@ -1,10 +1,10 @@
 # Deltatech - Schiță și vedere 3D pe liniile comenzii (Sketch 3D)
 
 - **Nume Tehnic:** `deltatech_sketch_3d`
-- **Versiune:** `20.0.1.4.0` (în PR-ul [terrabit-solutions/bitshop#4181](https://github.com/terrabit-solutions/bitshop/pull/4181), încă neunit; ramura `20.0` are `20.0.1.3.1`)
+- **Versiune:** `20.0.1.5.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/20.0/deltatech_sketch_3d
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sketch_3d`
-- **Ultima Ingestie:** `2026-11-27`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,14 +15,14 @@ Modulul afișează pe linia comenzii de vânzare schița (SVG) unei ferestre, u�
 
 - Coloana *Schiță* în liniile comenzii de vânzare: apare doar dacă cel puțin o linie are schiță; o schiță cu vedere 3D afișează cursor de mărire, iar un clic o deschide în 3D.
 - **Schiță detaliată:** piesele ei poartă datele vederii 3D (`data-k` tip, `data-d` adâncime, canaturi, geamuri, secțiunile de profil folosite).
-- **Vedere 3D (three.js)**, încărcată la primul clic: tragere pentru rotire, rotița pentru zoom; *Deschidere*, *Rabatare* și *Oblon* mișcă canaturile; *Cer și podea* așază elementul sub un cer; *Secțiune* taie elementul la jumătatea înălțimii; *Închide* (sau Esc) revine.
+- **Vedere 3D (three.js)**, încărcată la primul clic: bara are titlul în stânga și comenzile pe un singur rând (sub titlu, pe ecran îngust), cu butonul rotund ✕ în colț, iar sugestia *Trage pentru a roti, rotița pentru zoom* rămâne deasupra până la prima rotire; tragere pentru rotire, rotița pentru zoom; *Deschidere*, *Rabatare* și *Oblon* mișcă canaturile; *Cer și podea* așază elementul sub un cer; *Secțiune* taie elementul la jumătatea înălțimii; *Închide* (sau Esc) revine.
 - **Clic pe canat sau pe mâner** (din 20.0.1.4.0): deschide doar acel canat (rabatat sau oscilo-batant, după opțiunea aleasă), un al doilea clic îl închide; glisorul deschide toate canaturile împreună.
 - **Vedere 3D încorporabilă în pagină** prin `embedSketch3d` (din 20.0.1.4.0): dimensionată de pagina gazdă; un alt element afișat în ea păstrează punctul de vedere și crește de la dimensiunea celui anterior. O folosește configuratorul de tâmplărie din portal.
 - Schița apare lângă fiecare linie pe **comanda tipărită**.
 - Pe **comanda clientului (portal)**, butonul **3D** de sub sau de lângă o schiță detaliată deschide aceeași vedere.
 - **Secțiuni de profil** (*Vânzări → Configurare → Secțiuni de profil*, pentru administratorii de vânzări): conturul, camerele și oțelul unui profil, după codul lui. Tipuri: cadru, montant, canat, stulp, profil adăugat, cuplare. Profilele fără secțiune sunt desenate ca bare aproximative.
 - **Citire din desenul DXF** al producătorului de profile (ex. `102.311.dxf`): conturul, camerele, dimensiunea și oțelul se citesc din fișier; o secțiune nouă își ia codul din numele fișierului. Stulpul nu se poate citi din desen, el se așază pe canatul lui. Codul trebuie să fie cel folosit de schițe; o secțiune adăugată ulterior apare în 3D după ce schița liniei este redesenată. Biblioteci necesare doar pentru DXF: `ezdxf` și `shapely` (importate la utilizare, intenționat absente din `external_dependencies`; fără ele modulul funcționează și refuză desenele cu un mesaj).
-- Modul cu plată pe Odoo Apps (90 EUR, licență OPL-1, stadiu Beta). Fluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md).
+- Modul cu plată pe Odoo Apps (100 EUR, licență OPL-1, stadiu Beta). Fluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 

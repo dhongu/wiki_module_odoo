@@ -4,7 +4,7 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 # Fișă Modul: Schița și vederea 3D a ferestrelor, ușilor și panourilor de pe comanda de vânzare
 
 **Modul:** `deltatech_sketch_3d`
-**Versiune:** 20.0.1.4.0
+**Versiune:** 20.0.1.5.0
 **Suită:** bitshop
 **Dependențe:** `sale`, `portal`
 **Utilizator principal:** agentul de vânzări al unei firme de tâmplărie (PVC, aluminiu, lemn) și clientul lui, în portal; administratorul de vânzări pentru secțiunile profilelor
@@ -121,7 +121,10 @@ opționale al listei.
 ### Pasul 2 — Vederea 3D a elementului
 
 Faceți clic pe schița unei linii cu schiță detaliată (aici, fereastra). Se deschide pe tot
-ecranul **vederea 3D**, cu denumirea produsului ca titlu și o bară de comenzi:
+ecranul **vederea 3D**. Sus e o bară cu denumirea produsului ca titlu, în stânga, și comenzile
+grupate pe un singur rând; pe un ecran îngust (telefon) comenzile trec pe rânduri sub titlu. În
+colțul din dreapta e butonul rotund **✕**. Peste vedere, jos în stânga, indicația *Trage pentru
+rotire, rotița pentru zoom* dispare la prima rotire:
 
 - **trageți cu mouse-ul** ca să rotiți elementul, **rotița** mărește sau micșorează;
 - **Deschidere** — glisorul deschide cercevelele, de la 0° la 90°;
@@ -131,15 +134,15 @@ ecranul **vederea 3D**, cu denumirea produsului ca titlu și o bară de comenzi:
   geamul simulat;
 - **Cer și podea** — un fundal cu cer și podea, în loc de fundalul alb;
 - **Secțiune** — taie elementul (pasul 4);
-- **Închide** (sau tasta Esc) — revine la comandă.
+- **✕** (*Închide*, la trecerea mouse-ului) sau tasta Esc — revine la comandă.
 
 Aceeași vedere 3D se poate arăta și **în pagină**, în locul schiței: așa o folosește configuratorul
 din portal (`deltatech_window_configurator`), prin comutatorul *Schiță / 3D*. În pagină, bara nu
-are titlu și nici **Închide** (se revine la schiță din comutator), are culorile paginii, iar
+are titlu și nici butonul **✕** (se revine la schiță din comutator), are culorile paginii, iar
 indicația de folosire apare ca tooltip peste vedere. Când elementul se schimbă, vederea păstrează
 unghiul și deschiderea canatelor, iar elementul nou crește animat din dimensiunea celui dinainte.
 
-![Vederea 3D a ferestrei Fereastră PVC 2 canate 1200 × 1400 pe fundal alb: tocul, montantul și cele două cercevele cu geam și balamale; sus, bara cu Deschidere la 0°, lista Batant, Cer și podea nebifat, butoanele Secțiune și Închide și indicația Trage pentru rotire, rotița pentru zoom](screenshots/02_vedere_3d.png)
+![Vederea 3D a ferestrei Fereastră PVC 2 canate 1200 × 1400 pe fundal alb: tocul, montantul și cele două cercevele cu geam și balamale; sus, bara cu titlul în stânga, Deschidere la 0°, lista Batant, Cer și podea nebifat, butonul Secțiune și butonul rotund ✕ în colț; jos în stânga, peste vedere, indicația Trage pentru rotire, rotița pentru zoom](screenshots/02_vedere_3d.png)
 
 ### Pasul 3 — Deschiderea cercevelelor
 
@@ -191,7 +194,7 @@ Clientul apasă **3D** sub schița unui element (aici, ușa): se deschide aceea�
 back office, cu textele în limba lui. Ușa nu are cercevea oscilobatantă, deci alegerea
 *Batant / Rabatat* lipsește din bară.
 
-![Vederea 3D a ușii Ușă de intrare PVC 1000 × 2100 deschisă din portal: tocul, cerceveaua cu geam și trei balamale în stânga; bara are Deschidere la 0°, Cer și podea, Secțiune și Închide](screenshots/07_portal_vedere_3d.png)
+![Vederea 3D a ușii Ușă de intrare PVC 1000 × 2100 deschisă din portal: tocul, cerceveaua cu geam și trei balamale în stânga; bara are titlul în stânga, Deschidere la 0°, Cer și podea, Secțiune și butonul rotund ✕ în colț](screenshots/07_portal_vedere_3d.png)
 
 ### Pasul 8 — Secțiunile profilelor
 
@@ -257,7 +260,10 @@ stulpilor; redesenarea schițelor după schimbarea unei secțiuni; verificarea s
       apare doar la elementele cu cercevea oscilobatantă.
 - [ ] Un clic pe o cercevea sau pe mânerul ei o deschide doar pe ea; al doilea clic o închide.
 - [ ] *Secțiune* taie elementul, iar tocul cu secțiune cunoscută își arată camerele și armătura.
-- [ ] *Închide* și tasta Esc revin la comandă.
+- [ ] Bara vederii 3D are titlul în stânga și comenzile pe un singur rând; butonul rotund ✕ din
+      colț (tooltip *Închide*) și tasta Esc revin la comandă.
+- [ ] Indicația *Trage pentru rotire, rotița pentru zoom* apare peste vedere, jos în stânga, și
+      dispare la prima rotire.
 - [ ] Comanda tipărită are schița în stânga fiecărei linii cu schiță.
 - [ ] În portal, clientul comenzii vede schițele; butonul **3D** apare doar sub schițele
       detaliate și deschide aceeași vedere, cu textele în limba clientului.
