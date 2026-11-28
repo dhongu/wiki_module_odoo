@@ -1,10 +1,10 @@
 # Romania - Cont corespondent în Cartea mare (localizat la `l10n_ro_journal_reports/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_journal_reports`
-- **Versiune:** `19.0.2.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_journal_reports
+- **Versiune:** `20.0.2.0.6`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_journal_reports
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_journal_reports`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -22,7 +22,7 @@ Modulul completează Cartea Mare standard din Odoo Enterprise (General Ledger di
 #### 3. Dependențe
 
 - `account_reports`
-- `[[l10n_ro]]`
+- `l10n_ro`
 
 #### 4. Componente Cheie
 
@@ -40,5 +40,5 @@ Modulul completează Cartea Mare standard din Odoo Enterprise (General Ledger di
 
 #### 5. Conexiuni
 
-- `[[l10n_ro_journal_tva]]`
-- `[[l10n_ro_partner_ledger_currency]]`
+- [l10n_ro_journal_tva](../l10n_ro_journal_tva/index.md)
+- [l10n_ro_partner_ledger_currency](../l10n_ro_partner_ledger_currency/index.md)

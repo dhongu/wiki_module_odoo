@@ -1,10 +1,10 @@
 # Romania - Blocare stornare TVA la încasare declarat (FR-16) (localizat la `l10n_ro_vat_on_payment_lock/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_on_payment_lock`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_on_payment_lock`
+- **Versiune:** `20.0.1.0.5`
+- **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_vat_on_payment_lock`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_vat_on_payment_lock`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -13,10 +13,12 @@ Modulul blochează desfacerea reconcilierii unei încasări atunci când TVA la 
 
 #### 2. Funcționalități Cheie
 
-- Blochează desfacerea reconcilierii (`account.partial.reconcile`) — fie prin reset plată la ciornă, fie prin desfacere manuală din widgetul de reconciliere — atunci când aceasta a generat o notă de exigibilitate TVA cash-basis (cont 4428).
+- Blochează desfacerea reconcilierii (`account.partial.reconcile`) — prin „Anulare reconciliere” de pe factură sau prin modificarea/ștergerea unei încasări readuse la ciornă — atunci când aceasta a generat o notă de exigibilitate TVA cash-basis (cont 4428).
 - Verifică dacă nota de exigibilitate TVA are dată mai mică sau egală decât data de blocare fiscală a companiei (`tax_lock_date`), setată la validarea D300.
 - Afișează un mesaj de eroare explicit, cu referință la nota contabilă, data acesteia și data blocării fiscale.
+- „Resetare la ciornă” pe încasare rămâne permisă: în Odoo 20 plata revine în ciornă păstrând reconcilierea, iar nota de exigibilitate rămâne postată.
 - Perioadele nedeclarate (ulterioare datei de blocare) rămân editabile — controlul nu restricționează fluxul normal de lucru.
+- Configurare necesară: opțiunea „Baza de numerar” pe companie, taxa de vânzare cu exigibilitate „Pe baza plății” și cont de tranziție 4428, plus contul de bază pentru notele cash-basis. Pentru o corecție legitimă, contabilul-șef deblochează mai întâi data de blocare a declarației fiscale și depune un D300 rectificativ.
 - Se aplică exclusiv companiilor cu țara fiscală România.
 - Completează regimul de TVA la încasare furnizat de `l10n_ro_vat_on_payment` (OCA) și mecanismul nativ Odoo de exigibilitate pe încasare, fără a-l dubla.
 

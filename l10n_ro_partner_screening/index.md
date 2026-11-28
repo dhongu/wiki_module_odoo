@@ -1,10 +1,10 @@
 # Romania - Verificarea partenerilor (localizat la `l10n_ro_partner_screening/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_screening`
-- **Versiune:** `19.0.1.3.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_screening
+- **Versiune:** `20.0.1.3.3`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_partner_screening
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_partner_screening`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -42,7 +42,7 @@ postarea plăților.
   header-ul formularului.
 - **Acțiuni manuale de mentenanță:** din lista de sancțiuni, acțiuni server pentru
   actualizarea imediată a listelor OFAC/UE și re-screeningul tuturor partenerilor relevanți
-  (companii, clienți, furnizori).
+  (companii, clienți, furnizori); în Odoo 20 re-screeningul filtrează pe entitatea comercială (`parent_id = False`), deci include și firmele fără cod fiscal.
 
 #### 3. Dependențe
 

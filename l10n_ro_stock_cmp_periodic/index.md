@@ -1,48 +1,56 @@
 # Romania - CMP periodic lunar (localizat la `l10n_ro_stock_cmp_periodic/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_cmp_periodic`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_cmp_periodic
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_stock_cmp_periodic
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_cmp_periodic`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Acest modul recalculează lunar Costul Mediu Ponderat (CMP) conform OMFP 1802/2014, pentru firmele care folosesc CMP periodic (lunar) în loc de CMP perpetuu folosit nativ de Odoo 19. La finele lunii, modulul calculează CMP-ul lunar din toate intrările, determină diferența față de valoarea perpetuă deja postată și generează o singură notă contabilă de corecție, cu audit trail complet. Este util în special firmelor care migrează de la WinMentor sau SAGA.
+Modulul recalculează lunar Costul Mediu Ponderat (CMP) conform OMFP 1802/2014, pentru firmele care evaluează ieșirile din stoc la CMP periodic (lunar), nu la CMP perpetuu, cum face Odoo implicit. La finele lunii calculează CMP-ul din stocul inițial și toate intrările, determină diferența față de valoarea perpetuă deja postată și generează o singură notă contabilă de corecție, cu audit trail complet. Este util mai ales firmelor care migrează de la WinMentor sau SAGA.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Recalcul CMP lunar:** `CMP_lunar = (Val_stoc_final_luna_prec + Val_intrări_luna_crt) / (Qty_stoc_final_luna_prec + Qty_intrări_luna_crt)`.
-- **Notă de corecție (Abordarea B):** generează o singură notă `602/607 ↔ 302/371` pentru diferența Δ dintre evaluarea periodică și cea perpetuă.
-- **Wizard cu previzualizare:** tabel cu Δ per produs înainte de confirmare.
-- **Activare per categorie de produs:** flag pe categoriile dorite și jurnal CMP dedicat.
-- **Audit trail:** registru cu stoc inițial, intrări perioadă, CMP perpetuu vs. periodic, Δ corecție și nota asociată.
+- **Recalcul CMP lunar:** `CMP_lunar = (Val_stoc_inițial + Val_intrări) / (Cant_stoc_inițial + Cant_intrări)`, cu fallback la `standard_price` când numitorul este zero.
+- **Notă de corecție (Abordarea B):** o singură notă echilibrată `602/607 ↔ 302/371` pe ultima zi a lunii, pentru diferența dintre evaluarea periodică și cea perpetuă.
+- **Wizard cu previzualizare:** tabel cu diferența per produs înainte de generarea notei.
+- **Activare per companie și per categorie de produs:** se procesează doar categoriile bifate explicit; setările (activare, jurnal de corecție, recalcul automat) sunt în Contabilitate → Configurare → Setări, secțiunea „CMP Periodic Lunar".
+- **Registru CMP Periodic:** audit trail cu stoc inițial, intrări, CMP perpetuu vs. periodic, diferența de corecție și nota asociată, cu stări draft / calculat / postat; fiecare mișcare de ieșire păstrează valoarea provizorie și cea finală.
+- **Recalcul automat opțional:** cron lunar; recalculul e blocat pentru luna deja postată sau pentru perioada blocată fiscal.
+- **Coexistență cu coeficientul K:** metodele sunt independente și pot fi active simultan.
+- Fluxul pas-cu-pas, cu capturi, este în [fișa consultant](FISA_CONSULTANT.md).
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `account`
 - `stock_account`
 - `l10n_ro`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
 Conform `readme/DESCRIPTION.md`:
 
-### Vizualizări / Date
+**Modele**
 
-- `wizard/cmp_periodic_wizard_views.xml`: Wizardul de recalcul CMP cu previzualizare.
-- `views/cmp_period_line_views.xml`: Registrul de audit CMP periodic.
-- `views/product_category_views.xml`: Activarea flag-ului pe categorii de produse.
-- `views/account_move_views.xml`, `views/stock_move_views.xml`: Extinderi pe note contabile și mișcări de stoc.
-- `views/res_config_settings_views.xml`: Setările CMP periodic.
-- `data/cmp_periodic_cron.xml`: Cron-ul de recalcul.
+- `l10n_ro.cmp_period_line`: registrul de audit CMP periodic.
+- `l10n_ro.cmp_periodic_wizard` / `l10n_ro.cmp_periodic_wizard.line`: wizardul de recalcul și liniile de previzualizare (tranzitorii).
+- `stock.move`, `account.move`, `product.category`, `res.company`, `res.config.settings` (extinse): valori provizorii/finale pe ieșiri, legătura cu nota de corecție, flag-ul pe categorie și setările.
 
-### Acțiuni Automate / Acțiuni Server
+**Vizualizări**
 
-- **Recalcul CMP periodic:** cron lunar pentru recalculul automat al CMP.
+- `wizard/cmp_periodic_wizard_views.xml`: wizardul de recalcul cu previzualizare.
+- `views/cmp_period_line_views.xml`: registrul de audit.
+- `views/product_category_views.xml`: activarea pe categorii de produse.
+- `views/account_move_views.xml`, `views/stock_move_views.xml`: extinderi pe note contabile și mișcări de stoc.
+- `views/res_config_settings_views.xml`: setările CMP periodic.
 
-## 5. Conexiuni
+**Acțiuni Automate / Acțiuni Server**
 
-- `l10n_ro_stock_k_coefficient`
-- `l10n_ro_stock_gestiune`
+- `Monthly Periodic WAC — Automatic Recalculation` (`data/cmp_periodic_cron.xml`): cron lunar care apelează `run_cmp_periodic_cron()` pentru recalculul automat.
+
+#### 5. Conexiuni
+
+- [l10n_ro_stock_k_coefficient](../l10n_ro_stock_k_coefficient/index.md): metodă independentă de evaluare, poate coexista cu CMP periodic.
+- [l10n_ro_stock_gestiune](../l10n_ro_stock_gestiune/index.md): gestiunile contabile de stoc pe ale căror conturi se pot posta corecțiile.

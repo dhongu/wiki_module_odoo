@@ -1,39 +1,44 @@
 # Romania - Constrângeri de integritate a stocului (localizat la `l10n_ro_stock_constraints/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_constraints`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_constraints
+- **Versiune:** `20.0.1.0.2`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_stock_constraints
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_constraints`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Acest modul protejează integritatea datelor de stoc pentru localizarea românească, blocând modificările retroactive periculoase după înregistrarea contabilă. Complementar cu `deltatech_stock_negative` (care previne stocul negativ înainte de validare), modulul acționează după validare: interzice modificarea cantităților pe mișcările deja valorizate și impune o constrângere PostgreSQL directă pentru cantități non-negative pe locațiile interne.
+Modulul protejează integritatea datelor de stoc după validarea mișcărilor. Blochează modificările retroactive ale cantităților pe mișcările cu valorizare contabilă și interzice stocul negativ pe locațiile interne printr-o constrângere direct în baza de date. Completează modulul `deltatech_stock_negative`, care blochează stocul negativ înainte de validare.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Blocare modificare mișcări valorizate:** interzice modificarea câmpului `quantity` pe `stock.move.line` în starea `done` dacă mișcarea asociată are `is_valued = True`, prevenind discrepanțe între cantitățile fizice și cele contabile.
-- **Constrângere stoc non-negativ pe locații interne:** constraint SQL pe `stock.quant` (`quantity >= 0`) pentru locațiile de tip `internal`, instalat prin `post_init_hook`; locațiile de tranzit, input sau virtuale sunt excluse.
-- **Adaptare Odoo 19:** ține cont de eliminarea `stock.valuation.layer`, valorizarea fiind acum pe `stock.move` (`value`, `is_valued`, `remaining_qty`).
+- **Linii de mișcare protejate după valorizare:** modificarea cantității pe o linie de mișcare în starea *done* este interzisă dacă mișcarea este valorizată, ca să nu apară discrepanțe între stocul fizic și cel contabil.
+- **Cantitate non-negativă pe locații interne:** constrângere SQL `quantity >= 0` pe `stock.quant` pentru locațiile de tip intern; tranzitul, locațiile de intrare și cele virtuale sunt excluse.
+- **Mesaje de blocare și corecții permise:** utilizatorul primește mesaje explicite la blocare; corecțiile se fac prin documente (retur, ajustare), nu prin editarea mișcării validate (detalii în [fișa consultant](FISA_CONSULTANT.md)).
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `stock_account`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
 Conform `readme/DESCRIPTION.md`:
 
-### Modele
+**Modele**
 
-- `stock.move.line`: Extins cu constrângerea care blochează modificarea cantității după valorizare.
-- `stock.quant`: Vizat de constrângerea PostgreSQL pentru cantitate non-negativă pe locații interne.
+- `stock.move.line` (extins): blochează modificarea cantității după valorizare.
+- `stock.quant` (extins): vizat de constrângerea PostgreSQL pentru cantitate non-negativă.
 
-### Acțiuni Automate / Acțiuni Server
+**Vizualizări**
 
-- `post_init_hook`: Instalează constrângerea SQL directă pe `stock.quant` la instalarea modulului.
+Modulul nu definește vizualizări.
 
-## 5. Conexiuni
+**Acțiuni Automate / Acțiuni Server**
 
-- `l10n_ro_stock_gestiune`
+- `post_init_hook` (`hooks.py`): instalează constrângerea SQL pe `stock.quant` la instalare.
+
+#### 5. Conexiuni
+
+- [deltatech_stock_negative](../deltatech_stock_negative/index.md): blochează stocul negativ înainte de validare; modulul de față protejează datele după validare.
+- [l10n_ro_stock_gestiune](../l10n_ro_stock_gestiune/index.md): gestiunile contabile de stoc, care beneficiază de aceeași protecție a datelor.

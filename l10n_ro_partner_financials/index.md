@@ -1,10 +1,10 @@
 # Romania - Date financiare partener (MFinanțe) (localizat la `l10n_ro_partner_financials/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_financials`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_financials
+- **Versiune:** `20.0.1.0.5`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_partner_financials
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_partner_financials`
-- **Ultima Ingestie:** 2026-09-12
+- **Ultima Ingestie:** 2026-11-28
 
 #### 1. Sumar
 

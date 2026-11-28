@@ -1,10 +1,11 @@
 # Romania - Beneficiarul real al partenerului (localizat la `l10n_ro_partner_ubo/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_partner_ubo`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** [odoo-addons/l10n_ro_ent/l10n_ro_partner_ubo](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_partner_ubo)
+- **Versiune:** `20.0.1.0.3`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_partner_ubo
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_partner_ubo`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -32,7 +33,7 @@ Modulul ține evidența beneficiarilor reali (UBO — Ultimate Beneficial Owner)
 **Modele**
 
 - `l10n.ro.partner.ubo`: beneficiarul real — identitate, tip control, cotă deținută, sursa informației, termen de revizuire calculat din nivelul de risc al partenerului
-- `l10n.ro.sanction` (extins): motorul de potrivire pe listele OFAC/UE Consolidated, aplicat aici limitat la intrările de tip persoană
+- `l10n.ro.sanction.entry` (extins): motorul de potrivire pe listele OFAC/UE Consolidated, aplicat aici limitat la intrările de tip persoană
 - `res.partner` (extins): statusurile suplimentare "Beneficiar Real Sancționat" / "Beneficiar Real Lipsă", detectarea structurii de proprietate opace
 - `res.company` / `res.config.settings` (extinse): persoana desemnată AML, data ultimei declarații ONRC
 

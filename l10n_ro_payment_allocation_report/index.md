@@ -1,10 +1,10 @@
 # Romania - Raport de alocare a plăților
 
 - **Nume Tehnic:** `l10n_ro_payment_allocation_report`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_payment_allocation_report
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_payment_allocation_report
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_payment_allocation_report`
-- **Ultima Ingestie:** `2026-08-31`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

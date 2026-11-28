@@ -1,10 +1,10 @@
 # Romania - Pachet valorizare stocuri FIFO (localizat la `l10n_ro_stock_pack_fifo/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_pack_fifo`
-- **Versiune:** `19.0.1.3.3`
-- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_fifo](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_pack_fifo)
+- **Versiune:** `20.0.1.3.8`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_stock_pack_fifo
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_pack_fifo`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

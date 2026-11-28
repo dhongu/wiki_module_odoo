@@ -1,10 +1,10 @@
 # Romania - Registrul inventar (FR-50) (localizat la `l10n_ro_inventory_register/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_inventory_register`
-- **Versiune:** `19.0.1.3.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_inventory_register
+- **Versiune:** `20.0.1.4.5`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_inventory_register
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_inventory_register`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -20,6 +20,7 @@ Modulul generează Registrul Inventar anual pentru companiile din România, conf
 - Detaliere a mijloacelor fixe per bun din modulul de active (`account.asset`): nr. inventar, valoare de intrare, amortizare cumulată la data raportului și valoare contabilă netă, cu reconciliere față de soldul contabil al categoriei.
 - Preluare opțională a valorii de inventar din listele validate de inventariere fizică, atunci când este instalat `l10n_ro_inventory_closing`.
 - Confirmare cu blocare de editare; resetare la ciornă pentru corecții.
+- Anexă a elementelor din afara bilanțului (cont 8035) din obiectele de inventar date în folosință, dacă este instalat `l10n_ro_inventory_items`, comparată cu soldul contului.
 - Export PDF (formular 14-1-2 cu semnături) și export XLSX (cu foaie dedicată pentru detalierea mijloacelor fixe).
 - Constrângere de unicitate companie + an fiscal.
 
@@ -36,7 +37,8 @@ Modulul generează Registrul Inventar anual pentru companiile din România, conf
 - `l10n.ro.inventory.register`: Registrul anual pe companie și an fiscal (mixin `mail.thread`/`mail.activity.mixin`), cu acțiunile de generare linii, calcul valori contabile, preluare valori din inventarul fizic, generare anexe analitice și de mijloace fixe, confirmare/resetare, tipărire PDF și export XLSX.
 - `l10n.ro.inventory.register.line`: Liniile recapitulative pe categorie patrimonială (valoare contabilă, valoare inventar, diferențe, cauze).
 - `l10n.ro.inventory.register.annex.line`: Anexa analitică per cont, cu detaliere per partener pentru creanțe și datorii.
-- `l10n.ro.inventory.register.asset.line`: Anexa detaliată per mijloc fix (nr. inventar, cont, dată achiziție, valoare de intrare, amortizare cumulată, valoare netă), legată de `account.asset`.
+- `l10n.ro.inventory.register.asset.line`: Anexa detaliată per mijloc fix (nr. inventar, cont, dată achiziție, valoare de intrare, amortizare cumulată, valoare netă), legată de `account.asset` (varianta principală, registrul statutar).
+- `l10n.ro.inventory.register.off.balance.line`: Anexa elementelor din afara bilanțului (8035): denumire, gestiune, responsabil, dată dare în folosință, cantitate, valoare.
 
 **Vizualizări**
 
@@ -51,5 +53,6 @@ Modulul generează Registrul Inventar anual pentru companiile din România, conf
 
 #### 5. Conexiuni
 
+- [l10n_ro_inventory_items](../l10n_ro_inventory_items/index.md): dacă este instalat, adaugă anexa elementelor din afara bilanțului (cont 8035), cu obiectele de inventar date în folosință.
 - [l10n_ro_inventory_closing](../l10n_ro_inventory_closing/index.md): dacă este instalat, permite preluarea valorii de inventar pentru categoria Stocuri direct din ultimele liste validate de inventariere fizică.
 - [l10n_ro_period_close_enhanced](../l10n_ro_period_close_enhanced/index.md): se integrează în fluxul de închidere de perioadă/an fiscal al companiei.

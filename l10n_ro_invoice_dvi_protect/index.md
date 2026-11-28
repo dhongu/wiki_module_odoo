@@ -1,10 +1,10 @@
 # Romania - Protecție la resetarea facturilor de furnizor și DVI (localizat la `l10n_ro_invoice_dvi_protect/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_invoice_dvi_protect`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_invoice_dvi_protect
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_invoice_dvi_protect
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_invoice_dvi_protect`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,6 +16,7 @@ Modulul protejează integritatea contabilă a stocurilor evaluate FIFO, blocând
 - Blochează butonul **Resetare la ciornă** pe facturile furnizor (`in_invoice`, `in_refund`) dacă vreo mișcare de stoc asociată comenzii de achiziție are `remaining_qty < quantity` (stoc deja parțial consumat).
 - Mesaj de eroare explicit care indică produsul și cantitățile implicate.
 - Blochează butonul **Anulare** pe documentele DVI / costuri de aterizare (`stock.landed.cost`) când factura furnizor asociată (`vendor_bill_id`) nu trece verificarea de consum.
+- Blocajul se aplică oricărei metode de cost (FIFO, AVCO, preț standard), deoarece în Odoo 20 cantitatea rămasă pe recepție se urmărește pentru toate.
 - Protecție automată, fără configurare, integrată în fluxul standard de achiziție și recepție.
 
 #### 3. Dependențe
@@ -28,7 +29,7 @@ Modulul protejează integritatea contabilă a stocurilor evaluate FIFO, blocând
 **Modele**
 
 - `account.move` (extins): Adaugă verificarea care blochează resetarea la ciornă a facturilor furnizor cu stoc consumat.
-- `stock.landed.cost` (extins): Adaugă verificarea care blochează anularea DVI legate de o factură protejată.
+- `stock.landed.cost` (extins): Adaugă verificarea care blochează anularea DVI legate de o factură protejată (prin `vendor_bill_id` sau, dacă există, legătura inversă `dvi_id` din `l10n_ro_customs_dvi`, verificată cu gardă, fără dependență).
 
 **Vizualizări / Date**
 
@@ -40,4 +41,4 @@ Modulul protejează integritatea contabilă a stocurilor evaluate FIFO, blocând
 
 #### 5. Conexiuni
 
-- `[[l10n_ro]]`
+- `l10n_ro`: localizarea contabilă românească, contextul funcțional al DVI și al facturilor de import (fără dependență directă în manifest).

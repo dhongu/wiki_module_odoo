@@ -1,15 +1,15 @@
 # Romania - Fișă de magazie și balanță analitică a stocurilor (localizat la `l10n_ro_stock_sheet/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_sheet`
-- **Versiune:** `19.0.1.1.6`
-- **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_sheet`
+- **Versiune:** `20.0.1.1.14`
+- **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_stock_sheet`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_sheet`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România — **fișa de magazie** (formularul 14-3-8) și **balanța analitică a stocurilor** — implementate ca un singur raport nativ Enterprise (`account.report`), în același stil cu celelalte rapoarte din suita `l10n_ro_ent`. Rolul lor este să arate, pentru o perioadă aleasă, situația cantitativă și valorică a articolelor (stoc inițial, intrări, ieșiri, stoc final) și, în plus, să compare valoarea analitică a stocului cu soldul contabil al conturilor de stoc, semnalând diferențele per material. Valorizarea se citește direct de pe mișcările de stoc (`stock.move`), fără tabelul `stock.valuation.layer` eliminat în versiunea 19, ceea ce face raportul potrivit pentru deployment-urile pe valorizare nativă (cost standard sau CMP).
+Modulul aduce în Odoo 20 două rapoarte clasice de stoc cerute în România — **fișa de magazie** (formularul 14-3-8) și **balanța analitică a stocurilor** — implementate ca un singur raport nativ Enterprise (`account.report`), în același stil cu celelalte rapoarte din suita `l10n_ro_ent`. Rolul lor este să arate, pentru o perioadă aleasă, situația cantitativă și valorică a articolelor (stoc inițial, intrări, ieșiri, stoc final) și, în plus, să compare valoarea analitică a stocului cu soldul contabil al conturilor de stoc, semnalând diferențele per material. Valorizarea se citește direct de pe mișcările de stoc (`stock.move`), fără tabelul `stock.valuation.layer` eliminat din Odoo, ceea ce face raportul potrivit pentru deployment-urile pe valorizare nativă (cost standard sau CMP).
 
 #### 2. Funcționalități Cheie
 
@@ -18,6 +18,7 @@ Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România —
 - **Fișa de magazie (14-3-8)**: desfășurare document-cu-document a fiecărei mișcări, cu stoc curent cumulat și linie de stoc inițial.
 - **Reconciliere analitic ↔ sintetic per material**: coloanele „Sold sintetic" (din notele contabile) și „Diferență" arată unde valoarea analitică a stocului nu coincide cu soldul contului contabil, pe fiecare produs — evită compensările pe care un control global pe cont nu le-ar vedea. Nu generează note de ajustare, e doar instrument de control.
 - **Livrări directe (dropshipping) vizibile în fișă**: raportate ca flux de trecere (aceeași cantitate/valoare pe intrare și ieșire, pe contul de stoc al mărfii), altfel marfa dropship nu atingea nicio gestiune și lipsea complet din raport; la nivel de document apar ambele laturi, marcate „(intrare)"/„(ieșire)". Valoarea se calculează cu `stock.move._get_value()` (coloana `value` rămâne de regulă 0 pe dropship) și se persistă înapoi pe mișcare, ca deschiderile ulterioare ale raportului să fie rapide.
+- **Transfer de reclasificare între conturi de stoc** (ex. 3028 → 371): apare ca ieșire din contul creditat și intrare în cel debitat, deci balanța pe cont rămâne corectă și după reclasificări.
 - Tratarea corectă a intrărilor/ieșirilor: doar mișcările care traversează granița gestiunilor interne (recepții, livrări) plus liniile de dropship de mai sus; transferurile intern↔intern sunt ignorate.
 - Suport atât pentru valorizare **automată** (`real_time`), cât și **periodică** — contul de stoc se determină per mișcare (din nota contabilă a mișcării, cu fallback pe contul categoriei produsului, rezolvat prin ORM ca să nu piardă tăcut valorile venite din `ir.default`).
 - **Filtru de produse** care include și produsele arhivate cu mișcări de stoc reale (căutarea trimite `active_test: False`, altfel un articol scos din nomenclator nu putea fi selectat).
@@ -54,4 +55,4 @@ Modulul aduce în Odoo 19 două rapoarte clasice de stoc cerute în România —
 
 - [l10n_ro_stock_cmp_periodic](../l10n_ro_stock_cmp_periodic/index.md): postează nota de corecție CMP perpetuu vs. periodic; raportul de față doar semnalează diferențele, regularizarea recurentă se face acolo.
 - [l10n_ro_stock_k_coefficient](../l10n_ro_stock_k_coefficient/index.md): postează nota coeficient K (diferențe de preț, conturi 348/378), complementar reconcilierii din acest raport.
-- `l10n_ro_stock_account`: alternativa OCA pentru valorizare FIFO pe loturi; acest modul este varianta pentru valorizarea nativă Odoo 19, fără dependența de stack-ul OCA.
+- `l10n_ro_stock_account`: alternativa OCA pentru valorizare FIFO pe loturi; acest modul este varianta pentru valorizarea nativă Odoo 20, fără dependența de stack-ul OCA.

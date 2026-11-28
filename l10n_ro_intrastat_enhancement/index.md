@@ -1,10 +1,10 @@
 # Romania - Declarație Intrastat (localizat la `l10n_ro_intrastat_enhancement/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_intrastat_enhancement`
-- **Versiune:** `19.0.1.8.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_intrastat_enhancement
+- **Versiune:** `20.0.1.9.9`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_intrastat_enhancement
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_intrastat_enhancement`
-- **Ultima Ingestie:** `2026-09-16`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -21,7 +21,8 @@ Extinde declarația Intrastat românească din Odoo Enterprise cu tot ce este ne
 - **Validare formală a codului de TVA partener** — port fidel al bibliotecii Java `vat-validator` folosite de aplicația oficială INS (regex de format + cifră de control, pe țară); un cod care nu trece verificarea e semnalat de „INS Validation" înainte de export, nu abia la deschiderea declarației în aplicația offline INS. Placeholder-ul standard `QN`/`QV999999999999` e exclus din această verificare (e tratat separat, nu ca eroare de format).
 - **Remindere automate** — o acțiune programată lunară verifică fiecare companie românească față de pragurile sale și creează activități de avertizare când se atinge procentul de alertă sau se depășește pragul (deduplicare — o singură activitate deschisă per direcție), plus un reminder de depunere înainte de data de 15 a lunii cu link către portalul INS (https://intrastat.ro).
 - **Actualizare nomenclator CN** — lista de coduri Intrastat (`account.intrastat.code`) poate fi actualizată direct din XML-ul oficial INS (`CN_<versiune>.xml`), din **Contabilitate → Configurare → Coduri Intrastat**, butonul „Refresh"; menține Nomenclatura Combinată sincronizată cu anul configurat.
-- **Versiunile nomenclatoarelor, mutate în Setări** — începând cu 19.0.1.7.0, cele 10 versiuni de nomenclator INS (CN8, țări, țări UE, mod de transport, termeni de livrare, natura tranzacției A/B, județe, localități, unități suplimentare) se editează direct din **Contabilitate → Configurare → Setări**, secțiunea „Intrastat — INS Romania Nomenclature Versions" (vizibilă doar pentru companii românești), nu doar din Tehnic → Parametri de sistem; rămân parametri globali de instanță (`ir.config_parameter`, `l10n_ro_intrastat.*`), nu per companie.
+- **Versiunile nomenclatoarelor, mutate în Setări** — din versiunea 1.7.0, cele 10 versiuni de nomenclator INS (CN8, țări, țări UE, mod de transport, termeni de livrare, natura tranzacției A/B, județe, localități, unități suplimentare) se editează direct din **Contabilitate → Configurare → Setări**, secțiunea „Intrastat — INS Romania Nomenclature Versions" (vizibilă doar pentru companii românești), nu doar din Tehnic → Parametri de sistem; rămân parametri globali de instanță (`ir.config_parameter`, `l10n_ro_intrastat.*`), nu per companie.
+- **Țări pentru praguri din grupul Intrastat (Odoo 20)** — volumul anual ia țările partenere din grupul de țări Intrastat al Odoo (fără România și Marea Britanie), pentru că 20.0 nu mai are câmpul *Intrastat* pe țară; lista fixă a țărilor UE rămâne doar dacă grupul lipsește.
 - **Reconciliere cu D390** — buton „D390 Reconciliation" în raportul Intrastat (vizibil doar dacă modulul `l10n_ro_anaf_d390` este instalat) care compară, pentru aceeași perioadă, valoarea bunurilor din Intrastat cu declarația recapitulativă D390: sosirile Intrastat față de achizițiile intracomunitare de bunuri (cod „A") și expedierile Intrastat față de livrările + operațiunile triunghiulare (coduri „L"+„T"). Afișează diferența absolută, procentuală și un status (concordant / diferență minoră / de verificat).
 - **Terminologie românească oficială** pentru codurile de marfă (NC8) și codurile de tranzacție Intrastat, preluată din Regulamentul UE 2020/1197 și din nomenclatorul INS.
 
@@ -48,7 +49,7 @@ Extinde declarația Intrastat românească din Odoo Enterprise cu tot ce este ne
 - `view_l10n_ro_intrastat_check_form` / `action_l10n_ro_intrastat_check`: formularul și acțiunea (fără meniu) ale wizardului tehnic de verificare a pragului Intrastat; deschis atât tehnic, cât și din butonul „Intrastat Threshold" al raportului.
 - `view_l10n_ro_intrastat_error_line_list` / `action_l10n_ro_intrastat_error_line`: lista (needit/nedelete) cu liniile de eroare afișate după rularea „INS Validation".
 - `view_l10n_ro_intrastat_d390_reconcile_form`: formularul de reconciliere Intrastat ↔ D390, cu insigne de status colorate (verde/albastru/portocaliu) per flux.
-- `res_config_settings_view_form_intrastat_ro` (`res_config_settings_views.xml`): două secțiuni noi în **Contabilitate → Configurare → Setări** (vizibile doar pentru companii RO) — „Intrastat — INS Romania Thresholds" (praguri, % avertizare, „declarat obligatoriu", Incoterm implicit) și „Intrastat — INS Romania Nomenclature Versions" (cele 10 versiuni de nomenclator, mutate aici din Tehnic → Parametri de sistem începând cu 19.0.1.7.0).
+- `res_config_settings_view_form_intrastat_ro` (`res_config_settings_views.xml`): două secțiuni noi în **Contabilitate → Configurare → Setări** (vizibile doar pentru companii RO) — „Intrastat — INS Romania Thresholds" (praguri, % avertizare, „declarat obligatoriu", Incoterm implicit) și „Intrastat — INS Romania Nomenclature Versions" (cele 10 versiuni de nomenclator, mutate aici din Tehnic → Parametri de sistem din versiunea 1.7.0).
 - `product_template_hs_code`: ascunde câmpul `hs_code` din formularul produsului (moștenit din `stock_delivery`).
 - `account_intrastat_code_view.xml`: vizualizarea codurilor Intrastat, cu acțiunea de reîmprospătare a nomenclatorului („Refresh").
 
@@ -68,4 +69,4 @@ Extinde declarația Intrastat românească din Odoo Enterprise cu tot ce este ne
 
 - `l10n_ro_intrastat`: modulul de bază al declarației Intrastat pe România, pe care acest modul îl extinde cu exportul XML, verificarea de erori, statusul de prag, traducerile românești și logica de reconciliere.
 - `stock_delivery`: sursa câmpurilor de livrare și a codului HS (`hs_code`) ajustate de modul.
-- [l10n_ro_anaf_d390](../l10n_ro_anaf_d390/index.md): dacă este instalat, activează butonul de reconciliere Intrastat ↔ D390 (comparație bunuri intracomunitare); nu este o dependență strictă (verificare la runtime prin `_l10n_ro_d390_available`).
+- [l10n_ro_anaf_d390](../l10n_ro_anaf_d390/index.md): dacă este instalat (extinde raportul D390 din Enterprise `l10n_ro_reports_d390`, citit de reconciliere), activează butonul de reconciliere Intrastat ↔ D390 (comparație bunuri intracomunitare); nu este o dependență strictă (verificare la runtime prin `_l10n_ro_d390_available`).

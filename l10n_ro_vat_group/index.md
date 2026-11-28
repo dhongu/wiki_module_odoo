@@ -1,50 +1,57 @@
 # Romania - Grup fiscal TVA consolidat (localizat la `l10n_ro_vat_group/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_vat_group`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_vat_group
+- **Versiune:** `20.0.1.0.6`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_vat_group
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_vat_group`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Acest modul gestionează grupurile fiscale TVA conform art. 269² Cod Fiscal și OPANAF 2731/2016. Permite definirea unui grup de companii cu relații de control (deținere >50%) ca un singur subiect fiscal TVA, cu CUI unic, marcarea automată a tranzacțiilor intra-grup (excluse din baza TVA) și generarea unui raport TVA consolidat per membru, depus de membrul raportor printr-un singur D300.
+Acest modul gestionează grupurile fiscale TVA conform art. 269² Cod Fiscal și OPANAF 2731/2016. Permite definirea unui grup de companii cu relații de control (deținere >50%) ca un singur subiect fiscal TVA, cu CUI unic, marcarea automată a tranzacțiilor intra-grup (afișate separat în raport) și generarea unui raport TVA consolidat per membru, pentru decontul depus de membrul raportor.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Model grup TVA (`l10n.ro.vat.group`):** configurare companii membre, membru raportor și CUI unic (`RO_GRP_XXXXXX`), cu state machine `În constituire → Activ → Dizolvat`.
-- **Setare automată la activare:** câmpul „Grup fiscal TVA" se completează pe toate companiile membre.
-- **Marcare automată tranzacții intra-grup:** la postarea facturilor către o companie membră, acestea sunt marcate „Tranzacție intra-grup TVA", cu banner de avertizare și marcare retroactivă disponibilă.
-- **Raport TVA consolidat (wizard):** TVA colectată/deductibilă, intra-grup colectat/deductibil și TVA net per companie, plus total consolidat fără intra-grup.
-- **Blocare perioadă:** setează `tax_lock_date` sincronizat pe toate companiile membre.
+- **Grup fiscal TVA** (`l10n.ro.vat.group`, meniul Contabilitate → Configurare → Contabilitate → Grupuri Fiscale TVA, vizibil administratorilor de contabilitate): denumire, CUI grup (`RO_GRP_XXXXXX`), data înregistrării ANAF, companii membre și membru raportor; stări `În constituire → Activ → Dizolvat`.
+- **Activare**: verifică minimum 2 companii membre, membru raportor și CUI de grup; completează câmpul „Grup fiscal TVA" pe fiecare companie membră și blochează identificarea și lista membrilor.
+- **Marcare automată intra-grup**: la postarea unei facturi de client sau de furnizor către altă companie membră a unui grup activ, documentul primește bifa „Tranzacție intra-grup TVA" și un banner de avertizare; bifa nu mai poate fi modificată după postare. Marcajul nu schimbă nota contabilă.
+- **Marcare retroactivă** a documentelor postate înainte de activare, idempotentă (butonul „Marchează retroactiv intra-grup").
+- **Buton statistic „Intra-grup"** pe grup, cu lista documentelor marcate, pentru audit.
+- **Raport TVA consolidat** (wizard, pe perioadă): per companie membră TVA colectată, TVA deductibilă, intra-grup colectat/deductibil și TVA net, plus totaluri consolidate fără intra-grup; se citește pe ecran, fără export și fără XML D300.
+- **Blocare perioadă sincronizată**: „Blochează perioada (toate companiile)" setează data de blocare TVA pe toate companiile membre, doar pentru administratori și doar dacă utilizatorul are acces la toate.
+- **Dizolvare grup** („Dizolvă grup", data dizolvării) și revenire la ciornă pentru schimbarea membrilor.
+- **Nu include (Beta):** generarea XML D300 consolidat cu CUI de grup (necesită `l10n_ro_anaf_d300`) și formularul 045 de constituire a grupului.
+- Fluxul pas-cu-pas, cu capturi, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `account`
 - `l10n_ro`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-Conform `readme/DESCRIPTION.md`:
+**Modele**
 
-### Modele
+- `l10n.ro.vat.group`: grupul fiscal TVA (`mail.thread`), cu companii membre, membru raportor, CUI unic și flux de stări.
+- `account.move` (extins): marcarea tranzacțiilor intra-grup TVA.
+- `res.company` (extins): câmpul `l10n_ro_vat_group_id` (grupul fiscal al companiei).
+- Wizard `l10n_ro_vat_group_report_wizard`: calculul raportului TVA consolidat și blocarea perioadei.
 
-- `l10n.ro.vat.group`: Grupul fiscal TVA, cu companii membre, membru raportor, CUI unic și state machine.
-- `account.move`: Extins cu marcarea tranzacțiilor intra-grup TVA.
+**Vizualizări**
 
-### Vizualizări / Date
+- `views/l10n_ro_vat_group_views.xml`: formularul și lista grupului fiscal TVA.
+- `views/account_move_views.xml`: bannerul și câmpul de marcare intra-grup pe factură.
+- `wizard/l10n_ro_vat_group_report_wizard_views.xml`: raportul TVA consolidat.
+- `security/ir.access.csv`: drepturile de acces ale modulului (format Odoo 20).
 
-- `views/l10n_ro_vat_group_views.xml`: Formularul grupului fiscal TVA.
-- `views/account_move_views.xml`: Bannerul și câmpul de marcare intra-grup pe factură.
-- `wizard/l10n_ro_vat_group_report_wizard_views.xml`: Wizardul raportului TVA consolidat.
-
-### Acțiuni Automate / Acțiuni Server
+**Acțiuni Automate / Acțiuni Server**
 
 *Nu sunt definite acțiuni automate; marcarea intra-grup se aplică la postarea facturilor.*
 
-## 5. Conexiuni
+#### 5. Conexiuni
 
-- `l10n_ro_vat_regularization`
-- `l10n_ro_vat_deductibility`
-- `l10n_ro_vat_refund`
+- [l10n_ro_vat_regularization](../l10n_ro_vat_regularization/index.md): regularizarea TVA la nivel de decont.
+- [l10n_ro_vat_deductibility](../l10n_ro_vat_deductibility/index.md): deductibilitatea TVA (integral, pro-rata, nedeductibil).
+- [l10n_ro_vat_refund](../l10n_ro_vat_refund/index.md): rambursarea TVA.
+- `l10n_ro_anaf_d300`: viitorul D300 consolidat cu CUI de grup ar depinde de acest modul.

@@ -46,15 +46,15 @@ exercițiului financiar.
 ## 6. Flux de utilizare
 
 1. **Pre-validare:**
-   1. Deschideți **Contabilitate → Raportare → SAF-T Validator**.
+   1. Deschideți **Contabilitate → Raportare → Validator SAF-T**.
    2. Selectați **Tip declarație = Anual — Active (A)**.
-   3. Setați **From / To** = anul fiscal (ex. 01.01.2026 → 31.12.2026).
-   4. Apăsați **Validate** — sunt listate activele fără categorie SAF-T.
+   3. Setați **De la / Până la** = anul fiscal (ex. 01.01.2026 → 31.12.2026).
+   4. Apăsați **Validează** — sunt listate activele fără categorie SAF-T.
    5. Corectați (setați **Asset Category** pe fiecare activ) și re-rulați.
 2. **Generare D406 Active:**
-   1. Deschideți **Contabilitate → Raportare → Carte Mare**.
+   1. Deschideți **Contabilitate → Raportare → Ledgers → General Ledger** (raportul „Carte Mare”).
    2. Selectați perioada = **anul fiscal** complet.
-   3. Apăsați **SAF-T (D406 Asset Declaration)** — buton separat de cel lunar.
+   3. Apăsați **SAF-T (Declarația D406 pentru mijloace fixe)** — buton separat de cel lunar.
    4. Descărcați XML-ul.
 3. **Validare oficială:** rulați prin DUK Integrator.
 4. **Depunere:** încărcați în portal ANAF.
@@ -65,6 +65,11 @@ exercițiului financiar.
 |---|---|---|
 | `company_incomplete` | error / warning | date companie lipsă: CUI, adresă, județ, telefon, cont bancar, bază de impozitare SAF-T, contact cu nume din două cuvinte și telefon |
 | `asset_no_saft_category` | error | active fără `l10n_ro_saft_account_asset_category_id` |
+| `asset_degressive_export` | error | activ cu metodă degresivă, fără `l10n_ro_fixed_assets` — exportul D406 pică pe el |
+| `company_currency_not_ron` | error | moneda companiei nu e RON — D406 Active se generează doar în RON |
+| `asset_no_inventory_number` | warning | activ fără număr de inventar — se exportă ID-ul intern ca `AssetID` |
+| `asset_no_date_in_service` | warning | activ fără dată de punere în funcțiune |
+| `asset_duration_out_of_range` | warning | durata de utilizare în afara intervalului din catalog |
 
 > Verificarea **NU rulează** check-urile de parteneri / conturi / taxe (irelevante pentru A);
 > declarația anuală conține doar registrul de active.
@@ -130,6 +135,6 @@ butonul **„SAF-T (Declarația D406 pentru mijloace fixe)"** generează XML-ul 
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/02_saft_validator_wizard_a.png` | Wizard cu **Tip declarație = A** ① — radio Anual selectat, listă cu activele fără categorie SAF-T |
-| 2 | `screenshots/02_asset_form_categorie_saft.png` | Formular activ fix ② — câmpul **Categorie active** populat cu o clasă SAF-T (nomenclator ANAF) |
-| 3 | `screenshots/03_saft_export_button_a.png` | Cog menu pe Carte Mare ③ cu opțiunea **„SAF-T (Declarația D406 pentru mijloace fixe)"** evidențiată — export-ul D406 Active |
+| 1 | `static/description/02_saft_validator_wizard_a.png` | Wizard cu **Tip declarație = A** ① — radio Anual selectat, listă cu activele fără categorie SAF-T |
+| 2 | `static/description/02_asset_form_categorie_saft.png` | Formular activ fix ② — categoria SAF-T (nomenclator ANAF) în câmpul fără etichetă de deasupra valorii activului (①) |
+| 3 | `static/description/03_saft_export_button_a.png` | Cog menu pe Carte Mare ③ cu opțiunea **„SAF-T (Declarația D406 pentru mijloace fixe)"** evidențiată — export-ul D406 Active |

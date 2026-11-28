@@ -1,46 +1,54 @@
 # Romania - Ajustări pentru deprecierea stocurilor (39x) (localizat la `l10n_ro_stock_provision/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_provision`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_provision
+- **Versiune:** `20.0.1.0.7`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_stock_provision
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_provision`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Acest modul identifică automat stocurile fără rulaj (slow-moving) și generează note contabile de ajustare pentru depreciere conform OMFP 1802/2014, pct. 143–148. Contabilul stabilește numărul de zile fără mișcare și procentul de depreciere, sistemul scanează stocurile și propune liniile, iar la confirmare generează nota Dr 6814 = Cr 39x la constituire și Dr 39x = Cr 7814 la reluare, cu mapare a conturilor 39x per categorie de produs.
+Modulul identifică automat stocurile fără rulaj (slow-moving) și generează notele contabile de ajustare pentru depreciere, conform OMFP 1802/2014 pct. 143–148. Este destinat contabililor care constituie ajustări pe conturile din clasa `39x` la sfârșitul perioadei de raportare: sistemul propune liniile, contabilul le validează, iar la confirmare se generează nota contabilă.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Identificare automată slow-moving:** scanează stocurile fără rulaj pe baza zilelor configurate și a procentului de depreciere.
-- **Propuneri editabile:** contabilul poate debifa liniile pe care nu dorește să le provizioneze înainte de confirmare.
-- **Generare note contabile:** Dr 6814 = Cr 39x la constituire/majorare și Dr 39x = Cr 7814 la reluare/diminuare.
-- **Mapare conturi 39x per categorie:** 391 (materii prime), 392 (consumabile), 394 (produse finite), 397 (mărfuri).
-- **Surse de date flexibile:** folosește `product.valuation.history` din `deltatech_stock_valuation` dacă e disponibil, altfel fallback pe `stock.quant.in_date`.
-- **Cron lunar opțional** pentru generarea automată a analizelor în stare draft.
+- **Scanare automată** a stocurilor interne cu stoc pozitiv și fără intrări peste pragul configurat (implicit 180 de zile).
+- **Propunere de ajustare delta** față de soldul existent pe contul `39x`: constituire, majorare, diminuare sau reluare completă.
+- **Flux de aprobare** Analiză → Propuneri confirmate → Note generate; contabilul bifează sau debifează liniile înainte de postare. Analizele se țin în Contabilitate → Închidere → Provizioane Stocuri (39x).
+- **Note contabile:** `Dr 6814 = Cr 39x` la constituire/majorare și `Dr 39x = Cr 7814` la diminuare/reluare.
+- **Cont 39x per categorie de produs** (391–398); un produs fără cont 39x pe categorie nu apare în analiză.
+- **Procent de depreciere** configurabil global și suprascris per categorie.
+- **Cron lunar opțional** care creează analize în stare draft, pentru verificare manuală.
+- **Surse de date:** integrare opțională cu `deltatech_stock_valuation` pentru date lunare agregate; altfel `stock.quant`, cu data ultimei intrări din `l10n_ro_last_in_date` (dacă `l10n_ro_stock_aged_report` e instalat) sau din `in_date`.
+- Setările (conturile 6814/7814, zilele fără mișcare) se găsesc în Contabilitate → Configurare → Setări, secțiunea „Provizioane Stocuri Slow-Moving". Fluxul pas cu pas este în fișa consultantului.
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `stock`
 - `account`
-- `l10n_ro_stock_age_report`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-Conform `readme/DESCRIPTION.md`:
+**Modele**
 
-### Vizualizări / Date
+- `l10n.ro.stock.provision`: analiza de provizion (cu `mail.thread` și activități), cu stările și nota generată.
+- `l10n.ro.stock.provision.line`: linia de propunere per produs (stoc, sold 39x, ajustare delta).
+- `product.category`, `res.company`, `res.config.settings` (extinse): cont 39x și procent per categorie, conturi 6814/7814 și zile fără mișcare.
 
-- `views/l10n_ro_stock_provision_views.xml`: Interfața de analiză a provizioanelor și propunerilor.
-- `views/res_config_settings_views.xml`: Setările (conturi 6814/7814, zile slow-moving implicit).
-- `data/ir_cron.xml`: Cron-ul de generare propuneri.
+**Vizualizări**
 
-### Acțiuni Automate / Acțiuni Server
+- `view_l10n_ro_stock_provision_form` / `view_l10n_ro_stock_provision_list`: analiza de provizioane și propunerile.
+- `view_product_category_form_provision`: fila „Provizioane Stocuri RO (39x)" pe categorie.
+- `res_config_settings_view_form_stock_provision`: setările modulului.
 
-- **Generare propuneri provizioane stocuri slow-moving:** cron lunar (inactiv implicit) care creează analize draft pentru confirmare manuală.
+**Acțiuni Automate / Acțiuni Server**
 
-## 5. Conexiuni
+- `cron_stock_provision_monthly`: creează lunar analize draft pe fiecare companie; inactiv implicit.
 
-- `l10n_ro_stock_k_coefficient`
-- `l10n_ro_stock_cmp_periodic`
+#### 5. Conexiuni
+
+- [l10n_ro_stock_aged_report](../l10n_ro_stock_aged_report/index.md): sursă opțională pentru data ultimei intrări (`l10n_ro_last_in_date`).
+- [deltatech_stock_valuation](../deltatech_stock_valuation/index.md): date lunare agregate mai precise, dacă e instalat.
+- [l10n_ro_stock_k_coefficient](../l10n_ro_stock_k_coefficient/index.md): celălalt calcul contabil de închidere a lunii pe stocuri.
+- [l10n_ro_stock_cmp_periodic](../l10n_ro_stock_cmp_periodic/index.md): corecția lunară CMP, tot la închiderea lunii.

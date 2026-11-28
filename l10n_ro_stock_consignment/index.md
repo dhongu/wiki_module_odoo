@@ -1,53 +1,60 @@
 # Romania - Stocuri în custodie (localizat la `l10n_ro_stock_consignment/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_consignment`
-- **Nume anterior:** `l10n_ro_stock_custody` (redenumit pe 23.09.2026: numele vechi e ocupat pe Odoo Apps de alt furnizor)
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_stock_consignment
+- **Versiune:** `20.0.1.2.3`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_stock_consignment
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_stock_consignment`
-- **Ultima Ingestie:** 2026-09-23
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul gestionează bunurile primite sau date în custodie, adică mărfuri care circulă între companie și un terț fără transfer de proprietate. Evidența se ține în afara bilanțului, conform OMFP 1802/2014, pe contul **8033 — Valori materiale primite în păstrare sau custodie**, astfel încât aceste bunuri nu distorsionează stocul propriu valorizat și nici rezultatul financiar al companiei.
+Modulul gestionează bunurile primite sau date în custodie, fără transfer de proprietate, conform OMFP 1802/2014. Bunurile primite se țin în afara bilanțului (contul 8033), iar bunurile proprii date la terți trec în conturile de stocuri aflate la terți (357, 351, 354, 356 sau 358). Acoperă și stocurile la dispoziția clientului (call-off) trimise în alt stat membru UE, cu evidența termenului de 12 luni.
 
 #### 2. Funcționalități Cheie
 
-- **Custodie primită** — la validarea recepției, modulul setează automat proprietarul (terțul) pe liniile de mișcare (consignație nativă Odoo), astfel încât bunurile nu intră în valorizarea proprie, și generează automat nota extracontabilă **Dr 8033 = Cr 8039**.
-- **Stornare la retur** — butonul **Reverse Custody Entry** de pe transferul de stoc stornează automat nota de custodie (Dr 8039 = Cr 8033) la returul bunurilor către terț.
-- **Custodie dată** — marcarea transferurilor de ieșire cu bunuri proprii date în custodie la terți; modulul generează automat nota **Dr 357 = Cr 371** (mărfuri aflate la terți / stoc propriu), cu stornare simetrică la retur.
-- **Raport Goods in Custody** — listează toate stocurile ținute pe seama terților (quant-uri cu proprietar setat), accesibil din meniul Inventar → Raportare.
-- **Proces-verbal predare-primire custodie** — raport PDF imprimabil de pe transferul de stoc, cu lista produselor, cantităților și valorilor, pentru custodie primită sau dată.
-- **Conturi configurabile** — conturile de custodie primită (implicit 8033/8039), conturile de custodie dată (implicit 357/371) și jurnalul utilizat se configurează în Contabilitate → Setări, cu fallback automat după codul contului dacă nu sunt setate explicit.
-
-> **Notă de corecție (semnalată la ingestie):** `readme/DESCRIPTION.md` afirmă că tratamentul contabil al „custodiei date" (contul 357) *nu face parte din scope-ul modulului* și că aceasta ar fi doar un marcaj de evidență. Analiza codului (`models/stock_picking.py`, `models/res_company.py`, view-ul de setări) arată însă că modulul **implementează efectiv** contabilizarea on-balance Dr 357 = Cr 371 (cu stornare Dr 371 = Cr 357), inclusiv câmpuri de configurare dedicate (`l10n_ro_custody_given_account_id`, `l10n_ro_custody_stock_account_id`). Secțiunile de mai sus reflectă comportamentul real din cod; DESCRIPTION.md pare neactualizat față de implementare.
+- **Custodie primită:** la validarea recepției, proprietarul (terțul) se setează înainte de mișcarea de stoc, deci bunurile nu intră în valorizarea proprie; se generează nota extrabilanțieră `Dr 8033 = Cr 803999` la prețul din procesul-verbal.
+- **Stornare la retur:** returul total sau parțial stornează automat nota pentru cantitatea returnată; butonul **Stornează nota de custodie** stornează restul și nu permite o a doua stornare.
+- **Custodie dată:** transferul marcat *Date în custodie* trebuie să ducă bunurile într-o locație „la terți” cu contul de evaluare 35x potrivit (mărfuri 357, materii 351, produse 354, active biologice 356, ambalaje 358); modulul refuză destinațiile greșite și bunurile terților.
+- **Raport Bunuri în custodie** (Inventar → Raportare) și proces-verbal de predare-primire în PDF.
+- **Conturi configurabile** în Contabilitate → Setări: cont de custodie (implicit 8033), contrapartidă (implicit 803999) și jurnal (implicit EXTR); conturile 35x se pun pe locațiile „la terți”.
+- **Call-off (art. 270^1 Cod fiscal):** transferul se marchează *Stoc la dispoziția clientului (call-off)*, cu client vizat și dată a sosirii; evidența din Inventar → Raportare urmărește cantitățile expediate, preluate, returnate și rămase, valoarea din 357 și termenul de 12 luni, cu activități de reamintire și de expirare.
+- **Preluare și retur call-off:** butonul **Preluare** postează `Dr 607 = Cr 357` la valoarea expedierii și cere factura către clientul vizat; butonul **Retur** deschide transferul de retur în ciornă, cu cantitatea rămasă, iar returul validat face nota `Dr 371 = Cr 357`.
+- Secțiunea III din D390 o completează modulul-punte [l10n_ro_stock_consignment_d390](../l10n_ro_stock_consignment_d390/index.md).
+- Fluxul pas-cu-pas, cu capturi, este în [fișa consultant](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
 - `stock_account`
 - `l10n_ro`
+- [l10n_ro_off_balance](../l10n_ro_off_balance/index.md)
 
 #### 4. Componente Cheie
 
 **Modele**
 
-- `stock.picking` (extins): adaugă câmpurile `l10n_ro_custody_type` (Received/Given in custody) și `l10n_ro_custody_move_id` (referință la nota extracontabilă generată); la `button_validate()` generează automat nota de custodie corespunzătoare tipului, și expune acțiunea `action_l10n_ro_reverse_custody()` pentru stornare.
-- `res.company` (extins): câmpuri de configurare a conturilor de custodie primită (`l10n_ro_custody_account_id` / `l10n_ro_custody_counterpart_account_id`, implicit 8033/8039) și custodie dată (`l10n_ro_custody_given_account_id` / `l10n_ro_custody_stock_account_id`, implicit 357/371), plus jurnalul dedicat (`l10n_ro_custody_journal_id`); metodele `_l10n_ro_get_custody_account()` și `_l10n_ro_get_custody_balance_account()` caută automat conturile după cod dacă nu sunt setate explicit.
-- `res.config.settings` (extins): câmpuri `related` către conturile/jurnalul de custodie de pe companie, editabile din Contabilitate → Setări.
+- `stock.picking` (extins): tipul de custodie, nota generată la validare, stornarea notei și câmpurile call-off (client vizat, dată sosire).
+- `stock.move` (extins): marcarea proprietarului și verificarea locațiilor „la terți”.
+- `l10n.ro.call.off.line`: evidența call-off (expediat, preluat, returnat, rămas, valoare, termen, stare).
+- `l10n.ro.call.off.take.over` (tranzitoriu): fereastra de preluare a bunurilor de către client.
+- `res.company` / `res.config.settings` (extinse): conturile și jurnalul de custodie.
 
 **Vizualizări**
 
-- `view_picking_form_custody`: extinde formularul de transfer de stoc cu câmpul **Custodie** (lângă *Dată programată*), câmpul readonly cu nota generată și butonul **Reverse Custody Entry**.
-- `res_config_settings_view_form_custody`: adaugă în Contabilitate → Setări secțiunea „Romania - Stock Custody" cu cele două blocuri de conturi (off-balance pentru custodie primită, on-balance pentru custodie dată) și jurnalul.
-- `action_l10n_ro_custody_quants` / `menu_l10n_ro_custody_quants`: acțiune și meniu „Goods in Custody" (Inventar → Raportare) care listează `stock.quant` cu `owner_id` setat.
-- `action_report_l10n_ro_custody_pv`: raport QWeb-PDF „Proces-verbal predare-primire custodie", disponibil ca acțiune de imprimare pe `stock.picking`.
+- `view_picking_form_custody` / `view_picking_form_call_off`: câmpul **Custodie**, nota generată, butoanele de stornare și datele call-off pe transfer.
+- `res_config_settings_view_form_custody`: conturile și jurnalul de custodie în Contabilitate → Setări.
+- `view_location_form_custody`: configurarea locațiilor „la terți”.
+- `action_l10n_ro_custody_quants` / `menu_l10n_ro_custody_quants`: raportul Bunuri în custodie.
+- `action_l10n_ro_call_off_line` / `menu_l10n_ro_call_off_line`: evidența call-off.
+- `view_l10n_ro_call_off_take_over_form`: fereastra de preluare.
+- `action_report_l10n_ro_custody_pv`: raport PDF „Proces-verbal predare-primire custodie".
 
 **Acțiuni Automate / Acțiuni Server**
 
-Nu sunt definite `ir.cron`, `base.automation` sau `ir.actions.server` în acest modul; logica de generare/stornare a notelor contabile rulează sincron la validarea transferului (`button_validate`) și la apăsarea butonului de stornare.
+- `Romania: call-off stock deadlines` (`data/ir_cron_data.xml`): cron zilnic care generează activitățile de reamintire înainte de termen și de expirare.
 
 #### 5. Conexiuni
 
-- `stock` / `stock_account`: mecanismul de consignație nativ (proprietar pe `stock.quant`/`stock.move.line`) folosit pentru a exclude bunurile primite în custodie din valorizarea proprie.
-- `l10n_ro`: planul de conturi românesc, sursa conturilor off-balance 8033/8039 și a conturilor 357/371 folosite de modul.
+- [l10n_ro_stock_consignment_d390](../l10n_ro_stock_consignment_d390/index.md): completează secțiunea III din D390 cu expedierile și returnările call-off.
+- [l10n_ro_off_balance](../l10n_ro_off_balance/index.md): conturile extrabilanțiere (8033/803999) folosite la custodia primită.
+- `stock` / `stock_account`: consignația nativă (proprietar pe stoc) folosită pentru a exclude bunurile terților din valorizare.

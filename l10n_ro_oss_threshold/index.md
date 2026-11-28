@@ -1,22 +1,23 @@
 # Romania - Prag OSS 10.000 € (FR-22) (localizat la `l10n_ro_oss_threshold/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_oss_threshold`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_oss_threshold
+- **Versiune:** `20.0.1.0.7`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_oss_threshold
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_oss_threshold`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C către alte state membre UE, relevant pentru regimul OSS (One Stop Shop). Urmărește cumulat valoarea vânzărilor intracomunitare către consumatori și avertizează compania la apropierea sau depășirea pragului, peste care taxarea trebuie să se facă cu cota TVA din statul de consum. Include un cron de verificare lunară și un wizard de control la cerere.
+Modulul monitorizează pragul anual de 10.000 EUR pentru vânzările B2C către alte state membre UE, relevant pentru regimul OSS (One Stop Shop). Urmărește cumulat (în EUR, fără TVA, minus notele de credit) valoarea vânzărilor intracomunitare către consumatori și avertizează compania la apropierea sau depășirea pragului, peste care taxarea trebuie să se facă cu cota TVA din statul de consum. Include un cron de verificare lunară și un wizard de control la cerere.
 
 #### 2. Funcționalități Cheie
 
 - Monitorizarea cumulată a vânzărilor B2C către UE pentru raportare la pragul anual de 10.000 EUR.
 - Avertismente pe facturi și la nivel de companie privind apropierea sau depășirea pragului OSS.
 - Cron lunar de verificare automată a pragului.
-- Wizard de verificare la cerere a situației curente față de prag.
+- Wizard de verificare la cerere a situației curente față de prag (Raportare → Verificare Prag OSS), cu statusurile: sub prag, atenție, depășit, înregistrat OSS.
+- Modulul doar avertizează: nu schimbă taxele facturilor și nu depune declarații; se iau în calcul facturile cu poziție fiscală având *Detectare automată* bifat.
 - Configurare a parametrilor OSS în setările companiei și în setările generale de contabilitate.
 
 #### 3. Dependențe

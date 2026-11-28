@@ -1,22 +1,26 @@
 # Romania - Taxare inversă art. 331 în punctul de vânzare (localizat la `l10n_ro_reverse_charge_331_pos/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_reverse_charge_331_pos`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_reverse_charge_331_pos`
+- **Versiune:** `20.0.1.1.1`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_reverse_charge_331_pos
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_reverse_charge_331_pos`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul ține poziția fiscală de taxare inversă art. 331 în afara accesului casierului din Punctul de Vânzare (POS), atunci când cumpărătorul nu este înregistrat în scopuri de TVA. Butonul de poziție fiscală din POS listează în mod normal toate regimurile configurate pe casă, indiferent de clientul comenzii — singura cale prin care un regim art. 331 ar putea ajunge pe o vânzare căreia nu i se cuvine. Modulul elimină aceste regimuri din listă până când comanda are un client înregistrat conform art. 316 și refuză să moștenească o astfel de poziție de la un partener al cărui statut de TVA o contrazice. Filtrează opțiunile disponibile, în loc să blocheze ulterior — decizia rămâne a datelor, nu a operatorului de la casă.
+Modulul ține poziția fiscală de la art. 331 în afara selecției din Punctul de vânzare cât timp cumpărătorul nu este înregistrat în scopuri de TVA. Butonul de poziție fiscală al casierului listează tot ce e configurat pe casă și permite alegerea oricărei poziții, indiferent de client; acesta este drumul prin care taxarea inversă ajunge pe o vânzare la care nu se cuvine. În plus, o comandă cu taxare inversă trebuie facturată, fiindcă bonul fiscal nu documentează o livrare cu taxare inversă. Se instalează automat când sunt prezente `l10n_ro_reverse_charge_331` și `point_of_sale`.
 
 #### 2. Funcționalități Cheie
 
-- Ascunde regimurile fiscale art. 331 din dialogul „Choose the tax you want to apply” cât timp beneficiarul comenzii nu este înregistrat în scopuri de TVA (art. 316).
-- La schimbarea clientului pe comandă (`updatePricelistAndFiscalPosition`), anulează automat o poziție art. 331 deja aplicată dacă noul client nu este înregistrat în scopuri de TVA.
-- Criteriul de „înregistrat în scopuri de TVA” folosește câmpul `l10n_ro_vat_subjected` al partenerului, cu fallback pe prefixul `RO` al codului TVA dacă acel câmp nu e disponibil în payload-ul POS — aceeași logică e oglindită în Python (`res.partner`) și JavaScript, pentru a nu diverge tăcut.
-- Extinde datele încărcate în POS: marcajul `l10n_ro_reverse_charge_331` pe poziția fiscală și statutul de TVA al partenerului, altfel indisponibile pe ecranul de vânzare.
-- Nu afectează notele contabile de închidere a sesiunii (tip `entry`, nu documente de vânzare); un bon facturat totuși cu regim art. 331 pentru un cumpărător neînregistrat rămâne blocat la validare de garda din `l10n_ro_reverse_charge_331` (`account.move._post`).
+- Poziția art. 331 dispare din lista butonului **Taxă** cât timp comanda nu are un client înregistrat conform art. 316; se filtrează lista, deci casierul nu trebuie să știe cine e plătitor de TVA.
+- Un client neplătitor care are totuși pe fișă poziția plătitorilor nu o aduce pe comandă; linia păstrează taxa domestică, cu TVA la cota standard.
+- Cu un client plătitor, poziția clientului se preia, iar linia cu bunul din lista art. 331 primește `0% R331`, fără TVA în total.
+- Pe ecranul **Plată**, opțiunea **Factură** este bifată și nu poate fi debifată pentru comenzile cu taxare inversă; serverul facturează singur comenzile sincronizate fără bifă, dacă au client.
+- O comandă cu taxare inversă ajunsă pe server fără client nu poate fi facturată: rămâne pe bon și primește o notă în chatter, ca TVA-ul să fie regularizat de contabil.
+- Returul unei vânzări facturate cu taxare inversă se face tot cu factură de stornare; returul unei vânzări nefacturate rămâne pe bon.
+- Configurare pe casă (**Punct de vânzare → Configurare → Setări**, secțiunea **Contabilitate**): **Taxe flexibile** activate, poziția plătitorilor adăugată la **Permis**; poziția art. 331 nu se pune la **Implicit** și nici pe o presetare.
+- Fluxul pas-cu-pas este în [fișa consultantului](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -27,15 +31,28 @@ Acest modul ține poziția fiscală de taxare inversă art. 331 în afara accesu
 
 **Modele**
 
-- `account.fiscal.position` (extindere): adaugă `l10n_ro_reverse_charge_331` la câmpurile încărcate în POS, astfel încât marcajul art. 331 să însoțească poziția fiscală pe fiecare casă.
-- `res.partner` (extindere): adaugă statutul de TVA (`l10n_ro_vat_subjected`) la câmpurile încărcate în POS, ca decizia de filtrare să nu depindă de o alegere manuală a operatorului.
+- `account.fiscal.position` (extindere): încarcă în POS câmpul `l10n_ro_reverse_charge_331`, ca marcajul art. 331 să însoțească poziția fiscală pe fiecare casă.
+- `account.tax` (extindere): încarcă în POS câmpurile taxei necesare marcajului art. 331.
+- `res.partner` (extindere): încarcă în POS statutul de TVA (`l10n_ro_vat_subjected`), ca filtrarea să nu depindă de o alegere manuală.
+- `pos.order`: `_l10n_ro_requires_invoice_331` stabilește dacă o comandă trebuie facturată, iar `_process_saved_order` o facturează la sincronizare sau o notează în chatter când lipsește clientul.
 
 **Cod JavaScript (frontend POS)**
 
-- `pos_order.esm.js`: expune `isVatRegistered(partner)` (oglindă a verificării Python) și corectează `PosOrder.updatePricelistAndFiscalPosition` — anulează o poziție art. 331 dacă noul client nu e înregistrat în scopuri de TVA.
-- `control_buttons.esm.js`: corectează `ControlButtons.clickFiscalPosition` — reconstruiește dialogul de selecție a poziției fiscale excluzând regimurile art. 331 cât timp clientul curent nu e înregistrat, în loc să modifice temporar starea reactivă `config.fiscal_position_ids`.
+- `pos_order.esm.js`: `isVatRegistered(partner)` (oglinda verificării Python) și corectarea `PosOrder.updatePricelistAndFiscalPosition`, care anulează poziția art. 331 dacă noul client nu e înregistrat.
+- `control_buttons.esm.js`: corectează `ControlButtons.clickFiscalPosition`, construind dialogul de selecție fără regimurile art. 331 cât timp clientul nu e înregistrat.
+- `payment_screen.esm.js`: bifează și blochează opțiunea **Factură** pentru comenzile cu taxare inversă și afișează mesajul de refuz la încercarea de debifare.
+
+**Vizualizări**
+
+- Nu adaugă vizualizări XML.
+
+**Acțiuni Automate / Acțiuni Server**
+
+- Nu are.
 
 #### 5. Conexiuni
 
-- [l10n_ro_reverse_charge_331](../l10n_ro_reverse_charge_331/index.md): sursa marcajului fiscal art. 331 și a gărzii de validare pe facturi (`account.move._post`); acest modul doar extinde protecția în ecranul POS. Nu are încă pagină wiki proprie.
-- [deltatech_pos_fix](../deltatech_pos_fix/index.md): motivul arhitectural pentru care filtrarea se face la nivelul listei de poziții disponibile, nu la calculul taxelor — cele două module patch-uiesc metode diferite din fluxul POS, iar ordinea de încărcare a asset-urilor între suite nu e o garanție pe care să se bazeze corectitudinea calculului.
+- [l10n_ro_reverse_charge_331](../l10n_ro_reverse_charge_331/index.md): sursa marcajului art. 331 și a gărzii de pe facturi; acest modul extinde protecția în ecranul POS.
+- [l10n_ro_reverse_charge_331_sale](../l10n_ro_reverse_charge_331_sale/index.md): același regim pe comenzile de vânzare.
+- [l10n_ro_reverse_charge_331_purchase](../l10n_ro_reverse_charge_331_purchase/index.md): garda art. 331 pe achiziții.
+- [deltatech_pos_fix](../deltatech_pos_fix/index.md): motivul pentru care filtrarea se face la nivelul listei de poziții disponibile, nu la calculul taxelor; cele două module patch-uiesc metode diferite din fluxul POS.

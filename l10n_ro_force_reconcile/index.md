@@ -1,43 +1,43 @@
 # Romania - Reconciliere forțată între conturi diferite (localizat la `l10n_ro_force_reconcile/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_force_reconcile`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_force_reconcile
+- **Versiune:** `20.0.1.1.0`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_force_reconcile
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_force_reconcile`
-- **Ultima Ingestie:** 2026-06-01
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Wizard pentru reconcilierea a două înregistrări contabile din conturi diferite, ocolind restricția Odoo standard care permite reconcilierea doar între linii din același cont. Modulul creează un document intermediar de compensare cu câte o linie pe fiecare cont, util pentru cazuri românești precum avans furnizor ↔ factură (409 ↔ 401), avans client ↔ factură (419 ↔ 411) sau compensarea client-furnizor.
+Wizard pentru reconcilierea a două înregistrări contabile din conturi diferite. Odoo standard permite reconcilierea doar între linii din același cont; modulul elimină această restricție printr-un document intermediar de compensare, cu câte o linie pe fiecare cont, și acoperă cazurile tipice din contabilitatea românească (avans furnizor ↔ factură, avans client ↔ factură, compensare client-furnizor).
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Reconciliere între conturi diferite** prin wizard, pentru cazuri precum 409↔401, 419↔411, 411↔401 (compensare), 542↔401 (decont avans angajat).
-- **Acțiune „Reconciliere forțată"** disponibilă din meniul de acțiuni la selectarea a exact 2 înregistrări contabile (doar pentru `group_account_manager`).
-- **Afișarea conturilor, soldurilor reziduale și a sumei propuse** de compensare în wizard.
-- **Generarea automată a notei contabile de compensare** cu două linii, postarea ei și reconcilierea liniilor originale cu liniile corespondente.
+- Cazuri de utilizare: avans furnizor ↔ factură furnizor (409 ↔ 401), avans client ↔ factură client (419 ↔ 411), compensare client-furnizor pe același partener (411 ↔ 401), decontare avans angajat ↔ furnizor (542 ↔ 401).
+- Wizard lansat din lista de elemente de jurnal, prin acțiunea „Reconciliere forțată (conturi diferite)", disponibilă pentru grupul Contabilitate / Manager, la selectarea a exact 2 linii postate, nereconciliate complet, din aceeași companie, pe conturi care permit reconcilierea.
+- Afișează conturile, soldurile reziduale și suma propusă de compensare (minimul celor două reziduuri); suma, jurnalul (implicit primul jurnal de tip Diverse), data și eticheta (COMPENSARE) pot fi modificate.
+- Creează și postează automat o notă contabilă de compensare cu două linii (câte una pe fiecare cont) și reconciliază liniile originale cu liniile corespondente din notă.
+- Suportă reconcilierea parțială (suma compensată mai mică decât rezidualul liniei). Fluxul detaliat pas-cu-pas este în fișa consultant.
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `account`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-### Modele
+**Modele**
 
-- `account.force.reconcile` (wizard): gestionează selecția celor două înregistrări, afișează soldurile și creează nota de compensare cu reconcilierea ulterioară.
+- `account.force.reconcile` (wizard, `wizard/account_force_reconcile.py`): preia cele două linii selectate, calculează reziduurile și suma compensată, creează și postează nota de compensare și reconciliază liniile.
 
-### Vizualizări / Date
+**Vizualizări**
 
-- `wizard/account_force_reconcile_views.xml`: interfața wizardului de reconciliere forțată.
-- `data/server_actions.xml`: acțiunea „Reconciliere forțată" din meniul de acțiuni.
+- `wizard/account_force_reconcile_views.xml`: formularul wizardului de reconciliere forțată.
 
-### Acțiuni Automate / Acțiuni Server
+**Acțiuni Automate / Acțiuni Server**
 
-- Acțiune server „Reconciliere forțată": apare pe înregistrările contabile selectate și deschide wizardul (restricționată la `group_account_manager`).
+- `action_server_force_reconcile` (`data/server_actions.xml`): acțiune server „Reconciliere forțată" disponibilă pe elementele de jurnal selectate, care deschide wizardul (restricționată la grupul Contabilitate / Manager). Nu sunt definite `ir.cron`.
 
-## 5. Conexiuni
+#### 5. Conexiuni
 
-- `[[l10n_ro_currency_revaluation]]`
-- `[[l10n_ro_expense_currency]]`
+- [l10n_ro_currency_revaluation](../l10n_ro_currency_revaluation/index.md): reevaluarea valutară a soldurilor, folosită în același context de închidere a conturilor de terți.
+- [l10n_ro_expense_currency](../l10n_ro_expense_currency/index.md): cheltuieli în valută, ale căror avansuri se pot compensa cu acest wizard.

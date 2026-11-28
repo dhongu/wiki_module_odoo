@@ -35,10 +35,11 @@ sau un trimestru fiscal).
 - companie (CUI, adresă, județ);
 - **tipuri operație stoc** (`stock.picking.type`) cu rulaj — câmpul
   `l10n_ro_stock_movement_type` (selecție 10/20/30/40/50/60/70/80 conform nomenclatorului ANAF);
-- **unități de măsură** ale produselor mișcate — în Odoo 19 codul UNECE nu mai e câmp pe
-  `uom.uom`, ci o **mapare hardcodată pe xml_id** (`UOM_TO_UNECE_CODE` din
-  `account_edi_ubl_cii`). UoM-urile fără xml_id (custom, cum sunt baxuri, pachete) sunt
-  exportate ca `C62` (unit generic) — ANAF NU acceptă această valoare;
+- **unități de măsură** ale produselor mișcate — în Odoo 20 exportul ia codul UNECE din
+  câmpul `unece_code` al unității (adăugat de `account_edi_ubl_cii`), iar dacă lipsește din
+  **maparea hardcodată pe xml_id** (`UOM_TO_UNECE_CODE` din `account`). UoM-urile fără
+  niciuna (custom, cum sunt baxuri, pachete) sunt exportate ca `C62` („bucată”): codul e valid,
+  dar cantitatea din declarație nu mai corespunde realității (un bax de 12 bucăți apare ca 1 bucată);
 - mișcări de stoc validate (`stock.move` în stare `done`) în perioada cerută.
 
 ## 5. Configurare inițială
@@ -46,7 +47,7 @@ sau un trimestru fiscal).
 1. Instalați `l10n_ro_saft_stock` (auto-install pe `l10n_ro_saft` + `stock_account`).
 2. Pentru fiecare tip operație stoc activ:
    - Verificați **Tip mișcare SAF-T** (l10n_ro_stock_movement_type). Pentru tipurile create de
-     warehouse-ul demo, Odoo setează valori implicite (receipts → 50, deliveries → 40); pentru
+     warehouse-ul demo, Odoo setează valori implicite (recepții → 10 „Purchase”, livrări → 30 „Sale of stock”); pentru
      tipuri custom completați manual codul.
 3. Verificați că UoM-urile folosite au xml_id în mapping-ul UNECE (UoM-urile standard din
    modulul `uom` sunt deja mapate). UoM-urile custom (baxuri, pachete) nu au mapping și vor
@@ -55,16 +56,16 @@ sau un trimestru fiscal).
 ## 6. Flux de utilizare
 
 1. **Pre-validare:**
-   1. Deschideți **Contabilitate → Raportare → SAF-T Validator**.
+   1. Deschideți **Contabilitate → Raportare → Validator SAF-T**.
    2. Selectați **Tip declarație = La cerere — Stocuri (C)**.
-   3. Setați **From / To** = perioada cerută de ANAF.
-   4. Apăsați **Validate** — sunt listate tipurile de operație fără cod SAF-T și UoM-urile fără
+   3. Setați **De la / Până la** = perioada cerută de ANAF.
+   4. Apăsați **Validează** — sunt listate tipurile de operație fără cod SAF-T și UoM-urile fără
       cod UNECE.
    5. Corectați pe formularele respective și re-rulați.
 2. **Generare D406 Stocuri:**
-   1. Deschideți **Contabilitate → Raportare → Carte Mare**.
+   1. Deschideți **Contabilitate → Raportare → Ledgers → General Ledger** (raportul „Carte Mare”).
    2. Selectați perioada cerută.
-   3. Apăsați **SAF-T (D406 Stocks)** — buton adăugat de `l10n_ro_saft_stock`.
+   3. Apăsați **SAF-T (D406 Stocks Declaration)** — buton adăugat de `l10n_ro_saft_stock`.
    4. Descărcați XML-ul.
 3. **Validare oficială:** rulați prin DUK Integrator.
 4. **Predare la ANAF:** încărcați XML-ul în SPV ca răspuns la solicitare.
@@ -100,7 +101,7 @@ sau un trimestru fiscal).
 |---|---|
 | `l10n_ro_saft_stock` (Enterprise) | exportul Stocuri + câmpul movement_type pe picking type |
 | `stock` / `stock_account` | mișcările de stoc și valorizarea |
-| `account_edi_ubl_cii` | codurile UNECE pe UoM |
+| `account_edi_ubl_cii` (opțional) | câmpul `unece_code` pe UoM, pentru unitățile custom |
 
 ## 10. Verificări pentru consultant
 
@@ -143,6 +144,6 @@ butonul **„SAF-T (D406 Stocks Declaration)"** generează XML-ul pentru speța 
 
 | # | Fișier | Conținut |
 |---|--------|----------|
-| 1 | `screenshots/03_saft_validator_wizard_c.png` | Wizard cu **Tip declarație = C** ① — radio La cerere selectat, listă cu tip operație fără cod SAF-T și UoM fără mapping UNECE |
-| 2 | `screenshots/02_picking_type_movement_code.png` | Formular `stock.picking.type` ② — câmpul **Movement type (RO)** populat cu codul SAF-T (50 = Receipts / 40 = Deliveries / etc.) |
-| 3 | `screenshots/03_saft_export_button_c.png` | Cog menu pe Carte Mare ③ cu opțiunea **„SAF-T (D406 Stocks Declaration)"** evidențiată — export-ul D406 Stocuri |
+| 1 | `static/description/03_saft_validator_wizard_c.png` | Wizard cu **Tip declarație = C** ① — radio La cerere selectat, listă cu tip operație fără cod SAF-T și UoM fără mapping UNECE |
+| 2 | `static/description/02_picking_type_movement_code.png` | Formular `stock.picking.type` ② — câmpul **Movement type (RO)** populat cu codul SAF-T (50 = Receipts / 40 = Deliveries / etc.) |
+| 3 | `static/description/03_saft_export_button_c.png` | Cog menu pe Carte Mare ③ cu opțiunea **„SAF-T (D406 Stocks Declaration)"** evidențiată — export-ul D406 Stocuri |
