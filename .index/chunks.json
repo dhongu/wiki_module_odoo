@@ -10566,6 +10566,29 @@
     "text": "Sale Order Line Images\ndeltatech_sale_order_image\nModulul adaugă imaginea produsului (sau a variantei) pe liniile ofertei și ale comenzii de vânzare în PDF. Imaginea apare într-o coloană proprie, înaintea descrierii, ceea ce face documentul trimis clientului mai ușor de parcurs vizual.\nImaginea produsului sau a variantei se tipărește pe fiecare linie de produs, în prima coloană (lățime maximă 50 px); liniile fără imagine păstrează o celulă goală.\nRândurile de tip secțiune, notă și combo ocupă întreaga lățime a tabelului, deci tabelul rămâne aliniat.\nAcelași PDF este folosit la trimiterea prin email, iar factura proformă afișează și ea imaginea.\nOpțiunea Include image se setează per companie în *Vânzări > Configurare > Setări > Oferte și comenzi* și este activă implicit.\nImaginea apare doar pe documentul tipărit, nu și pe formularul ofertei.\nAtenție: Odoo 20 are propria opțiune Display Product Images (aceeași pagină de setări); nu le activa pe amândouă, altfel imaginea se tipărește de două ori.\nFluxul pas cu pas este în fișa consultantului."
   },
   {
+    "path": "deltatech_sale_order_report/index.md",
+    "module": "deltatech_sale_order_report",
+    "version": "20.0.1.0.9",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/deltatech_sale_order_report",
+    "local_path": "odoo-addons/terrabit/deltatech_sale_order_report",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Sale Order Report (Obsolet)",
+    "summary": "Modul **obsolet**, păstrat doar pentru ca bazele de date existente să poată fi actualizate. Formularul comenzii de vânzare pe care îl oferea a fost mutat în `l10n_ro_sale_order_report`. Modulul nu conține cod, vizualizări sau rapoarte proprii; instalat pe o bază nouă, are ca unic efect instalarea dependenței.",
+    "features": [
+      "Nu oferă funcționalități proprii; este un modul de tranziție (fără cod, fără vizualizări, fără raport).",
+      "Pentru instalări noi se depinde direct de [l10n_ro_sale_order_report](../l10n_ro_sale_order_report/index.md).",
+      "Instalările existente pot dezinstala modulul după ce niciun modul propriu nu mai depinde de el."
+    ],
+    "dependencies": [
+      "sale",
+      "l10n_ro_sale_order_report"
+    ],
+    "connections": [
+      "l10n_ro_sale_order_report"
+    ],
+    "text": "Sale Order Report (Obsolet)\ndeltatech_sale_order_report\nModul **obsolet**, păstrat doar pentru ca bazele de date existente să poată fi actualizate. Formularul comenzii de vânzare pe care îl oferea a fost mutat în `l10n_ro_sale_order_report`. Modulul nu conține cod, vizualizări sau rapoarte proprii; instalat pe o bază nouă, are ca unic efect instalarea dependenței.\nNu oferă funcționalități proprii; este un modul de tranziție (fără cod, fără vizualizări, fără raport).\nPentru instalări noi se depinde direct de [l10n_ro_sale_order_report](../l10n_ro_sale_order_report/index.md).\nInstalările existente pot dezinstala modulul după ce niciun modul propriu nu mai depinde de el."
+  },
+  {
     "path": "deltatech_sale_order_review/index.md",
     "module": "deltatech_sale_order_review",
     "version": "19.0.0.1.1",
@@ -14344,6 +14367,31 @@
     "text": "Work Days Report\ndeltatech_work_days_report\nModulul **Work Days Report** generează rapoarte Excel cuprinzătoare pentru urmărirea prezenței angajaților și gestionarea tichetelor de masă. Este util departamentelor de resurse umane și proceselor de salarizare, oferind automat fișiere Excel cu orele lucrate zilnic, totalurile pe angajat, tichetele de masă cuvenite și perioadele de concediu. Astfel se simplifică monitorizarea tiparelor de lucru ale angajaților și administrarea drepturilor la tichete de masă, asigurând raportări consecvente chiar și atunci când configurarea tipurilor de concediu este incompletă.\nÎmbunătățirea tipurilor de concediu: adaugă un câmp configurabil „code\" în formularele de tip de concediu (Time Off Type), pentru o mai bună categorisire și raportare.\nExport Excel în masă: permite exportul în masă accesibil din vizualizarea de listă a angajaților (Acțiune → „Export Working Days\").\nRaportare cuprinzătoare: generează rapoarte Excel detaliate care conțin informații despre angajat și orele lucrate zilnic, totalul orelor lucrate, tichetele de masă câștigate per angajat și perioadele/datele de concediu.\nFlexibilă codificare a concediilor: afișează automat „ABS\" (absență) pentru tipurile de concediu fără cod specificat, asigurând o raportare consecventă chiar și cu o configurare incompletă.\nExport tichete de masă către bancă: acțiune suplimentară „Export Bank Meal Vouchers\", disponibilă tot din lista de angajați, care generează un fișier Excel în formatul cerut de Banca Transilvania (nume, CNP, valoare, cont IBAN), calculând automat numărul de zile lucrate eligibile pentru tichete în intervalul selectat."
   },
   {
+    "path": "l10n_ro_account/index.md",
+    "module": "l10n_ro_account",
+    "version": "20.0.0.5.1",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_account",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_account",
+    "summary": "Modul de bază pentru contabilitatea românească, care adaugă mici reguli de lucru specifice localizării: limitarea încasărilor în numerar, afișarea conturilor în format scurt (cum se folosește în practica contabilă din România) și corecția traducerii pentru încasări.",
+    "features": [
+      "Limitarea încasărilor în numerar de la clienți: la înregistrarea unei plăți primite într-un jurnal de tip numerar, suma este verificată față de plafoane diferite pentru persoane juridice (implicit 5000) și persoane fizice (implicit 10000). Plafoanele se pot schimba prin parametrii de sistem `l10n_ro_accounting.amount_company_limit` și `l10n_ro_accounting.amount_person_limit`.",
+      "Verificarea se aplică atât plăților (`account.payment`), cât și asistentului de înregistrare a plății de pe factură, doar pentru companiile cu localizare română.",
+      "Afișarea conturilor în format scurt (ex. `5121` în loc de `512100`, sau `4426.1` pentru analitice) în numele afișat al contului, când compania are contabilitatea românească activă.",
+      "Corecție de traducere pentru termenul „încasare”."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_config"
+    ],
+    "text": "l10n_ro_account\nl10n_ro_account\nModul de bază pentru contabilitatea românească, care adaugă mici reguli de lucru specifice localizării: limitarea încasărilor în numerar, afișarea conturilor în format scurt (cum se folosește în practica contabilă din România) și corecția traducerii pentru încasări.\nLimitarea încasărilor în numerar de la clienți: la înregistrarea unei plăți primite într-un jurnal de tip numerar, suma este verificată față de plafoane diferite pentru persoane juridice (implicit 5000) și persoane fizice (implicit 10000). Plafoanele se pot schimba prin parametrii de sistem `l10n_ro_accounting.amount_company_limit` și `l10n_ro_accounting.amount_person_limit`.\nVerificarea se aplică atât plăților (`account.payment`), cât și asistentului de înregistrare a plății de pe factură, doar pentru companiile cu localizare română.\nAfișarea conturilor în format scurt (ex. `5121` în loc de `512100`, sau `4426.1` pentru analitice) în numele afișat al contului, când compania are contabilitatea românească activă.\nCorecție de traducere pentru termenul „încasare”."
+  },
+  {
     "path": "l10n_ro_account_bank_statement_import_ing_csv/index.md",
     "module": "l10n_ro_account_bank_statement_import_ing_csv",
     "version": "19.0.1.1.0",
@@ -14372,6 +14420,54 @@
     "text": "Romania - Import extrase bancare ING (CSV)\nl10n_ro_account_bank_statement_import_ing_csv\nAcest modul importă fișierele „Istoric conturi\" (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală a fișierului.\nImport fișier original: se încarcă CSV-ul exact cum e exportat din ING Business — antetul, separatorul `;`, sumele în format românesc (`1.234,56`) și codificarea sunt gestionate automat.\nDetecție după semnătură: fișierul e recunoscut după antetul ING, deci poate fi importat de pe orice jurnal de tip bancă, alături de alte formate de extras.\nValidare cont: numărul de cont din fișier e verificat față de contul bancar al jurnalului (mecanismul standard Odoo).\nSolduri: soldul inițial și cel final al extrasului sunt calculate din coloana „sold intermediar\".\nDate bogate pentru reconciliere: numele contrapartidei, contul IBAN și CUI-ul contrapartidei sunt preluate pe linia de extras, pentru identificarea automată a partenerului.\nProtecție la duplicate: fiecare tranzacție e importată o singură dată (id unic de import din referința internă/instant ING); reimportul aceluiași fișier e detectat."
   },
   {
+    "path": "l10n_ro_account_bank_statement_import_mt940_base/index.md",
+    "module": "l10n_ro_account_bank_statement_import_mt940_base",
+    "version": "20.0.0.4.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_account_bank_statement_import_mt940_base",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_account_bank_statement_import_mt940_base",
+    "summary": "Oferă un parser generic pentru fișiere MT940 (extras de cont bancar). Deoarece fiecare bancă interpretează formatul în felul ei, modulul nu importă singur extrase: este destinat să fie folosit de modulele specifice fiecărei bănci, care implementează dialectul respectiv.",
+    "features": [
+      "Parser generic MT940, reutilizabil de modulele pentru bănci.",
+      "Adaugă formatul de import `mt940_general` în lista formatelor disponibile pe jurnalele bancare.",
+      "Pe contul bancar al partenerului apare câmpul „Romania - MT940 Unstructured Tag 86 Pattern”, în care se definește modelul (pattern) pentru interpretarea câmpului nestructurat Tag 86.",
+      "Se integrează în fluxul standard de import de extrase (`account.statement.import`)."
+    ],
+    "dependencies": [
+      "account_statement_import_file",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_account_bank_statement_import_mt940_ing",
+      "l10n_ro_config"
+    ],
+    "text": "l10n_ro_account_bank_statement_import_mt940_base\nl10n_ro_account_bank_statement_import_mt940_base\nOferă un parser generic pentru fișiere MT940 (extras de cont bancar). Deoarece fiecare bancă interpretează formatul în felul ei, modulul nu importă singur extrase: este destinat să fie folosit de modulele specifice fiecărei bănci, care implementează dialectul respectiv.\nParser generic MT940, reutilizabil de modulele pentru bănci.\nAdaugă formatul de import `mt940_general` în lista formatelor disponibile pe jurnalele bancare.\nPe contul bancar al partenerului apare câmpul „Romania - MT940 Unstructured Tag 86 Pattern”, în care se definește modelul (pattern) pentru interpretarea câmpului nestructurat Tag 86.\nSe integrează în fluxul standard de import de extrase (`account.statement.import`)."
+  },
+  {
+    "path": "l10n_ro_account_bank_statement_import_mt940_ing/index.md",
+    "module": "l10n_ro_account_bank_statement_import_mt940_ing",
+    "version": "20.0.0.2.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_account_bank_statement_import_mt940_ing",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_account_bank_statement_import_mt940_ing",
+    "summary": "Permite importul în Odoo, ca extrase de cont, a fișierelor MT940 emise de banca ING România, ușurând reconcilierea fără introducere manuală.",
+    "features": [
+      "Adaugă formatul de import `mt940_ro_ing` pe jurnalele bancare.",
+      "Parser specific dialectului ING, construit peste parserul MT940 generic.",
+      "Formularul contului bancar afișează un exemplu de pattern pentru Tag 86 (partener, CUI, IBAN), ca ajutor la configurare.",
+      "Folosește fluxul standard de import de extrase (`account.statement.import`)."
+    ],
+    "dependencies": [
+      "l10n_ro_account_bank_statement_import_mt940_base"
+    ],
+    "connections": [
+      "l10n_ro_account_bank_statement_import_ing_csv"
+    ],
+    "text": "l10n_ro_account_bank_statement_import_mt940_ing\nl10n_ro_account_bank_statement_import_mt940_ing\nPermite importul în Odoo, ca extrase de cont, a fișierelor MT940 emise de banca ING România, ușurând reconcilierea fără introducere manuală.\nAdaugă formatul de import `mt940_ro_ing` pe jurnalele bancare.\nParser specific dialectului ING, construit peste parserul MT940 generic.\nFormularul contului bancar afișează un exemplu de pattern pentru Tag 86 (partener, CUI, IBAN), ca ajutor la configurare.\nFolosește fluxul standard de import de extrase (`account.statement.import`)."
+  },
+  {
     "path": "l10n_ro_account_bank_statement_import_xlsx/index.md",
     "module": "l10n_ro_account_bank_statement_import_xlsx",
     "version": "19.0.2.1.0",
@@ -14391,6 +14487,28 @@
     ],
     "connections": [],
     "text": "Romania - Import extrase bancare (XLSX)\nl10n_ro_account_bank_statement_import_xlsx\nAcest modul extinde funcționalitatea de import al extraselor bancare pentru a accepta fișiere XLSX. Se bazează pe mecanismul standard de import din Odoo, permițând utilizatorilor să mapeze coloanele dintr-un fișier Excel pe câmpurile liniilor de extras bancar. Astfel, contabilii pot prelua direct extrasele primite de la bancă în format Excel, fără conversii manuale, simplificând reconcilierea operațiunilor bancare.\nSuport XLSX: Adaugă formatul XLSX în lista formatelor de import disponibile pentru jurnalele bancare.\nMapare flexibilă: Folosește asistentul de import din Odoo, permițând utilizatorilor să gestioneze diverse structuri de fișiere.\nPotrivire parteneri specifică României: Identifică automat partenerul după nume sau după referința comenzii de vânzare regăsită în coloana de referință a plății."
+  },
+  {
+    "path": "l10n_ro_account_bank_statement_report/index.md",
+    "module": "l10n_ro_account_bank_statement_report",
+    "version": "20.0.0.2.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_account_bank_statement_report",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_account_bank_statement_report",
+    "summary": "Permite tipărirea registrului de casă și de bancă pentru o zi sau pentru o perioadă, pornind de la extrasele jurnalelor de numerar și bancare.",
+    "features": [
+      "Raport „Romania - Cash - Bank Register” disponibil din lista sau formularul extraselor.",
+      "Variante de raport zilnic și pe perioadă.",
+      "Utilizare: se deschide extrasul unui jurnal bancar sau de numerar și se tipărește raportul din meniul Tipărire."
+    ],
+    "dependencies": [
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_config"
+    ],
+    "text": "l10n_ro_account_bank_statement_report\nl10n_ro_account_bank_statement_report\nPermite tipărirea registrului de casă și de bancă pentru o zi sau pentru o perioadă, pornind de la extrasele jurnalelor de numerar și bancare.\nRaport „Romania - Cash - Bank Register” disponibil din lista sau formularul extraselor.\nVariante de raport zilnic și pe perioadă.\nUtilizare: se deschide extrasul unui jurnal bancar sau de numerar și se tipărește raportul din meniul Tipărire."
   },
   {
     "path": "l10n_ro_account_chart/index.md",
@@ -14464,6 +14582,29 @@
     "text": "Romania - Send E-Factura - legacy\nl10n_ro_account_edi_ubl\nAcest modul este o punte tehnică (bridge) păstrată pentru compatibilitate retroactivă în jurul trimiterii facturilor electronice românești (E-Factura) către SPV-ul ANAF. Practic, el nu mai conține logică proprie: rolul său este să marcheze numele tehnic vechi `l10n_ro_account_edi_ubl` ca fiind în continuare instalabil și să atragă automat modulul curent de E-Factura (`l10n_ro_edi`), unde se află toată funcționalitatea reală. Existența lui asigură o tranziție lină pentru bazele de date mai vechi care îl aveau deja instalat, fără a-l pierde la upgrade și fără a cere reconfigurare din partea utilizatorului.\nAsigură continuitatea numelui tehnic `l10n_ro_account_edi_ubl` pentru bazele de date existente (modul legacy/bridge).\nSe instalează automat (`auto_install = True`) atunci când dependența sa este prezentă, redirecționând trimiterea E-Factura către modulul curent.\nTrage după sine modulul de E-Factura propriu-zis (`l10n_ro_edi`), care conține logica de generare UBL și de comunicare cu SPV-ul ANAF.\nNu adaugă modele, vizualizări sau date proprii — întreaga funcționalitate este moștenită din dependență."
   },
   {
+    "path": "l10n_ro_account_edit_currency_rate/index.md",
+    "module": "l10n_ro_account_edit_currency_rate",
+    "version": "20.0.0.5.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_account_edit_currency_rate",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_account_edit_currency_rate",
+    "summary": "Permite editarea cursului valutar folosit pentru calculul debitului și creditului liniilor de factură, util când cursul trebuie corectat manual față de cel implicit.",
+    "features": [
+      "Cursul facturii (`invoice_currency_rate`) devine editabil în formularul facturii.",
+      "La schimbarea monedei, a datei facturii sau a cursului, prețurile liniilor se recalculează pentru companiile din România.",
+      "Pentru facturile provenite din comenzi de vânzare, prețul se convertește din moneda comenzii; liniile de avans dedus în factura finală folosesc prețul facturii de avans postate, astfel încât suma dedusă să corespundă celei deja facturate."
+    ],
+    "dependencies": [
+      "account",
+      "sale_management"
+    ],
+    "connections": [
+      "sale_management"
+    ],
+    "text": "l10n_ro_account_edit_currency_rate\nl10n_ro_account_edit_currency_rate\nPermite editarea cursului valutar folosit pentru calculul debitului și creditului liniilor de factură, util când cursul trebuie corectat manual față de cel implicit.\nCursul facturii (`invoice_currency_rate`) devine editabil în formularul facturii.\nLa schimbarea monedei, a datei facturii sau a cursului, prețurile liniilor se recalculează pentru companiile din România.\nPentru facturile provenite din comenzi de vânzare, prețul se convertește din moneda comenzii; liniile de avans dedus în factura finală folosesc prețul facturii de avans postate, astfel încât suma dedusă să corespundă celei deja facturate."
+  },
+  {
     "path": "l10n_ro_account_fisa_cont/index.md",
     "module": "l10n_ro_account_fisa_cont",
     "version": "19.0.1.0.0",
@@ -14522,6 +14663,31 @@
     "text": "l10n_ro_account_move_document_type\nl10n_ro_account_move_document_type\nAdaugă pe notele contabile **tipul documentului justificativ**, astfel încât registrele și jurnalele românești să arate ce document stă la baza fiecărei înregistrări: factură, notă de credit, factură de la furnizor, declarație vamală de import (DVI), chitanță, dispoziție de plată, extras de cont, stat de plată, decont de cheltuieli sau notă contabilă simplă.\nFacturile și chitanțele primesc tipul automat, după felul documentului.\nLiniile de extras bancar au tipul *Extras de cont*; o plată într-un jurnal bancar este *Ordin de plată / Document bancar* (se contabilizează pe contul de decontare, înainte de extras, uneori fără reconciliere). În jurnalele de numerar ambele sunt *Document de casă*.\nOrice altă înregistrare este *Notă contabilă*, până când modulul care o creează stabilește altceva (nota DVI din `l10n_ro_customs_dvi`, încasările și plățile de casă din `l10n_ro_account_sequence`).\nPe o notă contabilă, contabilul poate schimba tipul din formular (de exemplu, TVA de import înregistrat manual, justificat prin DVI), la Contabilitate > Contabilitate > Note contabile.\nColoana opțională *Tip document* și gruparea după tip în lista notelor contabile.\nJurnalul de TVA la cumpărări și vânzări din [l10n_ro_account_vat_journal](../l10n_ro_account_vat_journal/index.md) folosește tipul pentru coloana *Tip document*.\nFluxul pas cu pas este în [fișa consultantului](FISA_CONSULTANT.md)."
   },
   {
+    "path": "l10n_ro_account_period_close/index.md",
+    "module": "l10n_ro_account_period_close",
+    "version": "20.0.1.1.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_account_period_close",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_account_period_close",
+    "summary": "Modulul permite închiderea conturilor de venituri, de cheltuieli și a TVA între două date, pe baza unor șabloane de închidere definite de contabil. Reduce munca manuală de la sfârșitul lunii sau al anului, generând automat notele contabile de închidere.",
+    "features": [
+      "Șabloane de închidere (tip venituri, cheltuieli sau TVA) în Contabilitate → Consultant → Acțiuni → Închidere perioadă, cu jurnal, conturi de închis, cont debitor și cont creditor.",
+      "Acțiunea Închide perioada (disponibilă pe șablon) deschide un wizard în care se aleg datele și se apasă „Închide”.",
+      "Șabloanele de venituri și cheltuieli folosesc contul 121000 ca cont debitor și creditor.",
+      "Șablonul de TVA folosește conturile de închis 442600 și 442700, debit 442400, credit 442300, cu opțiunea „Închide conturile debitoare și creditoare” bifată.",
+      "Pentru conturile care se pot închide pe ambele părți (ex. 609, 709, 711xxx) se bifează pe cont opțiunea „Bypass Closing Side Check”.",
+      "Accesibil doar utilizatorilor cu rol de consultant contabil."
+    ],
+    "dependencies": [
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_config"
+    ],
+    "text": "l10n_ro_account_period_close\nl10n_ro_account_period_close\nModulul permite închiderea conturilor de venituri, de cheltuieli și a TVA între două date, pe baza unor șabloane de închidere definite de contabil. Reduce munca manuală de la sfârșitul lunii sau al anului, generând automat notele contabile de închidere.\nȘabloane de închidere (tip venituri, cheltuieli sau TVA) în Contabilitate → Consultant → Acțiuni → Închidere perioadă, cu jurnal, conturi de închis, cont debitor și cont creditor.\nAcțiunea Închide perioada (disponibilă pe șablon) deschide un wizard în care se aleg datele și se apasă „Închide”.\nȘabloanele de venituri și cheltuieli folosesc contul 121000 ca cont debitor și creditor.\nȘablonul de TVA folosește conturile de închis 442600 și 442700, debit 442400, credit 442300, cu opțiunea „Închide conturile debitoare și creditoare” bifată.\nPentru conturile care se pot închide pe ambele părți (ex. 609, 709, 711xxx) se bifează pe cont opțiunea „Bypass Closing Side Check”.\nAccesibil doar utilizatorilor cu rol de consultant contabil."
+  },
+  {
     "path": "l10n_ro_account_report/index.md",
     "module": "l10n_ro_account_report",
     "version": "19.0.1.0.0",
@@ -14538,6 +14704,30 @@
     ],
     "connections": [],
     "text": "România - Rapoarte Contabile\nl10n_ro_account_report\nModulul adaugă rapoarte contabile specifice localizării din România. În prezent pune la dispoziție registrul de casă, un document standard cerut de practica contabilă românească pentru evidența operațiunilor de încasări și plăți în numerar.\nRegistrul de casă"
+  },
+  {
+    "path": "l10n_ro_account_report_invoice/index.md",
+    "module": "l10n_ro_account_report_invoice",
+    "version": "20.0.0.4.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_account_report_invoice",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_account_report_invoice",
+    "summary": "Modulul adaptează factura tipărită la cerințele legale din România: adaugă mențiunea privind lipsa ștampilei și a semnăturii și, când factura este în altă monedă decât cea a companiei, afișează totalurile și în moneda companiei.",
+    "features": [
+      "Comentariu pe factură despre ștampilă și semnătură, conform legii; textul este configurabil pe companie (câmp traductibil, setat din Setări).",
+      "Totaluri în moneda companiei pentru facturile în valută.",
+      "În șabloanele de raport se afișează numărul de înregistrare la Registrul Comerțului (NRC) al partenerului și conturile bancare marcate pentru tipărire.",
+      "Modificările se aplică doar înregistrărilor românești (`is_l10n_ro_record`)."
+    ],
+    "dependencies": [
+      "l10n_ro_config",
+      "sale"
+    ],
+    "connections": [
+      "l10n_ro_config"
+    ],
+    "text": "l10n_ro_account_report_invoice\nl10n_ro_account_report_invoice\nModulul adaptează factura tipărită la cerințele legale din România: adaugă mențiunea privind lipsa ștampilei și a semnăturii și, când factura este în altă monedă decât cea a companiei, afișează totalurile și în moneda companiei.\nComentariu pe factură despre ștampilă și semnătură, conform legii; textul este configurabil pe companie (câmp traductibil, setat din Setări).\nTotaluri în moneda companiei pentru facturile în valută.\nÎn șabloanele de raport se afișează numărul de înregistrare la Registrul Comerțului (NRC) al partenerului și conturile bancare marcate pentru tipărire.\nModificările se aplică doar înregistrărilor românești (`is_l10n_ro_record`)."
   },
   {
     "path": "l10n_ro_account_return_pl_closing/index.md",
@@ -16121,6 +16311,30 @@
     "text": "Romania - CBAM (FR-56)\nl10n_ro_cbam\nModul pentru Carbon Border Adjustment Mechanism (CBAM), conform Regulamentului (UE) 2023/956. Sprijină importatorii români care introduc pe piața UE produse din categoriile vizate (oțel și fier, aluminiu, ciment, îngrășăminte, electricitate, hidrogen) să declare emisiile de CO₂ incorporate și, din regimul definitiv (1 ianuarie 2026), să determine certificatele CBAM necesare. Este construit peste modulul `esg` (Enterprise), reutilizând `esg.emission.factor` și `esg.emission.source` în loc să le dubleze, și peste `account_intrastat` pentru codul CN.\nProfil produs CBAM: marcaj `cbam_liable`, categorie derivată automat din codul CN (Intrastat), factor de emisie din nomenclator sau override verificat per instalație, țară de origine și preț carbon plătit în origine (certificat sau nu).\nNomenclator factori de emisie: extindere `esg.emission.factor` cu factori impliciți conform Reg. delegat (UE) 2024/3212; sursă ESG dedicată „Importuri CBAM\" în Scope 3 (Category 1: Purchased goods).\nCaptură automată la import: la postarea facturii de la furnizor din afara UE, generează linii CBAM (`l10n.ro.cbam.import.line`) cu cantitatea în tone și emisiile incorporate; smart button pe factură; retururile compensează cu semn negativ.\nDeclarație CBAM: trimestrială (regim de tranziție, Oct 2023 – Dec 2025) sau anuală (regim definitiv, din 2026); agregă liniile din perioadă, calculează totalurile de emisii și deducerea prețului carbonului plătit în origine.\nPrețuri de referință ale certificatelor (`l10n.ro.cbam.certificate.price`): nomenclator introdus manual pe măsură ce Comisia Europeană publică mediile (trimestriale pentru 2026, săptămânale ulterior), folosit automat la calculul declarației.\nVerificare trimestrială de deținere (regula 50%, din 2027): declarație definitivă cu trimestru completat funcționează ca checkpoint de deținere, distinct de declarația anuală de predare.\nGenerare notă contabilă pentru obligația de certificate CBAM (declarație definitivă anuală), cu conturi configurabile (652/462).\nExport XML pentru Registrul CBAM (conform Reg. de punere în aplicare (UE) 2023/1570 pentru tranziție) și raport PDF „Situație CBAM\".\nAnaliză CBAM: vizualizări grafic/pivot pe emisii, grupate pe lună, categorie și țară de origine."
   },
   {
+    "path": "l10n_ro_city/index.md",
+    "module": "l10n_ro_city",
+    "version": "20.0.1.10.1",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_city",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_city",
+    "summary": "Modulul încarcă în baza de date nomenclatorul localităților din România (cod SIRUTA, județ, cod poștal), astfel încât adresele partenerilor să fie completate uniform, cu localitate aleasă dintr-o listă.",
+    "features": [
+      "Nomenclator de peste 13.700 de localități, cu cod SIRUTA, județ, cod poștal și municipiu/comună de care aparțin.",
+      "Județele României actualizate (`res.country.state`).",
+      "Pe partener, localitatea se alege din lista filtrată după județ; județul și localitatea se pot completa pornind de la codul poștal.",
+      "Corecție în 20.0.1.10.1: prefixul codului poștal pentru județul Giurgiu era `87` în loc de `08`; la actualizare bazele existente primesc prefixul corect."
+    ],
+    "dependencies": [
+      "base_address_extended",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_config"
+    ],
+    "text": "l10n_ro_city\nl10n_ro_city\nModulul încarcă în baza de date nomenclatorul localităților din România (cod SIRUTA, județ, cod poștal), astfel încât adresele partenerilor să fie completate uniform, cu localitate aleasă dintr-o listă.\nNomenclator de peste 13.700 de localități, cu cod SIRUTA, județ, cod poștal și municipiu/comună de care aparțin.\nJudețele României actualizate (`res.country.state`).\nPe partener, localitatea se alege din lista filtrată după județ; județul și localitatea se pot completa pornind de la codul poștal.\nCorecție în 20.0.1.10.1: prefixul codului poștal pentru județul Giurgiu era `87` în loc de `08`; la actualizare bazele existente primesc prefixul corect."
+  },
+  {
     "path": "l10n_ro_config/index.md",
     "module": "l10n_ro_config",
     "version": "20.0.0.9.3",
@@ -16439,6 +16653,32 @@
       "l10n_ro_profit_tax"
     ],
     "text": "l10n_ro_doubtful_receivables_profit_tax\nl10n_ro_doubtful_receivables_profit_tax\nModul-punte între creanțele incerte și impozitul pe profit; se instalează automat când ambele module sunt prezente. Fără el, diferența permanentă calculată pe fiecare dosar rămâne o cifră pe ecran, pe care contabilul o transcrie manual în registrul de evidență fiscală și în D101.\nAlimentează calculul D101: partea nedeductibilă a ajustărilor 491 din perioadă se adaugă la cheltuielile nedeductibile, cu rând propriu „(+) Ajustări nedeductibile pentru creanțe” și buton către dosare.\nAlimentează registrul de evidență fiscală (OMF 808/2026) cu câte un rând per creanță: valoare contabilă, valoare fiscală, diferență și temei legal propriu (art. 26 alin. (1) lit. c), cu mențiune distinctă când condițiile nu sunt îndeplinite).\nSemnalează dubla numărare dacă există o regulă `l10n.ro.tax.adjustment` pe contul 6814; nu o corectează singur, regula trebuie ștearsă.\nNu are meniuri proprii: extinde ecranele Impozit pe profit și Registru de evidență fiscală (butoanele „Calculează din contabilitate”, „Generează din calculul D101”, „Tipărește registrul”).\nRămân manuale: venitul neimpozabil la reluare, încadrarea pierderii din 654, ajustarea bazei TVA, evidența 8034.\nPașii sunt în [fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "l10n_ro_dvi/index.md",
+    "module": "l10n_ro_dvi",
+    "version": "20.0.0.3.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_dvi",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_dvi",
+    "summary": "Modulul leagă factura de achiziție de declarația vamală de import (DVI) și înregistrează automat TVA-ul și cheltuielile vamale prin costuri suplimentare (landed cost), distribuindu-le corect pe produse.",
+    "features": [
+      "DVI creat din Contabilitate → Acțiuni → DVI, cu data, jurnalul, taxa TVA deductibilă și facturile asociate.",
+      "Se completează valoarea taxei vamale și a comisionului vamal, precum și cantitățile declarate pe liniile DVI.",
+      "La Postare se generează automat un landed cost (cu linii pentru taxa vamală, comision și TVA) care distribuie sumele pe produse și creează notele contabile pentru TVA-ul plătit.",
+      "DVI poate fi stornat: se creează straturi de evaluare cu minus și se anulează nota contabilă a landed cost-ului inițial.",
+      "Contul 447 trebuie să fie cont de reconciliere, pentru a putea fi închis prin bancă.",
+      "Din factură se poate deschide DVI-ul asociat; diferențele de TVA se înregistrează pe un produs dedicat.",
+      "Documentație suplimentară în `doc/DVI.docx` (în modul)."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account_landed_cost"
+    ],
+    "connections": [
+      "l10n_ro_stock_account_landed_cost"
+    ],
+    "text": "l10n_ro_dvi\nl10n_ro_dvi\nModulul leagă factura de achiziție de declarația vamală de import (DVI) și înregistrează automat TVA-ul și cheltuielile vamale prin costuri suplimentare (landed cost), distribuindu-le corect pe produse.\nDVI creat din Contabilitate → Acțiuni → DVI, cu data, jurnalul, taxa TVA deductibilă și facturile asociate.\nSe completează valoarea taxei vamale și a comisionului vamal, precum și cantitățile declarate pe liniile DVI.\nLa Postare se generează automat un landed cost (cu linii pentru taxa vamală, comision și TVA) care distribuie sumele pe produse și creează notele contabile pentru TVA-ul plătit.\nDVI poate fi stornat: se creează straturi de evaluare cu minus și se anulează nota contabilă a landed cost-ului inițial.\nContul 447 trebuie să fie cont de reconciliere, pentru a putea fi închis prin bancă.\nDin factură se poate deschide DVI-ul asociat; diferențele de TVA se înregistrează pe un produs dedicat.\nDocumentație suplimentară în `doc/DVI.docx` (în modul)."
   },
   {
     "path": "l10n_ro_edi_ubl_sale_store/index.md",
@@ -17129,6 +17369,32 @@
       "l10n_ro_efactura_dedup"
     ],
     "text": "Romania - Audit corelare declarații fiscale\nl10n_ro_fiscal_audit\nModulul oferă un raport de audit preventiv care corelează automat, pentru o perioadă dată, totalurile dintre declarațiile fiscale românești și sursele de date din contabilitate, semnalând neconcordanțele înainte de depunere sau înainte de un control ANAF. Practic, oferă un „semafor\" de consistență fiscală pe mai multe căi de calcul independente (TVA, SAF-T, e-Factura), astfel încât echipa financiară să corecteze eventualele diferențe din timp, fără să aștepte o eroare la depunere sau o notificare de la ANAF.\nCorelează TVA colectată (rd. 17) și deductibilă (rd. 27) din D300 cu totalurile din jurnalele de TVA (D394), refolosind reconcilierea FR-49 din `l10n_ro_anaf_d300`.\nPre-validează datele pentru SAF-T (D406): parteneri fără CUI, conturi nemapate, taxe fără tip SAF-T, refolosind `l10n_ro_saft_validator`.\nDetectează facturi furnizor e-Factura recepționate în dublu exemplar (aceeași amprentă: CUI + serie/nr + dată + sumă), refolosind `l10n_ro_efactura_dedup`.\nPrezintă neconcordanțele grupate pe arii, cu valoare așteptată, valoare găsită, diferență și drill-down către documentul vizat, pe framework-ul standard `account.report` (export PDF/XLSX inclus).\nConstatările sunt avertismente de verificat (necesită confirmare umană), nu verdicte automate; când datele sunt consistente, lista de neconcordanțe este goală.\nFiecare verificare degradează grațios (afișează „indisponibil\", nu eroare) dacă modulul-sursă corespunzător nu este instalat, fără a reimplementa logica declarațiilor existente."
+  },
+  {
+    "path": "l10n_ro_fiscal_validation/index.md",
+    "module": "l10n_ro_fiscal_validation",
+    "version": "20.0.0.4.1",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_fiscal_validation",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_fiscal_validation",
+    "summary": "Modulul actualizează în masă datele partenerilor (firme) din serviciul web ANAF: denumire, adresă, statut de plătitor de TVA și altele. Un cron zilnic menține partenerii la zi fără intervenție manuală.",
+    "features": [
+      "Cron zilnic „Update Romania Partner VAT Subjected” care sincronizează partenerii cu ANAF.",
+      "Cererea către ANAF este asincronă și în bloc: partenerii se împart în loturi (implicit 499 CUI-uri, limita ANAF fiind 500), apoi rezultatul se interoghează după `correlationId`.",
+      "Parametri opționali în `ir.config_parameter` (Setări → Tehnic → Parametri de sistem): `l10n_ro_fiscal_validation.anaf_bulk_url`, `anaf_corr` (trebuie să conțină un singur `%s`), `anaf_bulk_number` (maxim 499).",
+      "Cheia API ANAF (`l10n_ro_partner_create_by_vat.anaf_api_key`) și numele antetului HTTP (`anaf_api_key_header_tag`, implicit `x-api-key`) sunt partajate cu `l10n_ro_partner_create_by_vat`; fără cheie, cererea merge neautentificată.",
+      "Fișier de exemplu pentru import: `examples/res.partner.csv`."
+    ],
+    "dependencies": [
+      "l10n_ro_partner_create_by_vat",
+      "l10n_ro_vat_on_payment"
+    ],
+    "connections": [
+      "l10n_ro_partner_create_by_vat",
+      "l10n_ro_vat_on_payment"
+    ],
+    "text": "l10n_ro_fiscal_validation\nl10n_ro_fiscal_validation\nModulul actualizează în masă datele partenerilor (firme) din serviciul web ANAF: denumire, adresă, statut de plătitor de TVA și altele. Un cron zilnic menține partenerii la zi fără intervenție manuală.\nCron zilnic „Update Romania Partner VAT Subjected” care sincronizează partenerii cu ANAF.\nCererea către ANAF este asincronă și în bloc: partenerii se împart în loturi (implicit 499 CUI-uri, limita ANAF fiind 500), apoi rezultatul se interoghează după `correlationId`.\nParametri opționali în `ir.config_parameter` (Setări → Tehnic → Parametri de sistem): `l10n_ro_fiscal_validation.anaf_bulk_url`, `anaf_corr` (trebuie să conțină un singur `%s`), `anaf_bulk_number` (maxim 499).\nCheia API ANAF (`l10n_ro_partner_create_by_vat.anaf_api_key`) și numele antetului HTTP (`anaf_api_key_header_tag`, implicit `x-api-key`) sunt partajate cu `l10n_ro_partner_create_by_vat`; fără cheie, cererea merge neautentificată.\nFișier de exemplu pentru import: `examples/res.partner.csv`."
   },
   {
     "path": "l10n_ro_fixed_assets/index.md",
@@ -18069,6 +18335,33 @@
     "text": "Romania - Cont de manoperă în producție\nl10n_ro_mrp_labour_account\nModulul configurează conturile contabile pentru manopera de producție conform OMFP 1802/2014, astfel încât mecanismul standard Odoo 19 (`mrp_account._post_labour()`) să genereze corect nota de cost al manoperei la finalizarea comenzilor de producție. La instalare detectează și setează contul 331 pe locația de producție și expune conturile utilizate în Settings, asigurând conformitatea evidenței costurilor de producție în context românesc.\n`post_init_hook`: la instalare detectează contul 331 din planul de conturi RO și îl setează automat ca `valuation_account_id` pe locația de producție, dacă nu era deja configurat.\nCâmpuri pe companie cu referințe la conturile de manoperă, vizibile în Setări → Contabilitate → Manoperă Producție.\nSincronizare: modificarea contului de locație producție în Settings actualizează automat `valuation_account_id` pe locația de stoc.\nSuport pentru monografia standard Odoo 19: Dr cont cheltuieli workcenter (921/923) = Cr cont evaluare locație producție (331).\nIntegrare cu `l10n_ro_wip_closing`: notele generate de `_post_labour()` intră în `wip_move_ids` ale comenzii de producție și sunt incluse în închiderea WIP lunară."
   },
   {
+    "path": "l10n_ro_nondeductible_vat/index.md",
+    "module": "l10n_ro_nondeductible_vat",
+    "version": "20.0.0.4.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_nondeductible_vat",
+    "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_nondeductible_vat",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Romania - Nondeductible VAT",
+    "summary": "Modulul permite înregistrarea TVA-ului nedeductibil, atât din facturi, cât și din operațiuni de stoc (consum, minus de inventar). Ajută contabilitatea să reflecte corect partea de TVA care nu se poate deduce, mutând-o pe conturi de cheltuială dedicate.",
+    "features": [
+      "Taxă marcată ca nedeductibilă, selectabilă pe linia facturii, pe mișcarea de stoc de consum sau pe linia de minus de inventar.",
+      "Procent de nedeductibilitate pe linie (facturi, mișcări de stoc, stoc cantitativ), pentru TVA parțial nedeductibil.",
+      "Cont nedeductibil asociat contului de TVA și etichetă (tag) de cont corespondentă, pentru generarea automată a liniilor de TVA nedeductibil.",
+      "Opțiune pe linia de repartizare a taxei pentru excluderea sumei din valoarea stocului.",
+      "Câmpuri adăugate în formularul facturii, al transferului de stoc și al liniilor de inventar.",
+      "Recalcularea la reconcilierea parțială a plăților, în cazul TVA la încasare."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account",
+      "l10n_ro_vat_on_payment"
+    ],
+    "connections": [
+      "l10n_ro_vat_on_payment",
+      "l10n_ro_stock_account"
+    ],
+    "text": "Romania - Nondeductible VAT\nl10n_ro_nondeductible_vat\nModulul permite înregistrarea TVA-ului nedeductibil, atât din facturi, cât și din operațiuni de stoc (consum, minus de inventar). Ajută contabilitatea să reflecte corect partea de TVA care nu se poate deduce, mutând-o pe conturi de cheltuială dedicate.\nTaxă marcată ca nedeductibilă, selectabilă pe linia facturii, pe mișcarea de stoc de consum sau pe linia de minus de inventar.\nProcent de nedeductibilitate pe linie (facturi, mișcări de stoc, stoc cantitativ), pentru TVA parțial nedeductibil.\nCont nedeductibil asociat contului de TVA și etichetă (tag) de cont corespondentă, pentru generarea automată a liniilor de TVA nedeductibil.\nOpțiune pe linia de repartizare a taxei pentru excluderea sumei din valoarea stocului.\nCâmpuri adăugate în formularul facturii, al transferului de stoc și al liniilor de inventar.\nRecalcularea la reconcilierea parțială a plăților, în cazul TVA la încasare."
+  },
+  {
     "path": "l10n_ro_off_balance/index.md",
     "module": "l10n_ro_off_balance",
     "version": "20.0.1.0.4",
@@ -18407,6 +18700,31 @@
     "text": "Romania - Beneficiarul real al partenerului\nl10n_ro_partner_ubo\nModulul ține evidența beneficiarilor reali (UBO — Ultimate Beneficial Owner) ai partenerilor de afaceri, conform măsurilor de cunoaștere a clientelei impuse de Legea 129/2019 privind prevenirea și combaterea spălării banilor. Extinde motorul de screening din `l10n_ro_partner_screening` și îl aplică nu doar pe societate, ci pe persoanele fizice care o controlează — acolo unde riscul este de fapt ascuns.\nTab dedicat \"Beneficiari Reali\" pe fișa partenerului persoană juridică, cu identificarea completă a fiecărei persoane fizice care deține sau controlează societatea\nNatura controlului conform art. 4 alin. (2): deținere directă (peste 25%), deținere indirectă, control prin alte mijloace sau conducere de rang înalt (folosită doar ca soluție subsidiară, justificată în câmpul Note, nu prin completarea unei cote fictive)\nProveniența informației (declarația clientului, extras ONRC, RECOM, registru public al altui stat) și documentele justificative atașate\nCNP-ul și documentele sunt vizibile doar grupului \"Ofițer de conformitate AML\" (art. 23)\nScreening automat al fiecărui beneficiar real pe listele OFAC și UE Consolidated, limitat la intrările de tip persoană pentru a evita fals-pozitivele; rulează la salvare și după fiecare actualizare a listelor; confirmarea potrivirii rămâne a operatorului, prin butonul \"Screening sancțiuni\" de pe formularul beneficiarului real\nStatusul de screening al partenerului capătă două trepte noi, cu prioritate asupra celorlalte semnale: \"Beneficiar Real Sancționat\" și \"Beneficiar Real Lipsă\" (partener companie fără niciun beneficiar real documentat, semnalat cu banner de avertizare pe fișă)\nDetectare automată a structurilor de proprietate opace (niciun deținător nu depășește 25%)\nRevizuire periodică cu termen calculat pe nivelul de risc AML al partenerului — 12 luni (risc ridicat), 24 (mediu, implicit) sau 36 (redus) — vizibilă în meniul *Contabilitate → Beneficiari Reali*, filtrul \"Revizuire expirată\"; cronul săptămânal \"RO UBO: Revizuirea periodică a beneficiarilor reali\" (livrat dezactivat, se activează din *Setări → Tehnic → Acțiuni programate*) creează automat activități pentru persoana desemnată\nEvidența ultimei declarații proprii depuse la Registrul Comerțului (ONRC) și semnalarea automată a obligației anuale, rămasă în vigoare după Legea 315/2021 doar pentru societățile cu acționari sau sediu fiscal în jurisdicții necooperante (derivată din lista HG 1/2024 întreținută de modulul de screening)\nConfigurare din *Contabilitate → Configurare → Setări → Partner Screening (RO)*: persoana desemnată AML (primește activitățile de revizuire) și data ultimei declarații depuse la ONRC; grupul \"Ofițer de conformitate AML\" se acordă din *Setări → Utilizatori → Contabilitate*"
   },
   {
+    "path": "l10n_ro_partner_unique/index.md",
+    "module": "l10n_ro_partner_unique",
+    "version": "20.0.0.4.1",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_partner_unique",
+    "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_partner_unique",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Romania - Partners Unique",
+    "summary": "Modulul impune unicitatea partenerilor români pe baza CUI (VAT) și, opțional, a numărului din Registrul Comerțului (NRC), prevenind dublurile de clienți și furnizori.",
+    "features": [
+      "Constrângere la salvare: două companii din aceeași firmă nu pot avea același CUI; comparația ignoră prefixul `RO` și diferențele de majuscule.",
+      "Regula se aplică doar partenerilor românești, companiilor fără companie-părinte, în cadrul aceleiași firme (company_id).",
+      "Parametrul de sistem `l10n_ro_partner_unique.vat_nrc_unique` alege regula: `vat` (implicit, doar CUI) sau `vat_nrc` (CUI împreună cu NRC).",
+      "Mesaj de eroare clar cu perechea (CUI, NRC) duplicată.",
+      "Asistentul standard de îmbinare a partenerilor ocolește constrângerea, pentru ca îmbinarea dublurilor să rămână posibilă."
+    ],
+    "dependencies": [
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_config",
+      "is_l10n_ro_record"
+    ],
+    "text": "Romania - Partners Unique\nl10n_ro_partner_unique\nModulul impune unicitatea partenerilor români pe baza CUI (VAT) și, opțional, a numărului din Registrul Comerțului (NRC), prevenind dublurile de clienți și furnizori.\nConstrângere la salvare: două companii din aceeași firmă nu pot avea același CUI; comparația ignoră prefixul `RO` și diferențele de majuscule.\nRegula se aplică doar partenerilor românești, companiilor fără companie-părinte, în cadrul aceleiași firme (company_id).\nParametrul de sistem `l10n_ro_partner_unique.vat_nrc_unique` alege regula: `vat` (implicit, doar CUI) sau `vat_nrc` (CUI împreună cu NRC).\nMesaj de eroare clar cu perechea (CUI, NRC) duplicată.\nAsistentul standard de îmbinare a partenerilor ocolește constrângerea, pentru ca îmbinarea dublurilor să rămână posibilă."
+  },
+  {
     "path": "l10n_ro_payment_allocation_report/index.md",
     "module": "l10n_ro_payment_allocation_report",
     "version": "19.0.1.0.0",
@@ -18469,6 +18787,57 @@
       "l10n_ro_leasing"
     ],
     "text": "Romania - Instrumente de plată (cecuri, bilete la ordin)\nl10n_ro_payment_instruments\nModulul gestionează instrumentele de plată specifice (cecuri, bilete la ordin, cambii) conform Legii 58/1934 (cambia și biletul la ordin) și Legii 59/1934 (cecul). Urmărește fiecare instrument printr-o mașină de stări de la emitere/primire până la onorare sau refuz, generează automat notele contabile aferente fiecărei etape și oferă un scadențar cu alerte. Conturile contabile sunt auto-detectate din planul de conturi RO și pot fi suprascrise manual.\nTipuri suportate: cec primit (5113), cec emis, bilet la ordin de primit (413) / de plătit (403), cambie de primit (413) / de plătit (403).\nMașină de stări: Ciornă → În portofoliu → Remis la bancă → Onorat, cu ramuri Refuzat / Protestat și Andosat (pentru BO/cambii primite).\nNote contabile automate per etapă (ex.: cec primit Dr 5113 = Cr 4111 → onorare Dr 5121 = Cr 5113; BO emis Dr 401 = Cr 403 → plată Dr 403 = Cr 5121; andosare BO Dr 401 = Cr 413).\nGestionarea refuzului: reactivarea creanței/datoriei și activitate de avertizare.\nBlocaj opt-in la facturare (FR-39): dacă `res.company.l10n_ro_block_refused_instrument` e bifat, emiterea unei facturi de vânzare către un partener cu instrumente de plată refuzate este blocată (eroare dură), în loc de simpla activitate de avertizare. Gardă agregată prin mixinul de postare din `l10n_ro_anaf_base`.\nScadențar cu coloane \"Zile până la scadență\" și coduri de culoare în listă.\nCron zilnic opțional de alertă cu X zile înainte de scadență (parametru `l10n_ro_payment_instruments.alert_days_before_due`, implicit 5 zile).\nAuto-detectare conturi 5113, 413, 403, 4111, 401, 5121 din planul RO, cu suprascriere manuală per instrument."
+  },
+  {
+    "path": "l10n_ro_payment_receipt_report/index.md",
+    "module": "l10n_ro_payment_receipt_report",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_payment_receipt_report",
+    "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_payment_receipt_report",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Romania - Payment Receipt Report",
+    "summary": "Modulul oferă rapoartele de casă cerute în practica românească: chitanța și dispozițiile de plată și de încasare, tipărite direct din plăți și din liniile de extras.",
+    "features": [
+      "Raportul „Chitanță” tipărit din plata clientului.",
+      "Raportul „Dispoziție de plată / încasare” tipărit din operațiunile de extras (liniile extrasului de cont).",
+      "Suma în litere, generată cu biblioteca `num2words`.",
+      "Format de hârtie dedicat."
+    ],
+    "dependencies": [
+      "l10n_ro_payment_to_statement"
+    ],
+    "connections": [
+      "l10n_ro_payment_to_statement"
+    ],
+    "text": "Romania - Payment Receipt Report\nl10n_ro_payment_receipt_report\nModulul oferă rapoartele de casă cerute în practica românească: chitanța și dispozițiile de plată și de încasare, tipărite direct din plăți și din liniile de extras.\nRaportul „Chitanță” tipărit din plata clientului.\nRaportul „Dispoziție de plată / încasare” tipărit din operațiunile de extras (liniile extrasului de cont).\nSuma în litere, generată cu biblioteca `num2words`.\nFormat de hârtie dedicat."
+  },
+  {
+    "path": "l10n_ro_payment_to_statement/index.md",
+    "module": "l10n_ro_payment_to_statement",
+    "version": "20.0.1.1.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_payment_to_statement",
+    "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_payment_to_statement",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Romania - Payment to Statement",
+    "summary": "Modulul leagă plățile clienților și furnizorilor de extrasele de cont și de registrul de casă, generând automat linia de extras pentru fiecare plată validată. În plus, permite folosirea secvențelor proprii pe jurnale, conform cerințelor contabilității românești.",
+    "features": [
+      "Adăugarea plăților în extrasele de cont: din meniul de plăți sau din „Înregistrează plata” de pe factură, după validare se creează linia de extras pe extrasul selectat.",
+      "Secvențe atașate jurnalului, în locul numerotării standard Odoo:",
+      "secvență de jurnal (pentru jurnalele de vânzări, factura; pentru casă/bancă, celelalte înregistrări);",
+      "secvență de extras (casă/bancă);",
+      "secvență de încasare de la client (doar casă);",
+      "secvențe de intrare și ieșire de numerar, folosite la restituirile furnizor, respectiv client (doar casă).",
+      "Opțiune de extras automat pe jurnal și câmpuri noi pe formularul jurnalului și al plății.",
+      "Panou jurnal (dashboard) adaptat."
+    ],
+    "dependencies": [
+      "account",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_payment_receipt_report"
+    ],
+    "text": "Romania - Payment to Statement\nl10n_ro_payment_to_statement\nModulul leagă plățile clienților și furnizorilor de extrasele de cont și de registrul de casă, generând automat linia de extras pentru fiecare plată validată. În plus, permite folosirea secvențelor proprii pe jurnale, conform cerințelor contabilității românești.\nAdăugarea plăților în extrasele de cont: din meniul de plăți sau din „Înregistrează plata” de pe factură, după validare se creează linia de extras pe extrasul selectat.\nSecvențe atașate jurnalului, în locul numerotării standard Odoo:\nsecvență de jurnal (pentru jurnalele de vânzări, factura; pentru casă/bancă, celelalte înregistrări);\nsecvență de extras (casă/bancă);\nsecvență de încasare de la client (doar casă);\nsecvențe de intrare și ieșire de numerar, folosite la restituirile furnizor, respectiv client (doar casă).\nOpțiune de extras automat pe jurnal și câmpuri noi pe formularul jurnalului și al plății.\nPanou jurnal (dashboard) adaptat."
   },
   {
     "path": "l10n_ro_payroll_advance/index.md",
@@ -18909,6 +19278,32 @@
       "l10n_ro_invoice_report_online"
     ],
     "text": "l10n_ro_picking_report_online\nl10n_ro_picking_report_online\nDocumentele de stoc românești (NIR, aviz, bon de consum, transfer intern), disponibile și pe Odoo Online. Modulul nu conține cod Python și se importă ca arhivă zip (Aplicații > Importați modulul). Este varianta fără Python a modulului [l10n_ro_picking_report](../l10n_ro_picking_report/index.md), pentru bazele în care codul propriu nu poate rula.\nRapoarte din meniul Tipăriți al transferului: Recepție (NIR), Recepție fără TVA și Recepție cu preț de vânzare (doar pe recepții), Aviz, Aviz cu preț, Bon de consum și Notă de transfer.\nNIR cu preț unitar, valoare, TVA, preț de vânzare și adaos procentual; cantități și prețuri în unitatea de pe document (o cutie de 13 kg rămâne cutie); prețul din comanda de achiziție sau din valoarea mișcării.\nAviz și Aviz cu preț: prețul din comanda de vânzare (cu discount, cu TVA inclus sau nu); fără comandă, prețul din lista clientului, altfel prețul de listă.\nLivrarea bifată *Aviz de însoțire* se tipărește ca „Aviz de însoțire a mărfii\" (14-3-6A); celelalte au titlul „Livrare\".\nPe documente: datele firmei și conturile bancare, gestionarul locației, delegatul și mijlocul de transport, numărul AWB (când e instalat modulul de curierat), semnăturile.\nSetări pe firmă (fila *Factură România*, grupul *Documente de stoc*): ascunde TVA pe NIR, ascunde băncile; pe locație: lista de prețuri a magazinului, gestionarul, *Este locație de tip magazin*.\nAutomatizări în locul codului Python: delegatul aduce mijlocul de transport; prețul de vânzare se fixează pe mișcare la validarea recepției; recepția din comanda de achiziție primește ca document sursă referința furnizorului.\nFață de `l10n_ro_picking_report` nu are: rapoartele cumulative pe perioadă, butonul *Tipăriți* care alege singur raportul, facturarea din livrare cu delegatul și atașarea livrării semnate.\nOrdinea de import: `l10n_ro_report_common_online`, `l10n_ro_invoice_report_online`, apoi acest modul; limba română se instalează înainte. Pașii sunt în [fișa consultant](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "l10n_ro_pos/index.md",
+    "module": "l10n_ro_pos",
+    "version": "20.0.1.9.1",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_pos",
+    "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_pos",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Romania - Point of Sale",
+    "summary": "Adaptează Punctul de Vânzare (POS) la cerințele din România: ieșirile din gestiune sunt contabilizate la fiecare mișcare de stoc, iar casierul este avertizat la vânzările în numerar care depășesc plafoanele legale.",
+    "features": [
+      "Dacă este instalat `l10n_ro_stock_account`, se generează note contabile la fiecare mișcare de ieșire din stoc; nota contabilă de închidere a sesiunii POS nu mai conține liniile de ieșire din gestiune.",
+      "Avertisment pe ecranul de plată la vânzare în numerar de minimum 5000 lei („doar către persoane fizice”) și mesaj de eroare la depășirea a 10.000 lei.",
+      "Raportul „Detalii vânzări” afișează și coloanele de cost de stoc, inclusiv pe rândurile de retur.",
+      "Date suplimentare la pregătirea facturii din comanda POS."
+    ],
+    "dependencies": [
+      "point_of_sale",
+      "pos_stock",
+      "l10n_ro_config"
+    ],
+    "connections": [
+      "l10n_ro_config",
+      "l10n_ro_stock_account"
+    ],
+    "text": "Romania - Point of Sale\nl10n_ro_pos\nAdaptează Punctul de Vânzare (POS) la cerințele din România: ieșirile din gestiune sunt contabilizate la fiecare mișcare de stoc, iar casierul este avertizat la vânzările în numerar care depășesc plafoanele legale.\nDacă este instalat `l10n_ro_stock_account`, se generează note contabile la fiecare mișcare de ieșire din stoc; nota contabilă de închidere a sesiunii POS nu mai conține liniile de ieșire din gestiune.\nAvertisment pe ecranul de plată la vânzare în numerar de minimum 5000 lei („doar către persoane fizice”) și mesaj de eroare la depășirea a 10.000 lei.\nRaportul „Detalii vânzări” afișează și coloanele de cost de stoc, inclusiv pe rândurile de retur.\nDate suplimentare la pregătirea facturii din comanda POS."
   },
   {
     "path": "l10n_ro_pos_fiscal_compliance/index.md",
@@ -19871,6 +20266,38 @@
     "text": "Romania - Stock\nl10n_ro_stock\nAcest modul simplifică procesul de \"Consum\" și \"Dare în folosință\" a materialelor și obiectelor de inventar, adăugând automat locațiile și tipurile de operațiuni de stoc necesare pentru fiecare depozit nou creat al companiilor cu contabilitate românească. Practic, oferă cadrul minim de stoc pentru mișcările specifice de scoatere din gestiune a materialelor consumate în producție/exploatare sau a obiectelor de inventar date în folosință angajaților.\nCreează automat, la nivel de companie, două locații de stoc dedicate: \"Consum\" (`usage: consume`) și \"Dare în folosință\" (`usage: usage_giving`) — o singură pereche per companie cu contabilitate românească (funcțiile `create_missing_consume_location` / `create_missing_usage_location` completează locațiile lipsă și la instalare/actualizare, nu doar la crearea companiei).\nPentru fiecare depozit (`stock.warehouse`) al unei companii românești, generează automat câte un tip de operațiune intern dedicat pentru \"Consum\" (cod secvență `CONS`, barcode `<COD_DEPOZIT>-CONSUME`) și pentru \"Dare în Folosință\" (cod secvență `USAGE`, barcode `<COD_DEPOZIT>-USAGE`), fiecare cu propria secvență de numerotare (`<cod_depozit>/CONS/` respectiv `<cod_depozit>/USAGE/`); tipurile de operațiuni sunt vizibile (needitabile) pe formularul depozitului, lângă tipul de operațiune de ieșire.\nMișcările de stoc către locațiile \"Consum\" / \"Dare în folosință\" sunt tratate corect ca ieșiri (`_is_outgoing`), iar cele dinspre aceste locații ca intrări (`_is_incoming`), astfel încât rapoartele și valorizarea de stoc să le clasifice consecvent.\nAdaugă pe fișa produsului (și pe varianta de produs) câmpul \"Greutate Netă\" (`l10n_ro_net_weight`), afișat lângă câmpul de volum pe formularul de produs, cu unitatea de măsură de greutate configurată la nivel de sistem."
   },
   {
+    "path": "l10n_ro_stock_account/index.md",
+    "module": "l10n_ro_stock_account",
+    "version": "20.0.1.15.2",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_stock_account",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account",
+    "summary": "Adaptează contabilitatea de stoc din Odoo la cerințele contabilității românești: conturi de stoc, venituri și cheltuieli configurabile pe locație, categorie de produs și depozit, evaluare FIFO separată pe fiecare locație și înregistrări contabile corecte pentru livrările dropship. Beneficiul este un stoc evaluat și contabilizat conform planului de conturi românesc, cu costul mărfurilor recunoscut la momentul potrivit.",
+    "features": [
+      "Configurări contabile specifice pe locație de stoc (cont de evaluare, cont de venituri, cont de cheltuieli), cu acțiune pentru propagarea contului către locațiile copil.",
+      "Conturi speciale pentru operațiuni de stoc: cont de consum și cont pentru recepții în curs, definite pe contul contabil.",
+      "Personalizarea conturilor de stoc pe categoria de produs și poziție fiscală asociată depozitului.",
+      "FIFO pe locație (în loc de FIFO pe toată compania): fiecare ieșire se împarte automat în câte o mișcare pe fiecare strat FIFO; transferurile interne consumă din stiva locației sursă și intră în stiva destinației. Se controlează prin opțiunea de companie `fifo_per_location` (implicit activă pentru companiile românești).",
+      "Compensarea automată a stocului negativ pentru produsele FIFO: ieșirea făcută înaintea intrării se evaluează provizoriu la prețul standard, iar la recepția următoare valoarea se realocă și se generează o notă de corecție legată de mișcarea de intrare (idempotent). Opțiunea de companie `fifo_location_negative_compensation`.",
+      "Evaluare și contabilizare pentru livrările dropship, simetric cu o livrare obișnuită: cheltuială (607) în debit și cont de stoc (371) în credit la plecarea mărfii către client; returul se înregistrează în storno (sumă negativă), nu prin inversare debit/credit. Dropship-ul nu influențează valoarea stocului real al aceluiași produs (FIFO sau cost mediu). Mișcările dropship istorice nu se corectează retroactiv.",
+      "Contul 408 nu se folosește niciodată pe dropship; dacă factura furnizorului lipsește la vânzare, contrapartida corectă este un cont de stoc în tranzit (327).",
+      "Performanță: indecși parțiali pe `stock_move` pentru stiva FIFO și pentru mișcările cu cantitate negativă în așteptare, plus cache pe durata cererii pentru rapoartele mari de evaluare."
+    ],
+    "dependencies": [
+      "stock_dropshipping",
+      "l10n_ro_stock"
+    ],
+    "connections": [
+      "l10n_ro_stock_account_base",
+      "l10n_ro_stock_account_landed_cost_account",
+      "l10n_ro_stock_account_date",
+      "l10n_ro_stock_account_landed_cost",
+      "l10n_ro_stock_account_reception_in_progress"
+    ],
+    "text": "l10n_ro_stock_account\nl10n_ro_stock_account\nAdaptează contabilitatea de stoc din Odoo la cerințele contabilității românești: conturi de stoc, venituri și cheltuieli configurabile pe locație, categorie de produs și depozit, evaluare FIFO separată pe fiecare locație și înregistrări contabile corecte pentru livrările dropship. Beneficiul este un stoc evaluat și contabilizat conform planului de conturi românesc, cu costul mărfurilor recunoscut la momentul potrivit.\nConfigurări contabile specifice pe locație de stoc (cont de evaluare, cont de venituri, cont de cheltuieli), cu acțiune pentru propagarea contului către locațiile copil.\nConturi speciale pentru operațiuni de stoc: cont de consum și cont pentru recepții în curs, definite pe contul contabil.\nPersonalizarea conturilor de stoc pe categoria de produs și poziție fiscală asociată depozitului.\nFIFO pe locație (în loc de FIFO pe toată compania): fiecare ieșire se împarte automat în câte o mișcare pe fiecare strat FIFO; transferurile interne consumă din stiva locației sursă și intră în stiva destinației. Se controlează prin opțiunea de companie `fifo_per_location` (implicit activă pentru companiile românești).\nCompensarea automată a stocului negativ pentru produsele FIFO: ieșirea făcută înaintea intrării se evaluează provizoriu la prețul standard, iar la recepția următoare valoarea se realocă și se generează o notă de corecție legată de mișcarea de intrare (idempotent). Opțiunea de companie `fifo_location_negative_compensation`.\nEvaluare și contabilizare pentru livrările dropship, simetric cu o livrare obișnuită: cheltuială (607) în debit și cont de stoc (371) în credit la plecarea mărfii către client; returul se înregistrează în storno (sumă negativă), nu prin inversare debit/credit. Dropship-ul nu influențează valoarea stocului real al aceluiași produs (FIFO sau cost mediu). Mișcările dropship istorice nu se corectează retroactiv.\nContul 408 nu se folosește niciodată pe dropship; dacă factura furnizorului lipsește la vânzare, contrapartida corectă este un cont de stoc în tranzit (327).\nPerformanță: indecși parțiali pe `stock_move` pentru stiva FIFO și pentru mișcările cu cantitate negativă în așteptare, plus cache pe durata cererii pentru rapoartele mari de evaluare."
+  },
+  {
     "path": "l10n_ro_stock_account_base/index.md",
     "module": "l10n_ro_stock_account_base",
     "version": "20.0.0.0.2",
@@ -19897,6 +20324,52 @@
     "text": "l10n_ro_stock_account_base\nl10n_ro_stock_account_base\nPăstrează câmpurile modulului OCA `l10n_ro_stock_account`, fără logica lui, pentru ca o bază de date care a avut modulul OCA să-și păstreze coloanele și datele, iar modulul OCA să poată fi eliminat și datele migrate la versiunea următoare. Nu adaugă comportament, ecrane sau logică contabilă.\nInclude conturile de firmă folosite de contabilitatea stocurilor din `l10n_ro_config` (aviz de plătit și de încasat, dare în folosință, transfer de stoc, taxă neeligibilă), pentru ca `l10n_ro_config` să poată fi eliminat.\nCâmpurile calculate din modulul OCA (`l10n_ro_move_type`, `l10n_ro_account_id`, `l10n_ro_transfer_account_id`, `fifo_per_location`, `fifo_location_negative_compensation`) sunt aici câmpuri stocate simple: nu se completează pentru înregistrările noi.\nFără vizualizări și fără dependență de `l10n.ro.mixin`; notele contabile de stoc sunt făcute de modulul de valorizare instalat în bază.\nProcedură: se lucrează pe o copie a bazei, cu backup; se instalează `l10n_ro_stock_base` și acest modul înainte de dezinstalarea modulului OCA `l10n_ro_stock_account` (și `l10n_ro_stock`, dacă nu mai e necesar); `l10n_ro_config` se dezinstalează abia după preluarea celorlalte câmpuri ale lui. Câmpurile se verifică în Setări > Tehnic > Structura bazei de date > Câmpuri (mod dezvoltator), iar valorile se citesc prin Acțiuni > Export. Detalii în [fișa consultant](FISA_CONSULTANT.md)."
   },
   {
+    "path": "l10n_ro_stock_account_date/index.md",
+    "module": "l10n_ro_stock_account_date",
+    "version": "20.0.0.2.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_stock_account_date",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_date",
+    "summary": "Permite alegerea unei „Date contabile” pentru operațiunile de stoc, astfel încât recepțiile și livrările să poată fi contabilizate la data reală a documentului, nu neapărat la data validării. Pentru companiile românești datele din viitor sunt blocate, iar data se poate restrânge la perioada începând cu prima zi a lunii anterioare.",
+    "features": [
+      "Câmp `Data contabilă` pe picking, folosit la validarea operațiunii și la mișcările de stoc rezultate.",
+      "Blocarea datelor viitoare pentru companiile românești.",
+      "Posibilitatea de restricționare a datei de la prima zi a lunii precedente.",
+      "Câmpul apare în formularul și în lista de picking-uri, precum și în filtrul de căutare."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account"
+    ],
+    "connections": [
+      "l10n_ro_stock_account_date_wizard"
+    ],
+    "text": "l10n_ro_stock_account_date\nl10n_ro_stock_account_date\nPermite alegerea unei „Date contabile” pentru operațiunile de stoc, astfel încât recepțiile și livrările să poată fi contabilizate la data reală a documentului, nu neapărat la data validării. Pentru companiile românești datele din viitor sunt blocate, iar data se poate restrânge la perioada începând cu prima zi a lunii anterioare.\nCâmp `Data contabilă` pe picking, folosit la validarea operațiunii și la mișcările de stoc rezultate.\nBlocarea datelor viitoare pentru companiile românești.\nPosibilitatea de restricționare a datei de la prima zi a lunii precedente.\nCâmpul apare în formularul și în lista de picking-uri, precum și în filtrul de căutare."
+  },
+  {
+    "path": "l10n_ro_stock_account_date_wizard/index.md",
+    "module": "l10n_ro_stock_account_date_wizard",
+    "version": "20.0.1.1.1",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_stock_account_date_wizard",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_date_wizard",
+    "summary": "Aduce selecția „Datei contabile” în wizard-urile de confirmare a operațiunilor de stoc, astfel încât utilizatorul să o poată seta direct la validarea unei livrări sau recepții cu backorder.",
+    "features": [
+      "Câmpul `Data contabilă` în wizard-ul de confirmare backorder; ascuns când picking-urile aparțin unei companii non-românești (compania se ia din picking-uri, nu din compania curentă).",
+      "Data nu se propune implicit la data curentă: se scrie pe picking doar dacă utilizatorul o setează, iar ștergerea ei nu șterge o dată deja existentă pe picking.",
+      "Data propusă este data contabilă comună tuturor picking-urilor; dacă diferă, câmpul rămâne gol.",
+      "Butoanele *Validate* și *No Backorder* scriu data pe aceleași picking-uri, cele validate de nucleul stoc, inclusiv cele fără backorder."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account_date"
+    ],
+    "connections": [
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_account_date_wizard\nl10n_ro_stock_account_date_wizard\nAduce selecția „Datei contabile” în wizard-urile de confirmare a operațiunilor de stoc, astfel încât utilizatorul să o poată seta direct la validarea unei livrări sau recepții cu backorder.\nCâmpul `Data contabilă` în wizard-ul de confirmare backorder; ascuns când picking-urile aparțin unei companii non-românești (compania se ia din picking-uri, nu din compania curentă).\nData nu se propune implicit la data curentă: se scrie pe picking doar dacă utilizatorul o setează, iar ștergerea ei nu șterge o dată deja existentă pe picking.\nData propusă este data contabilă comună tuturor picking-urilor; dacă diferă, câmpul rămâne gol.\nButoanele *Validate* și *No Backorder* scriu data pe aceleași picking-uri, cele validate de nucleul stoc, inclusiv cele fără backorder."
+  },
+  {
     "path": "l10n_ro_stock_account_enhancement/index.md",
     "module": "l10n_ro_stock_account_enhancement",
     "version": "19.0.0.0.0",
@@ -19919,6 +20392,32 @@
       "l10n_ro_config"
     ],
     "text": "Romania - Stock Accounting Enhancement\nl10n_ro_stock_account_enhancement\nAcest modul aduce verificări suplimentare pentru evidența contabilă a stocurilor în contextul localizării românești. Pe de o parte, se asigură că mișcările de stoc nu se înregistrează cu un preț de cost egal cu zero, evitând astfel valorizări incorecte. Pe de altă parte, introduce o restricție la postarea facturilor de vânzare sau de achiziție care conțin produse stocabile, dar nu sunt legate de o comandă de vânzare (SO) sau de achiziție (PO). Restricția poate fi activată sau dezactivată din setările de configurare, oferind flexibilitate în funcție de practicile fiecărei companii.\nVerificare ca prețul de cost să fie diferit de zero la mișcările de stoc.\nRestricție la postarea facturilor (vânzare/achiziție) care conțin produse stocabile fără referință la o comandă de vânzare (SO) sau de achiziție (PO).\nPosibilitatea de a activa/dezactiva această restricție din setările de configurare (Accounting -> România)."
+  },
+  {
+    "path": "l10n_ro_stock_account_landed_cost/index.md",
+    "module": "l10n_ro_stock_account_landed_cost",
+    "version": "20.0.1.7.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_stock_account_landed_cost",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_landed_cost",
+    "summary": "Extinde costurile adiționale (landed costs) din Odoo pentru a distribui costurile și pe mișcările de stoc rezervate din stocul real, nu doar pe cele deja intrate. Este util când transportul, vama sau alte cheltuieli se cunosc după recepție și trebuie repartizate corect pe valoarea stocului.",
+    "features": [
+      "Distribuirea costurilor adiționale și pe mișcările de stoc rezervate din stocul actual.",
+      "Tip de cost adițional românesc (`l10n_ro_cost_type`) și opțiunea de a distribui doar pe liniile de evaluare distribuite (de ex. pentru diferențe de preț, unde valoarea e deja contabilizată pe factură).",
+      "Linii de evaluare distribuite, afișate separat în formularul costului adițional.",
+      "Verificarea sumei adaptată pentru costurile care nu se distribuie pe mișcările existente.",
+      "Acces configurat prin `ir.access` pentru liniile de evaluare distribuite."
+    ],
+    "dependencies": [
+      "stock_landed_costs",
+      "l10n_ro_stock_account_tracking"
+    ],
+    "connections": [
+      "l10n_ro_stock_account_landed_cost_account",
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_account_landed_cost\nl10n_ro_stock_account_landed_cost\nExtinde costurile adiționale (landed costs) din Odoo pentru a distribui costurile și pe mișcările de stoc rezervate din stocul real, nu doar pe cele deja intrate. Este util când transportul, vama sau alte cheltuieli se cunosc după recepție și trebuie repartizate corect pe valoarea stocului.\nDistribuirea costurilor adiționale și pe mișcările de stoc rezervate din stocul actual.\nTip de cost adițional românesc (`l10n_ro_cost_type`) și opțiunea de a distribui doar pe liniile de evaluare distribuite (de ex. pentru diferențe de preț, unde valoarea e deja contabilizată pe factură).\nLinii de evaluare distribuite, afișate separat în formularul costului adițional.\nVerificarea sumei adaptată pentru costurile care nu se distribuie pe mișcările existente.\nAcces configurat prin `ir.access` pentru liniile de evaluare distribuite."
   },
   {
     "path": "l10n_ro_stock_account_landed_cost_account/index.md",
@@ -19947,6 +20446,28 @@
     "text": "l10n_ro_stock_account_landed_cost_account\nl10n_ro_stock_account_landed_cost_account\nCheltuielile de transport, manipulare sau vamă, facturate separat de marfă, se adaugă la costul de achiziție al stocului. Modulul completează documentul standard Odoo „Costuri adiționale” cu determinarea contului din locația de stoc și cu completarea automată a costului din factura furnizorului, astfel încât nota contabilă să respecte localizarea românească (371 pe debit, contul de cheltuieli al liniei pe credit).\nDeterminarea contului de evaluare a stocului din locație (destinație la intrări, sursă la ieșiri), împreună cu poziția fiscală a jurnalului.\nCompletarea automată a costului adițional creat din factura furnizorului: recepțiile comenzii de achiziție și contul fiecărei linii se preiau din factură.\nOpțional, rutarea creditului de clasa 6 printr-un cont intermediar tehnic, setat pe companie (Metodă cost adițional clasa 6: *Standard* sau *Prin cont intermediar*, plus Cont Intermediar, în *Contabilitate > Configurare > Setări*, blocul România).\nLa metoda *Prin cont intermediar*, forma notei depinde de bifa Storno accounting a companiei (a doua pereche în roșu sau clasică); setările afișează un avertisment dacă bifa e oprită.\nFuncționează pentru ambele moduri de recepție (fără Aviz și pe bază de aviz) și tratează stocul rezervat sau deja vândut la validarea costului. Fluxul detaliat este în fișa consultantului."
   },
   {
+    "path": "l10n_ro_stock_account_reception_in_progress/index.md",
+    "module": "l10n_ro_stock_account_reception_in_progress",
+    "version": "20.0.1.1.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_stock_account_reception_in_progress",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_reception_in_progress",
+    "summary": "Permite înregistrarea recepțiilor în curs: marfa recepționată înainte de sosirea facturii furnizorului, pe baza unei comenzi de achiziție marcate corespunzător. Pentru a păstra corectitudinea contabilă, cantitatea din facturile legate de o astfel de comandă nu mai poate fi modificată.",
+    "features": [
+      "Marcaj `Recepție în curs` pe comanda de achiziție, propagat pe picking-urile asociate.",
+      "Restricție: nu se poate schimba cantitatea din liniile de factură legate de comenzi marcate ca recepții în curs.",
+      "Câmpul apare în formularul comenzii de achiziție."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_price_difference"
+    ],
+    "connections": [
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_account_reception_in_progress\nl10n_ro_stock_account_reception_in_progress\nPermite înregistrarea recepțiilor în curs: marfa recepționată înainte de sosirea facturii furnizorului, pe baza unei comenzi de achiziție marcate corespunzător. Pentru a păstra corectitudinea contabilă, cantitatea din facturile legate de o astfel de comandă nu mai poate fi modificată.\nMarcaj `Recepție în curs` pe comanda de achiziție, propagat pe picking-urile asociate.\nRestricție: nu se poate schimba cantitatea din liniile de factură legate de comenzi marcate ca recepții în curs.\nCâmpul apare în formularul comenzii de achiziție."
+  },
+  {
     "path": "l10n_ro_stock_account_store/index.md",
     "module": "l10n_ro_stock_account_store",
     "version": "20.0.1.1.2",
@@ -19972,6 +20493,28 @@
       "l10n_ro_stock_account"
     ],
     "text": "l10n_ro_stock_account_store\nl10n_ro_stock_account_store\nContabilitatea stocurilor de mărfuri ținute la preț de vânzare (magazin cu amănuntul) pentru companiile din România. O locație marcată ca **Magazin** păstrează marfa la preț de vânzare, cu TVA inclus; fiecare mișcare care intră sau iese din ea primește, pe lângă nota de stoc la cost, o notă separată pentru adaosul comercial (378) și TVA neexigibil (4428).\nPrimirea mărfii de la furnizor cu factură (371 = 401, 4426 = 401, apoi 371 = 378 și 371 = 4428) sau cu aviz (371 = 408, apoi adaos și TVA; la sosirea facturii 408 = 401).\nTransferul din depozit (la cost) în magazin: transferul la cost, apoi 371 = 378 și 371 = 4428.\nIeșirea din magazin (livrare, consum, minus la inventar, transfer în depozit): 378 = 371 și 4428 = 371, alături de ieșirea la cost.\nRetururile (către furnizor, de la client) stornează în roșu adaosul și TVA ale mișcării returnate, la prețul ei de vânzare.\nPrețul de vânzare se ia din produs (Sales Price și Customer Taxes); sumele rămân pe mișcarea de stoc (Store Sale Amount, Store Markup, Store Uneligible VAT), vizibile în grupul Store Valuation (*Inventar > Raportare > Moves History*).\nReevaluarea automată la schimbarea prețului de vânzare, cu document numerotat (*Inventar > Raportare > Store Revaluations*): creștere 371 = 378 / 4428, reducere în sens invers. Reducerea sub costul unitar și schimbarea într-o perioadă blocată sunt refuzate.\nConfigurare: Not Eligible Tax Account (4428) pe companie, Romania - Store Markup Account (378) pe categoria de produs cu evaluare perpetuă, opțional un cont dedicat pentru TVA neexigibil, iar pe locație Romania - Merchandise type = Store.\nLimite: transferul între două magazine nu mută adaos sau TVA; stocul existent la instalare cere o notă de deschidere (371 = 378 / 4428); nu acoperă eliberarea lunară cu coeficientul K, vânzările din POS, procesul-verbal de modificare a prețurilor și raportul de inventar la preț de vânzare."
+  },
+  {
+    "path": "l10n_ro_stock_account_tracking/index.md",
+    "module": "l10n_ro_stock_account_tracking",
+    "version": "20.0.0.3.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_stock_account_tracking",
+    "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_stock_account_tracking",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_account_tracking",
+    "summary": "Modulul adaugă un tabel care păstrează rezervările dintre mișcările de stoc pentru produsele evaluate FIFO. Astfel se poate urmări, pentru fiecare ieșire, din ce intrări (mișcări sursă) a fost acoperită, cu cantitatea și valoarea aferentă.",
+    "features": [
+      "Legătură explicită între mișcarea sursă (intrarea) și mișcarea destinație (ieșirea) pentru produsele FIFO.",
+      "Pentru fiecare legătură se păstrează cantitatea și valoarea alocată.",
+      "Informațiile sunt vizibile din vizualizările mișcărilor de stoc (operațiuni detaliate și formularul mișcării)."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account"
+    ],
+    "connections": [
+      "l10n_ro_stock_account"
+    ],
+    "text": "l10n_ro_stock_account_tracking\nl10n_ro_stock_account_tracking\nModulul adaugă un tabel care păstrează rezervările dintre mișcările de stoc pentru produsele evaluate FIFO. Astfel se poate urmări, pentru fiecare ieșire, din ce intrări (mișcări sursă) a fost acoperită, cu cantitatea și valoarea aferentă.\nLegătură explicită între mișcarea sursă (intrarea) și mișcarea destinație (ieșirea) pentru produsele FIFO.\nPentru fiecare legătură se păstrează cantitatea și valoarea alocată.\nInformațiile sunt vizibile din vizualizările mișcărilor de stoc (operațiuni detaliate și formularul mișcării)."
   },
   {
     "path": "l10n_ro_stock_account_warehouse_journal/index.md",
@@ -20538,6 +21081,31 @@
     "text": "Romania - Data contabilă a mișcărilor de stoc\nl10n_ro_stock_posting_date\nModulul adaugă o **dată contabilă (Posting Date)** pe operațiile de stoc — similar conceptului din SAP — pentru companiile din România, și o pune sub un control care împiedică datarea ce ar strica ordinea cronologică a valorizării. Astfel, echipa de contabilitate poate stabili exact în ce zi contabilă se înregistrează o recepție, o livrare sau un transfer, fără riscul de a rupe ordinea costurilor FIFO/CMP prin operații datate necorespunzător.\nExpune un câmp „Posting Date\" (dată contabilă) pe operațiile de stoc (`stock.picking`), separat de data efectivă de validare.\nLa validare, data contabilă aleasă este propagată către toate notele generate: valorizarea nativă Odoo, recepția fără factură (371 = 408), transferul valoric între gestiuni și storno-ul de retur — printr-un mecanism unic bazat pe contextul `force_period_date`.\nControl activabil per companie care blochează o dată contabilă atunci când:\neste în viitor;\neste înainte de ultima mișcare valorizată a aceluiași produs (ar desincroniza ordinea costurilor FIFO/CMP);\nla retur, este înainte de mișcarea originală pe care o stornează (barieră absolută — un retur nu poate precede recepția/livrarea inversată);\ncade într-o perioadă contabilă blocată (lock date fiscal/TVA/hard lock);\nopțional, este mai devreme de prima zi a lunii precedente.\nGranularitatea verificării „ultimei postări\" urmează granularitatea valorizării native Odoo 19: implicit pe `(produs, companie)`.\nSetări dedicate în Configurare Inventar/Contabilitate pentru activarea controlului și a restricției pe luna precedentă."
   },
   {
+    "path": "l10n_ro_stock_price_difference/index.md",
+    "module": "l10n_ro_stock_price_difference",
+    "version": "20.0.1.1.0",
+    "github": "https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_stock_price_difference",
+    "local_path": "odoo-addons/l10n-romania-oca/l10n_ro_stock_price_difference",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "l10n_ro_stock_price_difference",
+    "summary": "Modulul gestionează diferențele de preț dintre facturi și recepții. La postarea facturii creează automat un cost suplimentar (landed cost) cu produsul „Price Difference” definit în configurare, astfel încât valoarea stocului să reflecte prețul facturat. Se aplică doar produselor evaluate FIFO.",
+    "features": [
+      "Detectarea diferențelor de preț între factura de achiziție și recepție la postarea facturii.",
+      "Generarea automată a unui landed cost cu produsul „Price Difference”, creat sau preluat din configurare.",
+      "Dialog de confirmare a diferențelor de preț înainte de postare.",
+      "La recepțiile pe aviz, diferența se calculează din reziduul rămas pe contul pivot 408 după recunoașterea diferenței de curs valutar, nu prin compararea valorii facturii cu valoarea stocului. Diferența de curs nu mai este capitalizată în stoc (corecție introdusă în 19.0.1.0.0). Calculul este analitic, deci disponibil înainte de postare și corect la facturarea parțială."
+    ],
+    "dependencies": [
+      "l10n_ro_stock_account_landed_cost",
+      "stock_landed_costs",
+      "purchase_stock"
+    ],
+    "connections": [
+      "l10n_ro_stock_account_landed_cost"
+    ],
+    "text": "l10n_ro_stock_price_difference\nl10n_ro_stock_price_difference\nModulul gestionează diferențele de preț dintre facturi și recepții. La postarea facturii creează automat un cost suplimentar (landed cost) cu produsul „Price Difference” definit în configurare, astfel încât valoarea stocului să reflecte prețul facturat. Se aplică doar produselor evaluate FIFO.\nDetectarea diferențelor de preț între factura de achiziție și recepție la postarea facturii.\nGenerarea automată a unui landed cost cu produsul „Price Difference”, creat sau preluat din configurare.\nDialog de confirmare a diferențelor de preț înainte de postare.\nLa recepțiile pe aviz, diferența se calculează din reziduul rămas pe contul pivot 408 după recunoașterea diferenței de curs valutar, nu prin compararea valorii facturii cu valoarea stocului. Diferența de curs nu mai este capitalizată în stoc (corecție introdusă în 19.0.1.0.0). Calculul este analitic, deci disponibil înainte de postare și corect la facturarea parțială."
+  },
+  {
     "path": "l10n_ro_stock_provision/index.md",
     "module": "l10n_ro_stock_provision",
     "version": "19.0.1.0.1",
@@ -21091,6 +21659,77 @@
     "text": "Job Queue\nqueue_job\nModulul adaugă în Odoo o coadă de joburi integrată, care permite ca anumite apeluri de metode să fie amânate și executate asincron, în fundal, în loc să blocheze utilizatorul în timpul unei operațiuni. Joburile sunt stocate în PostgreSQL și procesate de un „Jobrunner\" dedicat, fiecare într-o tranzacție proprie, cu reîncercări automate în caz de eșec temporar. Este modulul de bază (OCA) peste care se construiesc majoritatea automatizărilor de fundal — sincronizări, generări de documente, integrări externe — fără a încetini interfața pentru utilizator.\nVizualizări dedicate pentru joburi (listă, formular, kanban), toate persistate în baza de date PostgreSQL.\nJobrunner: proces care execută joburile eficient, folosind mecanismul `NOTIFY` din PostgreSQL pentru a porni joburile aproape instantaneu, fără polling.\nCanale (`queue.job.channel`): permit segregarea joburilor pe canale ierarhice (canal rădăcină `root` + subcanale) și limitarea capacității de procesare paralelă pe fiecare canal (ex: joburile grele pe un canal cu un singur worker, cele ușoare pe un canal cu 4).\nReîncercări automate: joburile eșuate cu un tip de excepție reîncercabil sunt reprogramate automat, cu un tipar de reîncercare configurabil (`retry_pattern`) — ex: primele 3 încercări la 10 secunde distanță, următoarele 5 la 1 minut, etc.\nProprietăți de job: prioritate, dată estimată de execuție (ETA), descriere personalizată, număr de reîncercări, `identity_key` pentru a preveni duplicarea unui job încă neexecutat.\nAcțiuni asociate (Related Actions): un buton pe formularul jobului care poate deschide, de exemplu, înregistrarea vizată de job (implicit deschide formularul/lista aferentă); comportamentul poate fi personalizat pe `queue.job.function` (`enable`, `func_name`, `kwargs`).\nGrafuri de joburi cu dependențe: prin API-ul `delayable()`, joburile pot fi înlănțuite (`chain()`, `on_done()`) sau grupate pentru execuție paralelă (`group()`); un job aflat în `wait_dependencies` așteaptă ca joburile părinte să se termine cu succes înainte de a porni.\nÎmpărțirea unui job mare în mai multe joburi mai mici, cu `.split(n)` (opțional `chain=True` pentru execuție secvențială), utilă la procesarea unor seturi mari de înregistrări.\nConfigurare fără cod prin înregistrări XML `queue.job.function` (model + metodă, canal, acțiune asociată, tipar de reîncercare) și `queue.job.channel` (ierarhie de canale), fără a mai fi nevoie de decoratorul `@job` (obsolet).\nMeniu `Job Queue` (`Queue > Job Queue / Channels / Job Functions`), accesibil grupului „Job Queue Manager\", cu wizard-uri pentru marcarea în masă a joburilor ca „Done\" sau „Cancelled\" și pentru reprogramarea (`requeue`) joburilor eșuate.\nFacilități pentru dezvoltatori/testare: `with_delay()` / `delayable()` pentru amânarea metodelor; `trap_jobs()` pentru a testa joburile fără să le execute efectiv; execuție sincronă (bypass) prin variabila de mediu `QUEUE_JOB__NO_DELAY=1` sau, în teste, prin cheia de context `queue_job__no_delay=True`.\nConfigurare runner prin variabile de mediu sau fișierul `.conf` (secțiunea `[queue_job]`: `channels`, `scheme`, `host`, `port`, `http_auth_user`, `http_auth_password`); necesită `--workers` > 1 (sau `server_wide_modules = web,queue_job`) pentru ca joburile să pornească în paralel.\nAmânare automată a metodelor existente: `_patch_job_auto_delay()` pe `base` transformă o metodă în job la apelul din cod (opțional condiționat de o cheie de context), cu opțiunile jobului furnizate de o metodă `<metodă>_job_options`.\nJobrunner pornit ca proces worker separat (când Odoo rulează cu `--workers` > 0), nu ca fir în procesul principal; joburile rămase în `enqueued`/`started` (ex. worker oprit) sunt reîncadrate automat.\nCurățare automată: `ir.cron` zilnic („AutoVacuum Job Queue\") care șterge periodic joburile terminate vechi."
   },
   {
+    "path": "terrabit_base/index.md",
+    "module": "terrabit_base",
+    "version": "20.0.1.3.0",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_base",
+    "local_path": "odoo-addons/terrabit/terrabit_base",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Terrabit Base",
+    "summary": "Meta-modul care instalează dintr-o singură mișcare setul de bază folosit la clienții Terrabit din România: stoc, vânzări, achiziții, contabilitate, modulele Deltatech uzuale și localizarea românească (inclusiv e-Factura și mesajele SPV). Nu adaugă cod propriu; rolul lui este să ofere o configurare de pornire consecventă pentru o bază de date nouă.",
+    "features": [
+      "Aduce aplicațiile standard de stoc (cu evaluare și costuri de achiziție), vânzări, achiziții și contabilitate (`accountant`).",
+      "Include utilitare Deltatech: blocarea creării rapide, procese de afaceri, inventar de stoc și buton de creare factură din achiziție.",
+      "Include localizarea românească Odoo și OCA (`l10n_ro`, `l10n_ro_edi`, `l10n_ro_city`) și extensiile Terrabit: e-Factura, taxare inversă pe servicii, rapoarte de factură și de livrare, registru de casă.",
+      "Include importul facturilor de achiziție UBL și mesajele SPV pentru achiziții.",
+      "Nu are fișă de consultant; nu are descriere detaliată în `readme/` (DESCRIPTION.md conține doar un titlu)."
+    ],
+    "dependencies": [
+      "stock",
+      "stock_account",
+      "stock_landed_costs",
+      "sale",
+      "sale_management",
+      "purchase",
+      "purchase_stock",
+      "accountant",
+      "deltatech_no_quick_create",
+      "deltatech_business_process",
+      "deltatech_stock_inventory",
+      "deltatech_purchase_create_bill_button",
+      "l10n_ro_edi",
+      "l10n_ro",
+      "l10n_ro_city",
+      "l10n_ro_efactura_enhancement",
+      "l10n_ro_service_tax",
+      "l10n_ro_invoice_report",
+      "l10n_ro_picking_report",
+      "l10n_ro_cash_register",
+      "deltatech_purchase_ubl",
+      "l10n_ro_message_spv_purchase"
+    ],
+    "connections": [
+      "l10n_ro_efactura_enhancement",
+      "l10n_ro_message_spv_purchase"
+    ],
+    "text": "Terrabit Base\nterrabit_base\nMeta-modul care instalează dintr-o singură mișcare setul de bază folosit la clienții Terrabit din România: stoc, vânzări, achiziții, contabilitate, modulele Deltatech uzuale și localizarea românească (inclusiv e-Factura și mesajele SPV). Nu adaugă cod propriu; rolul lui este să ofere o configurare de pornire consecventă pentru o bază de date nouă.\nAduce aplicațiile standard de stoc (cu evaluare și costuri de achiziție), vânzări, achiziții și contabilitate (`accountant`).\nInclude utilitare Deltatech: blocarea creării rapide, procese de afaceri, inventar de stoc și buton de creare factură din achiziție.\nInclude localizarea românească Odoo și OCA (`l10n_ro`, `l10n_ro_edi`, `l10n_ro_city`) și extensiile Terrabit: e-Factura, taxare inversă pe servicii, rapoarte de factură și de livrare, registru de casă.\nInclude importul facturilor de achiziție UBL și mesajele SPV pentru achiziții.\nNu are fișă de consultant; nu are descriere detaliată în `readme/` (DESCRIPTION.md conține doar un titlu)."
+  },
+  {
+    "path": "terrabit_clear_data/index.md",
+    "module": "terrabit_clear_data",
+    "version": "20.0.1.0.15",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_clear_data",
+    "local_path": "odoo-addons/terrabit/terrabit_clear_data",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Clear Data",
+    "summary": "Asistent (*Setări > Tehnic > Clear Data*) care șterge datele tranzacționale ale unei baze de date (stoc, vânzări, achiziții, facturi, contabilitate, proiecte, producție, documente de service) și, opțional, datele de bază (liste de materiale, produse, parteneri), pentru o companie sau pentru toate. Este util la pregătirea unei baze de test sau la resetarea unei baze după încărcări de probă. Operația este ireversibilă și cere confirmare explicită.",
+    "features": [
+      "Opțiuni separate de ștergere: documente de stoc, vânzare, achiziție, facturi, documente contabile, proiecte, comenzi de producție, documente de service, mailuri; opțional LDM, produse (toate, finite, semifabricate) și parteneri.",
+      "Confirmare obligatorie (bifa „Sunt sigur că vreau să șterg datele!”) și alegerea companiei (implicit compania curentă).",
+      "Opțiuni pentru resetarea website-ului și încărcarea datelor demo.",
+      "Scripturi proprii ale modulelor, fără ca acestea să depindă de `terrabit_clear_data`: `data/clear_data_transactional.sql` (rulat cu opțiunea de ștergere a datelor tranzacționale din module, bifată implicit) și `data/clear_data_master.sql` (date de bază din module), rulate în ordinea inversă a dependențelor.",
+      "Scripturile primesc parametrii `%(company_ids)s` (compania aleasă sau toate) și `%(delete_shared)s` (datele fără companie pot fi șterse); un `%` literal se scrie `%%`. După rulare se curăță urmăritorii, mesajele, activitățile și atașamentele înregistrărilor șterse.",
+      "Ștergerea se face în loturi, cu jurnalizarea progresului.",
+      "La ștergerea unei companii se curăță în prealabil depozitele, regulile de stoc, site-urile și conturile contabile asociate.",
+      "Acces rezervat administratorilor (`base.group_system`)."
+    ],
+    "dependencies": [
+      "base"
+    ],
+    "connections": [],
+    "text": "Clear Data\nterrabit_clear_data\nAsistent (*Setări > Tehnic > Clear Data*) care șterge datele tranzacționale ale unei baze de date (stoc, vânzări, achiziții, facturi, contabilitate, proiecte, producție, documente de service) și, opțional, datele de bază (liste de materiale, produse, parteneri), pentru o companie sau pentru toate. Este util la pregătirea unei baze de test sau la resetarea unei baze după încărcări de probă. Operația este ireversibilă și cere confirmare explicită.\nOpțiuni separate de ștergere: documente de stoc, vânzare, achiziție, facturi, documente contabile, proiecte, comenzi de producție, documente de service, mailuri; opțional LDM, produse (toate, finite, semifabricate) și parteneri.\nConfirmare obligatorie (bifa „Sunt sigur că vreau să șterg datele!”) și alegerea companiei (implicit compania curentă).\nOpțiuni pentru resetarea website-ului și încărcarea datelor demo.\nScripturi proprii ale modulelor, fără ca acestea să depindă de `terrabit_clear_data`: `data/clear_data_transactional.sql` (rulat cu opțiunea de ștergere a datelor tranzacționale din module, bifată implicit) și `data/clear_data_master.sql` (date de bază din module), rulate în ordinea inversă a dependențelor.\nScripturile primesc parametrii `%(company_ids)s` (compania aleasă sau toate) și `%(delete_shared)s` (datele fără companie pot fi șterse); un `%` literal se scrie `%%`. După rulare se curăță urmăritorii, mesajele, activitățile și atașamentele înregistrărilor șterse.\nȘtergerea se face în loturi, cu jurnalizarea progresului.\nLa ștergerea unei companii se curăță în prealabil depozitele, regulile de stoc, site-urile și conturile contabile asociate.\nAcces rezervat administratorilor (`base.group_system`)."
+  },
+  {
     "path": "terrabit_delivery_staff/index.md",
     "module": "terrabit_delivery_staff",
     "version": "19.0.0.0.10",
@@ -21207,6 +21846,40 @@
     "text": "Terrabit Google Tag Manager\nterrabit_google_tag\nModulul integrează Google Tag Manager (GTM) cu magazinul online Odoo, permițând urmărirea evenimentelor de comerț electronic (vizualizare produs, adăugare în coș, început de checkout, plată, căutare, contact, formular, achiziție finală) direct în `window.dataLayer`, fără personalizări suplimentare de cod. Astfel, echipele de marketing pot construi rapoarte și campanii de conversie în Google Ads/Analytics folosind un singur container GTM, configurabil direct din setările website-ului.\nInjectează automat scriptul GTM (și fallback-ul `<noscript>`) în `<head>`-ul fiecărei pagini, pe baza unui ID de container (`Tracking ID`) configurat în Website → Configurare → Setări.\nTrimite către `dataLayer` evenimentele standard de comerț electronic: `view_item`, `add_to_cart`, `begin_checkout`, `add_payment_info`, `search`, `contact`, `generate_lead` și `purchase`.\nFiecare eveniment de produs conține detalii bogate (`item_id`, `item_name`, `item_brand`, `item_category`, `price`, `quantity`), cu `item_id` configurabil (variantă / șablon / SKU) prin `terrabit_website_sale_tracking_base`.\nSuportă opțional un `Cod de Conversie` Google Ads — la finalizarea comenzii trimite și un eveniment `conversion` cu `send_to` setat pe eticheta de conversie.\nPăstrează formatul (plat) al evenimentelor identic cu versiunea Odoo 18, astfel încât trigger-ele existente din containerul GTM continuă să funcționeze după upgrade.\nSe bazează pe evenimentele native `website_sale` (`view_item_event`, `add_to_cart_event`) și pe evenimentele normalizate din `terrabit_website_sale_tracking_base`, evitând astfel duplicarea logicii de tracking pentru fiecare pixel de marketing."
   },
   {
+    "path": "terrabit_helpdesk_ai_reply/index.md",
+    "module": "terrabit_helpdesk_ai_reply",
+    "version": "20.0.1.20.0",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_helpdesk_ai_reply",
+    "local_path": "odoo-addons/terrabit/terrabit_helpdesk_ai_reply",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Helpdesk AI Reply",
+    "summary": "Dispecer AI pentru partea de către client a ciclului de viață al unui tichet de helpdesk, construit pe un singur agent `ai.agent` (Tibi) și pe furnizorul LLM deja configurat în Odoo. Agentul nu încearcă soluții tehnice, care rămân în sarcina consultanților: confirmă primirea tichetului, trimite mementouri, scade prioritatea tichetelor rămase fără răspuns și închide tichetul când clientul confirmă rezolvarea.",
+    "features": [
+      "Tichet nou: răspuns de preluare care confirmă primirea, rezumă cererea, cere date lipsă (pași de reproducere, eroare, capturi) și anunță preluarea de către un consultant. Instalarea șterge șablonul standard de confirmare de pe etapele care îl folosesc, ca să nu primească clientul două emailuri.",
+      "Așteptăm clientul: memento după `ai_reminder_day` zile de tăcere (repetat), iar tichetele cu prioritate High rămase fără răspuns `ai_priority_downgrade_day` zile coboară la Medium, cu notă internă. Etapa se marchează cu „Așteptăm clientul”.",
+      "Răspuns de la client: nimic imediat și fără schimbare de etapă; dacă echipa nu reacționează în `ai_intervene_after_hours` ore (implicit 24, măsurat de la ultima activitate reală), AI-ul clasifică răspunsul: închide tichetul la confirmarea rezolvării (cu notă internă) sau trimite o confirmare scurtă de primire, fără conținut tehnic.",
+      "Limită de mesaje AI consecutive (`ai_max_consecutive_messages`, implicit 3), după care agentul tace până intervine un om; `0` înseamnă fără limită.",
+      "Prag pe echipă setat în Setări; `0` dezactivează funcția respectivă.",
+      "Închiderea tichetelor tăcute folosește mecanismul nativ „Close inactive tickets automatically” (cronul nativ trebuie activat o dată).",
+      "Necesită un furnizor LLM configurat (cheie proprie sau conector IAP). Se pot adăuga surse (RAG) agentului pentru ancorarea răspunsurilor, opțional cu restricție la surse.",
+      "Primul răspuns se poate restrânge la o echipă prin `filter_domain` al automatizării `automation_ai_reply`.",
+      "Suprascrie mutarea automată în „în lucru” din `deltatech_helpdesk`: Tibi nu schimbă niciodată etapa unui tichet deschis.",
+      "Nu are fișă de consultant."
+    ],
+    "dependencies": [
+      "helpdesk",
+      "ai",
+      "base_automation",
+      "deltatech_helpdesk"
+    ],
+    "connections": [
+      "deltatech_helpdesk",
+      "terrabit_iap",
+      "terrabit_iap_ai"
+    ],
+    "text": "Helpdesk AI Reply\nterrabit_helpdesk_ai_reply\nDispecer AI pentru partea de către client a ciclului de viață al unui tichet de helpdesk, construit pe un singur agent `ai.agent` (Tibi) și pe furnizorul LLM deja configurat în Odoo. Agentul nu încearcă soluții tehnice, care rămân în sarcina consultanților: confirmă primirea tichetului, trimite mementouri, scade prioritatea tichetelor rămase fără răspuns și închide tichetul când clientul confirmă rezolvarea.\nTichet nou: răspuns de preluare care confirmă primirea, rezumă cererea, cere date lipsă (pași de reproducere, eroare, capturi) și anunță preluarea de către un consultant. Instalarea șterge șablonul standard de confirmare de pe etapele care îl folosesc, ca să nu primească clientul două emailuri.\nAșteptăm clientul: memento după `ai_reminder_day` zile de tăcere (repetat), iar tichetele cu prioritate High rămase fără răspuns `ai_priority_downgrade_day` zile coboară la Medium, cu notă internă. Etapa se marchează cu „Așteptăm clientul”.\nRăspuns de la client: nimic imediat și fără schimbare de etapă; dacă echipa nu reacționează în `ai_intervene_after_hours` ore (implicit 24, măsurat de la ultima activitate reală), AI-ul clasifică răspunsul: închide tichetul la confirmarea rezolvării (cu notă internă) sau trimite o confirmare scurtă de primire, fără conținut tehnic.\nLimită de mesaje AI consecutive (`ai_max_consecutive_messages`, implicit 3), după care agentul tace până intervine un om; `0` înseamnă fără limită.\nPrag pe echipă setat în Setări; `0` dezactivează funcția respectivă.\nÎnchiderea tichetelor tăcute folosește mecanismul nativ „Close inactive tickets automatically” (cronul nativ trebuie activat o dată).\nNecesită un furnizor LLM configurat (cheie proprie sau conector IAP). Se pot adăuga surse (RAG) agentului pentru ancorarea răspunsurilor, opțional cu restricție la surse.\nPrimul răspuns se poate restrânge la o echipă prin `filter_domain` al automatizării `automation_ai_reply`.\nSuprascrie mutarea automată în „în lucru” din `deltatech_helpdesk`: Tibi nu schimbă niciodată etapa unui tichet deschis.\nNu are fișă de consultant."
+  },
+  {
     "path": "terrabit_helpdesk_connector/index.md",
     "module": "terrabit_helpdesk_connector",
     "version": "19.0.0.2.15",
@@ -21300,6 +21973,34 @@
       "iap"
     ],
     "text": "Terrabit IAP Client Base\nterrabit_iap\nModulul conectează instanțele Odoo la serviciile proprii Terrabit vândute prin mecanismul IAP (In-App Purchases — servicii cu credite consumate din platformă). El permite ca fiecare serviciu Terrabit (nu doar serverul oficial Odoo) să aibă propriul endpoint de facturare/credite, oferă un pas de „înregistrare\" a contului pe serverul Terrabit și transmite automat datele de identificare necesare (CUI-ul companiei, modulele instalate, informații de contract) atunci când un serviciu are nevoie de ele.\nConfigurare centralizată a endpoint-ului serviciilor Terrabit, în Setări generale (setarea „IAP Endpoint Service\", vizibilă doar pentru `base.group_system`), prin parametrul propriu `terrabit_iap.endpoint` (implicit `https://terrabit.odoo.com`). Parametrul global `iap.endpoint` rămâne al serviciilor Odoo, deci un „Save\" în Setări nu mai mută butoanele standard (View My Services, Buy Credit, Manage, Rotate) pe serverul Terrabit.\nConturile IAP ale serviciilor Terrabit (servicii definite de un modul `terrabit_*`) primesc la creare endpoint-ul Terrabit; conturile celorlalte servicii păstrează endpoint-ul Odoo. La actualizare, o migrare repară conturile și parametrii rămași pe endpoint greșit (un endpoint setat intenționat pe alt server nu se atinge).\nSecret de apel invers (callback secret, terrabit#537): fiecare cont primește la creare (și prin migrare, pe cele existente) un secret generat în baza de date, trimis o singură dată în corpul cererii `/iap/register`, niciodată în URL. După ce serverul Terrabit confirmă că îl deține, rutele pe care serverul le apelează în această bază (`/iap/get_info`) refuză apelurile fără secret — `account_token` nu mai este suficient. Până la confirmare (server neactualizat, cont neînregistrat) rutele se comportă ca înainte. Schimbarea `account_token` șterge confirmarea; formularul contului arată câmpul read-only „Callback Secret Registered\" (secretul nu este afișat).\nFiecare cont IAP (`iap.account`) poate avea propriul endpoint de serviciu (`iap_endpoint`) și un `service_url` afișat pe formularul contului, permițând găzduirea mai multor servicii Terrabit pe endpoint-uri diferite.\nOpțiune per-cont „Hash IAP token\" (`use_hashing`) — dezactivarea ei trimite token-ul contului necriptat (util pentru unele integrări/depanare).\nButon „Register on Server\" pe formularul contului IAP (`action_register_account`) — trimite token-ul brut al contului la endpoint-ul `/iap/register`; serverul Terrabit calculează hash-ul, leagă contul de partenerul cu CUI-ul corespunzător și acordă creditele inițiale ale serviciului.\nPreluarea soldului/creditelor funcționează și pentru conturile cu endpoint propriu: metoda standard din Odoo interoghează un singur endpoint (cel implicit), pe când acest modul interoghează separat, cont cu cont, fiecare endpoint Terrabit prin ruta `/iap/1/get-accounts-information`.\nEndpoint controller `/iap/get_info` (JSON-RPC, fără autentificare de sesiune, protejat prin `account_token` și, după confirmare, prin secretul de apel invers) — expune date de identificare (token de cont, CUI/nume companie, `database.uuid`, `web.base.url`, modulele instalate, informații de contract publisher warranty) pentru ca serverul Terrabit să poată valida și procesa un cont IAP.\nDescoperirea serviciilor disponibile (`get_services`) e adaptată să interogheze fiecare endpoint IAP folosit de conturile existente, nu doar serverul oficial Odoo, prin ruta `/iap/services-token`.\nInterogarea serviciilor IAP folosește protocolul standard JSON-RPC, simplificând integrarea contului de credite cu alte sisteme și aliniind-o la modul obișnuit de apelare din Odoo."
+  },
+  {
+    "path": "terrabit_iap_ai/index.md",
+    "module": "terrabit_iap_ai",
+    "version": "20.0.2.0.2",
+    "github": "https://github.com/terrabit-solutions/terrabit/tree/20.0/terrabit_iap_ai",
+    "local_path": "odoo-addons/terrabit/terrabit_iap_ai",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Terrabit IAP AI",
+    "summary": "Direcționează AI-ul nativ din Odoo 20 (chat, agenți, câmpuri AI, acțiuni server AI din Enterprise `ai`) prin serverul IAP Terrabit în loc de serverul Odoo AI, astfel încât consumul AI să fie facturat în credite Terrabit. Instalarea nu schimbă furnizorul: AI-ul rămâne pe Odoo până când un administrator alege Terrabit.",
+    "features": [
+      "Setarea AI Provider (Odoo / Terrabit) în *Setări > General Settings > IAP Client*; alegerea Terrabit mută conturile IAP `odoo_ai` și parametrul `ai.endpoint` pe serverul Terrabit, iar revenirea la Odoo șterge `ai.endpoint`.",
+      "Endpoint implicit `https://terrabit.odoo.com`, modificabil dacă Terrabit indică altul.",
+      "Buton Register AI Account care înregistrează contul `odoo_ai` al companiei curente (se repetă în fiecare companie); serverul leagă contul de client prin CUI, deci compania trebuie să aibă CUI completat.",
+      "Furnizorul este global (`ai.endpoint`), valabil pentru toate companiile bazei.",
+      "Răspunsurile din chat vin prin webhook `/ai/completion_result_ready`, deci baza trebuie să fie accesibilă din internet; pentru baze locale se setează `ai.use_webhook` pe `False`.",
+      "Domeniu curent (etapa 1): completări text cu unelte, sincron și asincron; embeddings, transcriere, generare de imagini și căutare web cer încă serverul Odoo AI.",
+      "Codul AI al Odoo nu este suprascris. Nu are fișă de consultant."
+    ],
+    "dependencies": [
+      "ai",
+      "terrabit_iap"
+    ],
+    "connections": [
+      "terrabit_iap",
+      "terrabit_helpdesk_ai_reply"
+    ],
+    "text": "Terrabit IAP AI\nterrabit_iap_ai\nDirecționează AI-ul nativ din Odoo 20 (chat, agenți, câmpuri AI, acțiuni server AI din Enterprise `ai`) prin serverul IAP Terrabit în loc de serverul Odoo AI, astfel încât consumul AI să fie facturat în credite Terrabit. Instalarea nu schimbă furnizorul: AI-ul rămâne pe Odoo până când un administrator alege Terrabit.\nSetarea AI Provider (Odoo / Terrabit) în *Setări > General Settings > IAP Client*; alegerea Terrabit mută conturile IAP `odoo_ai` și parametrul `ai.endpoint` pe serverul Terrabit, iar revenirea la Odoo șterge `ai.endpoint`.\nEndpoint implicit `https://terrabit.odoo.com`, modificabil dacă Terrabit indică altul.\nButon Register AI Account care înregistrează contul `odoo_ai` al companiei curente (se repetă în fiecare companie); serverul leagă contul de client prin CUI, deci compania trebuie să aibă CUI completat.\nFurnizorul este global (`ai.endpoint`), valabil pentru toate companiile bazei.\nRăspunsurile din chat vin prin webhook `/ai/completion_result_ready`, deci baza trebuie să fie accesibilă din internet; pentru baze locale se setează `ai.use_webhook` pe `False`.\nDomeniu curent (etapa 1): completări text cu unelte, sincron și asincron; embeddings, transcriere, generare de imagini și căutare web cer încă serverul Odoo AI.\nCodul AI al Odoo nu este suprascris. Nu are fișă de consultant."
   },
   {
     "path": "terrabit_iap_server_helpdesk/index.md",
