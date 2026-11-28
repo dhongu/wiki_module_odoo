@@ -49,7 +49,7 @@ Modulul se instalează **automat** când sunt prezente atât `l10n_ro_reverse_ch
   categorii (vezi fișa modulului de bază).
 
 Pentru restul bazei legale (lista alin. (2), mențiunea pe factură, rândurile D300) vezi
-[fișa modulului de bază](../../l10n_ro_reverse_charge_331/readme/FISA_CONSULTANT.md).
+[fișa modulului de bază](../l10n_ro_reverse_charge_331/FISA_CONSULTANT.md).
 
 ## 3. Utilizatori și roluri
 
@@ -81,7 +81,7 @@ Date minime pentru demo (aceleași ca la partea de achiziție din modulul de baz
 ## 5. Configurare inițială
 
 1. Configurați partea de achiziție a modulului de bază, după pașii 1, 4, 6 și 7 din
-   [fișa modulului de bază](../../l10n_ro_reverse_charge_331/readme/FISA_CONSULTANT.md).
+   [fișa modulului de bază](../l10n_ro_reverse_charge_331/FISA_CONSULTANT.md).
 2. Instalați **Achiziții**. Modulul se instalează automat; nu are setări proprii.
 3. Verificați pe fiecare furnizor de bunuri art. 331 câmpul **Plătitor TVA (scpTVA)** și poziția
    fiscală. Furnizorul plătitor trebuie să aibă poziția fiscală a plătitorilor; fără ea, pe comandă
@@ -155,8 +155,8 @@ Comanda și cererea de ofertă nu generează note contabile. La factura creată 
 | `l10n_ro_reverse_charge_331` | taxa `21% R331`, maparea, statutul de TVA al partenerului, blocajul la postarea facturii | dependență (manifest) |
 | `purchase` | cereri de ofertă, comenzi de achiziție, factura creată din comandă | dependență (manifest) |
 | `purchase_stock` | reaprovizionarea care creează cereri de ofertă | opțional (prin Inventar) |
-| `l10n_ro_reverse_charge_331_sale` | aceeași regulă pe oferte și comenzi de vânzare — [fișa](../../l10n_ro_reverse_charge_331_sale/readme/FISA_CONSULTANT.md) | modul-punte paralel |
-| `l10n_ro_reverse_charge_331_pos` | aceeași regulă în POS — [fișa](../../l10n_ro_reverse_charge_331_pos/readme/FISA_CONSULTANT.md) | modul-punte paralel |
+| `l10n_ro_reverse_charge_331_sale` | aceeași regulă pe oferte și comenzi de vânzare — [fișa](../l10n_ro_reverse_charge_331_sale/index.md) | modul-punte paralel |
+| `l10n_ro_reverse_charge_331_pos` | aceeași regulă în POS — [fișa](../l10n_ro_reverse_charge_331_pos/index.md) | modul-punte paralel |
 | `l10n_ro_anaf_partner` | sincronizează din ANAF statutul **Plătitor TVA (scpTVA)** al furnizorului | opțional, recomandat |
 
 Ce este automat: alegerea taxei pe liniile cererilor de ofertă și ale comenzilor de achiziție, la
@@ -191,7 +191,7 @@ achiziție (vezi limitările din secțiunea 11).
 Fișa este **simplă, fără capturi** (`"consultant_sheet": "simple"` în manifest): modulul nu are
 ecrane proprii, iar efectul se vede în coloana **Taxe** a comenzii standard. Capturile părții de
 achiziție (taxa `21% R331`, factura furnizorului plătitor, nota de autolichidare, D300) sunt în
-[fișa modulului de bază](../../l10n_ro_reverse_charge_331/readme/FISA_CONSULTANT.md).
+[fișa modulului de bază](../l10n_ro_reverse_charge_331/FISA_CONSULTANT.md).
 
 ## 11. Observații pentru manual
 

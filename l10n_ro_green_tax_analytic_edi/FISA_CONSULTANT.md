@@ -19,7 +19,7 @@ Acest modul-punte duce nota în XML ca **notă pe linie**, lipită de linia prod
 aparține. Nu adaugă linii, taxe sau sume: numerele liniilor, totalurile și TVA-ul din XML rămân
 cele de fără modul. Configurarea taxei verde (categorii, conturi analitice, tipuri de operațiune,
 textul notei) se face în modulul de bază, descris în fișa
-[`l10n_ro_green_tax_analytic`](../../l10n_ro_green_tax_analytic/readme/FISA_CONSULTANT.md); fișa de față
+[`l10n_ro_green_tax_analytic`](../l10n_ro_green_tax_analytic/FISA_CONSULTANT.md); fișa de față
 acoperă doar ce se schimbă în XML.
 
 ## 2. Bază legală și context

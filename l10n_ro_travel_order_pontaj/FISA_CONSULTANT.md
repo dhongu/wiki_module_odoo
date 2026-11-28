@@ -19,9 +19,9 @@ dispar când ordinul e anulat sau readus în ciornă. Corecțiile scrise de mân
 (un concediu, o zi lucrată în sărbătoare) rămân neatinse.
 
 Fișa acoperă doar ce adaugă puntea. Ordinul de deplasare (formularul, diurna, decontul) este descris în
-fișa modulului [`l10n_ro_travel_order`](../../l10n_ro_travel_order/readme/FISA_CONSULTANT.md), iar foaia
+fișa modulului [`l10n_ro_travel_order`](../l10n_ro_travel_order/FISA_CONSULTANT.md), iar foaia
 colectivă de prezență (codurile, corecțiile, închiderea lunii, tichetele de masă) în fișa modulului
-[`l10n_ro_hr_pontaj`](../../l10n_ro_hr_pontaj/readme/FISA_CONSULTANT.md).
+[`l10n_ro_hr_pontaj`](../l10n_ro_hr_pontaj/FISA_CONSULTANT.md).
 
 ## 2. Bază legală și context
 

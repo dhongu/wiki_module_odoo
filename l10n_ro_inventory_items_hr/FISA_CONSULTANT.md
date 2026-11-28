@@ -30,7 +30,7 @@ actualizarea lui să nu instaleze aplicația la firmele care nu o folosesc.
 Modulul **nu schimbă tratamentul contabil** al obiectelor de inventar: pragul de încadrare,
 monografia (`303`, `603 = 303`, evidența extrabilanțieră `8035`), imputarea lipsurilor și TVA-ul la
 casare sunt descrise în fișa modulului de bază,
-[Obiecte de Inventar (303/603/8035)](../../l10n_ro_inventory_items/readme/FISA_CONSULTANT.md),
+[Obiecte de Inventar (303/603/8035)](../l10n_ro_inventory_items/FISA_CONSULTANT.md),
 secțiunea 2. Fișa de față le presupune cunoscute.
 
 Ce aduce modulul este **persoana care are obiectul în folosință**, scrisă pe documente: bonul de
