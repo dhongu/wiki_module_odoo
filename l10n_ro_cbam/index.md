@@ -1,10 +1,10 @@
-# Romania - CBAM (FR-56) (localizat la `l10n_ro_cbam/index.md`)
+# Romania - CBAM (localizat la `l10n_ro_cbam/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cbam`
-- **Versiune:** `19.0.1.7.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cbam
+- **Versiune:** `20.0.1.7.6`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_cbam
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cbam`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

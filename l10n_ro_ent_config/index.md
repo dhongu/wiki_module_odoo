@@ -1,36 +1,25 @@
 # Romania - Configurare localizare Enterprise (localizat la `l10n_ro_ent_config/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_ent_config`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_ent_config
+- **Versiune:** `20.0.1.1.1`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_ent_config
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_ent_config`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Acest modul oferă un punct unic de instalare și configurare pentru suita **l10n_ro_ent**
-(localizarea enterprise Terrabit pentru România). Din **Setări → România Enterprise** poți
-bifa direct modulele de care ai nevoie (declarații ANAF, e-Factura/e-Transport, contabilitate
-și închidere de lună, rapoarte contabile și SAF-T, gestiuni de stoc, trezorerie, salarizare,
-fiscalitate specială, conformitate & audit, POS), grupate pe categorii — fără să cauți fiecare
-modul individual în Aplicații.
+Modulul oferă un punct unic de instalare și configurare pentru suita **l10n_ro_ent** (localizarea enterprise Terrabit pentru România). Din **Setări → România Enterprise** se bifează direct modulele necesare (declarații ANAF, e-Factura/e-Transport, contabilitate și închidere de lună, rapoarte contabile și SAF-T, gestiuni de stoc, trezorerie, salarizare, fiscalitate specială, conformitate și audit, POS), grupate pe categorii, fără a căuta fiecare modul în Aplicații.
 
 #### 2. Funcționalități Cheie
 
-- Pagină dedicată "România Enterprise" în **Setări → General Settings**, vizibilă doar pentru
-  companiile a căror țară este România (`country_code == 'RO'`).
-- Zece categorii de setări, fiecare corespunzând unui grup funcțional din suita l10n_ro_ent:
-  ANAF - Declarații & SPV, e-Factura & e-Transport, Contabilitate & Închidere de Lună, Rapoarte
-  Contabile & SAF-T, Stoc & Gestiuni Contabile, Bănci & Trezorerie, Salarizare & HR,
-  Fiscalitate Specială & Mediu, Conformitate & Audit, Puncte de Vânzare (POS).
-- Bifarea unei setări instalează automat modulul corespunzător (și dependențele lui);
-  debifarea îl dezinstalează, la apăsarea butonului **Salvează**.
-- Fiecare setare are un text de ajutor (`help`) care explică pe scurt rolul modulului asociat,
-  direct în interfață.
-- Modulele care se instalează automat ca punte între alte două module (`auto_install`) nu apar
-  în listă — se activează singure când ambele module conexe sunt prezente.
-- Accesul la pagină este restricționat prin grupul `group_ro_ent_menus` ("Romania Enterprise
-  Menus"), atribuit implicit administratorului (`base.user_admin`).
+- Pagina **România Enterprise** în **Setări**, vizibilă doar când compania curentă este din România și doar utilizatorilor din grupul **Meniuri România Enterprise** (la instalare îl primește administratorul implicit; alți administratori se adaugă din Setări → Utilizatori & Companii → Grupuri, în modul dezvoltator).
+- Zece categorii: ANAF - Declarații & SPV, e-Factura & e-Transport, Contabilitate & Închidere de Lună, Rapoarte Contabile & SAF-T, Stoc & Gestiuni Contabile, Bănci & Trezorerie, Salarizare & HR, Fiscalitate Specială & Mediu, Conformitate & Audit, Puncte de Vânzare (POS).
+- Bifarea unei setări și **Salvează** instalează modulul cu toate dependențele; debifarea pornește dezinstalarea, după confirmarea din fereastra **Dezinstalați modulele** (se văd modulele și datele afectate).
+- Pentru stocuri se alege un singur pachet de valorizare (CMP sau FIFO): cele două se exclud, iar Odoo oprește instalarea cu mesajul de module incompatibile.
+- Instalările și dezinstalările nu se combină într-o singură salvare: când există o debifare, Odoo deschide doar fereastra de dezinstalare, iar modulele bifate nou nu se instalează.
+- Modulele `auto_install` (punți între alte două module) nu apar în listă; se activează singure când ambele module conexe sunt prezente.
+- Fiecare setare are text de ajutor cu rolul modulului asociat.
 
 #### 3. Dependențe
 
@@ -40,21 +29,16 @@ modul individual în Aplicații.
 
 **Modele**
 
-- `res.config.settings` (extindere, tranzient): adaugă peste 90 de câmpuri booleene de tip
-  `module_<nume_modul>`, câte unul pentru fiecare modul instalabil din suita l10n_ro_ent;
-  bifarea/debifarea lor declanșează instalarea/dezinstalarea modulului corespunzător prin
-  mecanismul standard Odoo de setări.
+- `res.config.settings` (extindere, tranzient): câmpuri booleene `module_<nume_modul>`, câte unul pentru fiecare modul instalabil al suitei; bifarea/debifarea declanșează instalarea/dezinstalarea prin mecanismul standard Odoo de setări.
 
 **Vizualizări**
 
-- `res_config_settings_view_form`: extinde formularul de setări generale cu fila (app)
-  "Romania Enterprise", organizată în blocuri (`block`) pe categorii funcționale, fiecare bloc
-  conținând câte o `setting` per modul opțional.
+- `wizard/res_config_settings_views.xml`: extinde formularul de setări cu aplicația **România Enterprise**, organizată pe blocuri de categorii, cu câte o setare per modul.
 
 **Securitate**
 
-- `group_ro_ent_menus` ("Romania Enterprise Menus"): grup de securitate ce controlează
-  vizibilitatea filei "Romania Enterprise" din setări; membru implicit `base.user_admin`.
+- `security/ro_ent_menus_group.xml`: grupul **Meniuri România Enterprise**, care controlează vizibilitatea paginii; membru implicit administratorul.
+
 
 #### 5. Conexiuni
 

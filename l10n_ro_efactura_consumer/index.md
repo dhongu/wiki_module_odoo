@@ -2,46 +2,51 @@
 
 - **Nume Tehnic:** `l10n_ro_efactura_consumer`
 - **Nume anterior:** `l10n_ro_efactura_b2c` (redenumit pe 23.09.2026: numele vechi e ocupat pe Odoo Apps de alt furnizor)
-- **Versiune:** `19.0.1.0.2`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_efactura_consumer
+- **Versiune:** `20.0.1.0.8`
+- **Cale:** `https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_efactura_consumer`
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_efactura_consumer`
-- **Ultima Ingestie:** 2026-09-23
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
-## 1. Sumar
+#### 1. Sumar
 
-Extinde modulul `l10n_ro_edi` pentru a suporta transmiterea facturilor către persoane fizice (B2C) prin SPV (Spațiul Privat Virtual) conform CIUS-RO. Adaugă câmpul CNP pe partener cu validare automată, înlocuiește VAT-ul implicit din XML cu CNP-ul real și blochează trimiterea facturilor cu CNP invalid, asigurând conformitatea declarațiilor B2C.
+Extinde `l10n_ro_edi` pentru facturile e-Factura transmise către persoane fizice (B2C) prin SPV, conform CIUS-RO. Adaugă CNP-ul pe partener, îl validează prin algoritmul Luhn RO și îl pune în XML-ul UBL cu `schemeID="CNP"`, în locul valorii implicite `0000000000000`. Firmele care facturează doar către persoane juridice cu cod de TVA nu au nevoie de modul.
 
-## 2. Funcționalități Cheie
+#### 2. Funcționalități Cheie
 
-- **Câmp CNP pe partener:** vizibil pentru persoane fizice din România, cu validare automată prin algoritmul Luhn RO (13 cifre) și câmp calculat „CNP Valid".
-- **Generare XML CIUS-RO B2C:** când clientul este persoană fizică cu CNP valid, generatorul înlocuiește `DEFAULT_VAT = '0000000000000'` cu CNP-ul real, cu `schemeID="CNP"`.
-- **Validare pre-trimitere:** blochează trimiterea în SPV dacă CNP-ul este completat dar invalid.
-- **Avertizare pe factură:** afișează avertisment când clientul este persoană fizică română fără CNP valid.
-- **Migrare date:** la instalare, dacă `deltatech_contact` este prezent, copiază CNP-urile existente în `l10n_ro_cnp`.
-- **Protecție GDPR:** câmpul CNP este restricționat la grupul `base.group_user` (utilizatori interni).
+- Câmpul **CNP (Persoană Fizică RO)** pe partener (Facturare → Clienți), vizibil sub TVA cât timp partenerul nu are cod TVA și țara fiscală a firmei este România; criteriul este lipsa codului TVA, nu tipul Persoană/Companie. Coloană opțională **CNP** în lista de clienți.
+- Validare la salvare prin algoritmul Luhn RO (13 cifre, prima cifră 1–8, cifră de control corectă): un CNP greșit nu se salvează; câmpul calculat **CNP Valid** indică rezultatul.
+- XML CIUS-RO B2C corect: `schemeID="CNP"` în `PartyLegalEntity/CompanyID` și `PartyIdentification/ID`.
+- Blocare la trimiterea în SPV dacă CNP-ul este completat dar invalid; dacă lipsește, factura se trimite cu identificatorul anonim `0000000000000` (comportamentul standard).
+- Banner de avertizare pe factură când clientul persoană fizică română nu are CNP valid.
+- La instalare, migrarea CNP-urilor din câmpul `cnp` al `deltatech_contact` în `l10n_ro_cnp` (doar unde câmpul nou e gol; nu rulează la instalarea ulterioară a lui `deltatech_contact`).
+- Protecție GDPR: câmpul CNP este accesibil doar utilizatorilor interni (`base.group_user`).
+- Fără setări proprii: conexiunea la SPV rămâne în `l10n_ro_edi`.
 
-## 3. Dependențe
+#### 3. Dependențe
 
 - `l10n_ro_edi`
 
-## 4. Componente Cheie
+#### 4. Componente Cheie
 
-### Modele
+**Modele**
 
-- `res.partner`: extins cu câmpul `l10n_ro_cnp` și câmpul calculat „CNP Valid" (validare Luhn RO).
-- `account.move`: extins cu validarea pre-trimitere și avertizarea pentru persoane fizice fără CNP valid, plus generarea XML CIUS-RO B2C.
+- `res.partner` (extindere): câmpul `l10n_ro_cnp` și câmpul calculat „CNP Valid” (validare Luhn RO).
+- `account.move` (extindere): validarea pre-trimitere și avertizarea pentru persoane fizice fără CNP valid.
+- `account.edi.xml.ubl_ro` (extindere): generatorul XML CIUS-RO folosește CNP-ul cu `schemeID="CNP"` în locul valorii implicite.
 
-### Vizualizări / Date
+**Vizualizări**
 
-- `views/res_partner_views.xml`: câmpul CNP și indicatorul de validitate pe partener.
-- `views/account_move_views.xml`: avertizarea pe formularul facturii.
+- `view_partner_form_cnp_ro_inherit`: câmpul CNP și indicatorul de validitate pe formularul partenerului.
+- `view_partner_list_cnp_ro_inherit`: coloana opțională CNP în lista de parteneri.
+- `view_move_form_cnp_b2c_inherit`: avertizarea pe formularul facturii.
 
-### Acțiuni Automate / Acțiuni Server
+**Acțiuni Automate / Acțiuni Server**
 
-- `post_init_hook`: migrarea CNP-urilor existente din `deltatech_contact` (dacă modulul este prezent).
+- `post_init_hook` (`hooks.py`): migrarea CNP-urilor existente din `deltatech_contact`, dacă modulul este prezent.
 
-## 5. Conexiuni
+#### 5. Conexiuni
 
-- `[[l10n_ro_efactura_dedup]]`
-- `[[l10n_ro_etransport_block]]`
+- [l10n_ro_efactura_dedup](../l10n_ro_efactura_dedup/index.md): deduplicarea facturilor din SPV, același ecosistem `l10n_ro_edi`.
+- [l10n_ro_etransport_block](../l10n_ro_etransport_block/index.md): blocarea documentelor e-Transport, alt modul de control peste fluxurile ANAF.
+- [deltatech_contact](../deltatech_contact/index.md): sursa câmpului `cnp` migrat la instalare (legătură opțională).

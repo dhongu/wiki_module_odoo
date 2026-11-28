@@ -1,15 +1,15 @@
-# Romania - Situații financiare anuale ANAF (FR-31) (localizat la `l10n_ro_financial_statements/index.md`)
+# Romania - Situații financiare anuale ANAF (localizat la `l10n_ro_financial_statements/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_financial_statements`
-- **Versiune:** `19.0.1.10.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_financial_statements
+- **Versiune:** `20.0.1.12.3`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_financial_statements
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_financial_statements`
-- **Ultima Ingestie:** 2026-09-12
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Generează documentul de depunere a situațiilor financiare anuale în formatul cerut de ANAF, pornind de la rapoartele Enterprise din `l10n_ro_reports`. Piesa centrală este documentul unic `<Bilant1003>` — un singur fișier cu F10 (Bilanț), F20 (Cont de profit și pierdere) și F30 (Date informative) ca elemente, cu valorile scrise ca atribute `F<formular>_<rând><coloană>`, format verificat prin rulare efectivă cu validatorul oficial ANAF. Modulul mai oferă exporturi XML separate pe formular (pre-completare, cu un singur slot pe rând), numerotarea oficială a rândurilor derivată din grila extrasă din validator, pre-validarea a 290 din cele 303 reguli de corelație ale formularului (nemaiverificate de validatorul ANAF 2025), validarea echilibrului bilanțului și rapoartele Enterprise F30 (Date informative) și F40 (Situația activelor imobilizate). Se adresează contabililor și directorilor financiari din companiile românești care depun anual situațiile financiare la ANAF și Registrul Comerțului, conform OMFP 1802/2014.
+Generează documentul de depunere a situațiilor financiare anuale în formatul cerut de ANAF, pornind de la rapoartele Enterprise din `l10n_ro_reports`. Piesa centrală este documentul unic `<Bilant1003>` — un singur fișier cu F10 (Bilanț), F20 (Cont de profit și pierdere) și F30 (Date informative) ca elemente, cu valorile scrise ca atribute `F<formular>_<rând><coloană>`, format verificat prin rulare efectivă cu validatorul oficial ANAF. Modulul mai oferă exporturi XML separate pe formular (pre-completare, cu un singur slot pe rând), numerotarea oficială a rândurilor derivată din grila extrasă din validator, pre-validarea a 290 din cele 303 reguli de corelație ale formularului (nemaiverificate de validatorul ANAF 2025), validarea echilibrului bilanțului, rapoartele Enterprise F30 (Date informative) și F40 (Situația activelor imobilizate), declarația de inactivitate (S1046) și raportul administratorilor. Se adresează contabililor și directorilor financiari din companiile românești care depun anual situațiile financiare la ANAF și Registrul Comerțului, conform OMFP 1802/2014.
 
 #### 2. Funcționalități Cheie
 
@@ -22,6 +22,10 @@ Generează documentul de depunere a situațiilor financiare anuale în formatul 
 - **Formularul 40 — Situația activelor imobilizate:** raport Enterprise, cu coloane Sold inițial/Creșteri/Reduceri/Sold final, calculat pe categorii (imobilizări necorporale, corporale, financiare, amortizare, ajustări de depreciere) din rulajele conturilor 20x/21x/23x/26x/28x/29x.
 - **Formularul 30 — Date informative:** combină rânduri derivate din contabilitate (rezultat profit/pierdere, plăți restante furnizori/buget/credite, dobânzi/dividende, creanțe/datorii pe scadențe) cu rânduri introduse manual (număr mediu de salariați, structura capitalului social, cheltuieli de cercetare-dezvoltare pe surse) prin modelul persistent `l10n.ro.f30.manual.value`, cheie unică pe companie + perioadă + cod de rând.
 - **Antetul companiei pentru document (Setări → Contabilitate)** — câmpuri specifice ANAF care nu se pot deduce din contabilitate: cod CAEN (rezervă, folosită doar dacă lipsește modulul OCA `l10n_ro_config`), formă de proprietate (codPP), administrator, întocmitor (nume/calitate/nr. înregistrare CECCAR), entitate de interes public, steaguri ANAF fără etichetă în validator (bifaMC/DD/GG/AA, codJJ) — completate exact conform formularului oficial tipărit.
+- **Declarația de inactivitate (formularul ANAF S1046)** — pentru entitățile fără activitate de la constituire până la sfârșitul exercițiului, care depun declarația în locul situațiilor financiare. XML-ul se generează din datele companiei, verificat cu validatorul oficial; modulul avertizează când contabilitatea arată activitate (note pe alte conturi decât cele ale capitalului social). Flux Ciornă → Confirmat, cu export XML și PDF.
+- **Raportul administratorilor** — documentul care însoțește situațiile financiare anuale (OMFP 1802/2014, pct. 489–492). Indicatorii-cheie (cifra de afaceri, rezultat, active, datorii, capitaluri proprii, număr mediu de salariați, rate uzuale) se precompletează din rândurile F10/F20/F30 pe exercițiul curent și pe cel precedent; secțiunile narative se scriu în formular, iar raportul se tipărește în PDF.
+- **Meniu unic „Situații financiare anuale"** — F10, F20, F30 și F40 ca tab-uri, în ordinea din documentul de depunere; butoanele de export rămân pe fiecare formular.
+- **Număr Registrul Comerțului (Odoo 20)** — `regCom` din antet (și din declarația de inactivitate) se ia din câmpul partenerului adus de `l10n_ro_config`, altfel din câmpul „Nr. Registrul Comerțului” din Setări → Contabilitate (Odoo 20 a scos câmpul standard de pe companie; la upgrade valoarea veche se copiază).
 - **Implementat ca `account.report.custom.handler`** — trei handlere (`l10n.ro.fs.handler` pentru F10/F20, `l10n.ro.f40.handler`, `l10n.ro.f30.handler`) integrate nativ în frameworkul Enterprise de rapoarte, plus modelul `l10n.ro.fs.document` (moștenește mixin-ul `l10n_ro_anaf.report.handler.mixin`) pentru construcția documentului unic — fără rapoarte duplicate și fără wizard separat.
 
 #### 3. Dependențe
@@ -40,15 +44,19 @@ Generează documentul de depunere a situațiilor financiare anuale în formatul 
 - `l10n.ro.f40.handler` (`account.report.custom.handler`): calculează Situația activelor imobilizate (F40) pe categorii de conturi, cu solduri inițiale/finale și creșteri/reduceri pe perioadă.
 - `l10n.ro.fs.validator` (model abstract): pre-validarea corelațiilor formularului împotriva regulilor extrase din validatorul ANAF (`ANAF_RULES` / `ANAF_RULES_UNPARSED` din `l10n_ro_fs_rules.py`), cu toleranță de 1 leu la rotunjiri.
 - `l10n.ro.fs.layout` (model abstract): sursa unică a numerotării oficiale ANAF pe (tip bilanț, an) — `REPORT_PAIR_BY_TIP`, `FORMS_WITH_VERIFIED_ROWS` și maparea cod intern → (formular, rând oficial), cu moștenire de la o versiune `default` pentru anii care doar renumerotează câteva rânduri.
+- `l10n.ro.fs.inactivity.declaration`: declarația de inactivitate S1046 (ciornă/confirmat), cu export XML și PDF.
+- `l10n.ro.fs.administrators.report` / `l10n.ro.fs.administrators.report.line`: raportul administratorilor, cu indicatori precompletați și secțiuni narative.
 - `l10n.ro.f30.manual.value`: stochează valorile introduse manual pentru rândurile statistice ale Formularului 30, cheie unică pe companie + perioadă + cod de rând.
 - `res.company` (extins): câmpurile de antet ale documentului ANAF care nu se pot deriva din contabilitate (CAEN de rezervă, formă de proprietate, administrator, întocmitor, entitate de interes public, steaguri fără etichetă în validator).
 
-**Vizualizări / Date**
+**Vizualizări**
 
 - `data/l10n_ro_fs_report_setup.xml`: leagă handlerul `l10n.ro.fs.handler` de raportul F10 Bilanț (`l10n_ro_reports.account_financial_report_ro_bs_smle`) și de toate variantele F20 CPP (smle / micro-entitate / internațional).
 - `data/l10n_ro_f40_report.xml`: definește raportul Enterprise „Code 40 - Statement of Fixed Assets" (coloane Opening Balance/Increases/Reductions/Closing Balance), acțiunea client și intrarea de meniu în Rapoartele contabile.
 - `data/l10n_ro_f30_report.xml`: definește raportul Enterprise „Code 30 - Informative Data (auto-fill)" grupat pe `f30_line`, acțiunea client și intrarea de meniu în Rapoartele contabile.
 - `views/l10n_ro_f30_manual_views.xml`: vizualizarea listă pentru editarea rândurilor manuale ale Formularului 30, deschisă din butonul „Fill manual rows".
+- `views/l10n_ro_fs_inactivity_views.xml`, `views/l10n_ro_fs_admin_report_views.xml`: listele și formularele declarației de inactivitate și ale raportului administratorilor.
+- `data/l10n_ro_annual_statements.xml`: raportul și meniul „Situații financiare anuale”.
 - `views/res_config_settings_views.xml`: blocul „Romanian Annual Financial Statements" în Setări → Contabilitate, cu câmpurile de antet ANAF ale companiei.
 - `static/src/warnings.xml`: șabloanele QWeb ale bannerelor de avertizare afișate pe rapoarte (rânduri F30 neexportate, coloane parțiale F30, coloana de deschidere lipsă la F10/F20).
 
@@ -56,6 +64,7 @@ Generează documentul de depunere a situațiilor financiare anuale în formatul 
 
 - Butonul „Export ANAF submission (full set)" (F10) — generează documentul unic `<Bilant1003>`.
 - Butonul „Export XML ANAF (pre-fill, single form)" (F10/F20/F30) — generează XML-ul per formular.
+- Butoanele „Compute Indicators" / „Print PDF" (raportul administratorilor) și „Export XML ANAF (S1046)" / „Print PDF" (declarația de inactivitate).
 - Butonul „Fill manual rows" (F30), care seedează idempotent câte un rând manual pe companie/perioadă și deschide lista editabilă.
 
 #### 5. Conexiuni
@@ -63,6 +72,7 @@ Generează documentul de depunere a situațiilor financiare anuale în formatul 
 - [l10n_ro_financial_notes](../l10n_ro_financial_notes/index.md): note explicative la bilanț, complementare situațiilor financiare.
 - [l10n_ro_inventory_register](../l10n_ro_inventory_register/index.md): document suport pentru patrimoniu.
 - [l10n_ro_account_return_pl_closing](../l10n_ro_account_return_pl_closing/index.md): rezultatul exercițiului în contul 121.
+- [l10n_ro_config](../l10n_ro_config/index.md): sursa numărului de la Registrul Comerțului (câmpul partenerului).
 - [l10n_ro_anaf_base](../l10n_ro_anaf_base/index.md): mixin-ul de handler ANAF pe care se construiește documentul unic, și infrastructura comună de declarații ANAF.
 - [l10n_ro_account_chart](../l10n_ro_account_chart/index.md): planul de conturi RO pe care se construiesc formularele.
 - `l10n_ro_reports`: rapoartele Enterprise F10/F20 (Bilanț, CPP) pe care le extinde modulul; fără el butoanele de export nu au pe ce se afișa.

@@ -1,10 +1,10 @@
 # Romania - Declarația D103 ANAF (localizat la `l10n_ro_anaf_d103/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d103`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d103](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d103)
+- **Versiune:** `20.0.1.0.5`
+- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d103](https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d103)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d103`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,6 +16,7 @@ Modulul generează exportul XML al Decontului lunar privind accizele (D103) dire
 - **Export XML D103**: generare fișier XML pentru decontul lunar, din liniile declarației de accize (categorie, cantitate, U.M., cotă, acciză), cu antet de identificare a companiei (CUI, denumire, lună, an).
 - **Calcul automat al liniilor**: prin acțiunea „Calculează" a declarației, liniile sunt agregate per categorie de acciză din facturile postate ale perioadei (vânzări, cu storno pe note de credit).
 - **Izolare față de D120**: exportul D103 folosește propriul template XML; decontul anual D120 este tratat de modulul-soră [l10n_ro_anaf_d120](../l10n_ro_anaf_d120/index.md), peste aceeași infrastructură [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md).
+- **Formular retras:** ultima versiune publicată de ANAF este din 2010, fără XSD și fără soft J; exportul urmează structura istorică și nu poate fi verificat cu DUKIntegrator, deci se confirmă cu ANAF dacă declarația mai e solicitată.
 
 #### 3. Dependențe
 

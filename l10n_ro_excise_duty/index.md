@@ -1,11 +1,11 @@
-# Romania - Accize (FR-42) (localizat la `l10n_ro_excise_duty/index.md`)
+# Romania - Accize (localizat la `l10n_ro_excise_duty/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_excise_duty`
 - **Nume anterior:** `l10n_ro_excise` (redenumit pe 23.09.2026: numele vechi e ocupat pe Odoo Apps de alt furnizor)
-- **Versiune:** `19.0.1.4.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_excise_duty
+- **Versiune:** `20.0.1.4.5`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_excise_duty
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_excise_duty`
-- **Ultima Ingestie:** 2026-09-23
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar

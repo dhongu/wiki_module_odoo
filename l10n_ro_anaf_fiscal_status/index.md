@@ -1,10 +1,10 @@
 # Romania - Vector fiscal și Fișa pe rol (SPV ANAF) (localizat la `l10n_ro_anaf_fiscal_status/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_fiscal_status`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status](https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_fiscal_status)
+- **Versiune:** `20.0.1.0.3`
+- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_fiscal_status](https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_fiscal_status)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_fiscal_status`
-- **Ultima Ingestie:** `2026-07-02`
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -19,7 +19,9 @@ Modulul descarcă automat, din Spațiul Privat Virtual (SPV) al ANAF, pentru fie
 - Păstrarea documentului-sursă ANAF (PDF/registru) atașat la fiecare snapshot, pentru audit.
 - Transport prin infrastructura existentă Terrabit Connect (mTLS la SPVWS2, fără OAuth2 Bearer) și coada de joburi din `l10n_ro_anaf_agent` (tip job `fiscal_status`) — modulul nu reinventează transportul, adaugă doar tipul de cerere și cele două modele de evidență.
 - Cron zilnic de descărcare (dezactivat implicit) și cron zilnic de remindere pentru termenele de depunere apropiate (activitate `mail.activity`), pe baza mapării categorie fiscală → declarație Odoo (D300, D112, D101, D100, D103, D390).
-- Alimentează calendarul real de declarații (FR-60) și auditul de corelare a declarațiilor (FR-65).
+- Alimentează calendarul real de declarații și auditul de corelare a declarațiilor.
+- Drepturi: contabilii citesc vectorul și fișa pe rol; managerii de contabilitate declanșează descărcarea, editează maparea vector → declarație și gestionează snapshoturile.
+- Modul în versiune Beta: transportul către SPV este funcțional, iar formatul exact al răspunsului ANAF se validează pe un cont SPV real.
 
 #### 3. Dependențe
 

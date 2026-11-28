@@ -1,10 +1,10 @@
 # Romania - Repartizarea cheltuielilor indirecte pe centre de cost (localizat la `l10n_ro_cost_centers/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_cost_centers`
-- **Versiune:** `19.0.1.0.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_cost_centers
+- **Versiune:** `20.0.1.0.5`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_cost_centers
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_cost_centers`
-- **Ultima Ingestie:** `2026-06-08`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -29,7 +29,22 @@ Modulul automatizează repartizarea cheltuielilor indirecte pe centre de cost (c
 
 #### 4. Componente Cheie
 
-Fișierul `readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie și nu solicită explicit analiza componentelor tehnice. Conform fluxului de ingestie din `schema.md`, analiza codului pentru această secțiune este **omisă**.
+`readme/DESCRIPTION.md` acoperă Sumarul și Funcționalitățile Cheie și nu cere explicit analiza componentelor; analiza codului pentru această secțiune este omisă. Structura rezultă din fișierele modulului:
+
+**Modele**
+
+- `l10n.ro.cost.allocation` (`mail.thread`, `mail.activity.mixin`): documentul de repartizare, cu perioadă, cheie și nota contabilă generată.
+- `l10n.ro.cost.allocation.line`: linia pe centrul țintă, cu procent și sumă.
+- `account.analytic.account` (extins): câmpurile Suprafață (m²) și Nr. angajați.
+
+**Vizualizări**
+
+- `views/l10n_ro_cost_allocation_views.xml`: lista și formularul repartizărilor.
+- `views/analytic_account_views.xml`: câmpurile de bază de repartizare pe centrul de cost.
+
+**Acțiuni Automate / Acțiuni Server**
+
+Nu există. `data/ir_sequence.xml` definește secvența de numerotare a repartizărilor.
 
 #### 5. Conexiuni
 

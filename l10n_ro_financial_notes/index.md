@@ -1,10 +1,10 @@
 # Romania - Note explicative la situațiile financiare (localizat la `l10n_ro_financial_notes/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_financial_notes`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_financial_notes
+- **Versiune:** `20.0.1.2.1`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_financial_notes
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_financial_notes`
-- **Ultima Ingestie:** 2026-06-09
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -14,8 +14,8 @@ Modul care generează Notele explicative 1–10 la situațiile financiare anuale
 #### 2. Funcționalități Cheie
 
 - **Note calculate automat din contabilitate:**
-  - **Nota 1** — Active imobilizate: mișcări (intrări, ieșiri) și amortizare per categorie (necorporale `20x`/`280x`, corporale `21x`/`281x`, financiare `26x`/`296x`).
-  - **Nota 2** — Provizioane: constituiri, utilizări și anulări per cont `151x`.
+  - **Nota 1** — Active imobilizate: mișcări (intrări, ieșiri) și amortizare per categorie (necorporale `20x`/`280x`, corporale `21x`/`281x`, financiare `261–268`/`296x`).
+  - **Nota 2** — Provizioane: constituiri, utilizări și anulări per cont `151x` (calculate pe fiecare cont în parte, nu după prefix).
   - **Nota 4** — Analiza rezultatului din exploatare: venituri și cheltuieli pe categorii (`6xx`/`7xx`).
   - **Nota 5** — Creanțe și datorii: scadențar (sub 1 an / 1–5 ani / peste 5 ani) din soldurile nereconciliate la data de referință.
 - **Note cu completare manuală:**

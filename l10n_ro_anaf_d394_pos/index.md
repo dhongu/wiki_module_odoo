@@ -1,10 +1,10 @@
 # Romania - D394 pentru punctul de vânzare (localizat la `l10n_ro_anaf_d394_pos/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d394_pos`
-- **Versiune:** `19.0.1.1.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d394_pos
+- **Versiune:** `20.0.1.3.2`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d394_pos
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d394_pos`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** 2026-11-28
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -15,9 +15,9 @@ Modulul face puntea între declarația **D394** și modulul **Point of Sale**: b
 
 - Elimină nota de sesiune POS din colectarea pe `account.move`, scopat **doar** la colectarea D394 — jurnalul de TVA normal rămâne neatins.
 - Construiește contribuția POS la op1/op2 direct din comenzile `pos.order` nefacturate.
-- `nrBF` = numărul de bonuri (comenzi distincte); `nrAMEF` = jurnale POS distincte, sau serii AMEF distincte dacă sunt configurate.
+- `nrBF` = numărul de bonuri (comenzi distincte); `nrAMEF` = serii AMEF distincte dacă sunt configurate (sau preluate din `l10n_ro_pos_fiscal_compliance`), altfel jurnale POS distincte.
 - Retururile (refund) se agregă cu semn negativ.
-- Rutare: comandă nefacturată cu CUI → op1; fără CUI → op2 (tip `L`); comandă facturată → deja în op1 prin `out_invoice`.
+- Rutare: comandă nefacturată cu CUI → op1; fără CUI → op2 (tip `I1`, încasări prin aparat de marcat); comandă facturată → deja în op1 prin `out_invoice`; bonurile cu cote mixte (21% și 11%) rămân un singur bon, cu baza și TVA pe fiecare cotă.
 - Configurare opțională a „Seriei AMEF" pe fiecare punct de vânzare, pentru ca `nrAMEF` să reflecte numărul real de aparate fiscale.
 
 #### 3. Dependențe
@@ -30,11 +30,12 @@ Modulul face puntea între declarația **D394** și modulul **Point of Sale**: b
 **Modele**
 
 - `l10n_ro_anaf_d394.report.mixin` (extins prin `L10nRoTaxReportHandlerPos`): dedup notele de sesiune POS din colectarea D394 și injectează contribuția POS (op1/op2) în datele XML ale declarației.
+- `res.config.settings` (extins): expune câmpul Seria AMEF în setările punctului de vânzare.
 - `pos.config` (extins): adaugă câmpul `l10n_ro_amef_series` (Seria AMEF) folosit pentru numărarea `nrAMEF` pe aparat fiscal.
 
 **Vizualizări**
 
-- `pos_config_view_form_d394_amef`: adaugă grupul „D394 Declaration" cu câmpul Seria AMEF în formularul punctului de vânzare (`pos.config`).
+- `res_config_settings_view_form_d394_amef` (secțiunea `l10n_ro_d394_pos_section`): adaugă blocul „Declarația D394” cu câmpul Seria AMEF în Punct de vânzare → Configurare → Setări.
 
 **Acțiuni Automate / Acțiuni Server**
 

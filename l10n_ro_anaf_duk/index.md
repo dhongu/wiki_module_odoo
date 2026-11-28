@@ -1,10 +1,11 @@
 # Romania - DUK Integrator (prin agent local) (localizat la `l10n_ro_anaf_duk/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_duk`
-- **Versiune:** `19.0.1.0.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_duk
+- **Versiune:** `20.0.1.0.4`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_duk
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_duk`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** 2026-11-28
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
@@ -12,7 +13,8 @@ Modulul validează declarațiile ANAF cu **DUKIntegrator**, aplicația oficială
 
 #### 2. Funcționalități Cheie
 
-- Buton **Validate DUK** pe depunerea ANAF (*Contabilitate → ANAF → Depuneri*): creează un job `duk_validate`, iar starea DUK devine *Pending Validation* până agentul întoarce rezultatul.
+- Fluxul pas-cu-pas, cu capturi, este în fișa consultantului: setarea gărzii, registrul depunerilor, validarea, rezultatul valid/invalid și blocajul la depunere.
+- Buton **Validare DUK** pe depunerea ANAF (*Contabilitate → ANAF → Depuneri*): creează un job `duk_validate`, iar starea DUK devine *Pending Validation* până agentul întoarce rezultatul.
 - Agentul Terrabit Connect de pe stația contabilului preia jobul, rulează DUKIntegrator local (`java -jar DUKIntegrator.jar -usage p <file_type> ...`) și trimite rezultatul înapoi.
 - La rezultat: dacă e **valid**, starea devine *Valid* și se atașează PDF-ul oficial (cu XML inclus); dacă e **invalid**, starea devine *Invalid* și erorile apar în câmpul *DUK Errors*.
 - Câmp calculat **Status** (ciclu de viață unificat) pe depunere: ciornă → XML generat → validat DUK (valid/invalid) → trimis ANAF → acceptat/respins de ANAF.

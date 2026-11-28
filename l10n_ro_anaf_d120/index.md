@@ -1,10 +1,10 @@
 # Romania - Declarația D120 ANAF (localizat la `l10n_ro_anaf_d120/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_anaf_d120`
-- **Versiune:** `19.0.1.1.1`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_anaf_d120
+- **Versiune:** `20.0.1.2.1`
+- **Cale:** [https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d120](https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_anaf_d120)
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_anaf_d120`
-- **Ultima Ingestie:** 2026-06-09
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -16,7 +16,10 @@ Modulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D
 - **Export XML D120:** generarea decontului de accize în formatul ANAF (`D120_<CUI>_<AAAALL>.xml`), pe baza liniilor declarației de accize.
 - **Mapare automată pe rândurile D120:** fiecare categorie de acciză (bere, vin, alcool etilic, țigarete, motorină, GPL, gaz natural, energie electrică, plus categoriile nearmonizate din Legea 296/2023) este pusă pe rândul corespunzător din formular (R0, R3, R9, R20 etc.).
 - **Calcul totaluri:** subtotaluri și totaluri (accize armonizate, nearmonizate, total general) calculate automat din liniile declarației.
+- **Formular PDF ANAF completat (Soft A):** exportul scrie datele declarației în formularul PDF inteligent ANAF D120, păstrând semnătura Adobe; alternativ XDP sau ZIP cu XDP și PDF, după setarea *Tip export*.
+- **Unități fiscale:** eticheta unității fiscale a fiecărui rând (hl, hl alcool pur, tone, GJ, MWh, 1.000 bucăți, kg, ml) se completează automat în XML; cantitatea se preia ca atare din facturi, fără conversie.
 - **Validare XSD:** XML-ul este validat față de schema oficială ANAF v5 (`d120_13052025.xsd`) înainte de livrare; datele de identificare ale companiei (CUI, CAEN, adresă) sunt verificate la export.
+- **Formular acceptat:** OPANAF 1330/14.06.2024, schema `d120_13052025.xsd`; verificat cu DUKIntegrator la 13.09.2026, fără erori.
 
 #### 3. Dependențe
 
@@ -28,6 +31,10 @@ Modulul adaugă exportul în format XML ANAF al **Decontului privind accizele (D
 **Modele**
 
 - `l10n.ro.excise.declaration`: model extins (inherit) din `l10n_ro_excise_duty`, combinat cu mixinul `l10n_ro_anaf.report.handler.mixin`. Suprascrie metoda `export_to_xml()` pentru a genera XML-ul D120 atunci când tipul declarației este `d120` (altfel deleagă la comportamentul de bază — ex. D103).
+
+**Vizualizări**
+
+- `view_l10n_ro_excise_declaration_form_d120`: extinde formularul declarației de accize cu exportul D120; `views/d120_xdp_export.xml` adaugă opțiunile de export PDF/XDP (Soft A).
 
 **Acțiuni Automate / Acțiuni Server**
 

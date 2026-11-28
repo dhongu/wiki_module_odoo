@@ -1,28 +1,27 @@
-# Romania - Taxe de mediu / AFM (FR-48) (localizat la `l10n_ro_environmental_tax/index.md`)
+# Romania - Taxe de mediu / AFM (localizat la `l10n_ro_environmental_tax/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_environmental_tax`
-- **Versiune:** `19.0.1.5.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_environmental_tax
+- **Versiune:** `20.0.1.5.5`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_environmental_tax
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_environmental_tax`
-- **Ultima Ingestie:** 2026-08-20
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-MVP pentru FR-48 — Taxe de mediu / AFM, cu focus inițial pe ambalaje. Modulul adaugă profil AFM pe produs, linii de ambalaj cu material, tip și greutate per unitate, cote AFM pe material și o declarație AFM persistentă pe perioadă, calculată din facturile de vânzare postate pentru cantitățile introduse pe piață și cele scutite/exportate, cu trasabilitate completă până la documentul sursă și rapoarte suport în PDF și XLSX. Prima versiune acoperă raportul suport pentru ambalaje și pregătește extinderea spre baterii, DEEE și alte categorii AFM.
+Taxe de mediu / AFM, cu focus inițial pe ambalaje. Modulul adaugă profil AFM pe produs, linii de ambalaj cu material, tip și greutate per unitate, cote AFM pe material și o declarație AFM persistentă pe perioadă, calculată din facturile de vânzare postate (cantități introduse pe piață și cantități scutite/exportate), cu trasabilitate până la documentul sursă și raport suport în PDF și XLSX. Prima versiune acoperă raportul suport pentru ambalaje și pregătește extinderea spre baterii, DEEE și alte categorii AFM.
 
 #### 2. Funcționalități Cheie
 
-- Profil AFM pe produs (tab dedicat) cu marcarea bunurilor supuse obligațiilor AFM.
-- Linii de ambalaj pe produs: material AFM, tip ambalaj (Primar / Secundar / Transport), factor cantitate și greutate/cantitate (kg) per unitate.
-- Cote AFM configurabile pe material.
-- Declarație AFM persistentă pe perioadă, cu stări Ciornă → Calculată → Validată.
-- Calcul automat din facturile de vânzare postate în perioada selectată, cu grupare pe material în cantitate introdusă pe piață (parteneri din aceeași țară) și cantitate scutită/export (parteneri din altă țară).
-- Ajustare manuală a cantității acoperite OIREP pe linie, cu distribuire automată din contractele OIREP active la recalculare.
-- Trasabilitate completă document → partener → produs → material → flux → cantitate, prin liniile sursă.
-- Raport suport al declarației în PDF (QWeb) și export XLSX (sumar pe material + foaie surse).
-- Blocarea validării facturilor pentru produse cu obligații AFM dar fără nicio linie de material activă.
-- Gestionare contracte OIREP: operator, categorie, materiale acoperite, interval de valabilitate și cantitate acoperită per perioadă.
+- Profil AFM pe produs, în fila **AFM / Mediu**: bifa **Supus obligațiilor AFM** și linii de material (material AFM, tip ambalaj Primar/Secundar/Transport, factor cantitate, greutate/cantitate în kg per unitate, marcaj informativ SGR).
+- Nomenclator de materiale (ambalaje, baterii, EEE/DEEE, anvelope, uleiuri) și cote AFM pe kg, preîncărcate la instalare (cotele implicite pentru 2025, de verificat anual), cu perioadă de valabilitate.
+- Blocarea postării facturilor care conțin produse cu obligații AFM dar fără nicio linie de material activă.
+- Declarație AFM persistentă pe perioadă (**Contabilitate → Raportare → AFM / Mediu → Declarații AFM**), cu stări Ciornă → Calculată → Validată; o singură declarație per companie și perioadă.
+- Calcul la cerere, prin **Recalculează**, din facturile de vânzare și stornările postate: cantitatea este grupată pe material în **Introdus pe piață** (partener din țara companiei) și **Scutit / export** (partener din altă țară). Importurile, stocurile, POS și e-commerce nu sunt incluse.
+- Contracte OIREP (**Contracte OIREP**, activate cu **Activează**): operator, categorie, materiale acoperite, valabilitate și cantitate acoperită per perioadă, distribuită automat la recalculare; acoperirea se poate ajusta manual înainte de validare.
+- Linii declarație pe material (introdus, scutit, acoperit OIREP, neacoperit, cotă, contribuție) și linii sursă pentru trasabilitate document → partener → produs → material → flux → cantitate.
+- Validarea cere linii calculate și cote pentru toate materialele; declarația validată nu se mai modifică, iar doar un manager poate folosi **Resetează la ciornă**.
+- Raport suport în **PDF** (QWeb) și **Export XLSX** (sumar pe material + foaie surse), pentru verificare și arhivare; exportul direct în eTAX/SIATD rămâne manual. Fluxul pas cu pas, cu capturi, este în fișa consultantului.
 
 #### 3. Dependențe
 
@@ -34,35 +33,28 @@ MVP pentru FR-48 — Taxe de mediu / AFM, cu focus inițial pe ambalaje. Modulul
 
 **Modele**
 
-- `l10n.ro.afm.material`: nomenclatorul materialelor de ambalaj/AFM (ex. plastic, hârtie/carton, sticlă, metal, baterie portabilă).
-- `l10n.ro.afm.rate`: cotele AFM aplicabile per material.
-- `product.template` (extindere): câmpul de marcare a obligațiilor AFM și liniile de ambalaj asociate produsului.
-- `l10n.ro.afm.product.line`: linia de ambalaj pe produs — material, tip ambalaj, factor cantitate și greutate/cantitate per unitate.
-- `l10n.ro.afm.declaration`: declarația AFM persistentă pe perioadă (companie, interval, stare), cu logica de recalculare din facturi și generarea rapoartelor PDF/XLSX.
-- `l10n.ro.afm.declaration.line`: linia de declarație per material, cu cantitate introdusă, scutită, acoperită OIREP, neacoperită, cotă și contribuție calculată.
-- `l10n.ro.afm.source.line`: linia sursă de trasabilitate (document, partener, produs, material, flux, cantitate) din care se compune declarația.
-- `l10n.ro.afm.operator.contract`: contractul OIREP (operator, categorie, materiale acoperite, interval de valabilitate, cantitate acoperită per perioadă).
-- `account.move` (extindere): validare la postare — blochează facturile cu produse AFM incomplete (fără linii de material configurate).
+- `l10n.ro.afm.material`: nomenclatorul materialelor AFM.
+- `l10n.ro.afm.rate`: cotele AFM pe material, cu interval de valabilitate.
+- `product.template` (extindere): marcajul de obligație AFM și liniile de ambalaj.
+- `l10n.ro.afm.product.line`: linia de profil AFM pe produs (material, tip ambalaj, factor, greutate).
+- `l10n.ro.afm.declaration`: declarația pe perioadă, cu recalculare din facturi și rapoarte PDF/XLSX.
+- `l10n.ro.afm.declaration.line`: linia declarației pe material.
+- `l10n.ro.afm.source.line`: linia sursă de trasabilitate.
+- `l10n.ro.afm.operator.contract`: contractul OIREP.
+- `account.move` (extindere): validare la postare pentru produse AFM cu profil incomplet.
 
 **Vizualizări**
 
-- `views/product_template_views.xml`: tabul „AFM / Mediu" pe produs, cu bifa de obligație AFM și liniile de material/ambalaj.
-- `views/l10n_ro_environmental_tax_views.xml`: formularele și listele pentru declarația AFM (cu liniile de declarație și liniile sursă), materiale, cote și contracte OIREP.
-
-**Rapoarte**
-
-- `reports/afm_declaration_report.xml`: raportul suport al declarației AFM în format PDF (QWeb), cu antet companie, perioadă, tabel linii și rânduri de semnătură; exportul XLSX (sumar pe material + foaie surse) este generat din același wizard/acțiune a declarației.
-
-**Date**
-
-- `data/afm_material_data.xml`: nomenclatorul inițial de materiale AFM.
-- `data/afm_rate_data.xml`: cotele AFM inițiale per material.
+- `views/product_template_views.xml`: fila **AFM / Mediu** pe produs.
+- `views/l10n_ro_environmental_tax_views.xml`: declarații, materiale, cote și contracte OIREP.
+- `reports/afm_declaration_report.xml`: raportul suport PDF.
 
 **Acțiuni Automate / Acțiuni Server**
 
-*Nu există `ir.cron` sau `base.automation`. Calculul declarației se realizează la cerere, prin butonul „Recalculează", care parcurge facturile de vânzare postate din perioada selectată.*
+- Nu există `ir.cron` sau `base.automation`; calculul rulează la cerere, prin butonul **Recalculează**. Datele inițiale (`data/afm_material_data.xml`, `data/afm_rate_data.xml`) încarcă materialele și cotele.
 
 #### 5. Conexiuni
 
-- [l10n_ro_cbam](../l10n_ro_cbam/index.md): altă localizare de raportare de mediu/carbon pentru piața românească, din aceeași suită `l10n_ro_ent`.
-- [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md): modul înrudit de fiscalitate specială (accize) din aceeași suită `l10n_ro_ent`.
+- [l10n_ro_cbam](../l10n_ro_cbam/index.md): altă raportare de mediu/carbon din aceeași suită `l10n_ro_ent`.
+- [l10n_ro_excise_duty](../l10n_ro_excise_duty/index.md): fiscalitate specială (accize) din aceeași suită.
+- [l10n_ro_sgr](../l10n_ro_sgr/index.md): sistemul garanție-returnare; câmpul de ambalaj SGR de pe liniile AFM este doar informativ și nu înlocuiește obligația AFM.

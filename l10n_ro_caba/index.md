@@ -1,10 +1,10 @@
-# Romania - TVA la încasare (CABA) (FR-16) (localizat la `l10n_ro_caba/index.md`)
+# Romania - TVA la încasare (CABA) (localizat la `l10n_ro_caba/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_caba`
-- **Versiune:** `19.0.1.1.0`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_caba
+- **Versiune:** `20.0.1.1.6`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_caba
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_caba`
-- **Ultima Ingestie:** `2026-09-25`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -109,6 +109,7 @@ consultant cu fluxul complet, matricea celor 8 cazuri, notele contabile și refl
 - [l10n_ro_vat_on_payment_lock](../l10n_ro_vat_on_payment_lock/index.md): controlează perioadele deja
   declarate pentru TVA la încasare; `l10n_ro_caba` doar completează configurarea contabilă a
   mecanismului.
+- [l10n_ro_anaf_partner](../l10n_ro_anaf_partner/index.md): regimul furnizorilor din registrul ANAF (RTVAI) și poziția fiscală pusă automat pe ei; `l10n_ro_caba` pornește de la această poziție.
 - `l10n_ro_vat_on_payment` (OCA): aduce lista ANAF a firmelor la TVA la încasare și aplicarea
   automată a poziției fiscale pe factură; se poate instala împreună cu `l10n_ro_caba`, fără
   dependență între ele.
@@ -116,6 +117,6 @@ consultant cu fluxul complet, matricea celor 8 cazuri, notele contabile și refl
   regimuri folosesc aceleași taxe la încasare configurate corect de acest modul.
 - [l10n_ro_anaf_d300](../l10n_ro_anaf_d300/index.md): declarația D300 preia baza și TVA-ul din
   notele CABA generate la încasarea/plata facturilor, în luna încasării.
-- `l10n_ro_dvi`: modul fără pagină wiki încă.
-- `l10n_ro_nondeductible_vat`: modul fără pagină wiki încă; a inspirat convenția de a folosi un
+- [l10n_ro_dvi](../l10n_ro_dvi/index.md): folosește același cont tehnic pentru liniile de bază; TVA-ul din DVI nu trece prin 44282.
+- [l10n_ro_nondeductible_vat](../l10n_ro_nondeductible_vat/index.md): a inspirat convenția de a folosi un
   analitic al 4428 pentru contul tehnic de bază, în loc de 473.
