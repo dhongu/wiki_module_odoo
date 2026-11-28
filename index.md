@@ -526,6 +526,15 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [deltatech_widget_hierarchy_m2o](deltatech_widget_hierarchy_m2o/index.md): Widget OWL care afișează câmpurile many2one ca arbore expandabil părinte/copil, cu lazy loading și căutare, în locul listei derulante plate.
 - [deltatech_widget_many2one_badge](deltatech_widget_many2one_badge/index.md): Widget Owl care afișează câmpurile many2one ca badge colorat (culoare din înregistrarea legată), folosit de exemplu pentru fazele comenzilor.
 - [deltatech_work_days_report](deltatech_work_days_report/index.md): Generează rapoarte Excel pentru prezența angajaților și gestionarea tichetelor de masă.
+- [l10n_bg_zip](l10n_bg_zip/index.md): localități și provincii bulgare cu cod poștal, completate automat din codul poștal.
+- [l10n_cz_zip](l10n_cz_zip/index.md): localități cehe cu cod poștal și regiune, completate automat din codul poștal.
+- [l10n_de_zip](l10n_de_zip/index.md): localități germane cu cod poștal și regiune, completate automat din codul poștal.
+- [l10n_es_zip](l10n_es_zip/index.md): Localități spaniole cu cod poștal și regiune, completate automat din codul poștal.
+- [l10n_fr_zip](l10n_fr_zip/index.md): localități franceze cu cod poștal și regiune, completate automat din codul poștal.
+- [l10n_it_zip](l10n_it_zip/index.md): Localități italiene cu CAP și provincie, completate automat din codul poștal.
+- [l10n_md](l10n_md/index.md): Plan de conturi, taxe și setări contabile pentru Republica Moldova.
+- [l10n_md_zip](l10n_md_zip/index.md): Localități moldovenești cu cod poștal și raion, completate automat din codul poștal.
+- [l10n_pl_zip](l10n_pl_zip/index.md): Localități poloneze cu cod poștal și regiune, completate automat din codul poștal.
 - [l10n_ro_account](l10n_ro_account/index.md): Limitare încasări în numerar, conturi în format scurt și corecție de traducere pentru localizarea română.
 - [l10n_ro_account_bank_statement_import_ing_csv](l10n_ro_account_bank_statement_import_ing_csv/index.md): Importă fișierele „Istoric conturi" (CSV) exportate din ING Business direct ca extrase de cont, fără nicio prelucrare manuală, cu detecție automată a fișierului, solduri și date de contrapartidă pentru reconciliere.
 - [l10n_ro_account_bank_statement_import_mt940_base](l10n_ro_account_bank_statement_import_mt940_base/index.md): Parser generic MT940 pentru importul extraselor bancare, folosit de modulele specifice băncilor.
@@ -780,6 +789,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_wip_closing](l10n_ro_wip_closing/index.md): Evaluare și stornare în roșu a producției în curs (331/711) la 1 a lunii următoare, conform OMFP 1802.
 - [l10n_ro_zip](l10n_ro_zip/index.md): Bază de date cu ~52.000 de coduri poștale din România, cu autocompletare în adresa partenerului.
 - [l10n_ro_zip_osm](l10n_ro_zip_osm/index.md): Străzile orașelor mici cu un singur cod poștal, din OpenStreetMap, în nomenclatorul de coduri poștale.
+- [l10n_sk_zip](l10n_sk_zip/index.md): Localități slovace cu cod poștal și regiune, completate automat din codul poștal.
 - [product_brand](product_brand/index.md): Gestionarea mărcilor de produse și raportare pe marcă.
 - [queue_job](queue_job/index.md): Coadă de joburi pentru execuția asincronă a metodelor în fundal, cu canale, prioritate/ETA, reîncercări automate și grafuri de dependențe între joburi.
 - [queue_job_cron_jobrunner](queue_job_cron_jobrunner/index.md): Executor de joburi queue_job bazat pe cron-uri ir.cron, pentru medii fără runner dedicat (ex. Odoo.sh).

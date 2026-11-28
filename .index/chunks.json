@@ -14448,9 +14448,10 @@
     "friendly_name": "Bulgaria - City from ZIP",
     "summary": "Încarcă localitățile bulgare cu codul poștal și provincia și completează automat orașul și provincia adreselor din Bulgaria pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.",
     "features": [
+      "Încarcă cele 28 de provincii (oblasti) cu cod ISO 3166-2:BG; provinciile introduse manual (latin sau chirilic) sunt reutilizate, iar duplicatele sunt îmbinate. Denumirile localităților sunt în latină (transliterare oficială), cu traducerea bulgară în chirilic pentru utilizatorii în limba bulgară; prefixul \"BG-\" al codului poștal este ignorat.",
       "Listă de localități cu cod poștal, legate de provincia țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).",
       "Țara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.",
-      "Pe formularul contactului, la introducerea codului poștal () se completează orașul și provincia. Dacă un cod poștal este comun mai multor localități, se completează doar provincia, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.",
+      "Pe formularul contactului, la introducerea codului poștal se completează orașul și provincia. Dacă un cod poștal este comun mai multor localități, se completează doar provincia, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.",
       "Acțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează provincia.",
       "La instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).",
       "Orice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește provincia completată.",
@@ -14463,7 +14464,7 @@
       "base_address_extended",
       "l10n_ro_zip"
     ],
-    "text": "Bulgaria - City from ZIP\nl10n_bg_zip\nÎncarcă localitățile bulgare cu codul poștal și provincia și completează automat orașul și provincia adreselor din Bulgaria pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.\nListă de localități cu cod poștal, legate de provincia țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).\nȚara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.\nPe formularul contactului, la introducerea codului poștal () se completează orașul și provincia. Dacă un cod poștal este comun mai multor localități, se completează doar provincia, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.\nAcțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează provincia.\nLa instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).\nOrice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește provincia completată.\nLista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+    "text": "Bulgaria - City from ZIP\nl10n_bg_zip\nÎncarcă localitățile bulgare cu codul poștal și provincia și completează automat orașul și provincia adreselor din Bulgaria pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.\nÎncarcă cele 28 de provincii (oblasti) cu cod ISO 3166-2:BG; provinciile introduse manual (latin sau chirilic) sunt reutilizate, iar duplicatele sunt îmbinate. Denumirile localităților sunt în latină (transliterare oficială), cu traducerea bulgară în chirilic pentru utilizatorii în limba bulgară; prefixul \"BG-\" al codului poștal este ignorat.\nListă de localități cu cod poștal, legate de provincia țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).\nȚara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.\nPe formularul contactului, la introducerea codului poștal se completează orașul și provincia. Dacă un cod poștal este comun mai multor localități, se completează doar provincia, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.\nAcțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează provincia.\nLa instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).\nOrice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește provincia completată.\nLista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
   },
   {
     "path": "l10n_cz_zip/index.md",
@@ -14520,6 +14521,31 @@
     "text": "Germany - City from ZIP\nl10n_de_zip\nÎncarcă localitățile germane cu codul poștal și regiunea și completează automat orașul și regiunea adreselor din Germania pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.\nListă de localități cu cod poștal, legate de regiunea țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).\nȚara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.\nPe formularul contactului, la introducerea codului poștal (Postleitzahl) se completează orașul și regiunea. Dacă un cod poștal este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.\nAcțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează regiunea.\nLa instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).\nOrice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește regiunea completată.\nLista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
   },
   {
+    "path": "l10n_es_zip/index.md",
+    "module": "l10n_es_zip",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-spain/tree/20.0/l10n_es_zip",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Spain - City from ZIP",
+    "summary": "Modulul încarcă localitățile (localidades) cu codul poștal și regiunea aferentă și completează automat orașul și regiunea adreselor din țara respectivă pe baza codului poștal. Utilizatorul nu mai caută manual orașul sau regiunea, iar adresele rămân uniforme, ceea ce ajută la livrări și rapoarte. Datele provin din GeoNames (Creative Commons Attribution 4.0).",
+    "features": [
+      "Lista localităților cu codul poștal (código postal), legate de regiunile deja definite în Odoo; vizibilă la Contacte → Configurare → Localizare → Orașe.",
+      "Țara este setată cu opțiunea *impune orașe*: orașul unei adrese se alege din listă.",
+      "Pe fișa contactului, completarea codului poștal setează orașul și regiunea. Dacă același cod este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă (sau se potrivește după nume, fără diacritice și fără diferență majuscule/minuscule).",
+      "Zerourile inițiale pierdute la import sunt readăugate (ex. `1000` devine `01000`).",
+      "Acțiunea de pe contacte *Spain: set city from ZIP* leagă contactele existente de orașul codului lor poștal și completează regiunea (selectate din listă, meniul *Acțiuni*).",
+      "La instalare, contactele din țară sunt legate direct (bază mică) sau, pe o bază mare, de acțiunea programată *Spain: link contacts to the city of their ZIP*, în loturi; aceasta se dezactivează singură la final.",
+      "Orice formular care aplică regulile de cod poștal ale contactului (ex. detaliile de livrare ale unui AWB) primește regiunea completată, deci expedierea poate fi făcută fără căutare manuală.",
+      "Detaliile pas-cu-pas, cu capturi, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [],
+    "text": "Spain - City from ZIP\nl10n_es_zip\nModulul încarcă localitățile (localidades) cu codul poștal și regiunea aferentă și completează automat orașul și regiunea adreselor din țara respectivă pe baza codului poștal. Utilizatorul nu mai caută manual orașul sau regiunea, iar adresele rămân uniforme, ceea ce ajută la livrări și rapoarte. Datele provin din GeoNames (Creative Commons Attribution 4.0).\nLista localităților cu codul poștal (código postal), legate de regiunile deja definite în Odoo; vizibilă la Contacte → Configurare → Localizare → Orașe.\nȚara este setată cu opțiunea *impune orașe*: orașul unei adrese se alege din listă.\nPe fișa contactului, completarea codului poștal setează orașul și regiunea. Dacă același cod este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă (sau se potrivește după nume, fără diacritice și fără diferență majuscule/minuscule).\nZerourile inițiale pierdute la import sunt readăugate (ex. `1000` devine `01000`).\nAcțiunea de pe contacte *Spain: set city from ZIP* leagă contactele existente de orașul codului lor poștal și completează regiunea (selectate din listă, meniul *Acțiuni*).\nLa instalare, contactele din țară sunt legate direct (bază mică) sau, pe o bază mare, de acțiunea programată *Spain: link contacts to the city of their ZIP*, în loturi; aceasta se dezactivează singură la final.\nOrice formular care aplică regulile de cod poștal ale contactului (ex. detaliile de livrare ale unui AWB) primește regiunea completată, deci expedierea poate fi făcută fără căutare manuală.\nDetaliile pas-cu-pas, cu capturi, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+  },
+  {
     "path": "l10n_fr_zip/index.md",
     "module": "l10n_fr_zip",
     "version": "20.0.1.0.1",
@@ -14545,6 +14571,107 @@
       "l10n_ro_zip"
     ],
     "text": "France - City from ZIP\nl10n_fr_zip\nÎncarcă localitățile franceze cu codul poștal și regiunea și completează automat orașul și regiunea adreselor din Franța pe baza codului poștal introdus. Utilizatorii nu mai caută manual localitatea, iar livrările (de exemplu AWB-urile) pot fi trimise fără completări manuale.\nListă de localități cu cod poștal, legate de regiunea țării, din [GeoNames](https://www.geonames.org) (licență Creative Commons Attribution 4.0).\nȚara este setată pe *oraș obligatoriu din listă* (enforce cities): orașul unei adrese se alege din lista încărcată.\nPe formularul contactului, la introducerea codului poștal (code postal) se completează orașul și regiunea. Dacă un cod poștal este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă; numele orașului, dacă se potrivește (fără diacritice și indiferent de majuscule), alege localitatea.\nAcțiunea *Actions → ... : set city from ZIP* pe contacte leagă contactele existente sau importate de orașul codului lor poștal și completează regiunea.\nLa instalare, contactele existente sunt legate direct (bază mică) sau în loturi, prin acțiunea programată de legare a contactelor (bază mare; se dezactivează singură la final).\nOrice formular care rulează regulile de cod poștal ale contactului (de exemplu detaliile de livrare ale unui AWB) primește regiunea completată.\nLista localităților se consultă la Contacts → Configuration → Localization → Cities. Fluxul pas cu pas este în fișa consultantului."
+  },
+  {
+    "path": "l10n_it_zip/index.md",
+    "module": "l10n_it_zip",
+    "version": "20.0.1.0.2",
+    "github": "https://github.com/dhongu/l10n-italy/tree/20.0/l10n_it_zip",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Italy - City from ZIP",
+    "summary": "Modulul încarcă localitățile (comuni și frazioni) cu codul poștal și provincia aferentă și completează automat orașul și provincia adreselor din țara respectivă pe baza codului poștal. Utilizatorul nu mai caută manual orașul sau provincia, iar adresele rămân uniforme, ceea ce ajută la livrări și rapoarte. Datele provin din GeoNames (Creative Commons Attribution 4.0).",
+    "features": [
+      "Lista localităților cu codul poștal (CAP), legate de provinciile deja definite în Odoo; vizibilă la Contacte → Configurare → Localizare → Orașe.",
+      "Țara este setată cu opțiunea *impune orașe*: orașul unei adrese se alege din listă.",
+      "Pe fișa contactului, completarea codului poștal setează orașul și provincia. Dacă același cod este comun mai multor localități, se completează doar provincia, iar orașul se alege din listă (sau se potrivește după nume, fără diacritice și fără diferență majuscule/minuscule).",
+      "Zerourile inițiale pierdute la import sunt readăugate (ex. `187` devine `00187`).",
+      "Acțiunea de pe contacte *Italy: set city from ZIP* leagă contactele existente de orașul codului lor poștal și completează provincia (selectate din listă, meniul *Acțiuni*).",
+      "La instalare, contactele din țară sunt legate direct (bază mică) sau, pe o bază mare, de acțiunea programată *Italy: link contacts to the city of their ZIP*, în loturi; aceasta se dezactivează singură la final.",
+      "Orice formular care aplică regulile de cod poștal ale contactului (ex. detaliile de livrare ale unui AWB) primește provincia completată, deci expedierea poate fi făcută fără căutare manuală.",
+      "Detaliile pas-cu-pas, cu capturi, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [],
+    "text": "Italy - City from ZIP\nl10n_it_zip\nModulul încarcă localitățile (comuni și frazioni) cu codul poștal și provincia aferentă și completează automat orașul și provincia adreselor din țara respectivă pe baza codului poștal. Utilizatorul nu mai caută manual orașul sau provincia, iar adresele rămân uniforme, ceea ce ajută la livrări și rapoarte. Datele provin din GeoNames (Creative Commons Attribution 4.0).\nLista localităților cu codul poștal (CAP), legate de provinciile deja definite în Odoo; vizibilă la Contacte → Configurare → Localizare → Orașe.\nȚara este setată cu opțiunea *impune orașe*: orașul unei adrese se alege din listă.\nPe fișa contactului, completarea codului poștal setează orașul și provincia. Dacă același cod este comun mai multor localități, se completează doar provincia, iar orașul se alege din listă (sau se potrivește după nume, fără diacritice și fără diferență majuscule/minuscule).\nZerourile inițiale pierdute la import sunt readăugate (ex. `187` devine `00187`).\nAcțiunea de pe contacte *Italy: set city from ZIP* leagă contactele existente de orașul codului lor poștal și completează provincia (selectate din listă, meniul *Acțiuni*).\nLa instalare, contactele din țară sunt legate direct (bază mică) sau, pe o bază mare, de acțiunea programată *Italy: link contacts to the city of their ZIP*, în loturi; aceasta se dezactivează singură la final.\nOrice formular care aplică regulile de cod poștal ale contactului (ex. detaliile de livrare ale unui AWB) primește provincia completată, deci expedierea poate fi făcută fără căutare manuală.\nDetaliile pas-cu-pas, cu capturi, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+  },
+  {
+    "path": "l10n_md/index.md",
+    "module": "l10n_md",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/l10n-moldova/tree/20.0/l10n_md",
+    "local_path": "odoo-addons/l10n-moldova/l10n_md",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Moldova - Accounting",
+    "summary": "Modul de localizare contabilă pentru Republica Moldova. Instalează planul de conturi (conturi de gradul I) din Planul general de conturi contabile, aprobat prin Ordinul Ministerului Finanțelor nr. 119 din 06.08.2013, împreună cu cotele de taxe conform Codului Fiscal al Republicii Moldova. Modulul nu are încă fișă de consultant; aceasta va fi adăugată la finalizarea planului de conturi.",
+    "features": [
+      "Șablon de plan de conturi `md` („Moldova”), încărcat prin mecanismul standard de chart template, cu conturi cu 3 cifre.",
+      "Cote de TVA pentru vânzări și achiziții: 20%, 8% și 0%; sunt definite și impozitul pe profit 12%, asigurările sociale 24% și asigurarea medicală 9%, conform Codului Fiscal.",
+      "Jurnale, grupuri de taxe, poziții fiscale și condiții de plată predefinite pentru Moldova.",
+      "Setări implicite la crearea companiei: conturi de creanțe, datorii, venituri, cheltuieli, diferențe de curs, prefixe pentru bancă, numerar și transferuri, țara fiscală Moldova și taxele implicite (TVA 20%).",
+      "Pe formularul companiei apar câmpurile IDNO (Moldova) și IBAN.",
+      "Date demo: o companie demonstrativă pentru Moldova."
+    ],
+    "dependencies": [
+      "account"
+    ],
+    "connections": [
+      "l10n_md_zip"
+    ],
+    "text": "Moldova - Accounting\nl10n_md\nModul de localizare contabilă pentru Republica Moldova. Instalează planul de conturi (conturi de gradul I) din Planul general de conturi contabile, aprobat prin Ordinul Ministerului Finanțelor nr. 119 din 06.08.2013, împreună cu cotele de taxe conform Codului Fiscal al Republicii Moldova. Modulul nu are încă fișă de consultant; aceasta va fi adăugată la finalizarea planului de conturi.\nȘablon de plan de conturi `md` („Moldova”), încărcat prin mecanismul standard de chart template, cu conturi cu 3 cifre.\nCote de TVA pentru vânzări și achiziții: 20%, 8% și 0%; sunt definite și impozitul pe profit 12%, asigurările sociale 24% și asigurarea medicală 9%, conform Codului Fiscal.\nJurnale, grupuri de taxe, poziții fiscale și condiții de plată predefinite pentru Moldova.\nSetări implicite la crearea companiei: conturi de creanțe, datorii, venituri, cheltuieli, diferențe de curs, prefixe pentru bancă, numerar și transferuri, țara fiscală Moldova și taxele implicite (TVA 20%).\nPe formularul companiei apar câmpurile IDNO (Moldova) și IBAN.\nDate demo: o companie demonstrativă pentru Moldova."
+  },
+  {
+    "path": "l10n_md_zip/index.md",
+    "module": "l10n_md_zip",
+    "version": "20.0.1.0.0",
+    "github": "https://github.com/dhongu/l10n-moldova/tree/20.0/l10n_md_zip",
+    "local_path": "odoo-addons/l10n-moldova/l10n_md_zip",
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Moldova - City from ZIP",
+    "summary": "Încarcă localitățile din Republica Moldova împreună cu codul poștal și raionul și completează automat orașul și raionul adreselor moldovenești pe baza codului poștal. Operatorul introduce doar codul poștal, iar calitatea adreselor crește, cu mai puțină muncă de introducere a datelor.",
+    "features": [
+      "Lista localităților moldovenești cu cod poștal, legate de cele 37 de subdiviziuni ale Republicii Moldova (ISO 3166-2:MD: raioane, municipiile Chișinău, Bălți și Bender, Găgăuzia, Stînga Nistrului), pe care modulul le adaugă ca județe/state ale Moldovei. Datele provin de la [GeoNames](https://www.geonames.org) (Creative Commons Attribution 4.0).",
+      "Moldova este setată cu Enforce Cities: orașul unei adrese moldovenești se alege din listă.",
+      "Pe formularul contactului, la introducerea codului poștal se completează orașul și raionul. Codul poate fi scris `MD-3100`, `MD3100` sau `3100`; când localitatea e identificată, el este rescris `MD-3100`.",
+      "Un cod poștal comun mai multor localități completează doar raionul (dacă toate sunt în același raion); numele orașului, dacă se potrivește (fără diacritice și fără diferențe de majuscule), alege localitatea.",
+      "Acțiunea Moldova: set city from ZIP pe contacte (drept Contact: Creation) leagă contactele existente de orașul codului poștal și completează raionul; se selectează companiile, nu persoanele de contact. Contactele din alte țări rămân neschimbate.",
+      "La instalare, contactele moldovenești cu cod poștal sunt legate de oraș: direct pe o bază mică, prin acțiunea programată Moldova: link contacts to the city of their ZIP, în loturi, pe una mare (se dezactivează singură la final).",
+      "Meniuri utile: Contacts → Configuration → Localization → Cities pentru lista localităților. Pașii detaliați cu capturi sunt în fișa de consultant."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [
+      "l10n_md"
+    ],
+    "text": "Moldova - City from ZIP\nl10n_md_zip\nÎncarcă localitățile din Republica Moldova împreună cu codul poștal și raionul și completează automat orașul și raionul adreselor moldovenești pe baza codului poștal. Operatorul introduce doar codul poștal, iar calitatea adreselor crește, cu mai puțină muncă de introducere a datelor.\nLista localităților moldovenești cu cod poștal, legate de cele 37 de subdiviziuni ale Republicii Moldova (ISO 3166-2:MD: raioane, municipiile Chișinău, Bălți și Bender, Găgăuzia, Stînga Nistrului), pe care modulul le adaugă ca județe/state ale Moldovei. Datele provin de la [GeoNames](https://www.geonames.org) (Creative Commons Attribution 4.0).\nMoldova este setată cu Enforce Cities: orașul unei adrese moldovenești se alege din listă.\nPe formularul contactului, la introducerea codului poștal se completează orașul și raionul. Codul poate fi scris `MD-3100`, `MD3100` sau `3100`; când localitatea e identificată, el este rescris `MD-3100`.\nUn cod poștal comun mai multor localități completează doar raionul (dacă toate sunt în același raion); numele orașului, dacă se potrivește (fără diacritice și fără diferențe de majuscule), alege localitatea.\nAcțiunea Moldova: set city from ZIP pe contacte (drept Contact: Creation) leagă contactele existente de orașul codului poștal și completează raionul; se selectează companiile, nu persoanele de contact. Contactele din alte țări rămân neschimbate.\nLa instalare, contactele moldovenești cu cod poștal sunt legate de oraș: direct pe o bază mică, prin acțiunea programată Moldova: link contacts to the city of their ZIP, în loturi, pe una mare (se dezactivează singură la final).\nMeniuri utile: Contacts → Configuration → Localization → Cities pentru lista localităților. Pașii detaliați cu capturi sunt în fișa de consultant."
+  },
+  {
+    "path": "l10n_pl_zip/index.md",
+    "module": "l10n_pl_zip",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-poland/tree/20.0/l10n_pl_zip",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Poland - City from ZIP",
+    "summary": "Modulul încarcă localitățile (miejscowości) cu codul poștal și regiunea aferentă și completează automat orașul și regiunea adreselor din țara respectivă pe baza codului poștal. Utilizatorul nu mai caută manual orașul sau regiunea, iar adresele rămân uniforme, ceea ce ajută la livrări și rapoarte. Datele provin din GeoNames (Creative Commons Attribution 4.0).",
+    "features": [
+      "Lista localităților cu codul poștal (kod pocztowy), legate de regiunile deja definite în Odoo; vizibilă la Contacte → Configurare → Localizare → Orașe.",
+      "Țara este setată cu opțiunea *impune orașe*: orașul unei adrese se alege din listă.",
+      "Pe fișa contactului, completarea codului poștal setează orașul și regiunea. Dacă același cod este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă (sau se potrivește după nume, fără diacritice și fără diferență majuscule/minuscule).",
+      "Codul poștal este adus la formatul local (ex. `00950` sau `00 950` devine `00-950`).",
+      "Acțiunea de pe contacte *Poland: set city from ZIP* leagă contactele existente de orașul codului lor poștal și completează regiunea (selectate din listă, meniul *Acțiuni*).",
+      "La instalare, contactele din țară sunt legate direct (bază mică) sau, pe o bază mare, de acțiunea programată *Poland: link contacts to the city of their ZIP*, în loturi; aceasta se dezactivează singură la final.",
+      "Orice formular care aplică regulile de cod poștal ale contactului (ex. detaliile de livrare ale unui AWB) primește regiunea completată, deci expedierea poate fi făcută fără căutare manuală.",
+      "Detaliile pas-cu-pas, cu capturi, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [],
+    "text": "Poland - City from ZIP\nl10n_pl_zip\nModulul încarcă localitățile (miejscowości) cu codul poștal și regiunea aferentă și completează automat orașul și regiunea adreselor din țara respectivă pe baza codului poștal. Utilizatorul nu mai caută manual orașul sau regiunea, iar adresele rămân uniforme, ceea ce ajută la livrări și rapoarte. Datele provin din GeoNames (Creative Commons Attribution 4.0).\nLista localităților cu codul poștal (kod pocztowy), legate de regiunile deja definite în Odoo; vizibilă la Contacte → Configurare → Localizare → Orașe.\nȚara este setată cu opțiunea *impune orașe*: orașul unei adrese se alege din listă.\nPe fișa contactului, completarea codului poștal setează orașul și regiunea. Dacă același cod este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă (sau se potrivește după nume, fără diacritice și fără diferență majuscule/minuscule).\nCodul poștal este adus la formatul local (ex. `00950` sau `00 950` devine `00-950`).\nAcțiunea de pe contacte *Poland: set city from ZIP* leagă contactele existente de orașul codului lor poștal și completează regiunea (selectate din listă, meniul *Acțiuni*).\nLa instalare, contactele din țară sunt legate direct (bază mică) sau, pe o bază mare, de acțiunea programată *Poland: link contacts to the city of their ZIP*, în loturi; aceasta se dezactivează singură la final.\nOrice formular care aplică regulile de cod poștal ale contactului (ex. detaliile de livrare ale unui AWB) primește regiunea completată, deci expedierea poate fi făcută fără căutare manuală.\nDetaliile pas-cu-pas, cu capturi, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "l10n_ro_account/index.md",
@@ -21798,6 +21925,31 @@
       "l10n_ro_city"
     ],
     "text": "Romania - Postal Codes, Streets of Small Towns\nl10n_ro_zip_osm\nAdaugă în nomenclatorul de coduri poștale străzile orașelor mici din România, pentru care Poșta Română publică un singur cod poștal pe oraș. Utilizatorul poate alege strada pe fișa partenerului, cu codul poștal al orașului completat corect.\n15.968 de străzi pentru 269 de orașe sub 50.000 de locuitori (Pantelimon, Voluntari, Lugoj, Tecuci, Câmpina, Bușteni și altele), fiecare cu codul poștal al orașului.\nNumele străzilor provin din OpenStreetMap, sub licența ODbL; codurile poștale vin de pe posta-romana.ro.\nLa instalare străzile se leagă de județ și, dacă `l10n_ro_city` e instalat, de localitate; o stradă existentă nu se adaugă a doua oară.\nVizualizare: Contacte → Configurare → Localizare → Coduri poștale, căutând codul poștal al orașului; un oraș cu un singur rând nu este acoperit.\nPe partener, după alegerea localității, strada se caută în câmpul de cod poștal de sub localitate; numele nu au diacritice.\nNu are nimic de configurat; se instalează automat împreună cu `l10n_ro_zip` (sau manual din Aplicații, dacă `l10n_ro_zip` era deja instalat)."
+  },
+  {
+    "path": "l10n_sk_zip/index.md",
+    "module": "l10n_sk_zip",
+    "version": "20.0.1.0.1",
+    "github": "https://github.com/dhongu/l10n-slovakia/tree/20.0/l10n_sk_zip",
+    "local_path": null,
+    "last_ingest": "2026-11-28",
+    "friendly_name": "Slovakia - City from ZIP",
+    "summary": "Modulul încarcă localitățile (obce) cu codul poștal și regiunea aferentă și completează automat orașul și regiunea adreselor din țara respectivă pe baza codului poștal. Utilizatorul nu mai caută manual orașul sau regiunea, iar adresele rămân uniforme, ceea ce ajută la livrări și rapoarte. Datele provin din GeoNames (Creative Commons Attribution 4.0).",
+    "features": [
+      "Lista localităților cu codul poștal (PSČ), legate de regiunile țării (modulul își încarcă propriile regiuni, `res_country_state_data.xml`); vizibilă la Contacte → Configurare → Localizare → Orașe.",
+      "Țara este setată cu opțiunea *impune orașe*: orașul unei adrese se alege din listă.",
+      "Pe fișa contactului, completarea codului poștal setează orașul și regiunea. Dacă același cod este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă (sau se potrivește după nume, fără diacritice și fără diferență majuscule/minuscule).",
+      "Codul poștal este adus la formatul local NNN NN (ex. `11000` devine `110 00`).",
+      "Acțiunea de pe contacte *Slovakia: set city from ZIP* leagă contactele existente de orașul codului lor poștal și completează regiunea (selectate din listă, meniul *Acțiuni*).",
+      "La instalare, contactele din țară sunt legate direct (bază mică) sau, pe o bază mare, de acțiunea programată *Slovakia: link contacts to the city of their ZIP*, în loturi; aceasta se dezactivează singură la final.",
+      "Orice formular care aplică regulile de cod poștal ale contactului (ex. detaliile de livrare ale unui AWB) primește regiunea completată, deci expedierea poate fi făcută fără căutare manuală.",
+      "Detaliile pas-cu-pas, cu capturi, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
+    ],
+    "dependencies": [
+      "base_address_extended"
+    ],
+    "connections": [],
+    "text": "Slovakia - City from ZIP\nl10n_sk_zip\nModulul încarcă localitățile (obce) cu codul poștal și regiunea aferentă și completează automat orașul și regiunea adreselor din țara respectivă pe baza codului poștal. Utilizatorul nu mai caută manual orașul sau regiunea, iar adresele rămân uniforme, ceea ce ajută la livrări și rapoarte. Datele provin din GeoNames (Creative Commons Attribution 4.0).\nLista localităților cu codul poștal (PSČ), legate de regiunile țării (modulul își încarcă propriile regiuni, `res_country_state_data.xml`); vizibilă la Contacte → Configurare → Localizare → Orașe.\nȚara este setată cu opțiunea *impune orașe*: orașul unei adrese se alege din listă.\nPe fișa contactului, completarea codului poștal setează orașul și regiunea. Dacă același cod este comun mai multor localități, se completează doar regiunea, iar orașul se alege din listă (sau se potrivește după nume, fără diacritice și fără diferență majuscule/minuscule).\nCodul poștal este adus la formatul local NNN NN (ex. `11000` devine `110 00`).\nAcțiunea de pe contacte *Slovakia: set city from ZIP* leagă contactele existente de orașul codului lor poștal și completează regiunea (selectate din listă, meniul *Acțiuni*).\nLa instalare, contactele din țară sunt legate direct (bază mică) sau, pe o bază mare, de acțiunea programată *Slovakia: link contacts to the city of their ZIP*, în loturi; aceasta se dezactivează singură la final.\nOrice formular care aplică regulile de cod poștal ale contactului (ex. detaliile de livrare ale unui AWB) primește regiunea completată, deci expedierea poate fi făcută fără căutare manuală.\nDetaliile pas-cu-pas, cu capturi, sunt în [FISA_CONSULTANT.md](FISA_CONSULTANT.md)."
   },
   {
     "path": "product_brand/index.md",
