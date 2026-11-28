@@ -1,20 +1,20 @@
 # Romania - Închiderea conturilor de venituri și cheltuieli (121) (localizat la `l10n_ro_account_return_pl_closing/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_account_return_pl_closing`
-- **Versiune:** `19.0.1.0.3`
-- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/19.0/l10n_ro_account_return_pl_closing
+- **Versiune:** `20.0.1.0.10`
+- **Cale:** https://github.com/terrabit-solutions/l10n_ro_ent/tree/20.0/l10n_ro_account_return_pl_closing
 - **Cale Locală:** `odoo-addons/l10n_ro_ent/l10n_ro_account_return_pl_closing`
-- **Ultima Ingestie:** `2026-09-12`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 
-Modul pentru închiderea lunară a conturilor de venituri (clasa 7) și cheltuieli (clasa 6) prin transferul soldului în contul 121 – Profit și pierdere, conform OMFP 1802/2014. Folosește framework-ul standard Enterprise `account.return` din `account_reports` (Odoo 19), oferind un flux structurat cu audit trail, similar cu cel de închidere TVA.
+Modul pentru închiderea lunară a conturilor de venituri (clasa 7) și cheltuieli (clasa 6) prin transferul soldului în contul 121 – Profit și pierdere, conform OMFP 1802/2014. Folosește framework-ul standard Enterprise `account.return` din `account_reports` (Odoo 20), oferind un flux structurat cu audit trail, similar cu cel de închidere TVA.
 
 #### 2. Funcționalități Cheie
 
-- Generare automată a notei contabile de închidere 6xx/7xx → 121 la apăsarea butonului Review.
-- Flux cu stări Review → Submit, cu audit trail complet prin chatter.
+- Generare automată a notei contabile de închidere 6xx/7xx → 121 la **Validate** în fereastra verificărilor (sau direct la **Submit**, când verificările sunt rezolvate).
+- Flux cu stări Review → Submit (butonul „Mark as Reviewed” din versiunea anterioară nu mai există în Odoo 20), cu audit trail complet prin chatter.
 - Suport pentru conturi cu sold pe ambele părți: 609, 709, 711 etc. (`pl_bypass_account_ids`).
 - Calcul profit/pierdere estimat înainte de generarea notei (fără a crea înregistrări), disponibil ca verificare „Estimated Profit / Loss” în panoul de checks al return-ului.
 - Badge profit/pierdere vizibil direct în vizualizarea Kanban pe fiecare return lunar.
@@ -40,14 +40,14 @@ Modul pentru închiderea lunară a conturilor de venituri (clasa 7) și cheltuie
 **Modele**
 
 - `account.return.type` (extins): adaugă configurația implicită pentru închiderea P&L pe tipul de return — `pl_journal_id` (jurnalul de închidere), `pl_account_id` (contul 121), `pl_bypass_account_ids` (conturi închise pe sold net, indiferent de parte) și câmpul calculat `is_pl_closing_return_type` (identifică dacă tipul de return se bazează pe un raport P&L românesc). Include și `_demo_setup()` pentru configurarea datelor demo.
-- `account.return` (extins): adaugă `pl_profit_amount`/`pl_show_profit` (rezultatul calculat din nota de închidere postată) și `is_pl_closing_return` (related pe tipul de return). Suprascrie `_run_checks()` pentru a injecta verificarea „Estimated Profit/Loss”, `action_validate()` și `_proceed_with_locking()` pentru a genera nota de închidere la validare, și `_on_post_submission_event()` pentru a afișa rezultatul (profit/pierdere) și nota generată după Submit. Metoda centrală `_generate_pl_closing_entries()` calculează soldurile conturilor 6xx/7xx/7581 pe perioada return-ului și creează + postează nota contabilă de închidere, legată de return prin `closing_return_id`. `action_compute_estimated_profit()` expune calculul preliminar din verificarea de check.
+- `account.return` (extins): adaugă `pl_profit_amount`/`pl_show_profit` (rezultatul calculat din nota de închidere postată) și `is_pl_closing_return` (related pe tipul de return). Suprascrie `_run_checks()` pentru a injecta verificarea „Estimated Profit/Loss”, `action_validate()` și `_proceed_with_locking()` (semnăturile din Odoo 20) pentru a genera nota de închidere la validare; verificările stau pe ciclul de audit „Equity” (`cycle_id`), și `_on_post_submission_event()` pentru a afișa rezultatul (profit/pierdere) și nota generată după Submit. Metoda centrală `_generate_pl_closing_entries()` calculează soldurile conturilor 6xx/7xx/7581 pe perioada return-ului și creează + postează nota contabilă de închidere, legată de return prin `closing_return_id`. `action_compute_estimated_profit()` expune calculul preliminar din verificarea de check.
 - `account.move` (extins prin câmpul standard `closing_return_id` din `account_reports`): leagă nota contabilă generată de instanța de return.
 
 **Vizualizări**
 
 - `data/account_return_pl_closing.xml`: definește tipul de return „RO – Închidere venituri/cheltuieli (P&L)” și verificările (checks) asociate.
 - `views/account_return_type_views.xml`: extinde vizualizarea formularului tipului de return pentru a expune câmpurile `pl_journal_id`, `pl_account_id`, `pl_bypass_account_ids`.
-- `data/menu.xml`: adaugă opțiunea de meniu **Contabilitate → Closing → Run P&L Closing Return**.
+- `data/menu.xml`: adaugă opțiunea de meniu **Contabilitate → Contabilitate → Închidere → Rulați închiderea P&L** (sub `account.account_closing_menu`).
 
 **Acțiuni Automate / Acțiuni Server**
 

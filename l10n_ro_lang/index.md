@@ -1,14 +1,14 @@
-# Romania - Set Lang to Romanian (localizat la `l10n_ro_lang/index.md`)
+# Romania - Website Language by Visitor IP (localizat la `l10n_ro_lang/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_lang`
-- **Versiune:** `19.0.0.0.2`
-- **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_lang`
+- **Versiune:** `20.0.0.0.7`
+- **Cale:** https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_lang
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_lang`
-- **Ultima Ingestie:** `2026-06-08`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
-Acest modul ajustează automat limba site-ului web în funcție de locația vizitatorului. Mai exact, dacă adresa IP a vizitatorului provine din România, limba este setată pe română. Scopul său este de a oferi o experiență localizată automată pentru vizitatorii din România, fără ca aceștia să fie nevoiți să schimbe manual limba.
+Acest modul ajustează automat limba site-ului web în funcție de locația vizitatorului. Dacă adresa IP a vizitatorului provine din România, limba este setată pe română. Scopul său este o experiență localizată automată pentru vizitatorii din România, fără ca aceștia să schimbe manual limba.
 
 #### 2. Funcționalități Cheie
 
@@ -20,7 +20,7 @@ Acest modul ajustează automat limba site-ului web în funcție de locația vizi
 
 #### 4. Componente Cheie
 
-*Secțiune omisă: fișierul `readme/DESCRIPTION.md` este prezent și nu solicită explicit analiza componentelor tehnice (Modele, Vizualizări, Acțiuni Automate / Acțiuni Server). Conform fluxului de ingestie, analiza suplimentară a codului nu a fost efectuată.*
+*Secțiune omisă: fișierul `readme/DESCRIPTION.md` este prezent și nu solicită explicit analiza componentelor tehnice (Modele, Vizualizări, Acțiuni Automate / Acțiuni Server).*
 
 #### 5. Conexiuni
 

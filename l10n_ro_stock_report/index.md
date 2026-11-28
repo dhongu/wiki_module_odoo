@@ -1,10 +1,10 @@
 # Romania - Stock Report (Fișă Magazie) (localizat la `l10n_ro_stock_report/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_stock_report`
-- **Versiune:** `19.0.2.7.0`
-- **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/19.0/l10n_ro_stock_report
+- **Versiune:** `20.0.2.10.0`
+- **Cale:** https://github.com/terrabit-ro/l10n-romania/tree/20.0/l10n_ro_stock_report
 - **Cale Locală:** `odoo-addons/l10n-romania-oca/l10n_ro_stock_report`
-- **Ultima Ingestie:** `2026-08-20`
+- **Ultima Ingestie:** `2026-11-28`
 
 #### 1. Sumar
 
@@ -22,7 +22,7 @@ Acest modul adaugă un raport de stocuri conform cerințelor legislației din Ro
 
 #### 3. Dependențe
 
-- `l10n_ro_stock_account`
+- [l10n_ro_stock_account](../l10n_ro_stock_account/index.md)
 
 #### 4. Componente Cheie
 
@@ -44,4 +44,4 @@ Modulul nu definește sarcini `ir.cron`, reguli `base.automation` sau `ir.action
 #### 5. Conexiuni
 
 - [l10n_ro_stock_picking_report](../l10n_ro_stock_picking_report/index.md): modul înrudit din aceeași suită, care furnizează documentele de mișcare a stocurilor (NIR, bon de consum, aviz de însoțire), complementar rapoartelor de sold oferite aici.
-- `l10n_ro_stock_account`: furnizează valorizarea stocului pe `stock.move` (câmpurile `l10n_ro_account_id`, `l10n_ro_transfer_account_id`, `l10n_ro_move_type`) pe care se bazează integral interogările SQL ale acestui raport.
+- [l10n_ro_stock_account](../l10n_ro_stock_account/index.md): furnizează valorizarea stocului pe `stock.move` (câmpurile `l10n_ro_account_id`, `l10n_ro_transfer_account_id`, `l10n_ro_move_type`) pe care se bazează integral interogările SQL ale acestui raport.

@@ -1,10 +1,11 @@
 # Romania - Customs Import Declaration (DVI) (localizat la `l10n_ro_customs_dvi/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_customs_dvi`
-- **Versiune:** `19.0.2.0.0`
-- **Cale:** `https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_customs_dvi`
+- **Versiune:** `20.0.2.2.2`
+- **Cale:** `https://github.com/dhongu/l10n-romania/tree/20.0/l10n_ro_customs_dvi`
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_customs_dvi`
-- **Ultima Ingestie:** `2026-09-23`
+- **Ultima Ingestie:** `2026-11-28`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 - **Nume anterior:** `terrabit_dvi` (redenumit la 2026-09-23; vezi [terrabit_dvi](../terrabit_dvi/index.md))
 
 #### 1. Sumar
@@ -23,7 +24,11 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 - Ajutoare extinse pe fiecare câmp al wizardului și o casetă de îndrumare cu maparea poziție din declarație → câmp.
 - Produsul de serviciu generat automat pentru taxa vamală e marcat ca fiind cost adițional, deci funcționează și pe traseul nativ „factură furnizor → Creați costuri adiționale”.
 - Onorariul comisionarului vamal **nu** se operează prin wizard: brokerul e furnizor obișnuit, cu sold pe 401, iar onorariul se capitalizează prin mecanismul nativ de cost adițional de pe factura lui.
-- Se exclude reciproc cu modulul OCA `l10n_ro_dvi`.
+- Regim 4200 (import scutit de TVA urmat de livrare intracomunitară): TVA-ul la import rămâne gol, doar baza ajunge în rândul 29 din decontul de TVA, iar TVA-ul reținut de vamă drept garanție se urmărește pe DVI (blocat / eliberat), fără notă contabilă.
+- Nota contabilă DVI primește tipul de document *Import (DVI)*, furnizorul extern pe antet, iar liniile de TVA sunt legate de taxă (SAF-T D406, închidere TVA); nota se creează și se postează chiar și fără taxă vamală.
+- Pe companii multiple, contul de datorie vamală (446) se ia din planul companiei DVI.
+- Fișa de consultant conține fluxul complet pas-cu-pas (import FOB cu locație de tranzit, TVA amânat, rambursare TVA, regim 4200) cu capturi de ecran.
+- Se exclude reciproc cu modulul [l10n_ro_dvi](../l10n_ro_dvi/index.md) (varianta OCA).
 
 #### 3. Dependențe
 
@@ -33,6 +38,7 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 - `l10n_ro`
 - `purchase_stock`
 - `stock_landed_costs`
+- [l10n_ro_account_move_document_type](../l10n_ro_account_move_document_type/index.md)
 
 #### 4. Componente Cheie
 
@@ -45,12 +51,15 @@ Modulul înregistrează Declarația Vamală de Import (DVI) pentru importurile d
 
 - `stock_landed_costs`: mecanismul nativ de repartizare a costurilor adiționale în valoarea stocului, pe care modulul îl folosește pentru taxele vamale.
 - `l10n_ro`: localizarea contabilă românească, sursa pentru conturile 4462 și 473 folosite la DVI.
-- `l10n_ro_dvi`: modul OCA cu funcționalitate similară, exclus prin manifest (`excludes`) — cele două nu pot coexista pe același `addons_path`.
+- [`l10n_ro_dvi`](../l10n_ro_dvi/index.md): modul OCA cu funcționalitate similară, exclus prin manifest (`excludes`) — cele două nu pot coexista pe același `addons_path`.
 - [`l10n_ro_invoice_dvi_protect`](../l10n_ro_invoice_dvi_protect/index.md): complementar; blochează resetarea facturii și anularea costului de aterizare după ce stocul a fost consumat FIFO.
-- [`terrabit_dvi`](../terrabit_dvi/index.md): numele anterior, păstrat ca modul tranzitoriu fără conținut, până la portarea pe 20.0.
-- `l10n_ro_anaf_d300`: TVA-ul deductibil la import ajunge în declarație prin etichetele fiscale ale taxei.
+- [`terrabit_dvi`](../terrabit_dvi/index.md): numele anterior, ale cărui înregistrări de date sunt preluate la instalare de `pre_init_hook`.
+- [`l10n_ro_anaf_d300`](../l10n_ro_anaf_d300/index.md): TVA-ul deductibil la import ajunge în declarație prin etichetele fiscale ale taxei.
 
 #### 6. Istoric
 
-- **19.0.2.0.0** (2026-09-23) — eliminat câmpul „Comision vamal”: nu există un comision datorat autorității vamale, cel de 0,5% a dispărut odată cu aderarea la UE. În practică era folosit pentru onorariul brokerului, cu contul greșit (446 în loc de 401) și fără TVA deductibilă. Taxa vamală trece pe analiticul **4462** (datorie curentă), iar baza importului ajunge în decont printr-o pereche tehnică pe **473**.
-- **19.0.1.3.0** (2026-09-23) — redenumit din `terrabit_dvi`; comisionul mutat de pe 447 pe 446; ajutoare și casetă de îndrumare în wizard.
+- **20.0.2.2.2** (2026-11-26) — pictograma butonului de deblocare folosește Material Symbols (`lock_open`), deoarece Odoo 20 nu mai randează `fa-unlock`.
+- **20.0.2.2.0** (2026-11-14) — portare a modificărilor 19.0.2.1.4 – 19.0.2.2.0: regim 4200, tipul de document *Import (DVI)*, costul adițional legat de factură, contul 446 pe companie.
+- **20.0.2.1.2** (2026-10-04) — documentație și ajutor pentru câmpul „TVA la import”: regimul fără plată în vamă (art. 326 alin. (4)-(5)) acoperă toate cele patru cazuri; taxa de ales este „21% IMP AM” / „11% IMP AM” din `l10n_ro_anaf_d300`.
+- **2.0.0** (seria 19.0) (2026-09-23) — eliminat câmpul „Comision vamal”: nu există un comision datorat autorității vamale, cel de 0,5% a dispărut odată cu aderarea la UE. În practică era folosit pentru onorariul brokerului, cu contul greșit (446 în loc de 401) și fără TVA deductibilă. Taxa vamală trece pe analiticul **4462** (datorie curentă), iar baza importului ajunge în decont printr-o pereche tehnică pe **473**.
+- **1.3.0** (seria 19.0) (2026-09-23) — redenumit din `terrabit_dvi`; comisionul mutat de pe 447 pe 446; ajutoare și casetă de îndrumare în wizard.
