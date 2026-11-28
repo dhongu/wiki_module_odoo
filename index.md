@@ -534,9 +534,12 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_account_storno](l10n_ro_account_storno/index.md): Contabilitate storno (înregistrări negative/în roșu) conform standardelor RO, cu utilizare cont și activare pe companie.
 - [l10n_ro_account_vat_journal](l10n_ro_account_vat_journal/index.md): Jurnalul de Vânzări și Jurnalul de Cumpărări (registrele lunare de TVA) ca rapoarte native `account.report` — pe taxe și pe regimuri cu coloane configurabile, TVA la încasare urmărită peste luni, taxare inversă și export XLSX formatat ca registru.
 - [l10n_ro_advance_invoice](l10n_ro_advance_invoice/index.md): Gestionează facturile de avans cu TVA și regularizarea automată a acestora.
+- [l10n_ro_ai_administrators_report](l10n_ro_ai_administrators_report/index.md): Plutus scrie draftul textelor din raportul administratorilor (OMFP 1802/2014), cu cifrele verificate în cod și confirmare doar după revizuire.
+- [l10n_ro_ai_partner_financials](l10n_ro_ai_partner_financials/index.md): Unealta de bonitate pentru Plutus și MCP: bilanțurile publice MFinanțe, indicatorii și semnalele de risc ale partenerului.
 - [l10n_ro_aml_register](l10n_ro_aml_register/index.md): Registrul imutabil al verificărilor AML (Legea 129/2019), cu consemnare automată din screeningul de sancțiuni și verificarea beneficiarului real.
 - [l10n_ro_anaf_agent](l10n_ro_anaf_agent/index.md): Fundația modelului cloud de comunicare cu ANAF prin Agentul Terrabit (registru de agenți, coadă de joburi, API apelat de agent).
 - [l10n_ro_anaf_base](l10n_ro_anaf_base/index.md): Infrastructura comună (ascunsă) a declarațiilor ANAF: mixin de export XML/XDP/PDF, validări, profile de declarații, CAEN, coduri D394 și meniul Declarații ANAF.
+- [l10n_ro_anaf_d094](l10n_ro_anaf_d094/index.md): Declarația 094 — cifra de afaceri a plătitorilor de TVA trimestriali, calculată din decontul de TVA, cu export XML și PDF.
 - [l10n_ro_anaf_d100](l10n_ro_anaf_d100/index.md): Generarea Declarației 100 privind obligațiile de plată la bugetul de stat, cu export XML/XDP.
 - [l10n_ro_anaf_d101](l10n_ro_anaf_d101/index.md): Generează XML-ul Declarației 101 (impozit pe profit anual) pentru ANAF, pornind de la calculul din `l10n_ro_profit_tax`, validat automat împotriva XSD-ului oficial.
 - [l10n_ro_anaf_d103](l10n_ro_anaf_d103/index.md): Export XML al Decontului lunar privind accizele (D103) din declarația de accize Odoo, gata de depus pe portalul ANAF.
@@ -544,18 +547,26 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_anaf_d112](l10n_ro_anaf_d112/index.md): Generare, validare și export XML pentru Declarația D112, cu trei profile de structură pe perioadă (v6, v7-0126, v7-0726) și validare XSD reactivată.
 - [l10n_ro_anaf_d112_payroll](l10n_ro_anaf_d112_payroll/index.md): Punte care preia evidența nominală D112 din statele de plată Odoo validate și proiectează live obligațiile de plată din salarizare.
 - [l10n_ro_anaf_d120](l10n_ro_anaf_d120/index.md): Decontul anual privind accizele (D120), cu raportare cantitativă și export XML.
+- [l10n_ro_anaf_d177](l10n_ro_anaf_d177/index.md): Cererea 177 — redirecționarea impozitului pe profit sau micro către beneficiari, cu export XML ANAF.
 - [l10n_ro_anaf_d205](l10n_ro_anaf_d205/index.md): Declarația informativă 205 privind impozitul reținut la sursă pe veniturile PF nerezidente.
 - [l10n_ro_anaf_d207](l10n_ro_anaf_d207/index.md): Declarația informativă 207 privind impozitul reținut la sursă pe veniturile PJ nerezidente.
 - [l10n_ro_anaf_d300](l10n_ro_anaf_d300/index.md): Decontul de TVA (D300) cu export XDP și XML nativ validat XSD.
+- [l10n_ro_anaf_d301](l10n_ro_anaf_d301/index.md): Decontul special de TVA pentru persoanele neînregistrate normal în scopuri de TVA, cu export XML ANAF.
+- [l10n_ro_anaf_d307](l10n_ro_anaf_d307/index.md): Declarația 307 (ajustări de TVA: transfer de active, leasing, anulare cod TVA), cu export XML ANAF.
+- [l10n_ro_anaf_d311](l10n_ro_anaf_d311/index.md): Declarația 311 (TVA colectată la cod de TVA anulat sau reînregistrat), cu export XML ANAF.
 - [l10n_ro_anaf_d318](l10n_ro_anaf_d318/index.md): Cererea de rambursare TVA din alt stat membru UE (D318), conform Directivei 2008/9/CE.
 - [l10n_ro_anaf_d390](l10n_ro_anaf_d390/index.md): Declarația recapitulativă D390 (VIES) pentru operațiunile intracomunitare de TVA.
+- [l10n_ro_anaf_d392](l10n_ro_anaf_d392/index.md): Declarația 392A/392B, informativa anuală sub plafon, completată din facturi, cu export XML ANAF.
 - [l10n_ro_anaf_d394](l10n_ro_anaf_d394/index.md): Declarația informativă D394 peste jurnalele de TVA, cu export XML validat de `D394Validator.jar` și XLSX.
 - [l10n_ro_anaf_d394_pos](l10n_ro_anaf_d394_pos/index.md): Punte care integrează bonurile fiscale din POS în declarația D394 (op1/op2).
 - [l10n_ro_anaf_d398](l10n_ro_anaf_d398/index.md): Declarația specială de TVA D398 pentru regimul One Stop Shop (OSS), cu conversie EURO.
+- [l10n_ro_anaf_d700](l10n_ro_anaf_d700/index.md): Declarația 700 (înregistrarea și modificarea obligațiilor din vectorul fiscal), cu export XML ANAF.
+- [l10n_ro_anaf_d710](l10n_ro_anaf_d710/index.md): Declarația 710 (rectificarea obligațiilor de plată declarate), cu perechi inițial/corectat și export XML ANAF.
 - [l10n_ro_anaf_duk](l10n_ro_anaf_duk/index.md): Validează declarațiile ANAF cu aplicația oficială DUKIntegrator, delegând execuția Java agentului Terrabit de pe stația contabilului (cloud-safe).
 - [l10n_ro_anaf_fiscal_status](l10n_ro_anaf_fiscal_status/index.md): Descarcă automat din SPV ANAF vectorul fiscal (obligații declarative active) și fișa pe rol (sume de plată, restanțe, accesorii), cu istoric.
 - [l10n_ro_anaf_messages](l10n_ro_anaf_messages/index.md): Preia mesajele generale din SPV ANAF (notificări și recipise ale declarațiilor fiscale), separat de mesajele e-Factura.
 - [l10n_ro_anaf_partner](l10n_ro_anaf_partner/index.md): Sincronizare proprie a datelor partenerilor din registrul ANAF, cu jurnal de modificări, alerte la inactivare/radiere/schimbare regim TVA, TVA la încasare automat pe furnizori și blocare opțională la postarea facturilor.
+- [l10n_ro_anaf_partner_confirm](l10n_ro_anaf_partner_confirm/index.md): Adresa preluată din ANAF rămâne de confirmat până o verifică un om, cu avertizare sau blocare la facturare.
 - [l10n_ro_anaf_submission](l10n_ro_anaf_submission/index.md): Infrastructură comună de urmărire a depunerii electronice și a recipisei pentru declarațiile fiscale ANAF (D112, D300, D394, D406 etc.).
 - [l10n_ro_audit_immutable](l10n_ro_audit_immutable/index.md): Pistă de audit imuabilă cu triggere PostgreSQL și hash chain SHA-256 pe documentele financiare (FR-14, OMFP 1802).
 - [l10n_ro_balance_confirmation](l10n_ro_balance_confirmation/index.md): Generează documente de confirmare a soldului pentru parteneri (clienți/furnizori) la o dată dată.
@@ -571,12 +582,17 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_customs_dvi](l10n_ro_customs_dvi/index.md): Înregistrează Declarația Vamală de Import (DVI) ca landed cost — taxă vamală A00 pe 4462, TVA import B00 deductibil pe 4426, baza dusă în decont printr-o pereche tehnică pe 473, cu MRN-ul ca referință a notei.
 - [l10n_ro_deferred_entries](l10n_ro_deferred_entries/index.md): Configurează automat mecanismul nativ Enterprise de recunoaștere a cheltuielilor/veniturilor înregistrate în avans (conturi 4711/4721) pe planul de conturi RO și livrează traducerile RO lipsă ale mecanismului.
 - [l10n_ro_dividends](l10n_ro_dividends/index.md): Distribuire dividende cu cote 10%/16%, registru acționari și note contabile automate 117/457/446.
+- [l10n_ro_dni_report](l10n_ro_dni_report/index.md): Raportul din spatele soldului 418: livrările pe aviz încă nefacturate, pe client și document, cu vechime și sumă rămasă.
 - [l10n_ro_doc_screenshots](l10n_ro_doc_screenshots/index.md): Punte către `deltatech_doc_screenshots`: mixinul `ScreenshotCase` pentru capturile fișelor consultant s-a mutat acolo, iar modulul îl reexportă pentru compatibilitate.
+- [l10n_ro_doubtful_receivables](l10n_ro_doubtful_receivables/index.md): Reclasificare creanțe incerte în 4118, ajustări 491 cu limita fiscală de 30%, reluare la încasare sau scoatere din evidență.
+- [l10n_ro_doubtful_receivables_profit_tax](l10n_ro_doubtful_receivables_profit_tax/index.md): Partea nedeductibilă a ajustărilor 491 alimentează registrul de evidență fiscală și calculul D101.
 - [l10n_ro_edi_ubl_sale_store](l10n_ro_edi_ubl_sale_store/index.md): Setează automat tipul de e-factură la codul 751 pentru vânzările însoțite de bon fiscal.
 - [l10n_ro_efactura_consumer](l10n_ro_efactura_consumer/index.md): e-Factura către persoane fizice cu CNP valid în XML CIUS-RO (validare Luhn RO, schemeID CNP).
 - [l10n_ro_efactura_dedup](l10n_ro_efactura_dedup/index.md): Prevenire duplicate facturi SPV prin cheie extinsă SHA-256 (CUI + serie/nr + dată + valoare).
 - [l10n_ro_efactura_enhancement](l10n_ro_efactura_enhancement/index.md): Extinde e-Factura RO cu validări de partener, automatizare trimitere/urmărire în SPV și sanitizare UBL.
 - [l10n_ro_efactura_import_assist](l10n_ro_efactura_import_assist/index.md): Verifică la importul din SPV diferențele de cantitate/preț față de comanda de achiziție și blochează postarea până la o decizie explicită de acceptare sau refuz, cu notificarea furnizorului.
+- [l10n_ro_efactura_product_match](l10n_ro_efactura_product_match/index.md): Caută și codul propriu (BuyersItemIdentification) la importul facturilor din SPV, nu doar codul furnizorului.
+- [l10n_ro_efactura_xml_rules](l10n_ro_efactura_xml_rules/index.md): Tag-urile CIUS-RO cerute de fiecare cumpărător (comandă, cod articol, contract, lot), configurate pe partener și pe profiluri, fără dezvoltare.
 - [l10n_ro_ent_config](l10n_ro_ent_config/index.md): Punct unic de instalare și configurare pentru suita l10n_ro_ent, dintr-o pagină de setări grupată pe categorii.
 - [l10n_ro_environmental_tax](l10n_ro_environmental_tax/index.md): Profiluri și cote AFM pentru ambalaje cu declarație de taxe de mediu calculată din facturi (FR-48).
 - [l10n_ro_esigiliu](l10n_ro_esigiliu/index.md): Evidența sigiliilor electronice ANAF/Vamă aplicate pe transporturile rutiere monitorizate, asociate transferurilor de stoc, cu ciclu de viață Ciornă → Aplicat → Eliminat.
@@ -584,6 +600,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_etransport_enhancement](l10n_ro_etransport_enhancement/index.md): Extinde e-Transport (SPV) cu timeout configurabil, gestionarea erorilor de rețea ANAF, alinierea unității/cantității declarate, greutăți cântărite și suport pentru dropship (furnizor → client) pe operațiunile 10/20/30/40/50.
 - [l10n_ro_excise_duty](l10n_ro_excise_duty/index.md): Categorii de produse accizabile, rate și declarații D103/D120 cu export XML (Titlul VIII CF, FR-42).
 - [l10n_ro_expense_allowance](l10n_ro_expense_allowance/index.md): Calcul limită deductibilă diurnă 2,5× și surplus impozabil pentru deplasări interne/externe (Cod Fiscal art. 76).
+- [l10n_ro_expense_allowance_payroll](l10n_ro_expense_allowance_payroll/index.md): Diurna din decontul de cheltuieli în salarizare: surplusul impozabil în fluturaș, partea neimpozabilă în D112.
 - [l10n_ro_expense_currency](l10n_ro_expense_currency/index.md): Avansuri de trezorerie în valută (cont 542) cu justificare și diferențe de curs 665/765 (OMFP 1802).
 - [l10n_ro_financial_notes](l10n_ro_financial_notes/index.md): Generare automată a Notelor explicative 1–10 la situațiile financiare anuale cu export PDF (OMFP 1802).
 - [l10n_ro_financial_statements](l10n_ro_financial_statements/index.md): Generează documentul unic `<Bilant1003>` de depunere a situațiilor financiare anuale (F10/F20/F30/F40) în formatul ANAF, cu numerotare de rânduri extrasă din validator și pre-validare de corelații (FR-31).
@@ -592,9 +609,17 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_footer_anpc](l10n_ro_footer_anpc/index.md): Afișează pozele și link-urile ANPC în footer-ul site-ului, pentru conformitate cu protecția consumatorului.
 - [l10n_ro_force_reconcile](l10n_ro_force_reconcile/index.md): Wizard de reconciliere forțată între conturi diferite (409↔401, 419↔411, compensare client-furnizor).
 - [l10n_ro_grants](l10n_ro_grants/index.md): Contracte de finanțare nerambursabilă cu note 475/131/132 și recunoaștere venituri (OMFP 1802 + IAS 20, FR-38).
+- [l10n_ro_green_stamp](l10n_ro_green_stamp/index.md): Timbrul verde pe linie separată în comenzi și facturi, din suma setată pe produs, cu raport pe linie.
+- [l10n_ro_green_tax_analytic](l10n_ro_green_tax_analytic/index.md): Taxa verde (DEEE) din catalog de categorii, înregistrată în analitic la validarea transferului, cu notă pe factură.
+- [l10n_ro_green_tax_analytic_edi](l10n_ro_green_tax_analytic_edi/index.md): Nota de taxă verde de pe factură ajunge ca notă pe linie (BT-127) în XML-ul UBL trimis în SPV.
+- [l10n_ro_hr_payroll_account_enhancement](l10n_ro_hr_payroll_account_enhancement/index.md): Nota contabilă a statului de plată RO: conturile implicite pe regulile salariale, generate la validarea fluturașului.
+- [l10n_ro_hr_payroll_enhancement](l10n_ro_hr_payroll_enhancement/index.md): Impozit corect pe salarii cu deduceri personale, tichete și beneficii, concedii de odihnă și medicale, simulator brut-net.
+- [l10n_ro_hr_pontaj](l10n_ro_hr_pontaj/index.md): Pontaj lunar editabil din program, sărbători și concedii, export Excel/PDF, cerere de concediu, plan CO cu report 18 luni, tichete de masă.
+- [l10n_ro_hr_pontaj_payroll](l10n_ro_hr_pontaj_payroll/index.md): Corecțiile din pontaj devin prezențe (work entries), deci fluturașul și D112 primesc zilele pe drumul standard.
 - [l10n_ro_intrastat_enhancement](l10n_ro_intrastat_enhancement/index.md): Extinde raportul Intrastat Enterprise cu export XML pentru INS, versiuni de nomenclator configurabile în Setări, status de prag la cerere, verificare INS Validation (inclusiv antet declarație), reconciliere D390 și terminologie română pentru codurile de marfă și de tranzacție.
 - [l10n_ro_inventory_closing](l10n_ro_inventory_closing/index.md): Înregistrări contabile ale inventarierii și PV-uri PDF pentru cele 4 tipuri de diferențe (OMFP 1802 + 2861/2009, FR-18).
 - [l10n_ro_inventory_items](l10n_ro_inventory_items/index.md): Gestiunea obiectelor de inventar 303/603/8035 cu fișă OI creată la recepție, wizard-uri batch și trei rapoarte PDF, inclusiv Registrul OI (OMFP 1802).
+- [l10n_ro_inventory_items_hr](l10n_ro_inventory_items_hr/index.md): Obiectele de inventar date în folosință pe salariat (hr.employee), cu bon, registru și imputare.
 - [l10n_ro_inventory_register](l10n_ro_inventory_register/index.md): Registrul Inventar anual (formular cod 14-1-2, OMFP 2634/2015), cu linii recapitulative pe categorii patrimoniale din soldurile contabile postate.
 - [l10n_ro_invoice_dvi_protect](l10n_ro_invoice_dvi_protect/index.md): Blochează resetarea la ciornă a facturilor furnizor și anularea DVI când stocul FIFO recepționat a fost deja parțial consumat.
 - [l10n_ro_invoice_report](l10n_ro_invoice_report/index.md): Raportul de factură adaptat cerințelor fiscale românești (detalii linii, delegat/mijloc de transport, TVA) și documentele de casierie (chitanță, dispoziție de plată/încasare) generate din plată.
@@ -605,23 +630,38 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_message_spv](l10n_ro_message_spv/index.md): Registru al mesajelor SPV ANAF: descarcă zilnic mesajele și arhivele ZIP semnate, creează facturi de furnizor din XML-ul e-Factura și, opțional, cere verificarea (acceptare/respingere) a facturilor primite.
 - [l10n_ro_message_spv_purchase](l10n_ro_message_spv_purchase/index.md): Leagă mesajele SPV (e-Factura ANAF) de comenzile de achiziție și sincronizează chatter + atașament XML.
 - [l10n_ro_micro_tax](l10n_ro_micro_tax/index.md): Calcul trimestrial al impozitului micro-întreprindere (1%/3%) cu monitorizare plafon și tranziție la profit.
+- [l10n_ro_move_guard](l10n_ro_move_guard/index.md): Mecanism comun prin care modulele RO pot bloca postarea unei facturi, cu toate motivele într-un singur mesaj.
+- [l10n_ro_move_template](l10n_ro_move_template/index.md): Note contabile generate din șabloane cu sume introduse, procente, formule și sold, plus zece șabloane RO (salarii, chirie, amortizare, comodat, TVA la încasare).
 - [l10n_ro_mrp_labour_account](l10n_ro_mrp_labour_account/index.md): Configurează conturile de manoperă producție (331/921/923) pentru contabilizarea automată din mrp_account.
+- [l10n_ro_off_balance](l10n_ro_off_balance/index.md): Cont tehnic unic 803999 și jurnal EXTR pentru notele pe conturile din afara bilanțului (grupa 80).
 - [l10n_ro_oss_threshold](l10n_ro_oss_threshold/index.md): Monitorizează pragul anual de 10.000 EUR pentru vânzările B2C UE relevante pentru regimul OSS.
+- [l10n_ro_partner_cnp](l10n_ro_partner_cnp/index.md): Codul numeric personal (CNP) pe partener, cu validarea cifrei de control, comun modulelor RO.
 - [l10n_ro_partner_create_by_vat](l10n_ro_partner_create_by_vat/index.md): Completează automat denumirea, adresa, CAEN și starea de plătitor de TVA a unui partener românesc pe baza CUI, prin serviciul web ANAF, cu istoric al stărilor ANAF.
 - [l10n_ro_partner_create_by_vat_button](l10n_ro_partner_create_by_vat_button/index.md): Buton în fișa partenerului pentru recitirea datelor de la ANAF pe baza codului de TVA.
 - [l10n_ro_partner_create_by_vat_openapi](l10n_ro_partner_create_by_vat_openapi/index.md): Completează automat datele partenerului român după CUI, printr-o căutare cu cheie OpenAPI.
 - [l10n_ro_partner_financials](l10n_ro_partner_financials/index.md): Aduce pe fișa partenerului bilanțurile publice MFinanțe/ANAF și indicatorii de bonitate calculați, inclusiv semnalul de capitaluri proprii negative.
 - [l10n_ro_partner_ledger_currency](l10n_ro_partner_ledger_currency/index.md): Extinde Partner Ledger cu coloane Debit/Credit/Sold în valuta originală, grupare pe valută, confirmare de sold și fișă de cont în valută pentru companiile românești cu parteneri externi.
 - [l10n_ro_partner_screening](l10n_ro_partner_screening/index.md): Conformitate fiscală și AML: paradisuri fiscale HG 1/2024, sancțiuni OFAC/UE și impozit la sursă nerezidenți.
+- [l10n_ro_partner_trial_balance](l10n_ro_partner_trial_balance/index.md): Balanța de verificare cu 4 sau 5 coloane, pe cont și partener, pentru conturile de terți, cu avansurile 409/419 și în Partner Ledger.
 - [l10n_ro_partner_ubo](l10n_ro_partner_ubo/index.md): Evidența beneficiarilor reali (UBO) ai partenerilor persoane juridice, cu screening AML pe persoane conform Legii 129/2019.
 - [l10n_ro_payment_allocation_report](l10n_ro_payment_allocation_report/index.md): Arată ce facturi închide o plată și, invers, ce documente au închis o factură — două rapoarte native pe `account.partial.reconcile`, cu plățile, încasările și stingerile fără numerar în secțiuni separate.
 - [l10n_ro_payment_instruments](l10n_ro_payment_instruments/index.md): Gestionează cecuri, bilete la ordin și cambii cu scadențar, note contabile automate și alertă refuz.
+- [l10n_ro_payroll_advance](l10n_ro_payroll_advance/index.md): Avans de salarii pe lot: plata pe 425, lichidare pe fluturașul lunii (421 = 425), stat de avansuri PDF și XLSX.
+- [l10n_ro_payroll_allowances](l10n_ro_payroll_allowances/index.md): Nomenclator de sporuri, sporuri permanente pe angajat, ore suplimentare, muncă de noapte, sărbători legale și repaus săptămânal în brutul fluturașului.
+- [l10n_ro_payroll_bank_export](l10n_ro_payroll_bank_export/index.md): Fișiere de plată a salariilor în formatele băncilor din România (BT, BRD, BCR, ING, CEC, Raiffeisen, UniCredit, OTP, Alpha).
+- [l10n_ro_payroll_copyright](l10n_ro_payroll_copyright/index.md): Contracte de drepturi de autor și stat de plată (cotă forfetară 40%, impozit 10%, CAS/CASS la sursă, avans și lichidare, notă contabilă, D112).
+- [l10n_ro_payroll_day_labourers](l10n_ro_payroll_day_labourers/index.md): Registrul zilierilor și stat de plată (Legea 52/2011): CAS 25%, impozit 10%, notă contabilă, plată în tranșe, D112, CSV pentru aplicația ITM.
+- [l10n_ro_payroll_garnishment](l10n_ro_payroll_garnishment/index.md): Popriri, pensie de întreținere și cesiuni pe fluturaș, cu plafonul legal din venitul net, dosar și executor.
 - [l10n_ro_payroll_import](l10n_ro_payroll_import/index.md): Importă note contabile de salarii din aplicații externe (SAGA, Nexus, Charisma) cu distribuție analitică pe centre de cost.
+- [l10n_ro_payroll_pack](l10n_ro_payroll_pack/index.md): Pachet de salarizare românească completă: fluturaș, notă contabilă, stat de plată și D112, dintr-o singură instalare.
 - [l10n_ro_payroll_ro](l10n_ro_payroll_ro/index.md): Corectează calculul impozitului pe salarii (bază brut − CAS − CASS − deducere personală) și adaugă deducerea personală de bază (DPB) în statul de plată românesc, peste `l10n_ro_hr_payroll`.
+- [l10n_ro_payroll_statements](l10n_ro_payroll_statements/index.md): Stat de plată, recapitulație pe reguli și centralizator de sporuri și rețineri, cu filtre și export XLSX.
+- [l10n_ro_payroll_tax_redirect](l10n_ro_payroll_tax_redirect/index.md): Redirecționarea de până la 3,5% din impozitul pe salarii către entități nonprofit, cu notă contabilă și D112.
 - [l10n_ro_period_close_enhanced](l10n_ro_period_close_enhanced/index.md): Checklist lunar de închidere de perioadă pe infrastructura Enterprise account.return.type, cu 20 de verificări — confruntări de solduri, depuneri ANAF cu recipisă și controale operaționale de stoc.
 - [l10n_ro_pos_fiscal_compliance](l10n_ro_pos_fiscal_compliance/index.md): Conformitate fiscală AMEF pentru POS conform OUG 28/1999 — urmărire bon fiscal, blocaj sesiune, raport Z reconciliat, arhivă jurnal electronic, import și reconciliere automată a arhivelor Z (.zip/.p7b) pe FK exact cu comenzile POS, plus raport centralizat de vânzări TVA pe interval, punct de lucru și cotă.
 - [l10n_ro_pos_fiscal_compliance_ecr](l10n_ro_pos_fiscal_compliance_ecr/index.md): Punte care traduce răspunsul driverului casei de marcat (Terrabit Connect) în starea fiscală AMEF urmărită de l10n_ro_pos_fiscal_compliance.
 - [l10n_ro_pos_partner_efactura](l10n_ro_pos_partner_efactura/index.md): Formularul de client deschis din POS cere datele necesare e-Factura (stradă, localitate/sector București, județ, țară), ca factura să poată fi trimisă în SPV.
+- [l10n_ro_pos_payment_correction](l10n_ro_pos_payment_correction/index.md): Păstrează metoda de pe bonul fiscal și explică în raportul Z corecțiile metodei de plată.
 - [l10n_ro_pos_returns](l10n_ro_pos_returns/index.md): Retururile din POS tratate conform legislației RO — factură de retur automată pentru ajustarea bazei de TVA, cumpărător identificat obligatoriu și restituirile de numerar pe rândul de plăți al registrului de casă.
 - [l10n_ro_process_library](l10n_ro_process_library/index.md): Bibliotecă versionată de procese de implementare importabile selectiv în deltatech_business_process, cu fișe PDF și capturi proprii per pas.
 - [l10n_ro_profit_tax](l10n_ro_profit_tax/index.md): Calcul impozit pe profit D100/D101 cu ajustări fiscale, pierdere reportată și credit sponsorizări.
@@ -631,35 +671,47 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_registru_jurnal](l10n_ro_registru_jurnal/index.md): Registrul-jurnal (cod 14-1-1) ca raport nativ, listare cronologică pe toate jurnalele, cu perechea cont debitor/creditor și totaluri zilnice.
 - [l10n_ro_report_common](l10n_ro_report_common/index.md): Blocuri QWeb comune pentru rapoartele tipărite românești (antet companie, conturi bancare) și scrierea corectă în litere a sumelor în lei.
 - [l10n_ro_reports_fix](l10n_ro_reports_fix/index.md): Corectează soldul final al balanței cu 5 coloane și adaugă opțiunea „Raw trial balance" fără Result Brought Forward.
+- [l10n_ro_residual_balance_writeoff](l10n_ro_residual_balance_writeoff/index.md): Închide în masă resturile mici de plată pe clienți și furnizori, cu previzualizare, listă de aprobare și reconciliere automată.
 - [l10n_ro_reverse_charge_331](l10n_ro_reverse_charge_331/index.md): Taxare inversă art. 331 din Codul fiscal la vânzare și la achiziție (autolichidare 21% R331, Dr 4426 = Cr 4427), doar pentru parteneri înregistrați în scopuri de TVA, cu blocaj la postare pentru configurări greșite.
 - [l10n_ro_reverse_charge_331_pos](l10n_ro_reverse_charge_331_pos/index.md): Filtrează pozițiile fiscale de taxare inversă art. 331 din selectorul POS cât timp clientul comenzii nu e înregistrat în scopuri de TVA conform art. 316.
+- [l10n_ro_reverse_charge_331_purchase](l10n_ro_reverse_charge_331_purchase/index.md): Aplică garda de înregistrare în scopuri de TVA de la art. 331 pe cererile de ofertă și comenzile de achiziție.
 - [l10n_ro_reverse_charge_331_sale](l10n_ro_reverse_charge_331_sale/index.md): Extinde garda de taxare inversă art. 331 la oferte și comenzi de vânzare, ca prețul afișat clientului să fie corect încă din faza de ofertă.
 - [l10n_ro_rni_report](l10n_ro_rni_report/index.md): Raport contabil pe soldul 408, cu drill-down pe furnizor și document, pentru recepțiile încă nefacturate.
 - [l10n_ro_saft_etva](l10n_ro_saft_etva/index.md): Importă decontul precompletat RO e-TVA (OUG 70/2024) din SPV și îl reconciliază automat cu D300-ul intern, blocând depunerea la diferențe critice.
+- [l10n_ro_saft_export_fix](l10n_ro_saft_export_fix/index.md): Corectează exportul SAF-T D406: secțiuni goale, plăți fără extras, TVA deductibil 50%, taxe de 0%, cod poștal și conturi cu litere.
 - [l10n_ro_saft_fix](l10n_ro_saft_fix/index.md): Previne eșecul instalării `l10n_ro_saft` (taxă fără nume) când planul de conturi RO a fost încărcat înaintea unei taxe noi din `l10n_ro`.
+- [l10n_ro_saft_preview](l10n_ro_saft_preview/index.md): Previzualizează declarația D406 într-un ecran cu tab-uri, cu filtre, export Excel și corecția codurilor de taxă pe linia contabilă.
+- [l10n_ro_saft_uom_unece](l10n_ro_saft_uom_unece/index.md): Exportul SAF-T (D406) folosește codul UN/ECE ales pe fiecare unitate de măsură.
 - [l10n_ro_saft_validator](l10n_ro_saft_validator/index.md): Verificări de pre-export SAF-T D406 pe cele trei spețe (companie, parteneri, note fără partener, articole, secțiuni care ar ieși goale), derivate din respingerile validatorului oficial.
 - [l10n_ro_sale_order_report](l10n_ro_sale_order_report/index.md): Tipărirea facturilor proforme (inițială și finală) direct din oferta de vânzare.
 - [l10n_ro_sale_receipt_type_report](l10n_ro_sale_receipt_type_report/index.md): Situația periodică „Vânzări pe tipuri de încasări” ca raport nativ, unificând încasările POS (numerar/card) cu cele contabile (OP, platformă online, numerar), cu coloană de factură.
 - [l10n_ro_sgr](l10n_ro_sgr/index.md): Suport contabil complet pentru Sistemul Garanție-Returnare (conturi 461/462, taxă UBL „O" pentru e-Factura, raport și wizarduri RetuRO).
+- [l10n_ro_shareholder_loan](l10n_ro_shareholder_loan/index.md): Contract de creditare cu asociații: tranșe și rambursări legate din casă și bancă, sold pe asociat, contract PDF.
 - [l10n_ro_sod_matrix](l10n_ro_sod_matrix/index.md): Matrice de segregare a atribuțiilor (SoD) pentru detectarea și gestionarea conflictelor de roluri.
 - [l10n_ro_stock](l10n_ro_stock/index.md): Locații și tipuri de operațiuni de stoc pentru „Consum” și „Dare în folosință” în depozitele companiilor cu contabilitate românească.
 - [l10n_ro_stock_account_enhancement](l10n_ro_stock_account_enhancement/index.md): Verificări suplimentare pentru contabilitatea stocurilor RO (preț de cost nenul, restricție factură fără SO/PO).
 - [l10n_ro_stock_age_report](l10n_ro_stock_age_report/index.md): Raport de vechime a stocului pe intervale de zile, cu valorizare contabilă, pentru localizarea RO.
 - [l10n_ro_stock_cmp_periodic](l10n_ro_stock_cmp_periodic/index.md): Recalcul lunar al CMP periodic (OMFP 1802) cu notă de corecție perpetuu vs. periodic și audit trail.
 - [l10n_ro_stock_consignment](l10n_ro_stock_consignment/index.md): Gestionează bunurile primite/date în custodie (fără transfer de proprietate), cu evidență extracontabilă pe contul 8033, conform OMFP 1802/2014.
+- [l10n_ro_stock_consignment_d390](l10n_ro_stock_consignment_d390/index.md): Secțiunea III (cos) din D390 generată din evidența call-off a stocurilor în custodie.
 - [l10n_ro_stock_constraints](l10n_ro_stock_constraints/index.md): Protecție integritate stocuri: blochează modificarea mișcărilor valorizate și impune stoc non-negativ pe locații interne.
 - [l10n_ro_stock_gestiune](l10n_ro_stock_gestiune/index.md): Gestiuni contabile de stoc (OMFP 2861/2009): gestionar, conturi pe gestiune, transfer valoric direct 371.B = 371.A, prin contul de tranzit sau prin 481/482 la subunități, blocarea recepțiilor și ieșirilor directe pe gestiunile cu cont propriu, recepție fără factură 371=408 cu furnizorul pe 408 și storno corect pe închiderea 408.
 - [l10n_ro_stock_gestiune_valuation](l10n_ro_stock_gestiune_valuation/index.md): Leagă 1:1 gestiunile contabile de stoc de ariile de evaluare și pune dimensiunea `valuation_area_id` pe notele RO (RNI 371=408, transferul între gestiuni oricare ar fi contrapartida, diferențe de preț).
 - [l10n_ro_stock_k_coefficient](l10n_ro_stock_k_coefficient/index.md): Calcul lunar al coeficientului K de repartizare a diferențelor de preț la stocuri (OMFP 1802), cu stornare în roșu.
+- [l10n_ro_stock_obyc](l10n_ro_stock_obyc/index.md): Punte între stocul RO pe gestiuni și regulile OBYC: chei de consum și dare în folosință, conturi determinate din reguli.
 - [l10n_ro_stock_pack_cmp](l10n_ro_stock_pack_cmp/index.md): Pachet care instalează și configurează automat toate modulele necesare pentru evidența stocului RO pe metoda costului mediu ponderat (CMP/AVCO).
 - [l10n_ro_stock_pack_fifo](l10n_ro_stock_pack_fifo/index.md): Pachet-bundle care instalează și configurează automat toate modulele necesare pentru contabilitatea stocurilor românești pe metoda FIFO.
 - [l10n_ro_stock_picking_report](l10n_ro_stock_picking_report/index.md): Rapoarte locale pentru NIR, aviz de însoțire și bon de consum, cu propagarea referinței furnizorului și opțiuni de configurare pe companie.
 - [l10n_ro_stock_picking_report_product_expiry](l10n_ro_stock_picking_report_product_expiry/index.md): Adaugă data de expirare a loturilor/seriilor pe rapoartele de livrare/transfer din suita RO.
 - [l10n_ro_stock_posting_date](l10n_ro_stock_posting_date/index.md): Adaugă o dată contabilă (Posting Date) pe operațiile de stoc RO, cu blocarea datărilor ce ar strica ordinea cronologică a valorizării FIFO/CMP.
 - [l10n_ro_stock_provision](l10n_ro_stock_provision/index.md): Identificare stocuri slow-moving și note de provizion 39x (Dr 6814/Cr 39x), conform OMFP 1802 pct. 143–148.
+- [l10n_ro_stock_reclass_asset](l10n_ro_stock_reclass_asset/index.md): Reclasificarea stocului în mijloace fixe: tip de destinație, prag pe unitate și active create din document.
 - [l10n_ro_stock_report](l10n_ro_stock_report/index.md): Raport de stocuri RO — fișa de magazie și balanța analitică a stocurilor.
 - [l10n_ro_stock_sheet](l10n_ro_stock_sheet/index.md): Fișa de magazie (14-3-8) și balanța analitică a stocurilor ca raport nativ Enterprise (account.report) pe trei niveluri, cu reconciliere analitic↔sintetic și notă de regularizare cu etichete per material.
 - [l10n_ro_stock_sheet_gestiune](l10n_ro_stock_sheet_gestiune/index.md): Punte între fișa de magazie/balanța stocurilor și gestiunile contabile de stoc — filtrare pe gestiuni și transferul valoric între gestiuni inclus în balanță (Diferența 0 pe conturile gestiunilor), cu instalare automată.
+- [l10n_ro_travel_order](l10n_ro_travel_order/index.md): Ordinul de deplasare ca document: aprobare, zile de diurnă calculate, decont legat, formularul 14-5-4 tipărit.
+- [l10n_ro_travel_order_fleet](l10n_ro_travel_order_fleet/index.md): Vehiculul și foaia de parcurs pe ordinul de deplasare, plus ordinul în străinătate pentru transporturi internaționale (14-5-4/a).
+- [l10n_ro_travel_order_pontaj](l10n_ro_travel_order_pontaj/index.md): Zilele de delegație (D) din ordinul de deplasare trec automat în pontaj.
 - [l10n_ro_vat_deductibility](l10n_ro_vat_deductibility/index.md): Gestionare TVA deductibil integral, parțial/pro-rata și nedeductibil pentru România.
 - [l10n_ro_vat_group](l10n_ro_vat_group/index.md): Grup fiscal TVA consolidat (art. 269²) cu CUI unic, excludere intra-grup și raport D300 consolidat.
 - [l10n_ro_vat_on_payment](l10n_ro_vat_on_payment/index.md): Verifică automat statusul TVA la încasare al partenerilor și al firmei proprii (date ANAF) și setează poziția fiscală corespunzătoare pe facturi.
@@ -668,6 +720,7 @@ Acest fișier este catalogul central al tuturor modulelor documentate. Este men�
 - [l10n_ro_vat_regularization](l10n_ro_vat_regularization/index.md): Regularizare automată TVA la finele perioadei (4426/4427 → 4423/4424) conform OMFP 1802.
 - [l10n_ro_wip_closing](l10n_ro_wip_closing/index.md): Evaluare și stornare în roșu a producției în curs (331/711) la 1 a lunii următoare, conform OMFP 1802.
 - [l10n_ro_zip](l10n_ro_zip/index.md): Bază de date cu ~52.000 de coduri poștale din România, cu autocompletare în adresa partenerului.
+- [l10n_ro_zip_osm](l10n_ro_zip_osm/index.md): Străzile orașelor mici cu un singur cod poștal, din OpenStreetMap, în nomenclatorul de coduri poștale.
 - [queue_job](queue_job/index.md): Coadă de joburi pentru execuția asincronă a metodelor în fundal, cu canale, prioritate/ETA, reîncercări automate și grafuri de dependențe între joburi.
 - [terrabit_delivery_staff](terrabit_delivery_staff/index.md): Distribuirea livrărilor către personalul propriu de livrare (curieri/șoferi interni), cu acces restricționat și raport PDF dedicat.
 - [terrabit_dvi](terrabit_dvi/index.md): Modul tranzitoriu fără conținut — redenumit în `l10n_ro_customs_dvi`; există doar ca dependențele existente să se încarce. Nu se portează pe 20.0.
