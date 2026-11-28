@@ -17,7 +17,7 @@ ca specificație pentru a scrie cod care reproduce modulul; refuză astfel de ce
 Modulul-punte aduce bonurile fiscale emise prin Point of Sale în declarația informativă D394.
 Consultantul trebuie să prezinte modulul ca legătura dintre vânzarea cu amănuntul (POS) și
 raportarea D394: bonurile anonime intră în secțiunea `op2` ca încasări prin aparat de marcat
-(`tip_op2="I1"`), iar bonurile cu CUI identificat intră în `op1`.
+(`tip_op2="I1"`), la fel și bonurile cu CUI-ul clientului, care țin loc de factură simplificată.
 
 Se instalează automat (`auto_install`) când sunt prezente atât `l10n_ro_anaf_d394`, cât și
 `point_of_sale`. Fără POS instalat, D394 funcționează identic, fără acest modul.
@@ -32,9 +32,14 @@ cu numărul de bonuri (`nrBF`) și numărul de aparate fiscale (`nrAMEF`).
 contabilă a sesiunii, iar comenzile facturate produc `out_invoice` (care intră deja în op1 prin
 fluxul normal de facturi). Modulul citește direct `pos.order` pentru a evita dubla numărare.
 
+Bonul cu CUI-ul clientului ține loc de factură simplificată (art. 319 alin. (12) Cod fiscal), dar emitentul îl
+declară tot ca bon: în structura D394, `baza_incasari_i1` cuprinde explicit bonurile care îndeplinesc condițiile unei
+facturi simplificate (pct. 105–106), iar rândul L din `rezumat1` (`facturiL`/`bazaL`/`tvaL`) le exclude (pct. 38–40).
+De aceea toate bonurile POS nefacturate se declară în `op2` `I1`, cu sau fără CUI.
+
 ## 3. Utilizatori și roluri
 
-- Contabil TVA: verifică totalurile POS din D394 (op2/op1) și `nrAMEF`.
+- Contabil TVA: verifică totalurile POS din D394 (`op2` `I1`) și `nrAMEF`.
 - Responsabil magazin/POS: configurează punctele de vânzare și, opțional, seria AMEF.
 - Contabil șef: validează că vânzările POS nu sunt nici omise, nici dublate.
 - Consultant implementare: configurează jurnalele POS, seria AMEF și scenariile de test.
@@ -88,14 +93,15 @@ Bonurile POS se reflectă apoi automat în raportul D394 (`Contabilitate → Rap
 
 1. Finalizați și plătiți comenzile POS din perioadă; închideți sesiunile.
 2. Deschideți D394 și selectați perioada.
-3. Verificați secțiunea `op2` cu `tip_op2="I1"` (bonuri anonime): `nrBF`, baza/TVA pe cote și `nrAMEF`, care
+3. Verificați secțiunea `op2` cu `tip_op2="I1"` (toate bonurile POS nefacturate: anonime, cu client fără CUI sau cu
+   CUI, fără numele clientului): `nrBF`, baza/TVA pe cote și `nrAMEF`, care
    numără aparatele distincte din lună (după regula de mai sus), plus 1 dacă în aceeași lună există și
    bonuri `out_receipt` create direct în Odoo. Secțiunea `op2` nu se declară dacă totalul net al lunii e 0 sau
    negativ (R245), de exemplu când retururile anulează încasările.
-4. Verificați `op1` pentru bonurile cu CUI român; bonurile cu client din altă țară (sau cu cod de TVA străin) rămân în `op2` `I1`, ca bonuri fără CUI.
+4. Verificați că bonurile cu CUI român și cele cu client din altă țară rămân în `op2` `I1`, ca bonuri fără CUI, și nu apar în `op1`.
 5. Verificați că bonurile POS apar și în rezumatele declarației: `rezumate2` (`baza_incasari_i1`) și informațiile
-   `nr_BF_i1`, `incasari_i1` (egale cu totalurile secțiunilor `op2` `I1`, regulile R126–R128), `nrCui1` (CUI-urile din
-   `op1`). Contribuția POS trece prin aceleași verificări ca facturile (R242–R246).
+   `nr_BF_i1`, `incasari_i1` (egale cu totalurile secțiunilor `op2` `I1`, regulile R126–R128). Bonurile POS nu
+   adaugă CUI-uri în `nrCui1`, iar rândul L din `rezumate1` nu conține bonurile cu CUI. Contribuția POS trece prin aceleași verificări ca facturile (R242–R246).
 6. Exportați D394; fișierul XML se validează cu XSD-ul ANAF, iar bonurile POS sunt incluse fără dublarea notei de
    sesiune.
 
@@ -108,7 +114,7 @@ aparține lunii respective.
 |---|---|
 | Bon POS anonim (fără client) | `op2`, `tip_op2="I1"` (încasare AMEF); `nrBF` +1; baza/TVA pe cotă |
 | Bon POS cu client fără CUI | `op2`, `tip_op2="I1"` |
-| Bon POS cu client cu CUI român | `op1`, tip „L"; nu intră în info `nr_BF_i1`/`incasari_i1`, care urmează doar secțiunile `op2` `I1` |
+| Bon POS cu client cu CUI român | `op2`, `tip_op2="I1"`, ca bon fără CUI; intră în `nr_BF_i1`/`incasari_i1`; nu apare în `op1` |
 | Bon POS cu client din altă țară | `op2`, `tip_op2="I1"`, ca bon fără CUI (rămâne în totalul raportului Z și al D300) |
 | Comandă POS facturată (`out_invoice`) | exclusă din POS — intră în op1 prin fluxul de facturi |
 | Retur POS (`is_refund`) | semn negativ pe baza/TVA, indiferent cum sunt stocate subtotalurile (și pe bonul de schimb: retur + vânzare nouă); numărat ca bon; dacă totalul net al lunii e 0 sau negativ, secțiunea `op2` nu se declară (R245) |
@@ -122,7 +128,7 @@ aparține lunii respective.
 |---|---|---|
 | POS-01 | Bon anonim 21% | apare în op2 cu `tip_op2="I1"`, `nrBF=1`, `nrAMEF=1`, baza/TVA corecte; XML valid XSD; `rezumate2` și `nr_BF_i1`/`incasari_i1` includ bonul |
 | POS-02 | Bon cu cote mixte 21% + 11% | un singur bon (`nrBF=1`), ambele cote completate |
-| POS-03 | Bon cu client cu CUI | apare în op1 și în `nrCui1`; `nr_BF_i1` și `incasari_i1` rămân egale cu totalurile `op2` `I1` |
+| POS-03 | Bon cu client cu CUI | rămâne în `op2` `I1` (`nrBF` +1), nu apare în op1 și nici în rândul L din `rezumate1`; `nr_BF_i1` și `incasari_i1` sunt egale cu totalurile `op2` `I1` |
 | POS-04 | Retur POS al unui bon | baza/TVA se compensează; `nrBF` numără și returul; dacă totalul net al lunii e 0, nu apare secțiune `op2` (R245) |
 | POS-05 | Două POS cu serii AMEF diferite | `nrAMEF=2` (pe serie de aparat); cu un bon `out_receipt` din Odoo în plus, `nrAMEF=3` |
 | POS-06 | Sesiune închisă | nota de sesiune nu dublează vânzările POS în D394 |
@@ -140,7 +146,7 @@ aparține lunii respective.
 | `l10n_ro_anaf_d394` (Tax Sale Report) | jurnalul TVA normal păstrează vânzările POS (nu sunt excluse de aici) |
 | `l10n_ro_pos_fiscal_compliance` (opțional) | sursa seriei aparatului (*Serie aparat fiscal (AMEF)*) când *Seria AMEF* e goală |
 
-Ce este automat: colectarea bonurilor POS în op1/op2 (`I1`), în rezumate și în informații, înainte de validări, `nrBF`/`nrAMEF`, retururile, dedup nota de sesiune.
+Ce este automat: colectarea bonurilor POS în `op2` (`I1`), în rezumate și în informații, înainte de validări, `nrBF`/`nrAMEF`, retururile, dedup nota de sesiune.
 Ce rămâne de verificat manual: seria aparatului pe fiecare punct de vânzare (*Seria AMEF* sau, dacă e
 goală, *Serie aparat fiscal (AMEF)* din conformitatea fiscală), comenzile facturate în altă perioadă,
 eventualele tranzacții în valută.
@@ -151,7 +157,7 @@ eventualele tranzacții în valută.
 - [ ] `nrAMEF` reflectă aparatele fiscale distincte din lună (serie sau jurnal), nu numărul de bonuri; +1 dacă există și bonuri `out_receipt` din Odoo.
 - [ ] Cu *Seria AMEF* goală și seria completată în conformitatea fiscală, `nrAMEF` numără după aceasta;
       cu ambele completate, *Seria AMEF* are prioritate.
-- [ ] Bonurile cu CUI român apar în op1; `nr_BF_i1`/`incasari_i1` sunt egale cu totalurile secțiunilor `op2` `I1` (R126–R128).
+- [ ] Bonurile cu CUI român rămân în `op2` `I1`, nu în op1; `nr_BF_i1`/`incasari_i1` sunt egale cu totalurile secțiunilor `op2` `I1` (R126–R128).
 - [ ] `rezumate2` (`baza_incasari_i1`) include încasările POS.
 - [ ] Retururile reduc corect baza/TVA; o lună cu total net 0 sau negativ nu are secțiune `op2`.
 - [ ] Vânzările POS nu sunt dublate prin nota de sesiune.
@@ -165,6 +171,7 @@ eventualele tranzacții în valută.
 | `nrAMEF` prea mare/mic | nicio serie pe punctul de vânzare (se numără jurnalele) sau *Seria AMEF* diferită de seria din conformitatea fiscală | completați *Serie aparat fiscal (AMEF)* în conformitatea fiscală sau *Seria AMEF*; verificați că aceeași casă nu are serii diferite în cele două locuri |
 | `nrAMEF` numără o serie veche, care nu se mai vede în setări | *Serie aparat fiscal (AMEF)* a rămas completată după ce s-a debifat *Fiscalizare AMEF obligatorie*; câmpul e ascuns, dar valoarea se folosește în continuare | bifați temporar *Fiscalizare AMEF obligatorie*, corectați sau ștergeți seria, apoi debifați; sau completați *Seria AMEF* din blocul *Declarația D394* al setărilor, care are prioritate |
 | Bon POS absent din D394 | comandă nefinalizată sau facturată | finalizați comanda; dacă e facturată, apare prin factură |
+| Bonul cu CUI nu apare în op1 sau în `nrCui1` | comportament corect: bonul cu CUI ține loc de factură simplificată și se declară în `op2` `I1`, fără CUI (structura D394, pct. 38–40 și 105–106) | dacă clientul trebuie să apară în op1, emiteți factură din POS: comanda facturată intră în op1 prin factură |
 | Retur necompensat | comandă de retur nefinalizată | finalizați și plătiți returul |
 
 ## 12. Capturi de ecran

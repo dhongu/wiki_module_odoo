@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.1.1.20`
 - **Cale:** https://github.com/dhongu/deltatech_service/tree/19.0/deltatech_service_equipment
 - **Cale Locală:** `odoo-addons/deltatech_service/deltatech_service_equipment`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -38,7 +38,11 @@ echipamentele închiriate sau întreținute cu plată pe consum.
   perioada aleasă), între data contractului/instalării și sfârșitul perioadei.
 - **Necesită citiri pentru facturare** (pe tipul de contract): blochează pregătirea facturării pe
   contractele fără *Citiri efectuate*; excepție grupul **Poate factura fără citiri de contor**;
-  facturarea automată programată sare aceste contracte fără avertisment.
+  facturarea automată programată sare aceste contracte fără avertisment, dar cere *Citiri
+  efectuate* doar pentru tipurile cu această opțiune (contractele fără contoare se facturează la
+  data lor, din 19.0.1.1.19). După facturare, bifa *Citiri efectuate* se șterge pentru aceste
+  tipuri, ca perioada următoare să nu fie facturată pe citirile anterioare. O citire inclusă într-un
+  consum nu poate fi ștearsă.
 - **Schimbă data facturii** pe consumuri, înainte de facturare, pentru a data factura la data ultimei
   citiri incluse (prestare cu decontări succesive, art. 281 alin. (7) și art. 319 alin. (16) din
   Legea 227/2015) — implicit vine din *Data următoarei facturi client* a contractului, care poate fi
@@ -51,6 +55,12 @@ echipamentele închiriate sau întreținute cu plată pe consum.
   al instalărilor, adăugărilor în contract și dezinstalărilor.
 - **Creare automată a echipamentului** la crearea unei serii (lot) pentru un produs dintr-o categorie
   marcată *Tipul de echipament este obligatoriu*.
+- Căutarea unui echipament după serie sau cod EAN se face împreună cu numele (inclusiv din bara de
+  căutare), cu respectarea domeniului câmpului și a limitei de rezultate; lista derulantă afișează
+  adresa, amplasamentul și seria într-o a doua coloană estompată.
+- Reîmprospătarea costurilor echipamentului citește costul din evaluarea mișcării de stoc
+  (`stock.move.value`), negativ la livrări și pozitiv la retururi; fără
+  `deltatech_service_consumable` nu mai eșuează.
 - Notă contabilă a facturii: 4111 = 704 (venituri din servicii, ex. pagină) sau 706 (venituri din
   chirie, dacă se facturează separat) + 4427; contul vine din produsul-serviciu, nu e decis de modul.
 
@@ -75,8 +85,10 @@ explicit în fișă.
 
 **Limitări cunoscute** (din fișa consultant, secțiunea de verificări și flux):
 
-- Conversia unităților de măsură de facturare este inversată pe Odoo 19 — categoria de contor
-  trebuie configurată cu *Unitatea de măsură pentru facturare* **egală** cu unitatea citirii.
+- Conversia unităților de măsură de facturare a fost corectată în 19.0.1.1.15: consumul din citiri
+  folosește conversia standard Odoo, de la unitatea contorului la unitatea liniei de contract (o
+  linie fără unitate folosește unitatea produsului). Fișa consultant mai descrie conversia ca
+  inversată și recomandă aceeași unitate la citire și la facturare — recomandare depășită de cod.
 - Citirea făcută la instalare este facturată față de *Valoarea inițială* a contorului (implicit 0):
   dacă nu se completează *Valoarea inițială* = indexul de la punere în funcțiune, prima factură ia
   tot indexul, nu doar consumul real.

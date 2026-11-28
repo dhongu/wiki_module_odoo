@@ -98,8 +98,9 @@ Date minime pentru demo:
    - **D394 Period** (`tip_D394`): L / T / S / A, după periodicitatea TVA a firmei (la T/S/A, luna
      declarației este ultima lună a perioadei selectate în raport);
    - **D394 TVA la încasare** (`sistemTVA`): bifați dacă firma aplică sistemul TVA la încasare;
-     atunci `tvaDedAI` (rd. 139–142) primește TVA-ul facturilor de la furnizori cu TVA la încasare
-     achitate în perioadă, din notele de exigibilitate generate la plată; nebifat, `tvaDedAI` rămâne 0.
+     bifat sau nu, `tvaDedAI` (rd. 139–142; pct. 4.1 la sistem normal, pct. 5.3 la TVA la încasare)
+     primește TVA-ul facturilor de la furnizori cu TVA la încasare achitate în perioadă, din notele de
+     exigibilitate generate la plată.
      Tot bifa determină `tvaDed*` (rd. 135–138, 153B–C: facturi achitate de la furnizori în regim normal)
      și `tvaCol*` (rd. 143–146, 153B–C: facturi de vânzare încasate); nebifat, acestea sunt omise din XML.
      Bifa schimbă și încadrarea A/AÎ a facturilor cu taxă „la încasare": nebifat, orice factură de
@@ -136,6 +137,9 @@ Date minime pentru demo:
 8. Pentru operațiunile cu taxare inversă (V/C), setați **Cod produs D394** pe categoriile produselor folosite
    (nomenclatorul din `l10n_ro_anaf_base`: `Contabilitate → Raportare → Declarații ANAF → Coduri produs D394`;
    vezi fișa `l10n_ro_anaf_base`, Pasul 2). Fără cod, produsul nu apare în defalcarea pe produse a D394.
+   La achizițiile **N** de la persoane fizice, bunurile fără cod se declară pe 34 „alte bunuri” și serviciile pe
+   35: setați codul pe produs sau pe categorie pentru cereale, deșeuri (22), masă lemnoasă (23), terenuri (32)
+   și construcții (33).
 9. Configurați jurnalele pentru cartușul I pct. 2 (vezi pasul 0 din secțiunea 6): **Tip facturi D394**
    pe fiecare jurnal de vânzări / achiziții care emite facturi, terțul pe jurnalele 2.4 și, dacă există o
    decizie internă de alocare a numerelor, plajele alocate.
@@ -160,7 +164,9 @@ Date minime pentru demo:
 *Completează:*
 - **Tip facturi D394** — unde ajung facturile jurnalului în D394:
   - *Facturi proprii (2.2)* — facturile proprii (implicit);
-  - *Autofacturare (2.2.3)* — autofacturile, raportate în `<facturi>` cu baza și TVA-ul pe cote;
+  - *Autofacturare (2.2.3)* — autofacturile, raportate în `<facturi>` cu baza și TVA-ul pe cote; jurnalul poate
+    fi de vânzări sau de achiziții (ex. autofactura de ajustare a TVA-ului când furnizorul nu emite factura de
+    corecție, art. 319 alin. (3) Cod fiscal); din jurnalele de achiziții intră doar cele marcate așa sau 2.2.4;
   - *Emise în numele furnizorilor (2.2.4)* — jurnal de achiziții pentru facturile emise de firmă în numele
     furnizorilor; un jurnal de achiziții cu bifa **Self Billing** (Odoo) e tratat automat așa;
   - *Emise de clienți în numele firmei (2.3)* — clientul emite factura în numele firmei;
@@ -219,7 +225,10 @@ furnizorul din Franța) **nu intră în D394** — se declară în D390 — și 
 (inclusiv cu TVA amânat, art. 326 alin. (4)) nu se declară. Achizițiile de la furnizori neînregistrați în
 scopuri de TVA (persoane fizice, firme fără cod RO) apar la **N** (cota 0, fără TVA, cu valoarea totală), pe
 **Tip document D394** al facturii (factură, borderou, filă de carnet, contract, alt document); verificați
-că tipul documentului e corect. Serviciile cu taxare inversă de la prestatori din afara UE apar la tipul 4,
+că tipul documentului e corect. La persoanele fizice (fără cod sau cu CNP), bunurile fără **Cod produs D394**
+apar într-un avertisment deasupra jurnalului: în D394 merg pe 34 „alte bunuri”, ceea ce e greșit pentru
+cereale și codurile 22, 23, 32, 33. Serviciile (35), facturile simplificate, bonurile și achizițiile de la
+firme fără cod RO nu apar în avertisment. Serviciile cu taxare inversă de la prestatori din afara UE apar la tipul 4,
 **C**. Rândul ELY-CONTAB
 SRL (în demo, ultimul rând), fără rând D300, este o achiziție de la un furnizor cu TVA la încasare (TVA neexigibilă, 4428):
 în D394 apare la **AÎ** (`op1 tip="AI"`, pasul 4), în luna datei facturii, chiar dacă nu e plătită; lipsa
@@ -275,13 +284,16 @@ validatorul ANAF (R04) la aceste periodicități. Înainte de scriere, modulul
 rulează și regulile validatorului ANAF (codurile R04, R17, R35, R84, R96–R104, R215 etc.) și oprește exportul
 dacă găsește erori.
 
-*Verifică în XML (blocul `informatii`):* `tvaDedAI21`, `tvaDedAI11` etc. sunt 0 dacă firma nu aplică TVA
-la încasare. Dacă aplică, fiecare valoare este TVA-ul facturilor de la furnizori cu TVA la încasare
-**achitate în perioadă**, pe cotă: suma liniilor de TVA din notele de exigibilitate create la plată
-(4428 → 4426). O factură neachitată sau o achiziție intracomunitară nu apare aici. Dacă un rând
-`tvaDedAI` e 0 deși ați plătit facturi de la un furnizor cu TVA la încasare, deschideți furnizorul și
-verificați în fila **Monitorizare ANAF** că lista **Perioade TVA** are o perioadă RTVAI care acoperă
-data facturii; dacă nu, apăsați **Sincronizează cu ANAF** și regenerați.
+*Verifică în XML (blocul `informatii`):* `tvaDedAI21`, `tvaDedAI11` etc. sunt TVA-ul facturilor de la
+furnizori cu TVA la încasare **achitate în perioadă**, pe cotă, indiferent de luna facturii: suma liniilor
+de TVA din notele de exigibilitate create la plată (4428 → 4426), proporțional cu suma plătită. La firma în
+sistem normal (`sistemTVA="0"`) este pct. 4.1 din cartușul I și se ia după taxa „TVA la încasare” de pe
+factură; la firma cu TVA la încasare este pct. 5.3 și se ia după regimul furnizorului. O factură primită și
+plătită în aceeași lună apare și la AÎ, și aici. O factură neachitată sau o achiziție intracomunitară nu
+apare. La firma cu TVA la încasare, dacă un rând `tvaDedAI` e 0 deși ați plătit facturi de la un furnizor
+cu TVA la încasare, deschideți furnizorul și verificați în fila **Monitorizare ANAF** că lista
+**Perioade TVA** are o perioadă RTVAI care acoperă data facturii; dacă nu, apăsați **Sincronizează cu
+ANAF** și regenerați.
 
 *Verifică în XML (`sistemTVA="1"`):* blocul `informatii` are în plus `tvaDed24`…`tvaDed5` și
 `tvaCol24`…`tvaCol5` (la `sistemTVA="0"` lipsesc). `tvaDed` este TVA-ul facturilor de la furnizori în
@@ -315,7 +327,8 @@ exportul se oprește cu lista documentelor (vezi secțiunea 9).
   primit număr. Ex.: INV 3–8 și INV 11 sunt două rânduri, nu INV 3–11. Golurile dintre intervale nu se declară
   automat ca anulate (pot aparține altor luni). `nrFacturi` din `informatii` = numărul documentelor din
   aceste intervale.
-- **`<facturi>`** — câte un rând per document: `tip_factura` **1** notă de credit (stornare), **2** factură
+- **`<facturi>`** — câte un rând per document: `tip_factura` **1** factură stornată (valoare totală negativă:
+  notă de credit sau factură cu total negativ), **2** factură
   anulată, **3** autofactură, cu `bazaNN` / `tvaNN` pe fiecare cotă (ex. `baza21="200" tva21="42"`), **4** factură
   emisă în numele furnizorilor. O notă de credit pe o autofactură sau pe o factură 2.2.4 apare și ca tip 1.
 - **tip 3 (2.3) / tip 4 (2.4)** — intervalele facturilor emise de clienți, respectiv de terți, în numele firmei,
@@ -454,10 +467,10 @@ folosesc seria de facturi. Bonurile fiscale primite fără TVA nu intră în D39
 - **Momentul declarării la A/AÎ:** factura de la un furnizor cu TVA la încasare se declară **o singură
   dată**, la AÎ, în luna datei facturii, plătită sau nu (HG 1/2016, Titlul VII, pct. 101 alin. (6): cumpărătorul
   o înregistrează în jurnal chiar dacă deducerea intervine mai târziu). O factură din lunile anterioare plătită
-  în perioadă **nu mai apare** nici la A, nici la AÎ; TVA-ul plătit în perioadă intră doar în `tvaDedAI*` /
-  `tvaDed*` (la firma cu TVA la încasare). Deducerea efectivă (`Dr 4426 = Cr 4428`, la plată, art. 297
+  în perioadă **nu mai apare** nici la A, nici la AÎ; TVA-ul plătit în perioadă intră doar în `tvaDedAI*`
+  (pct. 4.1 / 5.3) și, la firma cu TVA la încasare, în `tvaDed*`. Deducerea efectivă (`Dr 4426 = Cr 4428`, la plată, art. 297
   alin. (2) CF) se vede în D300, deci TVA-ul de la AÎ din D394 nu se potrivește cu D300 din aceeași lună.
-- **`tvaDedAI`** (rd. 139–142): se ia din linia de TVA a notei de exigibilitate generate la plata facturii furnizorului (`Dr 4426 = Cr 4428`), proporțional cu suma plătită, doar pentru furnizorii cu TVA la încasare la data facturii. Regimul
+- **`tvaDedAI`** (rd. 139–142): se ia din linia de TVA a notei de exigibilitate generate la plata facturii furnizorului (`Dr 4426 = Cr 4428`), proporțional cu suma plătită, doar pentru furnizorii cu TVA la încasare: la firma în sistem normal (pct. 4.1) după taxa „la încasare” de pe factură, la firma cu TVA la încasare (pct. 5.3) după regimul furnizorului la data facturii. Regimul
   furnizorului: cu OCA `l10n_ro_vat_on_payment`, din `istoric.txt`; fără OCA, din perioadele RTVAI
   ale `l10n_ro_anaf_partner` (început inclusiv, sfârșit exclusiv), cu bifa de la ultima sincronizare
   ca rezervă. Un furnizor nesincronizat, fără bifă, e tratat ca furnizor în regim normal.
@@ -525,11 +538,14 @@ jurnalelor și plajele alocate prin decizie internă (pasul 0).
 
 ### Limitări cunoscute (în lucru)
 
-- **Firmă în regim normal, TVA plătit furnizorilor cu TVA la încasare:** `tvaDedAI` rămâne 0 la
-  `sistemTVA=0` (structura ANAF îl lasă gol pentru sistemul normal); facturile însele apar la AÎ.
-- **Firme care aplică TVA la încasare:** setarea pune `sistemTVA=1` și calculează `tvaDedAI`, `tvaDed*`
-  (facturi achitate de la furnizori în regim normal) și `tvaCol*` (facturi încasate), din notele de
-  exigibilitate din perioadă; la `sistemTVA=0` atributele se omit. Facturile furnizorilor cu TVA la
+- **Firmă în regim normal, TVA plătit furnizorilor cu TVA la încasare (pct. 4.1):** `tvaDedAI` se
+  completează și la `sistemTVA=0`, deși structura ANAF îl marchează gol pentru sistemul normal;
+  validatorul DUK v5 cere atributele și acceptă valorile. Încadrarea se face după taxa „la încasare”
+  de pe factură, nu după regimul furnizorului: o factură de la un furnizor cu TVA la încasare
+  înregistrată cu taxă „la facturare” nu intră la 4.1.
+- **Firme care aplică TVA la încasare:** setarea pune `sistemTVA=1` și calculează `tvaDedAI` (pct. 5.3),
+  `tvaDed*` (facturi achitate de la furnizori în regim normal) și `tvaCol*` (facturi încasate), din
+  notele de exigibilitate din perioadă; la `sistemTVA=0` se omit `tvaDed*` și `tvaCol*`. Facturile furnizorilor cu TVA la
   încasare apar la AÎ, cele ale furnizorilor în regim normal la A (decide regimul furnizorului).
 - **Regimul furnizorului fără OCA `l10n_ro_vat_on_payment`** e o aproximare bună doar cu sincronizarea
   zilnică a partenerilor cu ANAF:
@@ -595,6 +611,11 @@ jurnalelor și plajele alocate prin decizie internă (pasul 0).
   anterioară plătită acum nu apare nici la A, nici la AÎ.
 - [ ] La o firmă cu TVA la încasare, factura unui furnizor în regim normal (taxă „la încasare") apare la
   A, iar a unui furnizor cu TVA la încasare la AÎ.
+- [ ] La o firmă în sistem normal (`sistemTVA="0"`), `tvaDedAI` (pct. 4.1) cuprinde TVA-ul plătit în
+  perioadă furnizorilor cu TVA la încasare (facturi cu taxă „la încasare”), pe cota facturii,
+  proporțional cu suma plătită, inclusiv pentru facturile din lunile anterioare plătite acum (o factură
+  plătită parțial intră doar cu TVA-ul aferent plății); o factură primită și plătită în aceeași lună
+  apare și la AÎ, și aici.
 - [ ] La o firmă cu TVA la încasare, `tvaDedAI` cuprinde doar facturile achitate în perioadă de la
   furnizori cu TVA la încasare la data facturii (fără OCA: perioadele RTVAI din fila **Monitorizare
   ANAF** a furnizorului; cu OCA: istoricul `l10n_ro_vat_on_payment`);
@@ -618,6 +639,8 @@ jurnalelor și plajele alocate prin decizie internă (pasul 0).
 - [ ] Două facturi către același partener, cu același cod, dau un singur `op11` pe acel cod; `nrFactPR` adunat = 2.
 - [ ] La `op1` V, `op11` nu are atributul `tvaPR`; la C îl are.
 - [ ] Un produs cu taxare inversă fără **Cod produs D394** apare în avertismentul de pe jurnalul de TVA.
+- [ ] Un bun fără **Cod produs D394**, cumpărat de la o persoană fizică (N), apare în avertismentul pentru N de
+      pe jurnalul TVA Cumpărări; un serviciu sau o achiziție de la o firmă fără cod RO nu apare.
 - [ ] Un produs cu codul 36 sau 32–35 pe o factură V/C oprește exportul cu eroarea `codPR` din secțiunea 9.
 - [ ] Câmpul **Tip document D394** apare pe jurnalele de vânzări/cumpărări și pe facturi (lângă jurnal), ia
       implicit valoarea jurnalului și devine needitabil după postare.
@@ -650,6 +673,7 @@ jurnalelor și plajele alocate prin decizie internă (pasul 0).
 | O factură cu mai multe cote (ex. 21% și 11%) sau cu linii scutite lipsește din XML-ul D394 | Fișier generat cu un modul sub 19.0.1.3.16, care deducea cota din raportul TVA/bază pe toată factura | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
 | DUKIntegrator respinge XML-ul pentru un atribut de adresă sau un grup de atribute lipsă/în plus în `op1` / `rezumat1` | Fișier generat cu un modul sub 19.0.1.3.11, care emitea atribute goale sau grupuri neconforme | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
 | Avertisment pe jurnalul de TVA: „D394: produsele de mai jos apar pe operațiuni cu taxare inversă (V/C), dar nu au cod de produs D394…”, cu lista produselor (cel mult 20) | Produsele și categoriile lor nu au **Cod produs D394**, iar codul NC nu corespunde unui cod din nomenclator (de exemplu cherestea 44071290); exportul nu se oprește, dar declarația iese fără defalcarea pe produse pentru ele | Setați **Cod produs D394** pe categoria sau pe produsul din listă (ex. 23 pentru masă lemnoasă), apoi regenerați |
+| Avertisment pe jurnalul TVA Cumpărări: „D394: bunurile de mai jos sunt cumpărate de la persoane fizice (N), dar nu au cod de produs D394…”, cu lista bunurilor (cel mult 20) | Bunurile cumpărate de la persoane fizice nu au **Cod produs D394** pe produs sau pe categorie; în D394 se declară pe 34 „alte bunuri”, validatorul acceptă, dar cerealele, deșeurile, masa lemnoasă, terenurile și construcțiile trebuie declarate pe codul lor | Setați **Cod produs D394** pe produs sau pe categorie (ex. 1001 pentru grâu, 22 pentru deșeuri); pentru alte bunuri avertismentul se poate ignora, apoi regenerați |
 | „Validare pre-flight D394…” cu „codPR: codul de produs D394 X nu poate fi declarat la operațiunile V/C…”, cu documentele | Codul nu e admis în secțiunea operațiunii (32–35 sunt doar pentru achiziții N de la neînregistrați) sau nu e în lista `codPR` a XSD-ului (36, gaze naturale) | Alegeți codul corect pe produs sau pe categorie și regenerați |
 | DUKIntegrator respinge XML-ul cu R35, R235.2 sau R237.1 (`op11` fără `detaliu`, cod repetat în `op1`, `tvaPR` la V) | Fișier generat cu un modul sub 19.0.1.4.0 | Actualizați modulul `l10n_ro_anaf_d394` și regenerați XML-ul |
 | „Următoarele bonuri fiscale primite au TVA dedus, dar depășesc 100 EUR cu TVA: … Un astfel de bon nu ține loc de factură simplificată: înregistrați-l fără TVA sau alegeți tipul de document D394 corect…” | Bon fiscal primit (Tip document D394 = Bon fiscal) cu TVA dedus și total peste 100 EUR, la cursul BNR de la data bonului | Stornați bonul și înregistrați-l fără TVA (nu dă drept de deducere), sau, dacă de fapt e o factură, schimbați **Tip document D394**; regenerați |

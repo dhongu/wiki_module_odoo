@@ -26,7 +26,7 @@ Modulul nu are temei legal propriu. Contextul este operațional: apelurile trec 
 - Nu există conturi contabile implicate; modulul nu generează note contabile.
 - Date necesare de la administratorul Daktela: adresa instanței (de exemplu `https://firma.daktela.com`), un token API static pentru un utilizator de integrare și numele unic al fiecărui agent în Daktela.
 - Cu **Telefon web Daktela** nu e nevoie de date SIP (adresă WebSocket, domeniu SIP, utilizator de autentificare); cu **Softphone Odoo**, WebSocket și Domeniu SIP Daktela se completează pe furnizor, iar utilizatorul și parola SIP vin din **Sincronizați telefoanele Daktela**.
-- Datele din capturi (create de testul de capturi; modulul nu instalează date demo): furnizorul „Daktela", utilizatorul administrator legat de agentul `agent.demo` și folosit ca utilizator implicit, contactul „Client Exemplu SRL" cu telefon și trei apeluri importate.
+- Datele din capturi (create de testul de capturi; modulul nu instalează date demo): furnizorul „Daktela", utilizatorul administrator legat de agentul `agent.demo` și folosit ca utilizator implicit, contactul „Client Exemplu SRL" cu telefon și patru apeluri importate (trei din România, unul din Ungaria).
 
 ## 5. Configurare inițială
 
@@ -34,7 +34,7 @@ Modulul nu are temei legal propriu. Contextul este operațional: apelurile trec 
 2. Mergeți la **Telefon → Configurare → Furnizori** și creați furnizorul Daktela.
 3. În grupul **API Daktela**, completați **Adresă instanță Daktela**, **Token API Daktela**, **Fus orar Daktela** (fusul instanței Daktela, implicit Europe/Bucharest), opțional **Coadă de ieșire Daktela** și **Utilizator implicit Daktela**, apoi apăsați **Test conexiune**. La actualizarea modulului, furnizorii rămași pe UTC trec automat pe Europe/Bucharest; dacă instanța Daktela e în alt fus, setați-l pe acela.
 4. **WebSocket**, **Domeniu SIP Daktela** și **Mediul VoIP** nu trebuie completate: cu API-ul Daktela configurat, partea SIP a softphone-ului nu pornește, iar Odoo lucrează singur în modul Producție.
-   **Telefon Daktela** alege cine poartă sunetul. **Telefon web Daktela** (implicit): apelurile pleacă prin API-ul Daktela, iar agentul vorbește în telefonul web Daktela, ca în pașii de mai jos. **Softphone Odoo**: completați **WebSocket** cu adresa telefonului web Daktela (de exemplu `wss://donjon01.daktela.com:8089/mobile/1/firma.daktela.com`, vizibilă în DevTools la telefonul web) și **Domeniu SIP Daktela** cu adresa instanței, apoi apăsați **Sincronizați telefoanele Daktela**: utilizatorul fiecărui agent primește utilizatorul și parola SIP ale dispozitivului WebRTC al agentului din Daktela, iar softphone-ul Telefon poartă apelurile ca la orice furnizor SIP. Apelurile de intrare vin atunci direct în softphone, fără webhook. Daktela nu documentează oficial acest mod.
+   **Telefon Daktela** alege cine poartă sunetul. **Telefon web Daktela** (implicit): apelurile pleacă prin API-ul Daktela, iar agentul vorbește în telefonul web Daktela, ca în pașii de mai jos. **Softphone Odoo**: completați **WebSocket** cu adresa telefonului web Daktela (de exemplu `wss://donjon01.daktela.com:8089/mobile/1/firma.daktela.com`, vizibilă în DevTools la telefonul web) și **Domeniu SIP Daktela** cu adresa instanței, apoi apăsați **Sincronizați telefoanele Daktela**: utilizatorul fiecărui agent primește utilizatorul și parola SIP ale dispozitivului WebRTC al agentului din Daktela, iar softphone-ul Telefon poartă apelurile ca la orice furnizor SIP. Apelurile de intrare vin atunci direct în softphone, fără webhook. Daktela nu documentează oficial acest mod. Tot cu **Softphone Odoo**, bifa **Reducere zgomot** (activă implicit) filtrează zgomotul din jurul agentului din vocea trimisă clientului (pasul 12).
    Pentru apelurile de intrare, în grupul **Apeluri de intrare** apăsați **Generați adresa webhook**, copiați **URL webhook Daktela** și setați-l în Daktela (**Manage → Settings → Events**) pentru evenimentele de apel. Adresa conține un token secret: Daktela nu semnează evenimentele, deci, dacă adresa ajunge la altcineva, apăsați **Înlocuiți adresa webhook** (Odoo cere confirmare, pentru că adresa veche nu mai funcționează) și setați noua adresă în Daktela.
    După configurare, furnizorul Daktela devine furnizorul implicit al utilizatorilor noi și al celor fără furnizor, iar aplicația Telefon nu mai rulează în „Mod Demo”. Furnizorii de exemplu instalați cu aplicația (Demo, Axivox, DIDWW, OnSIP) se pot șterge. Un utilizator fără agent Daktela care pornește un apel primește mesajul că nu e legat de un agent.
 5. Pentru fiecare agent, deschideți utilizatorul din **Setări → Utilizatori & Companii → Utilizatori**, tabul **VoIP**: alegeți furnizorul și completați **Agent Daktela**. Dacă agentul sună pe altă coadă decât cea a furnizorului (de exemplu un operator pentru Ungaria, pe coada „Efectuare apeluri HU”), completați **Coadă de ieșire Daktela** pe utilizator. Coada utilizatorului are prioritate; fără ea se folosește coada de pe furnizor.
@@ -108,7 +108,13 @@ Când un client sună pe o coadă de intrare, apelul sună în telefonul Daktela
 
 Mergeți la **Telefon → Apeluri**. Un apel pornit din Odoo apare aici imediat, cu contactul; importul de la 10 minute îl completează cu orele și rezultatul din Daktela, fără să creeze un al doilea apel. La fiecare 10 minute, apelurile terminate în Daktela se importă aici (un apel aflat încă în desfășurare se importă la rularea de după încheierea lui), o singură dată fiecare, la ora la care au avut loc: contactul găsit după numărul de telefon, numărul, durata, utilizatorul găsit după agent și starea. Un apel răspuns apare ca efectuat sau primit, un apel intrat fără răspuns ca **Apel ratat**, iar un apel ieșit fără răspuns ca **Apel anulat**. Apelurile interne nu se importă.
 
-![Lista Apeluri din aplicația Telefon cu trei apeluri importate din Daktela: un apel ieșit către Client Exemplu SRL de 3 minute și 5 secunde cu starea Apeluri efectuate, un apel intrat ratat de la +40731222333 atribuit utilizatorului implicit și un apel ieșit anulat](screenshots/08_istoric_apeluri.png)
+![Lista Apeluri din aplicația Telefon cu patru apeluri importate din Daktela și coloana Țară: un apel ieșit către Client Exemplu SRL de 3 minute și 5 secunde cu starea Apeluri efectuate, un apel intrat ratat de la +40731222333, un apel primit de la +3612345678 din Ungaria și un apel ieșit anulat; în stânga, marcat, panoul Țară cu Tot, România 3 și Ungaria 1](screenshots/08_istoric_apeluri.png)
+
+**Filtrați apelurile pe țară.** În stânga listei, panoul **Țară** arată țările numerelor din istoric, fiecare cu numărul de apeluri (de exemplu **România 3**, **Ungaria 1**). Un clic pe țară lasă în listă doar apelurile ei; **Tot** le arată din nou pe toate. Așa, o operatoare care răspunde clienților din Ungaria își vede doar apelurile cu numere +36. Țara se citește din prefixul internațional al numărului (+40 România, +36 Ungaria), nu din fișa contactului, deci se vede și la apelurile fără contact găsit. Coloana **Țară** e afișată implicit în listă. Din bara de căutare, apelurile se pot căuta după țară (scrieți numele țării și alegeți din listă căutarea pe **Țară**) și grupa după țară (**Grupează după → Țară**).
+
+Țara se recunoaște din prefixul internațional, iar numărul apelantului se salvează mereu în acest format, atât când apelul apare în widgetul Telefon (softphone-ul Odoo sau telefonul web Daktela), cât și la importul din Daktela: un număr național primește prefixul țării companiei (`0724…` devine `+40724…`), iar `00` devine `+` (`00421…` devine `+421…`). Contactul se caută după numărul formatat. Așa, și apelurile primite de la numere naționale apar sub țara lor în panou. Doar interioarele scurte (de exemplu `105`) rămân neschimbate și fără țară; pentru numerele naționale, firma trebuie să aibă țara completată. La actualizarea modulului, apelurile deja existente în istoric se convertesc în același format.
+
+![Lista Apeluri filtrată pe Ungaria: în panoul Țară, Ungaria 1 marcată; în listă rămâne doar apelul primit de la +3612345678, cu Țară Ungaria](screenshots/14_istoric_filtru_tara.png)
 
 ### Pasul 9 — Opriți soneria cu Nu deranjați
 
@@ -128,9 +134,21 @@ Când agentul vrea să primească în continuare apelurile, dar fără sunet (lu
 
 ![Widgetul Telefon cu meniul Disponibil / Nu deranjați deschis: opțiunea Fără sonerie, cu textul Apelurile vin în continuare, fără sunet, și bifa verde, marcată; pe butonul Disponibil, clopoțelul tăiat](screenshots/11_widget_fara_sonerie.png)
 
+### Pasul 12 — Reduceți zgomotul de fond
+
+Cu **Telefon Daktela** pe **Softphone Odoo**, furnizorul are bifa **Reducere zgomot**, activă implicit. Vocea agentului trece printr-un filtru de zgomot în browser înainte să plece spre Daktela, așa că clientul nu mai aude tastatura, colegii sau strada, ca la telefonul web Daktela. Filtrul nu se aplică pe **Telefon web Daktela**, care își filtrează singur sunetul. Debifați **Reducere zgomot** doar dacă vocea agentului se aude tăiat sau calculatorul e prea lent; dacă filtrul nu poate porni în browser, apelul continuă cu microfonul nefiltrat.
+
+![Formularul furnizorului Daktela softphone: Telefon Daktela pe Softphone Odoo (1) și bifa Reducere zgomot activă (2), marcate](screenshots/12_furnizor_reducere_zgomot.png)
+
+### Pasul 13 — Alegeți microfonul și difuzoarele
+
+Cu **Softphone Odoo**, din meniul **Disponibil / Nu deranjați** al widgetului deschideți **Setări audio** (cu **Telefon web Daktela** opțiunea nu apare: dispozitivele se aleg în telefonul web Daktela). Submeniul are, ca în Odoo 20, lista **Microfon** și, în browserele care permit alegerea difuzorului (Chrome, Edge, Brave), listele **Difuzoare apel** și **Sonerie** (de exemplu apelul în căști și soneria în boxe), cu dispozitivele calculatorului. În celelalte browsere apare doar **Microfon**, iar sunetul merge în difuzorul implicit. Alegerea se aplică imediat, apelului în curs și apelurilor următoare, și se păstrează în browserul calculatorului, aceeași ca în setările de apel din Discuss: pe alt calculator sau în alt browser, agentul alege din nou. Dacă browserul nu a primit încă acces la microfon, listele arată **Permission Needed** (netradus în Odoo): un clic pe ele cere accesul. Dacă dispozitivul ales nu mai e conectat, softphone-ul folosește dispozitivul implicit, fără să întrerupă apelul. Alegeți microfonul căștii: microfonul camerei web preia zgomotul din cameră (la un client, browserul Brave folosea implicit microfonul camerei web).
+
+![Submeniul Setări audio deschis din meniul de stare al widgetului Telefon: Microfon pe Microfon căști USB, Difuzoare apel și Sonerie, marcate](screenshots/13_dialog_dispozitive_audio.png)
+
 ### Note de monografie și raportare
 
-Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și grupa în **Telefon → Apeluri** (după utilizator, stare, direcție) și se poate vedea și în calendar, grafic sau pivot.
+Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și grupa în **Telefon → Apeluri** după utilizator, stare, direcție și țară (din prefixul numărului: +40 România, +36 Ungaria) și se poate vedea și în calendar, grafic sau pivot. Numerele apelanților se salvează în format internațional (un număr național primește prefixul țării companiei), deci și apelurile de la numere naționale au țară; doar interioarele scurte rămân fără țară.
 
 ## 7. Legături cu alte module / declarații
 
@@ -139,7 +157,7 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 | `voip` (Telefon, Enterprise) | Furnizorii VoIP, istoricul apelurilor, softphone-ul și setările VoIP ale utilizatorului. Modulul nu funcționează fără el. |
 | `phone_validation` (prin Telefon) | Aduce numerele în format internațional, pentru apel și pentru găsirea contactului. |
 
-**Ce e automat:** starea apelului în widgetul Telefon (în curs, în convorbire, încheiat), închiderea în widget a unui apel închis în Daktela, apelul în istoric de la pornire și completarea lui la import, importul apelurilor terminate (la 10 minute), legarea apelurilor de contact și de utilizator, atribuirea apelurilor fără agent utilizatorului implicit, formatul internațional al numărului la apel. Cu **Softphone Odoo**, importul de la 10 minute sincronizează și telefoanele (utilizatorul și parola SIP ale agenților), iar apelurile agenților nu se mai importă din Daktela: le înregistrează chiar softphone-ul; se importă doar apelurile fără agent cunoscut, la utilizatorul implicit.
+**Ce e automat:** starea apelului în widgetul Telefon (în curs, în convorbire, încheiat), închiderea în widget a unui apel închis în Daktela, apelul în istoric de la pornire și completarea lui la import, importul apelurilor terminate (la 10 minute), legarea apelurilor de contact și de utilizator, atribuirea apelurilor fără agent utilizatorului implicit, formatul internațional al numărului la apel și al numărului apelantului la apelurile primite (țara lor în istoric). Cu **Softphone Odoo**, importul de la 10 minute sincronizează și telefoanele (utilizatorul și parola SIP ale agenților), iar apelurile agenților nu se mai importă din Daktela: le înregistrează chiar softphone-ul; se importă doar apelurile fără agent cunoscut, la utilizatorul implicit.
 
 **Ce rămâne manual:** conexiunea API pe furnizor, agentul pe fiecare utilizator, pornirea apelului (linkul **Apeluri** de lângă număr sau tastatura widgetului), închiderea apelului cu butonul roșu, deschiderea telefonului web Daktela.
 
@@ -172,11 +190,19 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 - [ ] Un apel intrat pierdut, fără agent, apare la utilizatorul implicit.
 - [ ] Pe furnizor, **Ultimul import Daktela** se actualizează după import. Dacă apelurile nu apar și data nu se schimbă, importul a eșuat; cauza (token, adresă) e în logul serverului.
 - [ ] Un apel intern între agenți nu apare în istoric.
+- [ ] În **Telefon → Apeluri**, panoul **Țară** din stânga arată țările numerelor cu numărul de apeluri (de exemplu România și Ungaria), iar un clic pe o țară lasă în listă doar apelurile ei.
+- [ ] Coloana **Țară** apare în lista Apeluri fără s-o adăugați din opțiunile coloanelor, cu țara dedusă din prefix (+40 România, +36 Ungaria).
+- [ ] **Grupează după → Țară** grupează apelurile pe țări, iar căutarea după țară găsește apelurile cu numere din țara aleasă; un interior scurt (de exemplu `105`) nu are țară.
+- [ ] Pe o firmă din România, un apel primit de la un număr național (`0724…`) apare în istoric cu numărul `+40724…`, țara România și contactul găsit după număr; un număr cu `00` (`00421…`) apare ca `+421…`.
 - [ ] **Nu deranjați** pune agentul în Daktela pe pauza din **Pauză Daktela pentru Nu deranjați** (sau pe Indisponibil, fără pauză pe furnizor); **Disponibil** îl readuce pe Ready.
 - [ ] Un **Nu deranjați** de 15 minute încheie singur pauza Daktela după expirare (cron la un minut).
 - [ ] Pe **Nu deranjați**, apelurile din coadă nu mai sună la agent și apar în fila **Coadă**.
 - [ ] **Preia** pe un apel din fila **Coadă** sună în telefonul agentului; un apel preluat între timp de altcineva dă „Acest apel nu mai e în așteptare.”
 - [ ] **Fără sonerie** oprește soneria unui apel primit în softphone-ul Odoo, dar apelul apare în widget și poate fi acceptat; agentul rămâne Ready în Daktela.
+- [ ] Cu **Softphone Odoo**, furnizorul arată bifa **Reducere zgomot**, activă; cu **Telefon web Daktela** bifa nu apare. Într-un apel de probă cu zgomot în cameră (tastatură, conversație), clientul aude vocea agentului fără zgomotul de fond; cu bifa debifată, zgomotul se aude din nou.
+- [ ] **Setări audio** din meniul **Disponibil / Nu deranjați** arată microfoanele calculatorului cu numele lor și, în Chrome, Edge sau Brave, și difuzoarele pentru apel și pentru sonerie (în alte browsere lipsesc listele de difuzoare); apelul următor folosește microfonul și difuzoarele alese, iar soneria sună în difuzoarele alese pentru ea. Microfonul ales apare același și în setările de apel din Discuss.
+- [ ] Schimbarea microfonului în timpul unui apel se aude imediat la client, iar un apel pus pe **Mut** rămâne pe mut.
+- [ ] Cu dispozitivul ales deconectat, apelul pornește cu dispozitivul implicit, iar dialogul arată **Implicit în browser**.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -204,6 +230,7 @@ Modulul nu generează note contabile. Istoricul apelurilor se poate filtra și g
 | Acest apel nu mai e în așteptare. | Alt agent a preluat apelul sau clientul a închis între timp | Lista se actualizează singură; alegeți alt apel |
 | Avertisment Daktela la Nu deranjați (motivul Daktela) | Daktela a refuzat pauza (pauză inexistentă în **Pauză Daktela pentru Nu deranjați**, agent într-un apel) | Verificați numele pauzei pe furnizor; Nu deranjați rămâne activ în Odoo, dar Daktela continuă să sune |
 | Daktela nu a răspuns cu JSON. | Adresa duce la o pagină care nu e API-ul Daktela (proxy, mentenanță, adresă greșită) | Verificați **Adresă instanță Daktela**; importul celorlalți furnizori continuă |
+| Microfonul nu a putut fi schimbat (urmat de motivul browserului) | La alegerea microfonului în **Setări audio**, în timpul unui apel, browserul nu a putut porni microfonul ales (microfon folosit exclusiv de altă aplicație, permisiune retrasă, dispozitiv deconectat) | Închideți aplicația care ține microfonul sau permiteți microfonul pentru site în browser, apoi alegeți din nou; apelul continuă pe dispozitivul anterior |
 
 ## 10. Capturi de ecran
 
@@ -220,10 +247,13 @@ Capturile sunt generate automat din `tests/test_screenshots.py` (mixinul `Screen
 - `05_widget_in_convorbire.png`: widgetul Telefon în timpul apelului: În convorbire, cronometrul, butonul Deschide telefonul Daktela și butoanele SIP dezactivate.
 - `06_widget_apel_incheiat.png`: widgetul Telefon după închiderea apelului, cu rezumatul.
 - `07_widget_apel_intrare.png`: widgetul Telefon cu un apel primit: Apel primit, fișa contactului și butoanele Respinge și Acceptă.
-- `08_istoric_apeluri.png`: lista Apeluri, cu apelurile importate din Daktela.
+- `08_istoric_apeluri.png`: lista Apeluri, cu apelurile importate din Daktela, coloana Țară și panoul Țară (pasul 8).
+- `14_istoric_filtru_tara.png`: lista Apeluri filtrată pe Ungaria din panoul Țară (pasul 8).
 - `09_widget_nu_deranjati.png`: meniul Disponibil / Nu deranjați al widgetului (pasul 9).
 - `11_widget_fara_sonerie.png`: opțiunea Fără sonerie din meniul widgetului (pasul 11).
 - `10_widget_in_asteptare.png`: fila Coadă, cu apelurile din coadă și butonul Preia (pasul 10).
+- `12_furnizor_reducere_zgomot.png`: furnizorul pe Softphone Odoo, cu bifa Reducere zgomot (pasul 12).
+- `13_dialog_dispozitive_audio.png`: submeniul Setări audio, cu microfonul, difuzoarele apelului și ale soneriei, pe dispozitive de exemplu simulate în test (pasul 13).
 
 Capturile widgetului se fac cu răspunsurile Daktela simulate în test (apel pornit, apoi răspuns), fără un apel real.
 
@@ -235,7 +265,6 @@ Capturile widgetului se fac cu răspunsurile Daktela simulate în test (apel por
 - Traducerea română oficială a aplicației Telefon din Odoo are parametri traduși greșit (`%(durata)s`, `%(durată)s`, `%(timp)s`, `%(ora)s` în loc de `%(duration)s`, `%(time)s`), din care ar rezulta „A durat:” sau „Apel primit ()” fără valoare. Modulul îi corectează la trimiterea traducerilor către browser (19.0.1.11.1), deci în widget durata și ora apar normal; greșeala trebuie raportată și la Odoo.
 - Importul presupune că Daktela trimite numărul clientului în câmpul `clid` pentru ambele direcții ; de verificat pe o instanță reală. Autentificarea (antetul `X-AUTH-TOKEN`), formatul filtrului și fusul orar al orelor au fost confirmate de Daktela.
 - Nu există legături către înregistrările audio; sunt în roadmap.
-- În interfața în română, coloana **Dată** din lista Apeluri arată „Astăzi," fără oră: e traducerea aplicației Telefon din Odoo, nu a acestui modul.
 
 ---
 

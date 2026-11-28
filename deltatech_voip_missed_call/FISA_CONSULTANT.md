@@ -37,9 +37,13 @@ Modulul nu are temei legal propriu. Contextul este operațional: lista se constr
 
 ### Pasul 1 — Deschideți lista clienților de sunat înapoi
 
-Mergeți la **Telefon → Apeluri nepreluate**. Lista se deschide cu filtrul **De sunat înapoi** și are un rând pe client (pe număr de telefon), cu încercarea cea mai recentă sus: **Ultima încercare**, **Contact**, **Număr de telefon**, **Încercări**, **Ultimul sunat** (utilizatorul la care a sunat ultimul apel), **Stare**, **Rezolvat de** și **Notă**. Un rând apare când un apel de intrare e nepreluat sau respins; apelurile următoare de la același număr se adună pe același rând, chiar dacă numărul e scris diferit (`0721 000 111` și `+40721000111`), iar **Încercări** crește. Apelurile de ieșire nepreluate și apelurile interne nu apar aici. Rândul îl vede orice utilizator intern, nu doar cel la care a sunat apelul.
+Mergeți la **Telefon → Apeluri nepreluate**. Lista se deschide cu filtrul **De sunat înapoi** și are un rând pe client (pe număr de telefon), cu încercarea cea mai recentă sus: **Ultima încercare**, **Contact**, **Număr de telefon**, **Țară**, **Încercări**, **Ultimul sunat** (utilizatorul la care a sunat ultimul apel), **Operatori** (toți utilizatorii la care au sunat apelurile clientului), **Stare**, **Rezolvat de** și **Notă**. Un rând apare când un apel de intrare e nepreluat sau respins; apelurile următoare de la același număr se adună pe același rând, chiar dacă numărul e scris diferit (`0721 000 111` și `+40721000111`), iar **Încercări** crește. Apelurile de ieșire nepreluate și apelurile interne nu apar aici. Rândul îl vede orice utilizator intern, nu doar cel la care a sunat apelul.
 
-![Lista Apeluri nepreluate cu filtrul De sunat înapoi: trei rânduri, Client Exemplu SRL cu 3 încercări și nota Vrea ofertă la plăcuțe de frână, un număr fără contact +40755111222 și Service Auto Nord SRL cu câte 1 încercare, toate în starea De sunat înapoi, cu butonul Marchează rezolvat](screenshots/01_lista_de_sunat_inapoi.png)
+**Filtrați rândurile pe țară.** Coloana **Țară** arată țara numărului, dedusă din prefixul internațional (+40 România, +36 Ungaria), nu din fișa contactului, deci o au și numerele fără contact. În stânga listei, panoul **Țară** arată țările numerelor, fiecare cu numărul de rânduri; un clic pe o țară lasă în listă doar rândurile ei, iar **Tot** le arată din nou pe toate. Așa, o operatoare care răspunde clienților dintr-o singură țară își vede doar clienții ei. Din bara de căutare, rândurile se pot căuta după țară și grupa după țară (**Grupează după → Țară**). Numărul rândului e salvat în format internațional (un număr național primește prefixul țării companiei), deci și clienții care sună de pe un număr național au țară; un rând fără țară (de exemplu când firma nu are țara completată) apare doar la **Tot**.
+
+**Filtrați rândurile pe operator.** Coloana **Operatori** arată toți utilizatorii la care au sunat apelurile nepreluate ale clientului. În bara de căutare, scrieți numele unui utilizator și alegeți **Căutare Operatori pentru: …**, sau grupați cu **Grupează după → Operator** (un rând apare la fiecare operator al lui) ori **Ultimul sunat**. Filtrul se poate salva ca favorit (**Favorite → Salvează căutarea curentă**), de exemplu cu operatoarele unei linii, ca fiecare echipă să-și deschidă lista ei.
+
+![Lista Apeluri nepreluate cu filtrul De sunat înapoi: în stânga panoul Țară cu Tot și România 3; trei rânduri, toate cu Țară România, Client Exemplu SRL cu 3 încercări și nota Vrea ofertă la plăcuțe de frână, un număr fără contact +40755111222 și Service Auto Nord SRL cu câte 1 încercare, toate în starea De sunat înapoi, cu butonul Marchează rezolvat](screenshots/01_lista_de_sunat_inapoi.png)
 
 ### Pasul 2 — Scrieți o notă pe rând
 
@@ -69,7 +73,7 @@ Dacă clientul a fost contactat pe alt canal (mobil, e-mail) sau apelul nu mai e
 
 ### Note de monografie și raportare
 
-Modulul nu generează note contabile. Lista se poate filtra după **De sunat înapoi**, **Rezolvat**, **M-a sunat pe mine** și **Azi**, și grupa după **Rezolvat de** sau **Stare**.
+Modulul nu generează note contabile. Lista se poate filtra după **De sunat înapoi**, **Rezolvat**, **M-a sunat pe mine** și **Azi**, după țară din panoul **Țară**, și grupa după **Operator**, **Ultimul sunat**, **Rezolvat de**, **Stare** sau **Țară**; câmpul **Operatori** permite filtre salvate pe utilizatori.
 
 ## 7. Legături cu alte module / declarații
 
@@ -78,7 +82,7 @@ Modulul nu generează note contabile. Lista se poate filtra după **De sunat în
 | `voip` (Telefon, Enterprise) | Istoricul apelurilor din care se construiește lista, meniul Telefon și linkul de apel de pe număr. Modulul nu funcționează fără el. |
 | `deltatech_voip_daktela` (opțional) | Aduce apelurile Daktela în istoric (import la 10 minute, webhook, widget); modulul le folosește ca pe orice apel din Telefon. |
 
-**Ce e automat:** crearea rândului la primul apel nepreluat, adunarea apelurilor următoare de la același număr, închiderea rândului la o convorbire preluată cu numărul (de intrare sau de ieșire), ignorarea unui apel nepreluat importat târziu, mai vechi decât o convorbire deja înregistrată, reluarea apelurilor din ultimele 7 zile la instalare, închiderea rândului când importul corectează un apel nepreluat în convorbire preluată.
+**Ce e automat:** țara rândului, din prefixul numărului, crearea rândului la primul apel nepreluat, adunarea apelurilor următoare de la același număr, închiderea rândului la o convorbire preluată cu numărul (de intrare sau de ieșire), ignorarea unui apel nepreluat importat târziu, mai vechi decât o convorbire deja înregistrată, reluarea apelurilor din ultimele 7 zile la instalare, închiderea rândului când importul corectează un apel nepreluat în convorbire preluată.
 
 **Ce rămâne manual:** apelul înapoi, nota, **Marchează rezolvat** pentru clienții contactați altfel. Lista *Missed* din Daktela nu se golește din Odoo.
 
@@ -95,6 +99,8 @@ Modulul nu generează note contabile. Lista se poate filtra după **De sunat în
 - [ ] După un rând rezolvat, un nou apel nepreluat de la același client deschide un rând nou cu **Încercări** 1.
 - [ ] Apelurile de ieșire nepreluate și apelurile interne (extensii de 1–2 cifre și apeluri cu contacte ale propriei firme) nu apar în listă.
 - [ ] Un apel nepreluat importat după o convorbire preluată mai nouă cu același număr nu creează rând.
+- [ ] Coloana **Operatori** arată toți utilizatorii la care a sunat clientul; căutarea după un operator lasă doar rândurile lui, iar **Grupează după → Operator** pune rândul la fiecare operator.
+- [ ] Coloana **Țară** apare implicit în listă, cu țara dedusă din prefix (+40 România, +36 Ungaria); panoul **Țară** din stânga arată țările cu numărul de rânduri, un clic pe o țară lasă doar rândurile ei, iar **Grupează după → Țară** grupează rândurile pe țări.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -102,13 +108,14 @@ Modulul nu generează note contabile. Lista se poate filtra după **De sunat în
 |---|---|---|
 | „La un apel nepreluat poți doar să scrii o notă.” | Un utilizator fără drept de administrator Telefon a încercat să modifice alt câmp decât nota (de exemplu printr-un import sau o acțiune de server). | Folosiți **Marchează rezolvat** pentru a închide rândul; restul câmpurilor le completează apelurile. |
 | Clientul apare de două ori în listă | Numerele nu se recunosc ca același număr, de obicei pentru că firma nu are țara completată. | Completați țara companiei în **Setări → Utilizatori și companii → Companii**; rândurile noi se vor aduna corect. |
+| Coloana **Țară** e goală pe toate rândurile | Biblioteca Python `phonenumbers` nu e instalată pe server (țara se citește din prefix cu ea). | Instalați `phonenumbers` (cerința standard a aplicației Telefon) și reporniți serverul; rândurile noi primesc țara. |
 | Rândul nu dispare după apelul înapoi | Apelul nu e încă în istoric (cu Daktela, importul rulează la 10 minute) sau clientul nu a răspuns. | Verificați apelul în **Telefon → Apeluri**: rândul se închide doar la un apel preluat (starea **Încetat**). Altfel, folosiți **Marchează rezolvat**. |
 
 ## 10. Capturi de ecran
 
 Capturile sunt generate automat de `tests/test_screenshots.py` (mixinul `ScreenshotCase` din `deltatech_doc_screenshots`, import defensiv), în română, pe o companie RO, și stau în `static/description/`:
 
-1. `01_lista_de_sunat_inapoi.png` — lista cu filtrul De sunat înapoi, trei clienți (pasul 1).
+1. `01_lista_de_sunat_inapoi.png` — lista cu filtrul De sunat înapoi, trei clienți, coloana și panoul Țară (pasul 1).
 2. `02_nota_pe_rand.png` — nota scrisă în coloana Notă (pasul 2).
 3. `03_formular_rand.png` — formularul rândului cu apelurile clientului (pasul 3).
 4. `04_lista_rezolvate.png` — lista cu filtrul Rezolvat, după apelul înapoi (pasul 4).

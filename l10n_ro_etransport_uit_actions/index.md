@@ -1,10 +1,11 @@
 # eTransport UIT Actions (localizat la `l10n_ro_etransport_uit_actions/index.md`)
 
 - **Nume Tehnic:** `l10n_ro_etransport_uit_actions`
-- **Versiune:** `19.0.1.1.4`
+- **Versiune:** `19.0.1.2.0`
 - **Cale:** https://github.com/dhongu/l10n-romania/tree/19.0/l10n_ro_etransport_uit_actions
 - **Cale Locală:** `odoo-addons/l10n-romania/l10n_ro_etransport_uit_actions`
 - **Ultima Ingestie:** `2026-10-09`
+- **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
 

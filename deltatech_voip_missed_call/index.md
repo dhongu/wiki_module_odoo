@@ -1,7 +1,7 @@
 # Phone - Apeluri pierdute de sunat înapoi (localizat la `deltatech_voip_missed_call/index.md`)
 
 - **Nume Tehnic:** `deltatech_voip_missed_call`
-- **Versiune:** `19.0.1.0.0`
+- **Versiune:** `19.0.1.1.0`
 - **Cale:** https://github.com/terrabit-solutions/bitshop_ent/tree/19.0/deltatech_voip_missed_call
 - **Cale Locală:** `odoo-addons/bitshop_ent/deltatech_voip_missed_call`
 - **Ultima Ingestie:** `2026-11-26`

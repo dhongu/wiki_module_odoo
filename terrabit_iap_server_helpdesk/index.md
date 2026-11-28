@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.3.1`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_iap_server_helpdesk
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_iap_server_helpdesk`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -74,13 +74,29 @@ este doar planificat, nu funcționează încă.
   ambele părți.
 - Creditele nu se acordă automat la înregistrarea contului — se alocă manual, per client, direct
   pe contul IAP; consumul lor automat din orele pontate pe tichete nu este implementat.
+- **Chat de suport**: fiecare client are un canal Discuss („Support · <client>”), creat la primul
+  mesaj, cu membrii echipei de helpdesk; rutele `/iap/terrabit_helpdesk/chat/post` și
+  `/iap/terrabit_helpdesk/chat/messages` (aceasta din urmă acceptă `after_id` și întoarce pagina
+  următoare de mesaje, pentru discuții de peste 500 de mesaje). Mesajul unui consultant anunță
+  baza clientului, care îl aduce; mesajele clientului și notificările de sistem nu declanșează
+  anunț. Un mesaj retrimis cu aceeași `request_key` nu se postează de două ori.
+- **Memento-uri**: subtipul de mesaj „Ticket Reminder”; lista de tichete trimisă conectorului are
+  `reminder_count` (memento-uri trimise de la ultimul răspuns al clientului) și
+  `last_reminder_date`. Memento-urile sunt numărate, nu copiate la client și nu se șterg niciodată;
+  ele anunță baza clientului, iar sincronizarea incrementală întoarce și tichetele atinse doar de
+  un memento sau de un răspuns. Migrarea marchează memento-urile deja trimise (e-mailurile
+  „Follow-up - …” fără subtip).
+- Un răspuns retrimis de conector cu aceeași `request_key` nu se postează de două ori, iar
+  atașamentele lui nu se creează din nou; două cereri simultane cu aceeași cheie nu pot posta
+  ambele (un index unic pe model, înregistrare și cheie o respinge pe a doua, care e reluată și
+  găsește primul mesaj). Cererile fără cheie se comportă ca înainte.
 - Închiderea unui tichet pe helpdesk-ul Terrabit cere pontaj (regulă venită din alt modul, nu din
   acesta) — fără el tichetul nu ajunge în stadiul închis, iar clientul nu îl vede ca **Închis**.
 
 #### 3. Dependențe
 
 - `iap`
-- `terrabit_iap_server`
+- [terrabit_iap_server](../terrabit_iap_server/index.md)
 - `helpdesk`
 - `helpdesk_timesheet`
 
@@ -110,17 +126,21 @@ este doar planificat, nu funcționează încă.
 
 - `data/iap_server_service_data.xml`: creează serviciul IAP „Terrabit Helpdesk"
   (`service_code=terrabit_helpdesk`, `initial_credits=0`).
+- `data/mail_message_subtype_data.xml`: subtipul de mesaj „Ticket Reminder”, folosit pentru
+  numărarea memento-urilor.
 
 **Controller**
 
 - `controllers/main.py`: endpointuri JSON-RPC, `auth="none"` — `/iap/terrabit_helpdesk/tickets`
   (creare), `/iap/terrabit_helpdesk/tickets/list`, `/iap/terrabit_helpdesk/tickets/messages`,
-  `/iap/terrabit_helpdesk/tickets/message/post`; autentificarea se face prin `account_token`,
+  `/iap/terrabit_helpdesk/tickets/message/post`, `/iap/terrabit_helpdesk/tickets/close`,
+  `/iap/terrabit_helpdesk/tickets/hold`, `/iap/terrabit_helpdesk/chat/post`,
+  `/iap/terrabit_helpdesk/chat/messages`; autentificarea se face prin `account_token`,
   rezolvat direct în cod, nu prin `ir.rule`.
 
 #### 5. Conexiuni
 
-- `terrabit_iap_server`: furnizează conturile înregistrate,
+- [terrabit_iap_server](../terrabit_iap_server/index.md): furnizează conturile înregistrate,
   serviciile și creditele IAP pe care se bazează acest modul.
 - `helpdesk`: tichetele, echipele și stadiile extinse de modul.
 - `helpdesk_timesheet`: pontajul pe tichete; e și dependență de instalare, pentru că una dintre

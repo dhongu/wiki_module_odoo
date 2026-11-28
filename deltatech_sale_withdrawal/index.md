@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.3.9`
 - **Cale:** https://github.com/terrabit-solutions/bitshop/tree/19.0/deltatech_sale_withdrawal
 - **Cale Locală:** `odoo-addons/bitshop/deltatech_sale_withdrawal`
-- **Ultima Ingestie:** 2026-09-24
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -24,6 +24,13 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 - Registru de retrageri în Vânzări, cu termenul de rambursare din art. 13 și activitate programată pentru responsabil.
 - Contract de execuție conectabil (pluggable), astfel încât urmărirea operațională (retur de stoc, notă de credit, sistem extern) se adaugă prin alte module, fără a atinge acest modul.
 - Interfață tradusă integral în română (`i18n/ro.po`).
+- **Configurare** în *Vânzări → Configurare → Setări → Withdrawal from Contract*: *Withdrawal Function* (expune butonul pe portal; perioada legală e de minimum 14 zile, o perioadă comercială mai lungă e permisă, una mai scurtă nu), *Withdrawal Period (days)* (implicit 14), *Refund Deadline* (zile pentru rambursare după informare, art. 13, implicit 14), *Withdrawal Execution* (modul implicit `Manual` e suficient legal: retragerea se înregistrează, consumatorul primește confirmarea și se programează o activitate; alte module adaugă alte moduri) și *Use Odoo's Native Withdrawal Button* (ascunde butonul modulului fără dezinstalare; registrul și înregistrările vechi rămân neatinse).
+- **Excepții art. 16 pe produs**: câmpul *Withdrawal Exception* (la comandă, produse igienice sigilate, perisabile, suporturi desigilate, conținut digital deja livrat) se moștenește din categorie dacă nu e setat pe produs.
+- Înainte de punerea în producție, e-mailul de confirmare a comenzii trebuie să conțină linkul de portal cu token de acces; fără el, un invitat nu poate ajunge la buton.
+- Pe portal, după expirarea perioadei butonul rămâne pe pagină, dar dezactivat și cu explicație, ca existența lui să poată fi verificată ulterior; pagina urmează limba portalului. Consumatorul poate alege opțional un motiv și poate adăuga detalii.
+- Dacă trimiterea confirmării eșuează, retragerea rămâne înregistrată, dar marcată ca neconfirmată, iar responsabilul comenzii primește o activitate; până la trimitere, perioada de retragere se extinde la douăsprezece luni, iar un cron orar reîncearcă.
+- În registrul *Vânzări → Comenzi → Withdrawals*: filtre *Not Acknowledged* și *Refund Overdue*, grupare după stare sau lună de transmitere; comanda are un buton **Withdrawals**; formularul retragerii are **Resend Acknowledgement** și **Mark Refunded** (înregistrările rambursate apar estompate). Modulul nu creează înregistrări contabile: rambursarea se face prin fluxul obișnuit de facturare și plată (notă de credit, retur de plată).
+- Ghidul pas-cu-pas, cu capturi de ecran, este în [FISA_CONSULTANT.md](FISA_CONSULTANT.md).
 
 #### 3. Dependențe
 
@@ -61,4 +68,4 @@ Modulul implementează funcția de retragere din contract (dreptul de renunțare
 
 - [deltatech_sale_withdrawal_stock](../deltatech_sale_withdrawal_stock/index.md): extensie care depinde de acest modul și de `sale_stock`, adăugând anularea sau returul efectiv de stoc la execuția retragerii.
 - [deltatech_rma](../deltatech_rma/index.md): returul comercial — act juridic diferit, model separat intenționat; puntea [deltatech_rma_withdrawal](../deltatech_rma_withdrawal/index.md) dă retragerii fișa cu cod de bare și recepția prin scanare.
-- `mail`: infrastructura de e-mail și șablon folosită pentru confirmarea de primire pe suport durabil.
+- `mail`: (dependență tranzitivă, prin `sale` și `portal`) infrastructura de e-mail și șablon folosită pentru confirmarea de primire pe suport durabil.

@@ -84,6 +84,11 @@ Date minime pentru demo (folosite și în capturi), pe compania **RO Company**:
 3. În **Configurare → Matrice de risc**, verificați matricea 5×5 sau creați una proprie: scale,
    niveluri cu intervale de punctaj, apoi **Completează grila din punctaj** sau completați grila de
    mână (de exemplu pentru o metodă în care nivelul nu rezultă din produsul punctajelor).
+   Intervalele nivelurilor trebuie să acopere toate punctajele posibile, fără goluri: altfel
+   **Completează grila din punctaj** se oprește și arată punctajele neacoperite. Punctajul minim al
+   unui nivel nu poate depăși punctajul maxim.
+   O matrice cu **Companie** goală e partajată între companii; una cu companie se poate folosi doar
+   pe evaluările acelei companii.
 4. În **Configurare → Tipuri de instruire** și **Tipuri de echipament**, ajustați periodicitățile.
 
 ## 6. Flux de utilizare
@@ -117,20 +122,27 @@ calitate.
 
 ### Pasul 4 — Închiderea incidentului
 
-**Închide** se poate apăsa doar după ce neconformitatea legată este închisă, adică după ce
-responsabilul cu calitatea a verificat eficacitatea tuturor acțiunilor. Altfel apare mesajul cu
-neconformitatea rămasă deschisă. Un incident fără neconformitate (de exemplu un eveniment evitat la
-limită fără acțiuni) se închide direct. **Redeschide** îl readuce în investigație.
+**Închide** se poate apăsa doar după ce toate neconformitățile incidentului sunt închise, adică după
+ce responsabilul cu calitatea a verificat eficacitatea tuturor acțiunilor. Contează atât
+neconformitatea deschisă din incident, cât și orice altă neconformitate care are incidentul ca
+sursă; o acțiune redeschisă după închiderea neconformității blochează și ea închiderea. Altfel apare
+mesajul cu neconformitățile rămase. Un incident fără neconformitate (de exemplu un eveniment evitat
+la limită fără acțiuni) se închide direct. **Redeschide** îl readuce în investigație.
+
+Legătura cu neconformitatea o pune doar butonul **Deschide neconformitate**; ea nu se poate schimba
+sau șterge de mână pe incident.
 
 ![Dialogul Operație invalidă peste accidentul în investigație: incidentul se poate închide doar după ce neconformitatea legată este închisă, cu toate acțiunile verificate](screenshots/04_incident_inchidere_blocata.png)
 
 ### Pasul 5 — Evaluarea riscurilor
 
 **Sănătate și securitate → Evaluări de risc → Nou.** Pe un loc de muncă sau un post se alege
-matricea și se adaugă pericolele: consecința, **Probabilitate** și **Gravitate**, din care rezultă
+matricea (a companiei evaluării sau una partajată) și se adaugă pericolele: consecința, **Probabilitate** și **Gravitate**, din care rezultă
 **Risc**; apoi **Măsuri de control** și valorile după măsuri, din care rezultă **Risc rezidual**.
 **Cel mai mare risc rezidual** arată nivelul cel mai sever al evaluării. **Aprobă** (doar
-responsabilul SSM) blochează evaluarea; **Data reevaluării** amintește când se reia.
+responsabilul SSM) blochează evaluarea; **Data reevaluării** amintește când se reia. Aprobarea cere
+ca fiecare pericol evaluat să aibă nivelul calculat (inițial și rezidual): dacă grila matricei nu are
+celula perechii alese, aprobarea se oprește cu lista pericolelor.
 
 1. **Găsiți pe ecran** — pe fiecare rând: pericolul, riscul inițial colorat pe nivel și riscul
    rezidual după măsuri.
@@ -145,14 +157,18 @@ responsabilul SSM) blochează evaluarea; **Data reevaluării** amintește când 
 **Configurare → Matrice de risc.** O matrice are scalele de **Probabilitate** și **Gravitate**,
 **Niveluri de risc** (nume, culoare, interval de punctaj, ce cere nivelul) și **Grilă**, care spune
 ce nivel are fiecare pereche probabilitate–gravitate. **Completează grila din punctaj** umple
-celulele goale după produsul punctajelor; celulele se pot modifica de mână.
+celulele goale după produsul punctajelor, doar dacă nivelurile acoperă toate punctajele; celulele se
+pot modifica de mână. O modificare a grilei recalculează nivelurile doar la evaluările în ciornă;
+evaluările aprobate își păstrează nivelurile, iar **Înapoi la ciornă** le recalculează după grila
+curentă.
 
 ![Matricea de risc 5x5, tab-ul Niveluri de risc: Scăzut 1–4, Mediu 5–9, Ridicat 10–16 și Critic 17–25, fiecare cu culoarea și acțiunea cerută](screenshots/06_matrice_risc.png)
 
 ### Pasul 7 — Sesiunea de instruire
 
 **Sănătate și securitate → Instruire → Sesiuni de instruire → Nou.** Se completează subiectul,
-**Tip de instruire**, data, durata, instructorul și participanții. **Marchează ca realizat** fixează
+**Tip de instruire**, data, durata, instructorul și participanții, care trebuie să fie angajați ai
+companiei sesiunii. **Marchează ca realizat** fixează
 sesiunea; fiecare participant prezent primește **Scadență** = data sesiunii plus periodicitatea
 tipului.
 
@@ -162,7 +178,8 @@ tipului.
 
 **Instruire → Evidența instruirilor** listează instruirile fiecărui angajat. Un rând e **restant**
 (cu roșu) când scadența a trecut și angajatul nu a mai făcut o instruire de același tip după aceea;
-filtrul **Restant** le arată pe toate.
+filtrul **Restant** le arată pe toate. Angajații arhivați (plecați din firmă) nu mai apar restanți;
+istoricul instruirilor lor rămâne.
 
 ![Evidența instruirilor: Elena Stan, Maria Ionescu și Ion Popescu instruiți recent, cu scadența peste un an; Andrei Dumitru cu instruirea de acum 13 luni restantă, cu roșu; rândurile din urmă cu 13 luni ale Mariei Ionescu și ale lui Ion Popescu nu sunt restante, fiind urmate de instruirea nouă](screenshots/08_evidenta_instruiri.png)
 
@@ -170,8 +187,10 @@ filtrul **Restant** le arată pe toate.
 
 **Sănătate și securitate → Echipament de protecție** este registrul echipamentului dat: angajat,
 echipament, cantitate, mărime, data eliberării și **De înlocuit la**, calculată din perioada
-tipului (se poate corecta). Rândurile cu termenul trecut apar cu roșu; **Returnat** scoate rândul
-din evidența curentă.
+tipului (se poate corecta). O schimbare a perioadei pe tipul de echipament se aplică doar
+echipamentelor date de acum înainte; datele de înlocuire deja stabilite rămân neschimbate. Rândurile
+cu termenul trecut apar cu roșu; **Returnat** scoate rândul din evidența curentă. Echipamentul unui
+angajat arhivat (plecat) nu mai apare de înlocuit; istoricul rămâne.
 
 ![Registrul echipamentului de protecție, filtrat În folosință: încălțămintea lui Ion Popescu și mănușile Mariei Ionescu, cu termenul depășit, apar cu roșu; casca, vesta reflectorizantă și încălțămintea Elenei Stan sunt în termen](screenshots/09_echipament_protectie.png)
 
@@ -207,14 +226,25 @@ oficiale către autorități.
 - [ ] Utilizatorul simplu nu poate investiga, închide sau modifica un incident aflat în investigație.
 - [ ] **Deschide neconformitate** creează o singură neconformitate cu sursa *Incident SSM*; o
       vătămare Cu zile de incapacitate, Gravă sau Mortală dă o neconformitate majoră.
-- [ ] Incidentul nu se închide cât timp neconformitatea legată e deschisă.
+- [ ] Incidentul nu se închide cât timp o neconformitate a lui e deschisă sau are o acțiune
+      neverificată (inclusiv una redeschisă după închiderea neconformității).
+- [ ] Neconformitatea legată nu se poate schimba sau șterge de mână pe incident.
 - [ ] Pe matricea 5×5, probabilitatea 1 și gravitatea 1 dau **Scăzut**, iar 5 și 5 dau **Critic**.
 - [ ] Probabilitatea 4 și gravitatea 4 dau **Ridicat**; după măsuri, 2 și 4 dau **Mediu**.
-- [ ] Doar responsabilul SSM aprobă o evaluare de risc.
+- [ ] Doar responsabilul SSM aprobă o evaluare de risc; aprobarea se oprește dacă un pericol nu are
+      nivel în grilă.
+- [ ] O modificare a grilei matricei schimbă nivelurile evaluărilor în ciornă, nu și pe ale celor
+      aprobate.
+- [ ] **Completează grila din punctaj** se oprește dacă un punctaj nu e acoperit de niciun nivel;
+      un nivel cu punctajul minim peste cel maxim nu se poate salva.
+- [ ] O evaluare nu acceptă matricea altei companii; o matrice partajată (fără companie) merge
+      peste tot.
+- [ ] Un angajat al altei companii nu poate fi adăugat ca participant la o sesiune de instruire.
 - [ ] O instruire periodică (12 luni) făcută la data D are scadența D + 12 luni; după scadență
       apare restantă, până la o instruire nouă de același tip.
 - [ ] Mănuși de protecție (3 luni) date la data D sunt de înlocuit la D + 3 luni; **Returnat**
-      scoate rândul din restanțe.
+      scoate rândul din restanțe; schimbarea perioadei tipului nu mută datele deja stabilite.
+- [ ] Un angajat arhivat nu mai apare restant la instruire și nici la echipament.
 
 ## 9. Mesaje de eroare frecvente
 
@@ -223,15 +253,20 @@ oficiale către autorități.
 | Doar responsabilul SSM poate investiga sau închide un incident. | un utilizator simplu apasă un buton sau importă o stare | o face responsabilul SSM |
 | Un incident în investigație poate fi modificat doar de responsabilul SSM. | corectură a raportorului după începerea investigației | corectura o face responsabilul SSM |
 | Un incident se raportează întâi; apoi se investighează și se închide. | import de incidente direct în altă stare | importați-le raportate |
-| Incidentul … se poate închide doar după ce neconformitatea … este închisă, cu toate acțiunile verificate. | **Închide** cu neconformitatea deschisă | realizați și verificați acțiunile, închideți neconformitatea |
+| Incidentul … se poate închide doar după ce neconformitatea … este închisă, cu toate acțiunile verificate. | **Închide** cu o neconformitate deschisă sau cu o acțiune neverificată (și una redeschisă după închidere) | realizați și verificați acțiunile, închideți neconformitatea |
+| Neconformitatea unui incident se deschide din incident. | legătura cu neconformitatea schimbată sau ștearsă de mână (sau dată la creare) | folosiți **Deschide neconformitate** |
 | Doar un incident raportat poate fi trecut în investigație. | **Investighează** pe un incident deja investigat | nimic de făcut |
 | Doar un incident în investigație poate fi închis. | **Închide** pe un incident raportat | întâi **Investighează** |
 | Doar responsabilul SSM poate aproba o evaluare a riscurilor. | aprobare de către alt rol | o aprobă responsabilul SSM |
 | Adăugați cel puțin un pericol înainte de aprobarea evaluării. | **Aprobă** fără pericole | adăugați pericolele |
 | Adăugați participanții înainte de a marca instruirea ca realizată. | sesiune fără participanți | adăugați participanții |
 | Doar o instruire planificată poate fi marcată ca realizată. | **Marchează ca realizat** de două ori | nimic de făcut |
+| Companii incompatibile pe înregistrări: … | evaluare cu matricea altei companii sau participant angajat al altei companii decât sesiunea | alegeți o matrice a companiei sau una partajată; adăugați doar angajați ai companiei sesiunii |
 | Un angajat apare o singură dată într-o sesiune de instruire. | același angajat adăugat de două ori | ștergeți rândul dublat |
 | Fiecare pereche probabilitate–gravitate are o singură celulă. | celulă dublată în grilă | ștergeți celula dublată |
+| Niciun nivel de risc al matricei … nu acoperă punctajul … | **Completează grila din punctaj** cu goluri între intervalele nivelurilor | ajustați intervalele nivelurilor, apoi completați din nou grila |
+| Punctajul minim al unui nivel de risc nu poate depăși punctajul maxim. | interval de punctaj inversat pe un nivel | corectați punctajul minim sau maxim |
+| Matricea de risc nu are celulă pentru încadrarea acestor pericole: … | **Aprobă** cu pericole a căror pereche probabilitate–gravitate lipsește din grilă | completați grila matricei, apoi aprobați |
 
 ## 10. Capturi de ecran
 

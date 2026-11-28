@@ -102,6 +102,7 @@ Roluri recomandate pentru testare:
 | **607** | partea din diferența de preț aferentă mărfii deja ieșite din stoc (FIFO/CMP, numai dacă e contul de cheltuială al produsului); câte o linie pe recepția căreia îi aparține |
 | **401** | datoria față de furnizor (la sosirea facturii) |
 | **308** | diferențe față de prețul standard, la cost standard: doar pentru materii prime, materiale consumabile și obiecte de inventar (301/302/303), după contul configurat pe categorie. La mărfuri (371) OMFP 1802/2014 nu are cont de diferențe față de prețul standard (378 ține adaosul comercial): se recomandă costul FIFO sau mediu |
+| **6588 / 609** | diferența dintre nota de credit a returului către furnizor și stornoul returului (cost): creditul **sub** cost (penalitate, taxă de restocare) merge pe cheltuială, implicit **6588**; creditul **peste** cost (reducere primită) pe **609**. Conturile se schimbă în *Setări → Inventar* (de exemplu 6581 la penalitate, 628 la taxă de restocare); fără cont configurat sau găsit în plan, diferența ajustează 371, ca înainte |
 | **665 / 765** | cheltuieli / venituri din diferențe de curs valutar |
 | **371.T** (analitic de 371) | cont de tranzit, setat pe locația de tranzit: marfa pe drum între două gestiuni |
 | **481 / 482** | decontări cu subunitățile care conduc contabilitate proprie (OMFP 1802/2014); folosite doar pe gestiunile marcate *Subunitate cu contabilitate proprie* |
@@ -134,7 +135,11 @@ Date minime pentru demo:
 
 Meniu: **Inventar → Configurare → Setări**, blocul **Evaluare**:
 
-1. ① **Recepție fără factură (371 = 408)** și **Cont 408 implicit** (dacă folosiți fluxul RNI).
+1. ① **Recepție fără factură (371 = 408)** și **Cont 408 implicit** (dacă folosiți fluxul RNI). Cu
+   această setare activă apar și **Cont pierdere la retur (6588)** și **Cont câștig la retur (609)**:
+   conturile pe care merge diferența dintre nota de credit a furnizorului și stornoul returului (sub cost,
+   respectiv peste cost). Lăsate goale, modulul folosește primul cont 6588 / 609 din plan; schimbați-le
+   când suma reținută e penalitate (6581) sau taxă de restocare (628).
 2. ② Opțional, **Blocare transfer fără cont de contrapartidă**: blochează transferul între gestiuni
    cu conturi de stoc diferite care nu poate fi contat — prin o locație de tranzit fără cont de
    tranzit, sau cu o subunitate cu contabilitate proprie fără cont de transfer.
@@ -273,6 +278,7 @@ facturii sau la validarea facturii care o înlocuiește; cât factura rămâne �
 
 Cazuri particulare (tratate automat, detaliate în „Note de monografie"):
 - **valută**: stocul rămâne la cursul recepției; diferența de curs recepție↔factură merge pe 665/765;
+- **nota de credit la retur diferită de stornou**: nu ajustează 371, ci 6588 (sub cost) sau 609 (peste cost), vezi „Note de monografie";
 - **preț diferit pe factură**: diferența ajustează 371 (FIFO/CMP; partea aferentă cantității deja ieșite din stoc merge pe 607, numai dacă contul de cheltuială al produsului e 607; la 601/602 rămâne pe stoc; la produsele cu clasă de evaluare contul vine din regula OBYC `stock_receipt_price_difference`, vezi fișa `l10n_ro_stock_obyc`) sau merge pe contul de diferențe
   de preț la cost standard (308, la materii prime și materiale; la mărfuri se recomandă FIFO/CMP, pentru că 378 ține adaosul comercial).
 
@@ -343,6 +349,16 @@ Nota `371 = 408` se **stornează în roșu** (OMFP 1802), proporțional cu valoa
 (4 × 100 = 400), astfel încât gestiunea și contul 408 scad împreună:
 
 - **Dr 371.1 = −400** / **Cr 408 = −400** (sume negative pe aceleași poziții).
+
+**Nota de credit a furnizorului la retur.** Bunurile returnate au ieșit deja din gestiune la cost, deci
+diferența dintre nota de credit și stornoul returului nu mai ajustează 371 (costul de achiziție al stocului
+rămas, așa cum îl definește OMFP 1802/2014 pct. 6, nu include diferența). Exemplu: 4 buc ies la 400, furnizorul creditează 4 × 90 = 360:
+`Dr 401 360` și `Dr 6588 40` / `Cr 408 400`; 371 rămâne la 600 pentru cele 6 buc. La firmă cu storno, partea
+401/408 (360) rămâne în roșu, iar cheltuiala de 40 se contează în negru, fiind o cheltuială nouă. Creditul
+peste cost se duce pe 609 (pct. 76). **TVA:** modulul nu recalculează TVA-ul, îl preia de pe nota de credit.
+Dacă suma reținută e penalitate, furnizorul ar trebui să reducă baza cu toată valoarea returnată și să ceară
+penalitatea separat, fără TVA (art. 286 alin. (4) lit. b și art. 287 lit. b din Codul fiscal); la taxa de
+restocare (serviciu) TVA-ul păstrat e justificat. Încadrarea depinde de contract și de documentul furnizorului.
 
 *Excepție:* dacă recepția a fost creditată pe un cont propriu al facturii (327, pasul 2b), returul se
 contează **mereu în roșu**, chiar dacă firma nu folosește stornarea, pe conturile notei de recepție
@@ -487,6 +503,10 @@ limitările).
 - Liniile 408 ale notei de recepție și ale stornoului poartă **furnizorul** (OMFP 1802, pct. 329),
   deci 408 se stinge și pe fișa furnizorului.
 - Retur furnizor: storno în roșu al notei `371 = 408` (sume negative, aceleași conturi).
+- Nota de credit a furnizorului la retur, diferită de stornou (ex. 4 buc ies la 400, credit 360): sub cost,
+  `Dr 401 360`, `Dr 6588 40` / `Cr 408 400`, cu 371 neschimbat la 600; peste cost, diferența se credită pe 609
+  (OMFP 1802/2014 pct. 6 și 76). Partea 401/408 rămâne în roșu la firmele cu storno, cheltuiala nouă se
+  contează în negru. TVA-ul se preia de pe nota de credit, nu se recalculează.
 - Transfer inter-gestiune cu conturi diferite: direct `371.2 = 371.1`; prin tranzit `371.T = 371.1`
   la plecare și `371.2 = 371.T` la sosire; cu o subunitate cu contabilitate proprie `481 = 371.1` și
   `371.2 = 481`. Valoarea totală a stocului nu se modifică.
@@ -508,6 +528,10 @@ Comportamentul de mai jos este acoperit de `tests/test_rni.py`, `tests/test_rni_
 | Scenariu | Rezultat așteptat |
 |---|---|
 | Recepție 10×100, fără factură | nota `371 = 408` pe 1000 |
+| Retur 4 buc (400), nota de credit 4×90 (`test_refund_below_cost_goes_to_expense`) | 40 pe 6588 în negru, 371 = 600, 408 = 0 |
+| Retur 4 buc (400), nota de credit 4×110 (`test_refund_above_cost_goes_to_609`) | 40 pe 609 la credit, 371 = 600, 408 = 0 |
+| Retur cu cont de pierdere ales pe companie (`test_refund_difference_uses_company_account`) | diferența pe contul ales, nu pe 6588 |
+| Retur fără 6588/609 în plan (`test_refund_difference_falls_back_to_371_without_accounts`) | diferența ajustează 371 (640), ca înainte |
 | Două recepții 6+4, 5 buc vândute, factură la 12 (FIFO) | 10 lei pe 607, legați doar de prima recepție; a doua rămâne 0 |
 | Factură la 12 pe 2 recepții parțiale (CMP) | suma consumată se împarte proporțional cu cantitatea recepționată (6/4) |
 | Factura resetată în ciornă sau stornată cu anulare | suma consumată pe recepție revine la 0 |
@@ -569,6 +593,9 @@ Ce rămâne manual: configurarea conturilor pe gestiune/companie, verificarea so
 
 ## 8. Verificări pentru consultant
 
+- [ ] Nota de credit la retur sub costul ieșirii (400 → credit 360): diferența de 40 pe **6588**, 371 rămâne la **600**, 408 stins.
+- [ ] Nota de credit la retur peste costul ieșirii: diferența pe **609** (la credit), 371 neschimbat la 600.
+- [ ] Cu un cont ales în **Cont pierdere la retur**, diferența merge pe acel cont, nu pe 6588; fără 6588/609 în plan și fără cont ales, diferența ajustează 371 ca înainte.
 - [ ] Setările **Recepție fără factură (371 = 408)**, **Blocare transfer fără cont de contrapartidă** și **Necesită gestiune contabilă** apar în Setări Inventar, blocul Evaluare.
 - [ ] Formularul **Gestiune contabilă** afișează câmpurile (gestionar, cont stoc, subunitate cu contabilitate proprie, cont 408, politică inventariere, locații); contul de transfer apare doar la subunități.
 - [ ] Recepția unui produs stocabil de la furnizor generează nota `371 = 408`, cu valoarea = cantitate × cost.

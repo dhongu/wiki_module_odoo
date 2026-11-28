@@ -51,12 +51,14 @@ Secure). Contextul operațional pe care trebuie să-l cunoască consultantul:
 - **Comision Revolut**: se contabilizează pe 627 „Cheltuieli cu serviciile bancare și asimilate” la decontare, pe baza
   raportului Revolut; modulul nu îl calculează. Tratamentul TVA al comisionului (prestator din UE: taxare inversă dacă serviciul este taxabil, fără TVA dacă este scutit) se verifică cu
   contabilul.
-- **Date necesare din contul Revolut Business:** cheia API secretă (**Secret key**) și cheia publică (**Public key**),
-  din secțiunea Merchant API; pentru testare, cheile din mediul **sandbox**.
+- **Date necesare din contul Revolut Business:** cheia API secretă (**Secret key**, `r_prod_…`) și cheia publică
+  (**Public key**, `pk_…`), generate din **API Console**; pentru testare, cheile din mediul **sandbox** (`r_test_…`).
 
 ## 5. Configurare inițială
 
-1. În contul Revolut Business (sandbox pentru testare) generați cheile API din secțiunea **Merchant API**.
+1. În contul Revolut Business (sandbox pentru testare) generați cheile API din **API Console**. Cheii secrete îi dați, la
+   produsul **Merchant**, permisiunile **Orders**, **Payments** și **Webhooks** (Read și Write) și, pentru Apple Pay,
+   **Apple Pay** (Write); permisiunile de la produsul Business nu ajung.
 2. În Odoo deschideți **Contabilitate → Configurare → Plăți online → Furnizori de plată → Revolut** (în lipsa
    modulului Enterprise de contabilitate, sub **Facturare**).
 3. Pe tabul **Date autentificare** completați **Cheie API Revolut** (cheia secretă) și **Cheie publică Revolut** și alegeți
@@ -255,7 +257,7 @@ Revolut, încărcarea fișierului Apple Pay și înregistrarea domeniului, nota 
 | Nu puteți crea un webhook Revolut dacă cheia API nu este setată. | s-a cerut webhook-ul fără cheia API | completați cheia API, apoi apăsați **Generează webhook-ul** |
 | Webhook-ul Revolut este deja configurat. | secretul de semnare există deja | nu e nevoie de nicio acțiune; ștergeți secretul doar dacă recreați webhook-ul |
 | Endpoint-ul webhook a fost creat în Revolut, dar nu a fost returnat niciun secret de semnare. … | Revolut nu a returnat secretul | copiați secretul din portalul Revolut în **Secret semnare webhook** |
-| Crearea webhook-ului Revolut a eșuat: … | adresa site-ului nu este publică sau cheia API este greșită / din alt mediu | verificați cheia, mediul (sandbox sau producție) și accesibilitatea site-ului |
+| Crearea webhook-ului Revolut a eșuat: … | adresa site-ului nu este publică, cheia API este greșită / din alt mediu sau (401 Unauthorized) cheia nu are permisiunea **Webhooks** la produsul Merchant | verificați cheia, permisiunile ei din API Console, mediul (sandbox sau producție) și accesibilitatea site-ului |
 | Sumă Revolut nepotrivită / Monedă Revolut nepotrivită / ID comandă Revolut nepotrivit | suma, moneda sau id-ul comenzii din Revolut nu corespund tranzacției | tranzacția rămâne în **Eroare**; verificați plata în portalul Revolut |
 | Încărcați mai întâi fișierul de validare a domeniului Apple Pay. … | s-a cerut înregistrarea domeniului fără fișier | încărcați **Fișier domeniu Apple Pay** din documentația Revolut |
 | The following payment methods must be disabled in order to enable manual capture: Revolut | se bifează **Captați Valoarea Manual**, dar metoda de plată Revolut nu declară suportul pentru captura manuală (limitare cunoscută a modulului) | lăsați bifa nefolosită; plata se încasează automat |

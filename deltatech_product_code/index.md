@@ -1,7 +1,7 @@
 # Codificare Produse (localizat la `deltatech_product_code/index.md`)
 
 - **Nume Tehnic:** `deltatech_product_code`
-- **Versiune:** `19.0.1.2.2`
+- **Versiune:** `19.0.1.2.3`
 - **Cale:** https://github.com/dhongu/deltatech/tree/19.0/deltatech_product_code
 - **Cale Locală:** `odoo-addons/deltatech/deltatech_product_code`
 - **Ultima Ingestie:** `2026-11-17`

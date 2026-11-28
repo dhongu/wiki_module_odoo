@@ -72,7 +72,10 @@ sincronizare:
 - **Categoria/atributele** — opționale (**Folosește categoriile**, **Tipul de produs ca categorie
   internă**, **Opțiuni ca atribute**); dacă **Opțiuni ca atribute** rămâne oprit, **produsul tot se importă**, dar **variantele lui** Shopify
   sunt sărite (nu fuzionate tăcut într-o singură variantă) — avertismentul apare doar în log-ul
-  serverului, nu vizibil pentru operator în interfață.
+  serverului, nu vizibil pentru operator în interfață. Excepție: cu **Doar mapare produse** bifat
+  pe backend, importul nu creează produse, iar **Opțiuni ca atribute** și **Tipul de produs ca
+  categorie internă** rămân oprite; variantele Shopify se leagă doar după SKU / cod de bare de
+  variantele Odoo existente.
 
 Date minime pentru demo: un magazin Shopify de test (sau Shopify Dev Store), cel puțin un produs
 cu variante, un client și o comandă existentă în magazin.
@@ -98,6 +101,12 @@ cu variante, un client și o comandă existentă în magazin.
    categorii cu același nume. Categoria se schimbă doar când se schimbă tipul de produs în
    Shopify. Atunci produsul trece în prima categorie cu noul nume, de aceea e bine ca numele
    categoriilor folosite pentru Shopify să fie unice.
+   **Catalog păstrat în Odoo**: dacă produsele, variantele și prețurile se gestionează în Odoo,
+   bifați în schimb **Doar mapare produse** (grupul **Produse** din același tab). Completați pe
+   variantele Odoo **Referința internă** = SKU-ul Shopify sau **Codul de bare** = codul de bare
+   Shopify, apoi, după **Importă datele de bază**, rulați **Mapează produsele** din meniul ⋮ al
+   cardului **Produse** (tab-ul **Obiecte**). O comandă cu o variantă rămasă nelegată nu se
+   importă până când produsul e creat sau legat în Odoo.
 7. Opțional, activați comutatoarele GraphQL dorite din tab-ul **GraphQL**. **Comenzi prin GraphQL**
    pornește bifat și rămâne așa; celelalte pornesc oprite.
    Tot aici, opțional, bifați **Importă doar produsele modificate** dacă importul de produse
@@ -185,6 +194,11 @@ Tot în acest tab, sub comutatoarele de produse, se află importul incremental d
 Captura de mai sus e făcută înainte de aceste două câmpuri; ele apar în același tab, sub
 comutatoarele de produse.
 
+Cu **Doar mapare produse** bifat (tab-ul **Comenzi și produse**), **Opțiuni ca atribute** și
+**Tipul de produs ca categorie internă** se opresc și devin needitabile: Shopify nu mai creează
+atribute sau categorii în Odoo. Importul de produse doar leagă variantele Shopify de variantele Odoo
+după SKU (referința internă) sau codul de bare.
+
 ### Pasul 4 — Prima sincronizare (tab Obiecte)
 
 Tab-ul **Obiecte** arată câte un card kanban pentru fiecare tip de date — 14 în total (inclusiv
@@ -196,6 +210,11 @@ ordinea asta, pentru prima sincronizare: **Depozite** → **Categorie publică**
 **Caracteristici**/**Valori ale caracteristicilor** (dacă e activată) → **Produse**/**Șablon de
 produs** → **Clienți** → **Etapă vânzare** (configurare manuală, nu import) → **Comandă de
 vânzare**, ultimul, ca liniile de comandă să găsească deja produsele și clienții importați.
+
+Cu **Doar mapare produse**, în locul importului de **Caracteristici** și **Produse** rulați
+**Mapează produsele** din meniul ⋮ al cardului **Produse**, apoi verificați lista legăturilor
+(numărul de pe card) că fiecare variantă Shopify are un **Produs Odoo**. Abia apoi importați
+comenzile.
 
 ![Tab Obiecte: 14 carduri, câte unul pe tip de date (Caracteristici, Clienți, Comandă de vânzare, Șablon de produs, Produse, Depozite, Etapă vânzare etc.), fiecare cu numărul de înregistrări sincronizate și butoanele lui, de exemplu Import pe Depozite și Import +preț și Export manual +preț pe Șablon de produs](screenshots/05_objects.png)
 
@@ -420,6 +439,12 @@ vânzare (tag-uri Shopify), verificarea periodică a webhook-urilor.
       eșuate, cel puțin o sincronizare înregistrată) după prima sincronizare reușită.
 - [ ] Un produs cu mai multe variante Shopify, fără **Opțiuni ca atribute** activat, tot se
       importă — dar variantele lui sunt sărite (verificați log-ul serverului, nu interfața).
+- [ ] Cu **Doar mapare produse** bifat, **Opțiuni ca atribute** și **Tipul de produs ca categorie
+      internă** sunt oprite și needitabile, iar **Mapează produsele** leagă variantele Shopify după
+      SKU / cod de bare, fără produse noi în Odoo.
+- [ ] Cu **Doar mapare produse** bifat, o comandă Shopify cu un SKU necunoscut în Odoo nu se
+      importă (jobul eșuează cu SKU-ul în mesaj); după crearea sau legarea produsului, jobul
+      reluat importă comanda.
 - [ ] **Secret client / Cheie API** e completat chiar și pe un backend cu token permanent, ca semnătura HMAC a
       webhook-urilor primite să se verifice.
 - [ ] Exportul de stoc/preț (dacă activat manual din **Marketplace → Configurare → Acțiuni programate**)
@@ -459,7 +484,8 @@ mesaj care spune că prețul nu a fost trimis și că cele două părți diferă
 | Mesaj / simptom | Cauză probabilă | Remediere |
 |---|---|---|
 | Comandă importată fără depozit corect (rutată pe depozitul implicit) | Location-ul Shopify al comenzii nu are un `marketplace.warehouse` mapat | Importați/verificați maparea de depozite înainte de a reimporta comanda |
-| Produsul se importă, dar variantele lui nu (avertisment doar în log-ul serverului) | **Opțiuni ca atribute** e oprit, iar produsul are mai multe variante reale | Activați **Opțiuni ca atribute** pe backend și reimportați produsul |
+| Produsul se importă, dar variantele lui nu (avertisment doar în log-ul serverului) | **Opțiuni ca atribute** e oprit, iar produsul are mai multe variante reale | Activați **Opțiuni ca atribute** pe backend și reimportați produsul; cu **Doar mapare produse** bifat, opțiunea rămâne oprită: legați variantele cu **Mapează produsele** |
+| Job de comandă eșuat „… este setat pe Doar mapare produse, iar produsul din marketplace … nu corespunde niciunui produs din Odoo …” sau „Nu s-a găsit produsul pentru SKU-ul … din comanda …” | Backend cu **Doar mapare produse**, iar varianta Shopify din comandă nu are în Odoo o variantă cu același SKU (referință internă) sau cod de bare | Creați sau corectați produsul în Odoo, rulați **Mapează produsele** și reluați jobul (**Repune în coadă**) |
 | O comandă nouă nu ajunge deloc în Odoo | Webhook `orders/create` lipsă sau expirat (Shopify a revocat/nu a găsit endpoint-ul) | **Verifică webhook-urile**, înregistrați ce apare ca **Lipsă**; între timp, rulați **Importă** manual pe cardul **Comandă de vânzare** |
 | Prețul exportat către Shopify nu se schimbă | Job în eroare (rate limit `429`/GraphQL `THROTTLED`) sau varianta nu are diferență de preț față de ultima exportare | Verificați job-urile eșuate din cardul kanban al backend-ului; exportul pornește doar pentru variante cu preț schimbat |
 | Token expirat brusc pe un backend Dev Dashboard App | **ID client** sau **Secret client / Cheie API** lipsește de pe backend (tokenul e tratat ca static și nu se reînnoiește), ori reînnoirea la apelul API a eșuat (secret schimbat sau aplicație dezinstalată în Shopify) | Completați **ID client** și **Secret client / Cheie API** pe backend; dacă eroarea persistă, verificați în Shopify că aplicația e instalată și că secretul e cel actual, apoi apăsați **Testează conexiunea** |

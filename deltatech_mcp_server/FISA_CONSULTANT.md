@@ -143,8 +143,8 @@ Ce dă fiecare bifă (uneltele de scriere apar doar cu **Permite clienților AI 
 
 - **Permite creare**: `create` (o înregistrare sau o listă de înregistrări într-un apel, până la numărul maxim per apel),
   `find_or_create` (întoarce înregistrarea găsită după un filtru sau o creează) și `copy` (acțiunea *Duplicare*);
-- **Note și activități**: note interne și activități planificate pe înregistrările modelului (`post_message`,
-  `schedule_activity`). Se bifează pe linia modelului documentului (de exemplu *Tichet helpdesk*), nu pe *Mesaj* sau
+- **Note și activități**: note interne, activități planificate și urmăritori pe înregistrările modelului
+  (`post_message`, `schedule_activity`, `add_followers`). Se bifează pe linia modelului documentului (de exemplu *Tichet helpdesk*), nu pe *Mesaj* sau
   *Activitate*: un `create` pe `mail.activity` rămâne refuzat;
 - **Atașamente**: listarea și citirea fișierelor atașate și tipărirea rapoartelor PDF ale modelului (`print_report`),
   chiar și cu serverul doar-citire; cu scrierea permisă, și atașarea unui fișier (`attach_file`). Raportul tipărit
@@ -449,7 +449,8 @@ văd doar în meniu.
 
 **Cererea.** Când AI-ul încearcă un model sau o operație pe care politica nu o dă, răspunsul de refuz îi spune că poate
 cere acces cu unealta `request_access`. Excepție: un refuz la creare sau modificare pe `mail.activity`, `mail.message` sau
-`mail.followers` (citirea primește refuzul obișnuit) îl trimite la `post_message` / `schedule_activity` pe document
+`mail.followers` (citirea primește refuzul obișnuit) îl trimite la `post_message` / `schedule_activity` /
+`add_followers` pe document
 și îi recomandă `request_access` cu operația `chatter` pe modelul documentului (de exemplu `helpdesk.ticket`), nu pe
 modelul refuzat. AI-ul trimite modelul, operația, motivul și numărul de zile (7 dacă nu spune altfel). Operațiile sunt:
 
@@ -602,14 +603,19 @@ Refuzul apare în *Jurnal apeluri* cu starea *Refuzat*, iar `describe_model` ara
 scrie (`writable`).
 
 Pe modelele unde linia din politică are bifat **Note și activități** (și scrierea e permisă din Setări),
-AI-ul mai vede două unelte:
+AI-ul mai vede trei unelte:
 
 - `post_message`: o notă internă în chatter, text simplu, care nu se trimite urmăritorilor sau clientului;
 - `schedule_activity`: o activitate (To-Do, apel, întâlnire), cu termen și utilizator responsabil (implicit
-  utilizatorul AI).
+  utilizatorul AI);
+- `add_followers`: adaugă contacte ca urmăritori ai înregistrării, cu notificările implicite ale modelului și fără
+  e-mail de invitație, ca butonul *Adaugă urmăritori*. Primește cel mult 20 de contacte într-un apel, iar
+  utilizatorul conectat trebuie să poată citi contactele; răspunsul arată cine a fost adăugat (`added`) și cine
+  urmărea deja (`already_following`). Un `write` pe `message_partner_ids` sau `message_follower_ids` rămâne refuzat
+  și îl trimite pe AI la `add_followers`.
 
-Ambele rulează cu drepturile utilizatorului conectat: Odoo cere același drept ca atunci când un om scrie pe
-înregistrare (de regulă dreptul de modificare). Uneltele cer modulul Discuss (`mail`). Fără bifă, cele două unelte
+Toate rulează cu drepturile utilizatorului conectat: Odoo cere același drept ca atunci când un om scrie pe
+înregistrare (de regulă dreptul de modificare). Uneltele cer modulul Discuss (`mail`). Fără bifă, cele trei unelte
 lipsesc, iar `list_models` arată `notes_and_activities: false` pe model; refuzurile îi spun AI-ului ce bifă lipsește
 și, cu cererile de acces pornite, să ceară operația `chatter` (Pasul 9).
 
@@ -729,10 +735,14 @@ fiecărei cereri de acces, configurarea clientului AI.
 - [ ] Cu serverul doar-citire, o cerere `request_access` din clientul AI pentru *Modificare*, *Note și activități*,
   *Ștergere* sau *Trimitere e-mailuri* e refuzată; una de *Citire* sau *Atașamente* trece.
 - [ ] O cerere aprobată cu operația *Note și activități* dă o linie personală cu citire și *Note și activități*:
-  `post_message` și `schedule_activity` apar abia după aprobare. Cu *Atașamente*, la fel pentru `list_attachments` și
+  `post_message`, `schedule_activity` și `add_followers` apar abia după aprobare. Cu *Atașamente*, la fel pentru `list_attachments` și
   `print_report`; cu *Ștergere*, pentru `unlink`; cu *Trimitere e-mailuri*, pentru `send_email`.
 - [ ] Un `send_email` refuzat pentru lipsa bifei, cu cererile de acces pornite, îi recomandă AI-ului operația `email`.
-- [ ] Un `create` pe `mail.activity` e refuzat cu îndrumarea spre `post_message` / `schedule_activity` și spre bifa
+- [ ] Cu *Note și activități* bifat, `add_followers` adaugă contactele ca urmăritori ai înregistrării, fără e-mail de
+  invitație; un contact care urmărea deja apare în `already_following`, nu se adaugă a doua oară.
+- [ ] Un `write` pe `message_partner_ids` e refuzat cu îndrumarea spre `add_followers`.
+- [ ] Un `create` pe `mail.activity` e refuzat cu îndrumarea spre `post_message` / `schedule_activity` /
+  `add_followers` și spre bifa
   *Note și activități* din politică; cu *Cereri de acces MCP* bifat, refuzul recomandă `request_access` cu
   operația `chatter` pe modelul documentului.
 - [ ] Apelurile apar în **Jurnal apeluri**; consumul apare în **Utilizare zilnică**.
@@ -797,10 +807,13 @@ interfața în engleză.
 | Neinstalat în această bază de date, omis (notificare la *Creare din șablon*) | Șablonul conține modele, câmpuri sau metode ale unor module neinstalate | Normal; dacă e nevoie de ele, instalați modulul și aplicați din nou șablonul cu *Adăugare șablon* |
 | modelul …: niciunul dintre câmpurile din … nu există (notificare la *Creare din șablon* / *Adăugare șablon*) | Listele *Câmpuri permise* / *Câmpuri modificabile* ale șablonului conțin doar câmpuri care nu există în această bază | Normal, modelul e sărit ca să nu se deschidă toate câmpurile; instalați modulul care aduce câmpurile sau corectați lista din șablon și aplicați din nou |
 | Notes and activities are not allowed on … | Linia modelului din politică nu are bifat *Note și activități*; mesajul numește politica și linia | Bifați-l pe linia modelului sau, cu *Cereri de acces MCP* bifat, aprobați cererea `request_access` cu operația `chatter` |
-| The model mail.activity (mail.message, mail.followers) is not available for create/write | AI-ul a încercat să creeze direct activitatea sau mesajul | Normal: mesajul îl trimite la `post_message` / `schedule_activity` pe document; bifați *Note și activități* pe linia modelului documentului |
+| The model mail.activity (mail.message, mail.followers) is not available for create/write | AI-ul a încercat să creeze direct activitatea sau mesajul | Normal: mesajul îl trimite la `post_message` / `schedule_activity` / `add_followers` pe document; bifați *Note și activități* pe linia modelului documentului |
 | The model … has no chatter. | Cerere *Note și activități* sau *Trimitere e-mailuri* (ori notă/activitate) pe un model fără chatter | Cereți opțiunea pe modelul documentului care are chatter |
 | The user is not allowed to use the MCP server (HTTP 403) | Utilizatorul nu are rolul Server MCP / Utilizator | Atribuiți rolul **Utilizator** |
 | The field … cannot be written through MCP | Câmpul e mascat, ascuns sau de tip linii | Scrieți alt câmp; câmpurile de tip linii nu se pot scrie |
+| The field message_partner_ids (message_follower_ids) cannot be written through MCP. Followers are added with the tool add_followers on the record. | AI-ul a încercat să adauge urmăritori scriind direct câmpul | Normal: AI-ul folosește `add_followers` pe înregistrare; cere *Note și activități* pe linia modelului |
+| partner_ids must be a list of 1 to 20 contact ids. | `add_followers` a primit o listă goală, peste 20 de contacte sau valori care nu sunt id-uri | AI-ul trimite id-urile contactelor (găsite cu `name_search` pe `res.partner`), cel mult 20 într-un apel |
+| These contacts do not exist: … | Id-uri de contacte șterse sau greșite în `add_followers` | AI-ul caută din nou contactele cu `name_search` |
 | Only methods starting with action_ or button_ … can be used as tools | Metoda nu e un buton sau nu e declarată în `_mcp_methods` | Alegeți metoda butonului (`action_…`/`button_…`) sau o acțiune de server |
 | The method … cannot be called on … | Metoda nu există pe model sau e privată | Verificați numele metodei în modul developer |
 | The name … is used by a built-in tool | Numele uneltei e rezervat | Alegeți alt nume |

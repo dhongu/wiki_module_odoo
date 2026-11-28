@@ -4,7 +4,7 @@
 - **Versiune:** `19.0.0.3.10`
 - **Cale:** https://github.com/terrabit-solutions/terrabit/tree/19.0/terrabit_helpdesk_connector
 - **Cale Locală:** `odoo-addons/terrabit/terrabit_helpdesk_connector`
-- **Ultima Ingestie:** `2026-09-24`
+- **Ultima Ingestie:** `2026-11-28`
 - **Fișă Consultant:** [FISA_CONSULTANT.md](FISA_CONSULTANT.md)
 
 #### 1. Sumar
@@ -76,10 +76,32 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   endpoint local pus intenționat rămâne neatins.
 - Gestionare inteligentă a fișierelor mari: cele sub 2 MB se copiază la Terrabit, cele peste rămân în
   baza clientului și se trimite doar un link cu token de acces.
+- Auto-înregistrare pe serverul Terrabit, fără cod de activare manual: la instalare se creează
+  contul IAP pentru serviciul `terrabit_helpdesk`, iar un cron zilnic reia înregistrarea dacă
+  serverul e temporar indisponibil.
+- Tichetul pleacă la Terrabit pe contul propriei companii (cu mai multe companii active); un cont
+  comun, fără companie, este doar rezerva.
+- **Chat de suport** (`Terrabit Support → Chat`): discuție liberă cu Terrabit din Discuss, în canalul
+  „Terrabit Support” al companiei; mesajele ajung la Terrabit, răspunsurile consultanților apar în
+  același canal, cu notificarea obișnuită din Discuss. Chatul e oprit implicit și se activează din
+  contul IAP Terrabit Helpdesk (bifa *Support chat*); meniul apare doar dacă e activat. Canalul e
+  restricționat la companiile contului de suport (un canal al unui cont fără companie rămâne
+  vizibil tuturor). Un mesaj scris cât Terrabit nu răspunde pleacă la următoarea sincronizare, fără
+  dublare, iar discuțiile de peste 500 de mesaje se aduc pe pagini, cu reluare de la ultima pagină
+  aplicată.
+- Fără duplicate la răspunsuri: conectorul trimite o cheie stabilă de cerere (`request_key`, bază de
+  date + mesaj local) atât la trimiterea imediată, cât și la reîncercarea din coadă; sincronizarea
+  pornită de o notificare așteaptă salvarea răspunsului înainte să-l copieze. Un răspuns corectat la
+  Terrabit se corectează și în discuție, cu tot cu fișiere. Necesită `terrabit_iap_server_helpdesk`
+  19.0.0.3.1 sau mai nou.
+- Pe tichet apar numărul de memento-uri trimise de Terrabit pe e-mail de la ultimul răspuns
+  (*Reminders*, *Last reminder*, și coloană opțională în listă), care revine la zero după răspunsul
+  clientului; necesită server 19.0.0.3.0 sau mai nou, altfel câmpurile rămân goale.
+- Butonul **Sync Now** funcționează pentru orice utilizator intern, nu doar pentru administratori.
 
 #### 3. Dependențe
 
-- `terrabit_iap`
+- [terrabit_iap](../terrabit_iap/index.md)
 - `iap`
 - `mail`
 
@@ -94,7 +116,9 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 - `iap.account` (extins): găzduiește logica de comunicare cu serverul Terrabit
   (`_terrabit_helpdesk_submit_ticket`, `_terrabit_helpdesk_fetch_tickets`,
   `_terrabit_helpdesk_fetch_messages`, `_terrabit_helpdesk_post_message`), protecția endpointului pe
-  bazele neutralizate și cron-urile de înregistrare/sincronizare.
+  bazele neutralizate, cron-urile de înregistrare/sincronizare și câmpurile chatului de suport
+  (`terrabit_chat_enabled`, `terrabit_chat_channel_id`).
+- `discuss.channel` (extins): canalul „Terrabit Support” al chatului de suport, restricționat pe companiile contului de suport (regulă multi-companie).
 - `mail.message` (extins): câmpul `terrabit_remote_id`, ancora de deduplicare pentru mesajele
   oglindite din discuția cu Terrabit.
 
@@ -109,7 +133,9 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 - `view_terrabit_helpdesk_ticket_search`: filtre pe status și pe „Mine”, grupări după status,
   urgență, autor și consultant.
 - Meniu rădăcină `Terrabit Support`, cu submeniurile `My Tickets`, `Team Tickets` („Tichete echipă”),
-  `Tickets On Hold` („Tichete în așteptare”) și `Closed Tickets` („Tichete închise”).
+  `Tickets On Hold` („Tichete în așteptare”), `Closed Tickets` („Tichete închise”) și `Chat`
+  (`menu_terrabit_support_chat`, vizibil doar grupului *Terrabit support chat available*).
+- `iap_account_view_form_terrabit_support_chat`: extinde contul IAP Terrabit Helpdesk cu bifa *Support chat* și canalul asociat.
 
 **Acțiuni Automate / Acțiuni Server**
 
@@ -121,6 +147,9 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
   „De răspuns” de peste 24 de ore, o singură dată pe așteptare.
 - `ir_actions_server_sync_terrabit_helpdesk_tickets` ("Sync Now"): acțiune server declanșată din
   butonul din antetul listei/kanbanului, pentru sincronizare imediată la cerere.
+- `ir_actions_server_open_terrabit_chat` („Chat with Terrabit”): deschide canalul de chat de suport
+  (`_terrabit_chat_open`); legată de modelul tichetelor, nu de `iap.account`, fiindcă utilizatorul
+  intern nu are drept de scriere pe contul IAP.
 
 #### 5. Conexiuni
 
@@ -130,5 +159,5 @@ răspunsul nu se pierd — rămân într-o coadă locală și pleacă automat la
 - [terrabit_helpdesk_link](../terrabit_helpdesk_link/index.md): modulul mai vechi, doar un link spre
   portalul de suport; conectorul îl înlocuiește, iar la clienții care îl au pe amândouă, linkul se
   poate dezinstala.
-- `terrabit_iap`: furnizează contul de conectare (IAP) și înregistrarea automată pe serverul
-  Terrabit, folosite de acest modul pentru autentificare.
+- [terrabit_iap](../terrabit_iap/index.md): furnizează contul de conectare (IAP) și înregistrarea
+  automată pe serverul Terrabit, folosite de acest modul pentru autentificare.
